@@ -908,7 +908,8 @@ public class AuthService : IAuthService
             .Include(rp => rp.Permission)
             .Select(rp => rp.Permission.Name)
             .Distinct()
-            .ToListAsync();
+            .ToListAsync()
+            .ConfigureAwait(false);
         
         return new SecurityUser
         {

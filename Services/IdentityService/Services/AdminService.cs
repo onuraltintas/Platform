@@ -752,14 +752,14 @@ public class AdminService : IAdminService
         try
         {
             // Check if user exists
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == request.UserId);
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == request.UserId).ConfigureAwait(false);
             if (user == null)
             {
                 return ServiceResult<UserRoleDto>.Failure(ErrorCodes.NOT_FOUND, "User not found");
             }
 
             // Check if role exists
-            var role = await _context.Roles.FirstOrDefaultAsync(r => r.Id == request.RoleId);
+            var role = await _context.Roles.FirstOrDefaultAsync(r => r.Id == request.RoleId).ConfigureAwait(false);
             if (role == null)
             {
                 return ServiceResult<UserRoleDto>.Failure(ErrorCodes.NOT_FOUND, "Role not found");
@@ -767,7 +767,8 @@ public class AdminService : IAdminService
 
             // Check if user already has this role
             var existingUserRole = await _context.UserRoles
-                .FirstOrDefaultAsync(ur => ur.UserId == request.UserId && ur.RoleId == request.RoleId);
+                .FirstOrDefaultAsync(ur => ur.UserId == request.UserId && ur.RoleId == request.RoleId)
+                .ConfigureAwait(false);
 
             if (existingUserRole != null)
             {
@@ -787,7 +788,7 @@ public class AdminService : IAdminService
             };
 
             _context.UserRoles.Add(userRole);
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync().ConfigureAwait(false);
 
             var userRoleDto = new UserRoleDto
             {
