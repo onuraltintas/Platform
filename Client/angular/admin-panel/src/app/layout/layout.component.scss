@@ -1,0 +1,25 @@
+// CoreUI Layout Styles - ensures proper sidebar and content positioning
+.sidebar-nav-fixed {
+  .wrapper {
+    margin-left: var(--cui-sidebar-width, 256px);
+    transition: margin-left 0.15s;
+  }
+
+  @media (max-width: 991.98px) {
+    .wrapper {
+      margin-left: 0;
+    }
+  }
+}
+
+// Additional spacing adjustments
+.body {
+  padding-top: 0;
+}
+
+// Override dashboard padding since layout provides spacing
+:host ::ng-deep app-dashboard {
+  .container-fluid {
+    padding: 0;
+  }
+}

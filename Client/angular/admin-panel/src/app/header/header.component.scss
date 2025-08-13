@@ -1,0 +1,51 @@
+// CoreUI Header Styles
+.avatar {
+  &-md {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  &-sm {
+    width: 1.75rem;
+    height: 1.75rem;
+  }
+
+  &-img {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+// Custom dropdown widths
+.w-300 { width: 300px !important; }
+.w-220 { width: 220px !important; }
+
+.badge-sm {
+  font-size: 0.75rem;
+  position: absolute;
+  top: 0.25rem;
+  right: 0.25rem;
+}
+
+// Header action button aesthetics
+.btn.btn-light.border {
+  border-radius: 999px;
+  padding-inline: .5rem;
+  transition: all .15s ease;
+}
+.btn.btn-light.border:hover {
+  background-color: #f3f4f6;
+}
+
+// Floating menu card
+header .card.shadow {
+  border-radius: .5rem;
+  overflow: hidden;
+}
+header .list-group-item {
+  font-size: .9rem;
+  padding: .6rem .75rem;
+}
+header .list-group-item i {
+  opacity: .85;
+}

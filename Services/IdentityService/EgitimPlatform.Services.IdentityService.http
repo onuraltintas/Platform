@@ -1,0 +1,6 @@
+@EgitimPlatform.Services.IdentityService_HostAddress = http://localhost:5213
+
+GET {{EgitimPlatform.Services.IdentityService_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

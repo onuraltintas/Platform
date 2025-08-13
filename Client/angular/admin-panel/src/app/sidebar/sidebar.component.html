@@ -1,0 +1,102 @@
+<div class="sidebar sidebar-dark sidebar-fixed" id="sidebar">
+  <!-- Sidebar Brand -->
+  <div class="sidebar-brand d-md-flex">
+    <div class="sidebar-brand-full">
+      <i class="cil-education"></i>
+      <span class="ms-2">EğitimPlatform</span>
+    </div>
+    <div class="sidebar-brand-minimized">
+      <i class="cil-education"></i>
+    </div>
+  </div>
+
+  <!-- Navigation -->
+  <ul class="sidebar-nav" data-coreui="navigation">
+    <li class="nav-item" *ngFor="let item of navItems">
+      <!-- Navigation Item with Children -->
+      <a 
+        class="nav-link" 
+        *ngIf="item.children"
+        [class.active]="isNavItemActive(item.url)"
+        (click)="toggleNavItem(item)"
+        style="cursor: pointer;">
+        <i [class]="item.icon"></i>
+        <span>{{ item.name }}</span>
+        <span *ngIf="item.badge" 
+              class="badge badge-sm" 
+              [class]="'bg-' + item.badge.color">
+          {{ item.badge.text }}
+        </span>
+        <i class="cil-chevron-right ms-auto" 
+           [class.rotate-90]="item.isExpanded"></i>
+      </a>
+      
+      <!-- Navigation Item without Children -->
+      <a 
+        class="nav-link" 
+        *ngIf="!item.children"
+        [routerLink]="item.url"
+        routerLinkActive="active">
+        <i [class]="item.icon"></i>
+        <span>{{ item.name }}</span>
+        <span *ngIf="item.badge" 
+              class="badge badge-sm" 
+              [class]="'bg-' + item.badge.color">
+          {{ item.badge.text }}
+        </span>
+      </a>
+
+      <!-- Sub Navigation (level 1) -->
+      <ul class="nav-group-items" 
+          *ngIf="item.children && item.isExpanded"
+          [@slideInOut]="item.isExpanded ? 'in' : 'out'">
+        <li class="nav-item" *ngFor="let child of item.children">
+          <!-- Child with children (toggle) -->
+          <a class="nav-link" *ngIf="child.children" (click)="toggleNavItem(child)" style="cursor:pointer;">
+            <i [class]="child.icon"></i>
+            <span>{{ child.name }}</span>
+            <i class="cil-chevron-right ms-auto" [class.rotate-90]="child.isExpanded"></i>
+          </a>
+          <!-- Child as link -->
+          <a class="nav-link" *ngIf="!child.children" [routerLink]="child.url" routerLinkActive="active">
+            <i [class]="child.icon"></i>
+            <span>{{ child.name }}</span>
+          </a>
+
+          <!-- Sub Navigation (level 2) -->
+          <ul class="nav-group-items" *ngIf="child.children && child.isExpanded" [@slideInOut]="child.isExpanded ? 'in' : 'out'">
+            <li class="nav-item" *ngFor="let grand of child.children">
+              <a class="nav-link" [routerLink]="grand.url" routerLinkActive="active">
+                <i [class]="grand.icon"></i>
+                <span>{{ grand.name }}</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+
+    <!-- Divider -->
+    <li class="nav-divider"></li>
+
+    <!-- Settings -->
+    <li class="nav-item">
+      <a class="nav-link" [routerLink]="'/profile'">
+        <i class="cil-user"></i>
+        <span>Profil</span>
+      </a>
+    </li>
+  </ul>
+
+  <!-- Sidebar Footer -->
+  <div class="sidebar-footer border-top d-flex flex-column">
+    <!-- Logout Button in Footer -->
+    <div 
+      class="btn btn-danger w-100 mb-2 custom-logout-btn shadow-sm" 
+      style="cursor: pointer;"
+      (click)="logout()">
+      <i class="cil-account-logout"></i>
+      <span>Çıkış</span>
+    </div>
+  </div>
+</div>

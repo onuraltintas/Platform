@@ -1,0 +1,85 @@
+<header class="header header-sticky mb-4">
+  <div class="container-fluid">
+    <!-- Sidebar Toggle -->
+    <button 
+      class="header-toggler px-md-0 me-md-3" 
+      type="button"
+      onclick="coreui.Sidebar.getInstance(document.querySelector('#sidebar')).toggle()"
+      aria-label="Toggle navigation">
+      <i class="cil-menu"></i>
+    </button>
+
+    <!-- Brand / Logo -->
+    <a class="header-brand d-md-none" href="#">
+      <i class="cil-education text-primary"></i>
+    </a>
+
+    <!-- Header Nav -->
+    <ul class="header-nav d-none d-md-flex">
+      <li class="nav-item">
+        <a class="nav-link" href="/dashboard">
+          <i class="cil-speedometer"></i> Dashboard
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/users">
+          <i class="cil-people"></i> Kullanıcılar
+        </a>
+      </li>
+    </ul>
+
+    <!-- Header Nav Right -->
+    <div class="ms-auto d-flex align-items-center gap-2 position-relative">
+      <!-- Avatar with name -->
+      <div class="d-flex align-items-center gap-2">
+        <div class="avatar avatar-md">
+          <ng-container *ngIf="currentUser?.avatar; else letterAvatar">
+            <img [src]="currentUser.avatar" alt="Avatar" class="rounded-circle" style="width: 40px; height: 40px; object-fit: cover;" />
+          </ng-container>
+          <ng-template #letterAvatar>
+            <div class="avatar-img rounded-circle bg-primary d-flex align-items-center justify-content-center text-white fw-bold" style="width: 40px; height: 40px;">
+              {{ avatarLetter }}
+            </div>
+          </ng-template>
+        </div>
+        <div class="d-none d-lg-block small text-muted">
+          {{ currentUser?.fullName || currentUser?.userName || currentUser?.email || 'Kullanıcı' }}
+        </div>
+      </div>
+      <!-- Icon button with caret -->
+      <button class="btn btn-sm btn-light border d-flex align-items-center gap-1" (click)="toggleMenu($event)">
+        <i class="cil-options"></i>
+        <span class="caret d-inline-block" style="border-top: .3rem solid; border-right: .3rem solid transparent; border-left: .3rem solid transparent; height: 0; width: 0;"></span>
+      </button>
+
+      <!-- Angular controlled menu -->
+      <div class="card shadow position-absolute end-0 mt-5" style="min-width: 240px; z-index: 1050;" *ngIf="menuOpen()" (click)="$event.stopPropagation()">
+        <div class="card-header py-2 bg-body-secondary text-body-secondary fw-semibold d-flex align-items-center gap-2">
+          <div class="avatar avatar-sm">
+            <ng-container *ngIf="currentUser?.avatar; else smallLetter">
+              <img [src]="currentUser.avatar" alt="Avatar" class="rounded-circle" style="width: 28px; height: 28px; object-fit: cover;" />
+            </ng-container>
+            <ng-template #smallLetter>
+              <div class="avatar-img rounded-circle bg-primary d-flex align-items-center justify-content-center text-white fw-bold" style="width: 28px; height: 28px;">
+                {{ avatarLetter }}
+              </div>
+            </ng-template>
+          </div>
+          <span class="small">{{ currentUser?.fullName || currentUser?.email || 'Kullanıcı' }}</span>
+        </div>
+        <div class="list-group list-group-flush">
+          <button class="list-group-item list-group-item-action d-flex align-items-center" (click)="navigate('/profile'); closeMenu()">
+            <i class="cil-user me-2"></i> Profil
+          </button>
+          <button class="list-group-item list-group-item-action d-flex align-items-center" (click)="navigate('/settings'); closeMenu()">
+            <i class="cil-settings me-2"></i> Ayarlar
+          </button>
+          <div class="border-top"></div>
+          <button class="list-group-item list-group-item-action d-flex align-items-center" (click)="logout(); closeMenu()">
+            <i class="cil-account-logout me-2"></i> Çıkış Yap
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>

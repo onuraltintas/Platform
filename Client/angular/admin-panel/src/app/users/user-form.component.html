@@ -1,0 +1,215 @@
+<div class="container py-4">
+  <div class="d-flex align-items-center mb-4">
+    <div>
+      <h2 class="mb-1">{{ userId ? 'Kullanıcıyı Düzenle' : 'Yeni Kullanıcı Oluştur' }}</h2>
+      <p class="text-muted mb-0">{{ userId ? 'Kullanıcı bilgilerini ve yetkilerini güncelleyin' : 'Yeni kullanıcı hesabı oluşturun ve gerekli yetkileri atayın' }}</p>
+    </div>
+    <div class="ms-auto">
+      <a class="btn btn-outline-secondary" [routerLink]="['/users']">
+        <i class="bi bi-arrow-left me-1"></i> Geri Dön
+      </a>
+    </div>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="save()">
+    <!-- Temel Bilgiler -->
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5 class="card-title mb-0">
+          <i class="bi bi-person me-2"></i>
+          Temel Bilgiler
+        </h5>
+      </div>
+      <div class="card-body">
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label">Kullanıcı Adı <span class="text-danger">*</span></label>
+            <input class="form-control" formControlName="userName" placeholder="Kullanıcı adını girin" [class.is-invalid]="isFieldInvalid('userName')">
+            <div class="invalid-feedback" *ngIf="isFieldInvalid('userName')">
+              {{ getFieldError('userName') }}
+            </div>
+            <div class="form-text" *ngIf="!isFieldInvalid('userName')">En az 3 karakter olmalıdır</div>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">E-posta Adresi <span class="text-danger">*</span></label>
+            <input class="form-control" formControlName="email" type="email" placeholder="ornek@email.com" [class.is-invalid]="isFieldInvalid('email')">
+            <div class="invalid-feedback" *ngIf="isFieldInvalid('email')">
+              {{ getFieldError('email') }}
+            </div>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Ad <span class="text-danger">*</span></label>
+            <input class="form-control" formControlName="firstName" placeholder="Ad" [class.is-invalid]="isFieldInvalid('firstName')">
+            <div class="invalid-feedback" *ngIf="isFieldInvalid('firstName')">
+              {{ getFieldError('firstName') }}
+            </div>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Soyad <span class="text-danger">*</span></label>
+            <input class="form-control" formControlName="lastName" placeholder="Soyad" [class.is-invalid]="isFieldInvalid('lastName')">
+            <div class="invalid-feedback" *ngIf="isFieldInvalid('lastName')">
+              {{ getFieldError('lastName') }}
+            </div>
+          </div>
+          
+          <!-- Create mode only: Password fields -->
+          <ng-container *ngIf="!userId">
+            <div class="col-md-6">
+              <label class="form-label">Şifre <span class="text-danger">*</span></label>
+              <div class="input-group">
+                <input class="form-control" formControlName="password" [type]="passwordFieldType" placeholder="En az 8 karakter" [class.is-invalid]="isFieldInvalid('password')">
+                <button class="btn btn-outline-secondary" type="button" (click)="togglePasswordVisibility()">
+                  <i class="bi" [ngClass]="passwordFieldType === 'password' ? 'bi-eye-slash' : 'bi-eye'"></i>
+                </button>
+                <div class="invalid-feedback" *ngIf="isFieldInvalid('password')">
+                  {{ getFieldError('password') }}
+                </div>
+              </div>
+              <div class="form-text" *ngIf="!isFieldInvalid('password')">Güçlü bir şifre seçin (büyük/küçük harf, rakam, özel karakter)</div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Şifre Tekrar <span class="text-danger">*</span></label>
+              <div class="input-group">
+                <input class="form-control" formControlName="confirmPassword" [type]="confirmPasswordFieldType" placeholder="Şifreyi tekrar girin" [class.is-invalid]="isFieldInvalid('confirmPassword')">
+                <button class="btn btn-outline-secondary" type="button" (click)="toggleConfirmPasswordVisibility()">
+                  <i class="bi" [ngClass]="confirmPasswordFieldType === 'password' ? 'bi-eye-slash' : 'bi-eye'"></i>
+                </button>
+                <div class="invalid-feedback" *ngIf="isFieldInvalid('confirmPassword')">
+                  {{ getFieldError('confirmPassword') }}
+                </div>
+              </div>
+            </div>
+          </ng-container>
+
+          <div class="col-md-6">
+            <label class="form-label">Telefon Numarası <span class="text-danger">*</span></label>
+            <input class="form-control" type="tel" formControlName="phoneNumber" placeholder="05551234567" [class.is-invalid]="isFieldInvalid('phoneNumber')">
+            <div class="invalid-feedback" *ngIf="isFieldInvalid('phoneNumber')">
+              {{ getFieldError('phoneNumber') }}
+            </div>
+            <div class="form-text" *ngIf="!isFieldInvalid('phoneNumber')">Sadece rakam giriniz.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hesap Durumu -->
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5 class="card-title mb-0">
+          <i class="bi bi-gear me-2"></i>
+          Hesap Durumu
+        </h5>
+      </div>
+      <div class="card-body">
+        <div class="row g-3">
+          <div class="col-md-6">
+            <div class="form-check form-switch">
+              <input class="form-check-input" id="isActive" type="checkbox" formControlName="isActive">
+              <label class="form-check-label" for="isActive">
+                <strong>Aktif Hesap</strong>
+                <div class="form-text">Hesabın aktif olup olmadığını belirler</div>
+              </label>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-check form-switch">
+              <input class="form-check-input" id="isEmailConfirmed" type="checkbox" formControlName="isEmailConfirmed">
+              <label class="form-check-label" for="isEmailConfirmed">
+                <strong>E-posta Doğrulanmış</strong>
+                <div class="form-text">E-posta adresinin doğrulanmış olup olmadığı</div>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Yetkiler ve Kategoriler -->
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5 class="card-title mb-0">
+          <i class="bi bi-shield-check me-2"></i>
+          Yetkiler ve Kategoriler
+        </h5>
+      </div>
+      <div class="card-body">
+        <div class="row g-4">
+          <div class="col-md-6">
+            <div class="border rounded p-3 h-100">
+              <h6 class="mb-3">
+                <i class="bi bi-people-fill me-2 text-primary"></i>
+                Roller
+              </h6>
+              <select class="form-select mb-2" multiple formControlName="roleIds" size="6" style="min-height: 150px;" [class.is-invalid]="isFieldInvalid('roleIds')">
+                <option *ngFor="let role of roles" [value]="role.id" [disabled]="!role.isActive" [class.text-muted]="!role.isActive">
+                  {{ role.name }}
+                  <span *ngIf="!role.isActive" class="text-muted"> (Pasif)</span>
+                </option>
+              </select>
+              <div class="invalid-feedback d-block" *ngIf="isFieldInvalid('roleIds')">
+                {{ getFieldError('roleIds') }}
+              </div>
+              <div class="d-flex align-items-center text-muted small">
+                <i class="bi bi-info-circle me-1"></i>
+                <span>Ctrl/Cmd tuşu ile çoklu seçim yapabilirsiniz</span>
+              </div>
+              <div class="mt-2">
+                <span class="badge bg-light text-dark me-1">Seçilen:</span>
+                <span class="badge bg-primary">{{ getSelectedCount('roleIds') }}</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="border rounded p-3 h-100">
+              <h6 class="mb-3">
+                <i class="bi bi-tags-fill me-2 text-success"></i>
+                Kategoriler
+              </h6>
+              <select class="form-select mb-2" multiple formControlName="categoryIds" size="6" style="min-height: 150px;" [class.is-invalid]="isFieldInvalid('categoryIds')">
+                <option *ngFor="let category of categories" [value]="category.id" [disabled]="!category.isActive" [class.text-muted]="!category.isActive">
+                  {{ category.name }}
+                  <span *ngIf="!category.isActive" class="text-muted"> (Pasif)</span>
+                </option>
+              </select>
+              <div class="invalid-feedback d-block" *ngIf="isFieldInvalid('categoryIds')">
+                {{ getFieldError('categoryIds') }}
+              </div>
+              <div class="d-flex align-items-center text-muted small">
+                <i class="bi bi-info-circle me-1"></i>
+                <span>Ctrl/Cmd tuşu ile çoklu seçim yapabilirsiniz</span>
+              </div>
+              <div class="mt-2">
+                <span class="badge bg-light text-dark me-1">Seçilen:</span>
+                <span class="badge bg-success">{{ getSelectedCount('categoryIds') }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Form Butonları -->
+    <div class="d-flex gap-3 justify-content-end">
+      <a class="btn btn-outline-secondary px-4" [routerLink]="['/users']">
+        <i class="bi bi-x-lg me-1"></i> İptal
+      </a>
+      <button class="btn btn-primary px-4" type="submit" [disabled]="loading || form.invalid">
+        <span *ngIf="loading" class="spinner-border spinner-border-sm me-2" role="status"></span>
+        <i *ngIf="!loading" class="bi bi-check-lg me-1"></i>
+        {{ loading ? 'Kaydediliyor...' : 'Kaydet' }}
+      </button>
+    </div>
+    
+    <!-- Başarı durumunda navigasyon butonları -->
+    <div class="d-flex gap-3 justify-content-center" *ngIf="successMessage">
+      <a class="btn btn-success px-4" [routerLink]="['/users']">
+        <i class="bi bi-arrow-left me-1"></i> Kullanıcı Listesine Dön
+      </a>
+      <a class="btn btn-outline-primary px-4" [routerLink]="['/users', userId || 'new']" *ngIf="userId">
+        <i class="bi bi-eye me-1"></i> Kullanıcı Detayı
+      </a>
+    </div>
+  </form>
+</div>
+

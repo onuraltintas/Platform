@@ -1,0 +1,78 @@
+{
+  "Logging": {
+    "MinimumLevel": "Information",
+    "Console": {
+      "Enabled": true,
+      "OutputTemplate": "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj} {Properties:j}{NewLine}{Exception}"
+    },
+    "File": {
+      "Enabled": true,
+      "Path": "logs/egitimplatform-.log",
+      "RollingInterval": "Day",
+      "FileSizeLimitBytes": 104857600,
+      "RetainedFileCountLimit": 31,
+      "OutputTemplate": "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] {Message:lj} {Properties:j}{NewLine}{Exception}"
+    },
+    "Elasticsearch": {
+      "Enabled": false,
+      "Uri": "http://localhost:9200",
+      "IndexFormat": "egitimplatform-logs-{0:yyyy.MM.dd}",
+      "Username": "",
+      "Password": ""
+    },
+    "Seq": {
+      "Enabled": false,
+      "ServerUrl": "http://localhost:5341",
+      "ApiKey": ""
+    },
+    "Enrichment": {
+      "WithMachineName": true,
+      "WithEnvironmentUserName": true,
+      "WithProcessId": true,
+      "WithProcessName": true,
+      "WithThreadId": true,
+      "WithThreadName": true
+    }
+  },
+  "Serilog": {
+    "Using": [ "Serilog.Sinks.Console", "Serilog.Sinks.File" ],
+    "MinimumLevel": {
+      "Default": "Information",
+      "Override": {
+        "Microsoft": "Warning",
+        "Microsoft.Hosting.Lifetime": "Information",
+        "System": "Warning"
+      }
+    },
+    "WriteTo": [
+      {
+        "Name": "Console",
+        "Args": {
+          "outputTemplate": "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj} {Properties:j}{NewLine}{Exception}"
+        }
+      },
+      {
+        "Name": "File",
+        "Args": {
+          "path": "logs/egitimplatform-.log",
+          "rollingInterval": "Day",
+          "fileSizeLimitBytes": 104857600,
+          "retainedFileCountLimit": 31,
+          "outputTemplate": "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] {Message:lj} {Properties:j}{NewLine}{Exception}"
+        }
+      }
+    ],
+    "Enrich": [
+      "FromLogContext",
+      "WithMachineName",
+      "WithEnvironmentUserName",
+      "WithProcessId",
+      "WithProcessName",
+      "WithThreadId",
+      "WithThreadName"
+    ],
+    "Properties": {
+      "Application": "EgitimPlatform"
+    }
+  }
+}

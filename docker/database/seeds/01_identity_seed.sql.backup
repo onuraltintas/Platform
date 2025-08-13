@@ -1,0 +1,133 @@
+-- Seed data for Identity Service
+USE EgitimPlatform_Identity;
+GO
+
+-- Create Users table if not exists
+IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'Users')
+BEGIN
+    CREATE TABLE Users (
+        Id UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
+        Email NVARCHAR(256) NOT NULL UNIQUE,
+        UserName NVARCHAR(256) NOT NULL UNIQUE,
+        FirstName NVARCHAR(100) NOT NULL,
+        LastName NVARCHAR(100) NOT NULL,
+        PasswordHash NVARCHAR(MAX) NOT NULL,
+        EmailConfirmed BIT DEFAULT 0,
+        PhoneNumber NVARCHAR(20),
+        PhoneNumberConfirmed BIT DEFAULT 0,
+        TwoFactorEnabled BIT DEFAULT 0,
+        LockoutEnd DATETIMEOFFSET,
+        LockoutEnabled BIT DEFAULT 1,
+        AccessFailedCount INT DEFAULT 0,
+        CreatedAt DATETIME2 DEFAULT GETUTCDATE(),
+        UpdatedAt DATETIME2 DEFAULT GETUTCDATE(),
+        IsActive BIT DEFAULT 1
+    );
+END
+GO
+
+-- Create Roles table if not exists
+IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'Roles')
+BEGIN
+    CREATE TABLE Roles (
+        Id UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
+        Name NVARCHAR(256) NOT NULL UNIQUE,
+        Description NVARCHAR(500),
+        IsActive BIT DEFAULT 1,
+        CreatedAt DATETIME2 DEFAULT GETUTCDATE(),
+        UpdatedAt DATETIME2 DEFAULT GETUTCDATE()
+    );
+END
+GO
+
+-- Create Categories table if not exists
+IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'Categories')
+BEGIN
+    CREATE TABLE Categories (
+        Id UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
+        Name NVARCHAR(100) NOT NULL,
+        Description NVARCHAR(500),
+        Type NVARCHAR(50),
+        IsActive BIT DEFAULT 1,
+        CreatedAt DATETIME2 DEFAULT GETUTCDATE(),
+        UpdatedAt DATETIME2 DEFAULT GETUTCDATE()
+    );
+END
+GO
+
+-- Create UserCategories table if not exists
+IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'UserCategories')
+BEGIN
+    CREATE TABLE UserCategories (
+        Id UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
+        UserId UNIQUEIDENTIFIER NOT NULL,
+        CategoryId UNIQUEIDENTIFIER NOT NULL,
+        AssignedAt DATETIME2 DEFAULT GETUTCDATE(),
+        CreatedAt DATETIME2 DEFAULT GETUTCDATE(),
+        UpdatedAt DATETIME2 DEFAULT GETUTCDATE(),
+        ExpiresAt DATETIME2 NULL,
+        IsActive BIT DEFAULT 1,
+        AssignedBy NVARCHAR(256) NULL,
+        Notes NVARCHAR(MAX) NULL,
+        FOREIGN KEY (UserId) REFERENCES Users(Id) ON DELETE CASCADE,
+        FOREIGN KEY (CategoryId) REFERENCES Categories(Id) ON DELETE CASCADE
+    );
+END
+GO
+
+-- Create UserRoles table if not exists
+IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'UserRoles')
+BEGIN
+    CREATE TABLE UserRoles (
+        Id UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
+        UserId UNIQUEIDENTIFIER NOT NULL,
+        RoleId UNIQUEIDENTIFIER NOT NULL,
+        AssignedAt DATETIME2 DEFAULT GETUTCDATE(),
+        CreatedAt DATETIME2 DEFAULT GETUTCDATE(),
+        UpdatedAt DATETIME2 DEFAULT GETUTCDATE(),
+        ExpiresAt DATETIME2 NULL,
+        IsActive BIT DEFAULT 1,
+        AssignedBy NVARCHAR(256) NULL,
+        Notes NVARCHAR(MAX) NULL,
+        FOREIGN KEY (UserId) REFERENCES Users(Id) ON DELETE CASCADE,
+        FOREIGN KEY (RoleId) REFERENCES Roles(Id) ON DELETE CASCADE
+    );
+END
+GO
+
+-- Insert default roles if not exists
+IF NOT EXISTS (SELECT * FROM Roles WHERE Name = 'Admin')
+BEGIN
+    INSERT INTO Roles (Name, Description) VALUES ('Admin', 'System Administrator');
+END
+
+IF NOT EXISTS (SELECT * FROM Roles WHERE Name = 'User')
+BEGIN
+    INSERT INTO Roles (Name, Description) VALUES ('User', 'Regular User');
+END
+
+IF NOT EXISTS (SELECT * FROM Roles WHERE Name = 'Teacher')
+BEGIN
+    INSERT INTO Roles (Name, Description) VALUES ('Teacher', 'Teacher/Instructor');
+END
+
+IF NOT EXISTS (SELECT * FROM Roles WHERE Name = 'Student')
+BEGIN
+    INSERT INTO Roles (Name, Description) VALUES ('Student', 'Student');
+END
+GO
+
+-- Insert default admin user if not exists
+IF NOT EXISTS (SELECT * FROM Users WHERE Email = 'admin@egitimplatform.com')
+BEGIN
+    DECLARE @AdminUserId UNIQUEIDENTIFIER = NEWID();
+    DECLARE @AdminRoleId UNIQUEIDENTIFIER = (SELECT Id FROM Roles WHERE Name = 'Admin');
+    
+    INSERT INTO Users (Id, Email, UserName, FirstName, LastName, PasswordHash, EmailConfirmed, IsActive)
+    VALUES (@AdminUserId, 'admin@egitimplatform.com', 'admin', 'System', 'Administrator', 
+            '$2a$11$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewdBPj4J/HS.iK8K', 1, 1);
+    
+    INSERT INTO UserRoles (UserId, RoleId, AssignedAt, CreatedAt, UpdatedAt, IsActive) 
+    VALUES (@AdminUserId, @AdminRoleId, GETUTCDATE(), GETUTCDATE(), GETUTCDATE(), 1);
+END
+GO 

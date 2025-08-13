@@ -1,0 +1,229 @@
+<div class="container py-3" *ngIf="user() as u">
+  <div class="d-flex align-items-center mb-3">
+    <h4 class="mb-0">{{ u.fullName }} <small class="text-muted">@{{ u.userName }}</small></h4>
+    <button class="btn btn-outline-secondary ms-auto" (click)="goEdit()">
+      <i class="bi bi-pencil"></i> Düzenle
+    </button>
+    <button class="btn" [class.btn-danger]="u.isActive" [class.btn-success]="!u.isActive" (click)="toggleActive()">
+      {{ u.isActive ? 'Deaktif Et' : 'Aktif Et' }}
+    </button>
+  </div>
+
+  <div class="row g-3">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <h6 class="card-title">Temel Bilgiler</h6>
+          <div>E-posta: <strong>{{ u.email }}</strong></div>
+          <div>Telefon: <strong>{{ u.phoneNumber || '-' }}</strong></div>
+          <div>Durum: <span class="badge" [class.bg-success]="u.isActive" [class.bg-secondary]="!u.isActive">{{ u.isActive ? 'Aktif' : 'Pasif' }}</span></div>
+          <div>E-posta Doğrulama: {{ u.isEmailConfirmed ? 'Evet' : 'Hayır' }}</div>
+          <div>Son Giriş: {{ u.lastLoginAt || '-' }}</div>
+        </div>
+      </div>
+      <div class="card mt-3">
+        <div class="card-body">
+          <h6 class="card-title d-flex align-items-center">Hızlı Görüntüleme
+            <button class="btn btn-sm btn-outline-secondary ms-auto" (click)="loadProfile()">Profil</button>
+            <button class="btn btn-sm btn-outline-secondary ms-2" (click)="loadSettings()">Ayarlar</button>
+          </h6>
+          <div class="row g-3">
+            <div class="col-md-6" *ngIf="showProfile() && userProfile() as p">
+              <div class="small text-muted">Profil</div>
+              <ng-container *ngIf="!showProfileEdit(); else profileEditTpl">
+                <div>Bio: {{ p.bio || '-' }}</div>
+                <div>Telefon: {{ p.phoneNumber || '-' }}</div>
+                <div>Şehir: {{ p.city || '-' }}</div>
+                <button class="btn btn-sm btn-outline-primary mt-2" (click)="editProfile()">Düzenle</button>
+              </ng-container>
+            </div>
+            <div class="col-md-6" *ngIf="showSettings() && userSettings() as s">
+              <div class="small text-muted">Ayarlar</div>
+              <ng-container *ngIf="!showSettingsEdit(); else settingsEditTpl">
+                <div>Tema: {{ s.theme }}</div>
+                <div>Dil: {{ s.language }}</div>
+                <div>E-posta Bild.: {{ s.emailNotifications ? 'Açık' : 'Kapalı' }}</div>
+                <button class="btn btn-sm btn-outline-primary mt-2" (click)="editSettings()">Düzenle</button>
+              </ng-container>
+            </div>
+          </div>
+          <ng-template #profileEditTpl>
+            <div class="row g-2">
+              <div class="col-12">
+                <label class="form-label">Bio</label>
+                <input class="form-control" [ngModel]="profileEdit().bio" (ngModelChange)="onProfileChange('bio', $event)">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Telefon</label>
+                <input class="form-control" [ngModel]="profileEdit().phoneNumber" (ngModelChange)="onProfileChange('phoneNumber', $event)">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Şehir</label>
+                <input class="form-control" [ngModel]="profileEdit().city" (ngModelChange)="onProfileChange('city', $event)">
+              </div>
+              <div class="col-12 d-flex gap-2 mt-2">
+                <button class="btn btn-sm btn-primary" (click)="saveProfile()">Kaydet</button>
+                <button class="btn btn-sm btn-outline-secondary" (click)="cancelProfileEdit()">İptal</button>
+              </div>
+            </div>
+          </ng-template>
+          <ng-template #settingsEditTpl>
+            <div class="row g-2">
+              <div class="col-md-4">
+                <label class="form-label">Tema</label>
+                <input class="form-control" [ngModel]="settingsEdit().theme" (ngModelChange)="onSettingsChange('theme', $event)">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Dil</label>
+                <input class="form-control" [ngModel]="settingsEdit().language" (ngModelChange)="onSettingsChange('language', $event)">
+              </div>
+              <div class="col-md-4 form-check mt-4">
+                 <input class="form-check-input" id="emailNot" type="checkbox" [ngModel]="settingsEdit().emailNotifications" (ngModelChange)="onSettingsChange('emailNotifications', $event)">
+                <label class="form-check-label" for="emailNot">E-posta Bildirimleri</label>
+              </div>
+              <div class="col-12 d-flex gap-2 mt-2">
+                <button class="btn btn-sm btn-primary" (click)="saveSettings()">Kaydet</button>
+                <button class="btn btn-sm btn-outline-secondary" (click)="cancelSettingsEdit()">İptal</button>
+              </div>
+            </div>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <h6 class="card-title d-flex align-items-center">Roller
+            <select class="form-select form-select-sm ms-auto" style="width:auto" [ngModel]="selectedRoleId()" (ngModelChange)="selectedRoleId.set($event)">
+              <option [ngValue]="null">Rol seç...</option>
+              <option *ngFor="let r of roles()" [ngValue]="r.id">{{ r.name }}</option>
+            </select>
+            <button class="btn btn-sm btn-outline-primary ms-2" (click)="addRole()">Ekle</button>
+          </h6>
+          <div *ngIf="!u.roles?.length" class="text-muted">-</div>
+          <div class="d-flex flex-wrap gap-2">
+            <span *ngFor="let r of u.roles" class="badge bg-info d-flex align-items-center gap-2">
+              {{ r }}
+              <i class="bi bi-x-lg" style="cursor:pointer" (click)="removeRole(r)"></i>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="card mt-3">
+        <div class="card-body">
+          <h6 class="card-title d-flex align-items-center">Kategoriler
+            <select class="form-select form-select-sm ms-auto" style="width:auto" [ngModel]="selectedCategoryId()" (ngModelChange)="selectedCategoryId.set($event)">
+              <option [ngValue]="null">Kategori seç...</option>
+              <option *ngFor="let c of categories()" [ngValue]="c.id">{{ c.name }}</option>
+            </select>
+            <input class="form-control form-control-sm ms-2" style="max-width: 180px;" type="datetime-local" [ngModel]="assignCategoryExpiresAt()" (ngModelChange)="assignCategoryExpiresAt.set($event)" placeholder="Bitiş">
+            <input class="form-control form-control-sm ms-2" style="max-width: 220px;" type="text" [ngModel]="assignCategoryNotes()" (ngModelChange)="assignCategoryNotes.set($event)" placeholder="Not">
+            <button class="btn btn-sm btn-outline-primary ms-2" (click)="addCategory()">Ekle</button>
+          </h6>
+          <div *ngIf="!u.categories?.length" class="text-muted">-</div>
+          <div class="d-flex flex-wrap gap-2 align-items-start">
+            <span *ngFor="let c of u.categories" class="badge bg-secondary d-flex align-items-center gap-2">
+              {{ c }}
+              <i class="bi bi-pencil" title="Düzenle" style="cursor:pointer" (click)="openEditCategory(c)"></i>
+              <i class="bi bi-x-lg" title="Kaldır" style="cursor:pointer" (click)="removeCategory(c)"></i>
+            </span>
+            <div class="d-flex gap-2 align-items-end mt-2">
+              <div>
+                <label class="form-label">Ara</label>
+                <input class="form-control form-control-sm" placeholder="kategori veya not" [ngModel]="assignmentQuery()" (ngModelChange)="assignmentQuery.set($event)">
+              </div>
+              <div>
+                <label class="form-label">Durum</label>
+                <select class="form-select form-select-sm" [ngModel]="assignmentActiveFilter()" (ngModelChange)="assignmentActiveFilter.set($event); onAssignmentFiltersChange()">
+                  <option [ngValue]="'all'">Hepsi</option>
+                  <option [ngValue]="'true'">Aktif</option>
+                  <option [ngValue]="'false'">Pasif</option>
+                </select>
+              </div>
+              <div>
+                <label class="form-label">Bitişi yaklaşan</label>
+                <select class="form-select form-select-sm" [ngModel]="assignmentExpiringFilter()" (ngModelChange)="assignmentExpiringFilter.set($event)">
+                  <option [ngValue]="'all'">Hepsi</option>
+                  <option [ngValue]="'expired'">Süresi geçmiş</option>
+                  <option [ngValue]="'7'">7 gün</option>
+                  <option [ngValue]="'30'">30 gün</option>
+                </select>
+              </div>
+              <div class="ms-auto d-flex gap-2">
+                <button class="btn btn-sm btn-outline-success" (click)="exportAssignmentsCsv()">CSV Dışa Aktar</button>
+                <button class="btn btn-sm btn-outline-success" (click)="exportAssignmentsExcel()">Excel Dışa Aktar</button>
+              </div>
+            </div>
+            <div class="table-responsive w-100 mt-2" *ngIf="userCategoryAssignments().length">
+              <table class="table table-sm align-middle">
+                <thead>
+                  <tr>
+                    <th (click)="sortAssignmentsBy('categoryName')" style="cursor:pointer">Kategori</th>
+                    <th (click)="sortAssignmentsBy('assignedAt')" style="cursor:pointer">Atanma</th>
+                    <th (click)="sortAssignmentsBy('expiresAt')" style="cursor:pointer">Bitiş</th>
+                    <th (click)="sortAssignmentsBy('isActive')" style="cursor:pointer">Durum</th>
+                    <th (click)="sortAssignmentsBy('notes')" style="cursor:pointer">Not</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let a of filteredAssignments()">
+                    <td>{{ a.categoryName }}</td>
+                    <td>{{ formatDateTime(a.assignedAt) }}</td>
+                    <td>{{ formatDateTime(a.expiresAt) }}</td>
+                    <td>
+                      <span class="badge" [class.bg-success]="a.isActive" [class.bg-secondary]="!a.isActive">{{ a.isActive ? 'Aktif' : 'Pasif' }}</span>
+                    </td>
+                    <td>{{ a.notes || '-' }}</td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="d-flex justify-content-between">
+                <button class="btn btn-sm btn-outline-secondary" (click)="prevAssignmentsPage()" [disabled]="assignmentPage()<=1">Önceki</button>
+                <div class="small text-muted">Sayfa {{ assignmentPage() }}</div>
+                <button class="btn btn-sm btn-outline-secondary" (click)="nextAssignmentsPage()" [disabled]="!assignmentsHasNext()">Sonraki</button>
+              </div>
+            </div>
+          </div>
+          <!-- Category edit modal (simple inline) -->
+          <div class="card mt-2" *ngIf="editingCategoryId() as ec">
+            <div class="card-body">
+              <div class="row g-2 align-items-end">
+                <div class="col-md-4">
+                  <label class="form-label">Bitiş</label>
+                  <input class="form-control" type="datetime-local" [ngModel]="categoryEdit().expiresAt" (ngModelChange)="onCategoryEditChange('expiresAt', $event)">
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">Durum</label>
+                  <select class="form-select" [ngModel]="categoryEdit().isActive" (ngModelChange)="onCategoryEditChange('isActive', $event)">
+                    <option [ngValue]="true">Aktif</option>
+                    <option [ngValue]="false">Pasif</option>
+                  </select>
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">Not</label>
+                  <input class="form-control" type="text" [ngModel]="categoryEdit().notes" (ngModelChange)="onCategoryEditChange('notes', $event)">
+                </div>
+                <div class="col-12 d-flex gap-2 mt-2">
+                  <button class="btn btn-sm btn-primary" (click)="saveCategoryEdit()">Kaydet</button>
+                  <button class="btn btn-sm btn-outline-secondary" (click)="cancelCategoryEdit()">İptal</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card mt-3">
+        <div class="card-body">
+          <h6 class="card-title d-flex align-items-center">İzinler (rollerden türetilir)
+            <input class="form-control form-control-sm ms-auto" style="max-width: 220px;" placeholder="İzin ara" [ngModel]="permissionQuery()" (ngModelChange)="permissionQuery.set($event)">
+          </h6>
+          <div class="text-muted small mb-2">İzinler, atanan roller üzerinden gelir. İzin yönetimi için Rol → İzin ekranını kullanın.</div>
+          <div>
+            <span *ngFor="let p of filteredPermissions()" class="badge bg-light text-dark me-2 mb-2">{{ p }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

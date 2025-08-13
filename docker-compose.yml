@@ -1,0 +1,340 @@
+services:
+  # SQL Server Database
+  sqlserver:
+    build:
+      context: ./docker/database
+      dockerfile: Dockerfile
+    container_name: egitimplatform-sqlserver
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=${DB_PASSWORD}
+      - MSSQL_PID=Developer
+      - MSSQL_AGENT_ENABLED=true
+      - MSSQL_LCID=1033
+      - MSSQL_COLLATION=SQL_Latin1_General_CP1_CI_AS
+    ports:
+      - "${DB_PORT}:1433"
+    volumes:
+      - sqlserver_data:/var/opt/mssql/data
+    networks:
+      - egitimplatform-network
+    user: "0:0"
+    healthcheck:
+      test: ["CMD", "/opt/mssql-tools18/bin/sqlcmd", "-S", "localhost", "-U", "sa", "-P", "${DB_PASSWORD}", "-C", "-Q", "SELECT 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    container_name: egitimplatform-redis
+    ports:
+      - "${REDIS_PORT}:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - egitimplatform-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  # RabbitMQ
+  rabbitmq:
+    image: rabbitmq:3.12-management
+    container_name: egitimplatform-rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=${RABBITMQ_USERNAME}
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_PASSWORD}
+    networks:
+      - egitimplatform-network
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    
+
+  # API Gateway
+  api-gateway:
+    build:
+      context: .
+      dockerfile: Gateways/EgitimPlatform.Gateway/Dockerfile
+    container_name: egitimplatform-api-gateway
+    ports:
+      - "5200:80"
+
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
+      - ASPNETCORE_URLS=http://+:80
+      - ConnectionStrings__DefaultConnection=Server=${DB_SERVER};Database=${DB_NAME_IDENTITY};User Id=${DB_USER};Password=${DB_PASSWORD};TrustServerCertificate=${DB_TRUST_SERVER_CERTIFICATE}
+      - ConnectionStrings__Redis=${REDIS_HOST}:${REDIS_PORT}
+      - Jwt__SecretKey=${JWT_SECRET_KEY}
+      - Jwt__Issuer=${JWT_ISSUER}
+      - Jwt__Audience=${JWT_AUDIENCE}
+      - Jwt__ExpirationMinutes=${JWT_EXPIRATION_MINUTES}
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    networks:
+      - egitimplatform-network
+    volumes:
+      - gateway_logs:/app/logs
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  # Identity Service
+  identity-service:
+    build:
+      context: .
+      dockerfile: Services/IdentityService/Dockerfile
+    container_name: egitimplatform-identity-service
+    ports:
+      - "${IDENTITY_SERVICE_PORT}:80"
+
+    environment:
+      - Messaging__RabbitMq__Host=rabbitmq
+      - Messaging__RabbitMq__Port=5672
+      - Messaging__RabbitMq__Username=${RABBITMQ_USERNAME}
+      - Messaging__RabbitMq__Password=${RABBITMQ_PASSWORD}
+      - Messaging__RabbitMq__VirtualHost=/
+      - ASPNETCORE_ENVIRONMENT=Docker
+      - ASPNETCORE_URLS=http://+:80
+      - ConnectionStrings__DefaultConnection=Server=${DB_SERVER};Database=${DB_NAME_IDENTITY};User Id=${DB_USER};Password=${DB_PASSWORD};TrustServerCertificate=${DB_TRUST_SERVER_CERTIFICATE}
+      - ConnectionStrings__Redis=${REDIS_HOST}:${REDIS_PORT}
+      - Jwt__SecretKey=${JWT_SECRET_KEY}
+      - Jwt__Issuer=${JWT_ISSUER}
+      - Jwt__Audience=${JWT_AUDIENCE}
+      - Jwt__ExpirationMinutes=${JWT_EXPIRATION_MINUTES}
+      - Google__ClientId=${GOOGLE_CLIENT_ID}
+      - Google__ClientSecret=${GOOGLE_CLIENT_SECRET}
+      - Google__RedirectUri=${GOOGLE_REDIRECT_URI}
+      - Google__AuthorizationEndpoint=${GOOGLE_AUTHORIZATION_ENDPOINT}
+      - Google__TokenEndpoint=${GOOGLE_TOKEN_ENDPOINT}
+      - Google__UserInfoEndpoint=${GOOGLE_USER_INFO_ENDPOINT}
+      - Google__Scope=${GOOGLE_SCOPE}
+      - Email__Smtp__Host=${EMAIL_SMTP_SERVER}
+      - Email__Smtp__Port=${EMAIL_SMTP_PORT}
+      - Email__Smtp__Username=${EMAIL_USERNAME}
+      - Email__Smtp__Password=${EMAIL_PASSWORD}
+      - Email__Settings__DefaultFromEmail=${EMAIL_FROM_EMAIL}
+      - Email__Settings__DefaultFromName=${EMAIL_FROM_NAME}
+      - Email__Settings__DefaultReplyToEmail=${EMAIL_FROM_EMAIL}
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    networks:
+      - egitimplatform-network
+    volumes:
+      - identity_logs:/app/logs
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  # User Service
+  user-service:
+    build:
+      context: .
+      dockerfile: Services/UserService/Dockerfile
+    container_name: egitimplatform-user-service
+    ports:
+      - "${USER_SERVICE_PORT}:80"
+
+    environment:
+      - Messaging__RabbitMq__Host=rabbitmq
+      - Messaging__RabbitMq__Port=5672
+      - Messaging__RabbitMq__Username=${RABBITMQ_USERNAME}
+      - Messaging__RabbitMq__Password=${RABBITMQ_PASSWORD}
+      - Messaging__RabbitMq__VirtualHost=/
+      - ASPNETCORE_ENVIRONMENT=Docker
+      - Jwt__SecretKey=${JWT_SECRET_KEY}
+      - Jwt__Issuer=${JWT_ISSUER}
+      - Jwt__Audience=${JWT_AUDIENCE}
+      - ConnectionStrings__DefaultConnection=Server=${DB_SERVER};Database=${DB_NAME_USER_SERVICE};User Id=${DB_USER};Password=${DB_PASSWORD};TrustServerCertificate=${DB_TRUST_SERVER_CERTIFICATE}
+      - ConnectionStrings__Redis=${REDIS_HOST}:${REDIS_PORT}
+      - ASPNETCORE_URLS=http://+:80
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    networks:
+      - egitimplatform-network
+    volumes:
+      - user_logs:/app/logs
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  # Notification Service
+  notification-service:
+    build:
+      context: .
+      dockerfile: Services/NotificationService/Dockerfile
+    container_name: egitimplatform-notification-service
+    ports:
+      - "${NOTIFICATION_SERVICE_PORT}:80"
+
+    environment:
+      - Messaging__RabbitMq__Host=rabbitmq
+      - Messaging__RabbitMq__Port=5672
+      - Messaging__RabbitMq__Username=${RABBITMQ_USERNAME}
+      - Messaging__RabbitMq__Password=${RABBITMQ_PASSWORD}
+      - Messaging__RabbitMq__VirtualHost=/
+      - ASPNETCORE_ENVIRONMENT=Docker
+      - ConnectionStrings__DefaultConnection=Server=${DB_SERVER};Database=${DB_NAME_NOTIFICATION_SERVICE};User Id=${DB_USER};Password=${DB_PASSWORD};TrustServerCertificate=${DB_TRUST_SERVER_CERTIFICATE}
+      - ConnectionStrings__Redis=${REDIS_HOST}:${REDIS_PORT}
+      - ASPNETCORE_URLS=http://+:80
+      - Email__SmtpServer=${EMAIL_SMTP_SERVER}
+      - Email__SmtpPort=${EMAIL_SMTP_PORT}
+      - Email__Username=${EMAIL_USERNAME}
+      - Email__Password=${EMAIL_PASSWORD}
+      - Email__FromEmail=${EMAIL_FROM_EMAIL}
+      - Email__FromName=${EMAIL_FROM_NAME}
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    networks:
+      - egitimplatform-network
+    volumes:
+      - notification_logs:/app/logs
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  # Feature Flag Service
+  featureflag-service:
+    build:
+      context: .
+      dockerfile: Services/FeatureFlagService/Dockerfile
+    container_name: egitimplatform-featureflag-service
+    ports:
+      - "${FEATURE_FLAG_SERVICE_PORT}:80"
+
+    environment:
+      - Messaging__RabbitMq__Host=rabbitmq
+      - Messaging__RabbitMq__Port=5672
+      - Messaging__RabbitMq__Username=${RABBITMQ_USERNAME}
+      - Messaging__RabbitMq__Password=${RABBITMQ_PASSWORD}
+      - Messaging__RabbitMq__VirtualHost=/
+      - ASPNETCORE_ENVIRONMENT=Docker
+      - Jwt__SecretKey=${JWT_SECRET_KEY}
+      - Jwt__Issuer=${JWT_ISSUER}
+      - Jwt__Audience=${JWT_AUDIENCE}
+      - ConnectionStrings__DefaultConnection=Server=${DB_SERVER};Database=${DB_NAME_FEATURE_FLAG_SERVICE};User Id=${DB_USER};Password=${DB_PASSWORD};TrustServerCertificate=${DB_TRUST_SERVER_CERTIFICATE}
+      - ConnectionStrings__Redis=${REDIS_HOST}:${REDIS_PORT}
+      - ASPNETCORE_URLS=http://+:80
+      - DB_SERVER=${DB_SERVER}
+      - DB_PORT=${DB_PORT}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME_FEATURE_FLAG_SERVICE=${DB_NAME_FEATURE_FLAG_SERVICE}
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    networks:
+      - egitimplatform-network
+    volumes:
+      - featureflag_logs:/app/logs
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  # Portainer Dashboard
+  portainer:
+    image: portainer/portainer-ce:latest
+    container_name: egitimplatform-portainer
+    restart: always
+    ports:
+      - "9000:9000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+    networks:
+      - egitimplatform-network
+
+  # Health Checks UI Dashboard
+  healthchecks-ui:
+    image: xabarilcoding/healthchecksui:latest
+    container_name: egitimplatform-healthchecks-ui
+    restart: always
+    ports:
+      - "8080:80"
+    environment:
+      - HealthChecksUI__HealthChecks__0__Name=API Gateway
+      - HealthChecksUI__HealthChecks__0__Uri=http://api-gateway/health
+      - HealthChecksUI__HealthChecks__1__Name=Identity Service
+      - HealthChecksUI__HealthChecks__1__Uri=http://identity-service/health
+      - HealthChecksUI__HealthChecks__2__Name=User Service
+      - HealthChecksUI__HealthChecks__2__Uri=http://user-service/health
+      - HealthChecksUI__HealthChecks__3__Name=Notification Service
+      - HealthChecksUI__HealthChecks__3__Uri=http://notification-service/health
+      - HealthChecksUI__HealthChecks__4__Name=Feature Flag Service
+      - HealthChecksUI__HealthChecks__4__Uri=http://featureflag-service/health
+      - HealthChecksUI__EvaluationTimeInSeconds=30
+      - HealthChecksUI__MinimumSecondsBetweenFailureNotifications=60
+    depends_on:
+      - api-gateway
+      - identity-service
+      - user-service
+      - notification-service
+      - featureflag-service
+    networks:
+      - egitimplatform-network
+volumes:
+  sqlserver_data:
+    driver: local
+  redis_data:
+    driver: local
+  portainer_data:
+    driver: local
+  gateway_logs:
+    driver: local
+  identity_logs:
+    driver: local
+  user_logs:
+    driver: local
+  notification_logs:
+    driver: local
+  featureflag_logs:
+    driver: local
+
+networks:
+  egitimplatform-network:
+    driver: bridge
+

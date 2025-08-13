@@ -1,0 +1,189 @@
+<div class="bg-light dark:bg-transparent min-vh-100 d-flex flex-row align-items-center">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-7 col-xl-6">
+        <div class="card mx-4">
+          <div class="card-body p-4 p-md-5">
+            <h1 class="text-center mb-2">Hesap Oluştur</h1>
+            <p class="text-medium-emphasis text-center mb-4">Platforma katılmak için bilgilerinizi girin</p>
+
+            <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+
+              <!-- Ad ve Soyad (yan yana) -->
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <div class="form-floating">
+                    <input class="form-control" id="firstName" type="text" placeholder="Adınız" formControlName="firstName" [class.is-invalid]="isFieldInvalid('firstName')">
+                    <label for="firstName">Adınız</label>
+                    <div class="invalid-feedback">
+                      {{ getFieldError('firstName') }}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <div class="form-floating">
+                    <input class="form-control" id="lastName" type="text" placeholder="Soyadınız" formControlName="lastName" [class.is-invalid]="isFieldInvalid('lastName')">
+                    <label for="lastName">Soyadınız</label>
+                    <div class="invalid-feedback">
+                      {{ getFieldError('lastName') }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Kullanıcı Adı -->
+              <div class="form-floating mb-3">
+                <input class="form-control" id="userName" type="text" placeholder="Kullanıcı Adı" formControlName="userName" [class.is-invalid]="isFieldInvalid('userName')">
+                <label for="userName">Kullanıcı Adı</label>
+                <div class="invalid-feedback">
+                  {{ getFieldError('userName') }}
+                </div>
+              </div>
+
+              <!-- Email -->
+              <div class="form-floating mb-3">
+                <input class="form-control" id="email" type="email" placeholder="Email" formControlName="email" [class.is-invalid]="isFieldInvalid('email')">
+                <label for="email">Email</label>
+                <div class="invalid-feedback">
+                  {{ getFieldError('email') }}
+                </div>
+              </div>
+
+              <!-- Telefon -->
+              <div class="form-floating mb-3">
+                <input class="form-control" id="phoneNumber" type="tel" placeholder="0555 555 55 55" formControlName="phoneNumber" [class.is-invalid]="isFieldInvalid('phoneNumber')" (input)="onPhoneInput($event)">
+                <label for="phoneNumber">Telefon Numarası</label>
+                <div class="invalid-feedback">
+                  {{ getFieldError('phoneNumber') }}
+                </div>
+              </div>
+
+              <!-- Şifre -->
+              <div class="mb-3">
+                <div class="input-group password-input-group">
+                  <input class="form-control" id="password" [type]="passwordVisible ? 'text' : 'password'" placeholder="Şifre" formControlName="password" [class.is-invalid]="isFieldInvalid('password')" aria-label="Şifre">
+                  <button class="btn btn-outline-secondary" type="button" (click)="togglePasswordVisibility('password')">
+                    <i class="bi" [class.bi-eye]="!passwordVisible" [class.bi-eye-slash]="passwordVisible"></i>
+                  </button>
+                </div>
+                <div class="invalid-feedback" [style.display]="isFieldInvalid('password') ? 'block' : 'none'">
+                  {{ getFieldError('password') }}
+                </div>
+              </div>
+
+              <!-- Şifre Tekrar -->
+              <div class="mb-3">
+                <div class="input-group password-input-group">
+                  <input class="form-control" id="confirmPassword" [type]="confirmPasswordVisible ? 'text' : 'password'" placeholder="Şifre Tekrarı" formControlName="confirmPassword" [class.is-invalid]="isFieldInvalid('confirmPassword') || registerForm.errors?.['passwordMismatch']" aria-label="Şifre Tekrarı">
+                  <button class="btn btn-outline-secondary" type="button" (click)="togglePasswordVisibility('confirmPassword')">
+                    <i class="bi" [class.bi-eye]="!confirmPasswordVisible" [class.bi-eye-slash]="confirmPasswordVisible"></i>
+                  </button>
+                </div>
+                <div class="invalid-feedback" [style.display]="(isFieldInvalid('confirmPassword') || registerForm.errors?.['passwordMismatch']) ? 'block' : 'none'">
+                  {{ getFieldError('confirmPassword') }}
+                </div>
+              </div>
+
+              <!-- Kullanım Şartları -->
+              <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" id="acceptTerms" formControlName="acceptTerms" [class.is-invalid]="isFieldInvalid('acceptTerms')">
+                <label class="form-check-label" for="acceptTerms">
+                  <a href="#" (click)="$event.preventDefault(); openKvkkModal()">Kullanım Şartları ve KVKK Metni</a>'ni okudum, kabul ediyorum.
+                </label>
+                <div class="invalid-feedback">
+                  {{ getFieldError('acceptTerms') }}
+                </div>
+              </div>
+
+              <!-- Kayıt Butonu -->
+              <div class="d-grid gap-2 mb-3">
+                <button class="btn btn-lg btn-success" type="submit" [disabled]="isLoading">
+                  <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-2"></span>
+                  {{ isLoading ? 'Hesap Oluşturuluyor...' : 'Hesap Oluştur' }}
+                </button>
+              </div>
+
+              <!-- Ayırıcı -->
+              <div class="row align-items-center my-3">
+                <div class="col border-bottom"></div>
+                <div class="col-auto">
+                  <span class="text-medium-emphasis">veya</span>
+                </div>
+                <div class="col border-bottom"></div>
+              </div>
+
+              <!-- Google Kayıt -->
+              <div class="d-grid gap-2 mb-3">
+                <button class="btn btn-lg btn-outline-danger" type="button" (click)="googleRegister()" [disabled]="isLoading">
+                  <i class="bi bi-google me-2"></i>
+                  Google ile Devam Et
+                </button>
+              </div>
+
+              <!-- Login Link -->
+              <div class="text-center mt-4">
+                <p class="text-medium-emphasis">
+                  Zaten bir hesabınız var mı?
+                  <a [routerLink]="['/auth/login']" class="fw-semibold text-decoration-none">
+                    Giriş Yapın
+                  </a>
+                </p>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- KVKK Modal (Bootstrap 5) -->
+<div class="modal fade" id="kvkkModal" tabindex="-1" aria-labelledby="kvkkModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="kvkkModalLabel">Kişisel Verilerin Korunması ve İşlenmesi Hakkında Aydınlatma Metni</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p><strong>Veri Sorumlusu:</strong> Eğitim Platformu</p>
+        
+        <p>Bu aydınlatma metni, 6698 sayılı Kişisel Verilerin Korunması Kanunu (“KVKK”) uyarınca, veri sorumlusu sıfatıyla hareket eden Eğitim Platformu tarafından, kişisel verilerinizin işlenmesine ilişkin olarak sizleri bilgilendirmek amacıyla hazırlanmıştır.</p>
+    
+        <h6>1. İşlenen Kişisel Veriler ve İşleme Amaçları</h6>
+        <p>Platformumuza üye olmanız ve hizmetlerimizden faydalanmanız kapsamında aşağıdaki kişisel verileriniz işlenmektedir:</p>
+        <ul>
+          <li><strong>Kimlik Bilgileri:</strong> Ad, soyad.</li>
+          <li><strong>İletişim Bilgileri:</strong> E-posta adresi, telefon numarası.</li>
+          <li><strong>Kullanıcı Bilgileri:</strong> Kullanıcı adı, şifre (kriptografik olarak saklanır).</li>
+          <li><strong>İşlem Güvenliği Bilgileri:</strong> IP adresi, log kayıtları.</li>
+        </ul>
+        <p>Bu veriler; üyelik işlemlerinin gerçekleştirilmesi, hizmetlerin sunulması, kullanıcı doğrulama, iletişim kurulması, yasal yükümlülüklerin yerine getirilmesi, hizmet kalitesinin artırılması ve sahteciliğin önlenmesi amaçlarıyla işlenmektedir.</p>
+    
+        <h6>2. Kişisel Verilerin Aktarılması</h6>
+        <p>Kişisel verileriniz, yasal zorunluluklar ve rızanız dışında üçüncü kişilerle paylaşılmaz. Ancak, hizmetlerin sağlanabilmesi için gerekli olan durumlarda (örneğin, e-posta gönderim hizmeti sağlayıcıları gibi) veya yetkili kamu kurum ve kuruluşlarından gelen taleplerin karşılanması amacıyla, KVKK'nın 8. ve 9. maddelerinde belirtilen şartlar çerçevesinde aktarılabilecektir.</p>
+        
+        <h6>3. Kişisel Veri Toplamanın Yöntemi ve Hukuki Sebebi</h6>
+        <p>Kişisel verileriniz, platformumuzdaki kayıt formları aracılığıyla elektronik ortamda toplanmaktadır. Bu verilerin işlenmesinin hukuki sebebi, KVKK'nın 5. maddesinde belirtilen “bir sözleşmenin kurulması veya ifasıyla doğrudan doğruya ilgili olması kaydıyla, sözleşmenin taraflarına ait kişisel verilerin işlenmesinin gerekli olması” ve “veri sorumlusunun hukuki yükümlülüğünü yerine getirebilmesi için zorunlu olması”dır.</p>
+    
+        <h6>4. İlgili Kişinin Hakları (KVKK Madde 11)</h6>
+        <p>KVKK'nın 11. maddesi uyarınca aşağıdaki haklara sahipsiniz:</p>
+        <ul>
+          <li>Kişisel verilerinizin işlenip işlenmediğini öğrenme,</li>
+          <li>İşlenmişse buna ilişkin bilgi talep etme,</li>
+          <li>İşlenme amacını ve amacına uygun kullanılıp kullanılmadığını öğrenme,</li>
+          <li>Yurt içinde veya yurt dışında aktarıldığı üçüncü kişileri bilme,</li>
+          <li>Eksik veya yanlış işlenmişse düzeltilmesini isteme,</li>
+          <li>KVKK'nın 7. maddesinde öngörülen şartlar çerçevesinde silinmesini veya yok edilmesini isteme,</li>
+          <li>Yapılan düzeltme, silme veya yok etme işlemlerinin, verilerin aktarıldığı üçüncü kişilere bildirilmesini isteme,</li>
+          <li>İşlenen verilerin münhasıran otomatik sistemler vasıtasıyla analiz edilmesi suretiyle aleyhinize bir sonucun ortaya çıkmasına itiraz etme,</li>
+          <li>Kanuna aykırı olarak işlenmesi sebebiyle zarara uğramanız hâlinde zararın giderilmesini talep etme.</li>
+        </ul>
+        <p>Bu haklarınızı kullanmak için destek@egitimplatformu.com adresi üzerinden bizimle iletişime geçebilirsiniz.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+      </div>
+    </div>
+  </div>
+</div>

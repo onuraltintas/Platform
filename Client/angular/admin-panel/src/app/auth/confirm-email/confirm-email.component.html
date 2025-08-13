@@ -1,0 +1,29 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+      <div class="card text-center shadow-sm">
+        <div class="card-body p-5">
+          <div *ngIf="isLoading">
+            <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;"></div>
+            <h4 class="mt-3">E-posta Adresiniz Doğrulanıyor...</h4>
+            <p class="text-muted">Lütfen bekleyin.</p>
+          </div>
+
+          <div *ngIf="!isLoading && isSuccess">
+            <i class="bi bi-check-circle-fill text-success" style="font-size: 4rem;"></i>
+            <h4 class="mt-3">Doğrulama Başarılı!</h4>
+            <p class="text-muted">Hesabınız başarıyla aktive edildi.</p>
+            <a routerLink="/auth/login" class="btn btn-primary mt-3">Şimdi Giriş Yap</a>
+          </div>
+
+          <div *ngIf="!isLoading && errorMessage">
+            <i class="bi bi-exclamation-triangle-fill text-danger" style="font-size: 4rem;"></i>
+            <h4 class="mt-3">Doğrulama Başarısız</h4>
+            <p class="text-danger">{{ errorMessage }}</p>
+            <a routerLink="/auth/login" class="btn btn-secondary mt-3">Giriş Sayfasına Dön</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

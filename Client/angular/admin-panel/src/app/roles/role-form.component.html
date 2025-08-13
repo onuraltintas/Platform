@@ -1,0 +1,69 @@
+<div class="container py-4">
+  <div class="d-flex align-items-center mb-3">
+    <h2 class="mb-0">{{ roleId ? 'Rolü Düzenle' : 'Yeni Rol' }}</h2>
+    <a class="btn btn-outline-secondary ms-auto" [routerLink]="['/roles']">
+      Geri Dön
+    </a>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="save()">
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5 class="mb-0">Temel Bilgiler</h5>
+      </div>
+      <div class="card-body">
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label">Ad <span class="text-danger">*</span></label>
+            <input class="form-control" formControlName="name">
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Durum</label>
+            <div class="form-check form-switch mt-2">
+              <input class="form-check-input" type="checkbox" formControlName="isActive">
+              <label class="form-check-label">Aktif</label>
+            </div>
+          </div>
+          <div class="col-12">
+            <label class="form-label">Açıklama</label>
+            <textarea class="form-control" rows="3" formControlName="description"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5 class="mb-0">İzinler</h5>
+      </div>
+      <div class="card-body">
+        <div class="row g-3">
+          <div class="col-12">
+            <select class="form-select" multiple size="12" formControlName="permissionIds">
+              <option *ngFor="let p of permissions" [value]="p.id" [disabled]="!p.isActive" [ngClass]="{'fw-bold': (form.get('permissionIds')?.value || []).includes(p.id)}">
+                {{ p.name }} <span *ngIf="!p.isActive">(Pasif)</span>
+              </option>
+            </select>
+            <div class="form-text">Ctrl/Cmd ile çoklu seçim yapabilirsiniz</div>
+          </div>
+          <div class="col-12">
+            <div class="border rounded p-2 bg-light">
+              <div class="fw-semibold mb-1">Seçili İzinler</div>
+              <div *ngIf="selectedPermissionNames.length; else noneSel">
+                <span class="badge bg-primary me-1 mb-1" *ngFor="let n of selectedPermissionNames">{{ n }}</span>
+              </div>
+              <ng-template #noneSel>
+                <span class="text-muted">Seçili izin yok</span>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-end gap-2">
+      <a class="btn btn-outline-secondary" [routerLink]="['/roles']">İptal</a>
+      <button class="btn btn-primary" type="submit">Kaydet</button>
+    </div>
+  </form>
+</div>
