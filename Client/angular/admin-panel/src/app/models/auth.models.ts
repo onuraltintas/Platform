@@ -66,9 +66,7 @@ export interface RegisterRequest {
   categories?: string[];
 }
 
-export interface RefreshTokenRequest {
-  refreshToken: string;
-}
+// Removed unused RefreshTokenRequest
 
 export interface ConfirmEmailRequest {
   token: string;

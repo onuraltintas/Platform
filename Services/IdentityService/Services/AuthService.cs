@@ -937,6 +937,6 @@ public class AuthService : IAuthService
         };
         
         _context.RefreshTokens.Add(refreshToken);
-        await _context.SaveChangesAsync();
+        await _context.SaveChangesAsync().ConfigureAwait(false);
     }
 }
