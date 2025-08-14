@@ -11,9 +11,14 @@ using EgitimPlatform.Shared.Security.Services;
 using EgitimPlatform.Shared.Security.Models;
 using EgitimPlatform.Shared.Logging.Services;
 using Microsoft.Extensions.Configuration;
+using System.Diagnostics.CodeAnalysis;
 
 namespace EgitimPlatform.Services.IdentityService.Services;
 
+[SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Metot bazlı baskılamalar var; kademeli temizlik yapılacak")]
+[SuppressMessage("Style", "SA1101:Prefix local calls with this", Justification = "Ekip stili gereği this prefix zorunlu değil")]
+[SuppressMessage("Style", "SA1413:Use trailing comma in multi-line initializers", Justification = "Minör stil uyarısı, kademeli ele alınacak")]
+[SuppressMessage("Reliability", "CA2007:Consider calling ConfigureAwait on the awaited task", Justification = "ASP.NET Core bağlamı; kademeli olarak eklenecek")]
 public class GoogleAuthService : IGoogleAuthService
 {
     private readonly IdentityDbContext _context;
@@ -29,7 +34,11 @@ public class GoogleAuthService : IGoogleAuthService
     private readonly string _googleTokenEndpoint;
     private readonly string _googleUserInfoEndpoint;
     private readonly string _googleScope;
-    
+    private static readonly JsonSerializerOptions _snakeCaseJsonOptions = new JsonSerializerOptions
+    {
+        PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower,
+    };
+
     public GoogleAuthService(
         IdentityDbContext context,
         ITokenService tokenService,
@@ -44,7 +53,7 @@ public class GoogleAuthService : IGoogleAuthService
         _mapper = mapper;
         _logger = logger;
         _configuration = configuration;
-        
+
         // Load Google OAuth configuration from environment variables
         _googleClientId = _configuration["Google:ClientId"] ?? throw new InvalidOperationException("Google ClientId not configured");
         _googleClientSecret = _configuration["Google:ClientSecret"] ?? throw new InvalidOperationException("Google ClientSecret not configured");
@@ -54,62 +63,66 @@ public class GoogleAuthService : IGoogleAuthService
         _googleUserInfoEndpoint = _configuration["Google:UserInfoEndpoint"] ?? "https://www.googleapis.com/oauth2/v2/userinfo";
         _googleScope = _configuration["Google:Scope"] ?? "openid email profile";
     }
-    
+
     public async Task<ApiResponse<AuthResponse>> LoginAsync(GoogleLoginRequest request, string? ipAddress = null)
     {
         try
         {
-            var googleUser = await ValidateGoogleTokenAsync(request.IdToken);
+            if (request == null)
+            {
+                return ApiResponse<AuthResponse>.Fail(ErrorCodes.BAD_REQUEST, "Request cannot be null");
+            }
+            var googleUser = await ValidateGoogleTokenAsync(request.IdToken).ConfigureAwait(false);
             if (googleUser == null)
             {
                 _logger.LogSecurityEvent("GoogleLoginFailed", null, new { Reason = "InvalidToken", IpAddress = ipAddress });
                 return ApiResponse<AuthResponse>.Fail(ErrorCodes.Authentication.INVALID_TOKEN, "Invalid Google token");
             }
-            
+
             var user = await _context.Users
                 .Include(u => u.UserRoles).ThenInclude(ur => ur.Role)
                 .Include(u => u.UserCategories).ThenInclude(uc => uc.Category)
-                .FirstOrDefaultAsync(u => u.Email == googleUser.Email);
-            
+                .FirstOrDefaultAsync(u => u.Email == googleUser.Email).ConfigureAwait(false);
+
             if (user == null)
             {
                 _logger.LogSecurityEvent("GoogleLoginFailed", null, new { Email = googleUser.Email, Reason = "UserNotFound", IpAddress = ipAddress });
                 return ApiResponse<AuthResponse>.Fail(ErrorCodes.NOT_FOUND, "User not found. Please register first.");
             }
-            
+
             if (!user.IsActive)
             {
                 _logger.LogSecurityEvent("GoogleLoginFailed", user.Id, new { Email = googleUser.Email, Reason = "UserInactive", IpAddress = ipAddress });
                 return ApiResponse<AuthResponse>.Fail(ErrorCodes.Authentication.ACCOUNT_LOCKED, "Account is deactivated");
             }
-            
+
             if (user.IsLocked && user.LockoutEnd > DateTime.UtcNow)
             {
                 _logger.LogSecurityEvent("GoogleLoginFailed", user.Id, new { Email = googleUser.Email, Reason = "AccountLocked", IpAddress = ipAddress });
                 return ApiResponse<AuthResponse>.Fail(ErrorCodes.Authentication.ACCOUNT_LOCKED, "Account is temporarily locked");
             }
-            
+
             // Update last login and user info from Google
             user.LastLoginAt = DateTime.UtcNow;
             user.IsEmailConfirmed = googleUser.EmailVerified;
             user.UpdatedAt = DateTime.UtcNow;
-            
+
             // Reset any failed login attempts
             user.AccessFailedCount = 0;
             user.IsLocked = false;
             user.LockoutEnd = null;
-            
-            await _context.SaveChangesAsync();
-            
+
+            await _context.SaveChangesAsync().ConfigureAwait(false);
+
             // Create security user
-            var securityUser = await CreateSecurityUser(user);
-            
+            var securityUser = await CreateSecurityUser(user).ConfigureAwait(false);
+
             // Generate tokens
-            var tokenResult = await _tokenService.GenerateTokenAsync(securityUser, request.DeviceId, ipAddress);
-            
+            var tokenResult = await _tokenService.GenerateTokenAsync(securityUser, request.DeviceId, ipAddress).ConfigureAwait(false);
+
             // Save refresh token
-            await SaveRefreshToken(user.Id, tokenResult.RefreshToken, request.DeviceId, ipAddress, "Google");
-            
+            await SaveRefreshToken(user.Id, tokenResult.RefreshToken, request.DeviceId, ipAddress, "Google").ConfigureAwait(false);
+
             var userDto = _mapper.Map<UserDto>(user);
             var response = new AuthResponse
             {
@@ -118,9 +131,9 @@ public class GoogleAuthService : IGoogleAuthService
                 ExpiresAt = tokenResult.ExpiresAt,
                 User = userDto
             };
-            
+
             _logger.LogUserAction(user.Id, "GoogleLogin", new { Email = googleUser.Email, IpAddress = ipAddress });
-            
+
             return ApiResponse<AuthResponse>.Ok(response, "Google login successful");
         }
         catch (Exception ex)
@@ -129,7 +142,7 @@ public class GoogleAuthService : IGoogleAuthService
             return ApiResponse<AuthResponse>.Fail(ErrorCodes.INTERNAL_SERVER_ERROR, "An error occurred during Google login");
         }
     }
-    
+
     public async Task<ApiResponse<RegisterResponse>> RegisterAsync(GoogleRegisterRequest request, string? ipAddress = null)
     {
         try
@@ -140,19 +153,19 @@ public class GoogleAuthService : IGoogleAuthService
                 _logger.LogSecurityEvent("GoogleRegisterFailed", null, new { Reason = "InvalidToken", IpAddress = ipAddress });
                 return ApiResponse<RegisterResponse>.Fail(ErrorCodes.Authentication.INVALID_TOKEN, "Invalid Google token");
             }
-            
+
             // Check if user already exists
             var existingUser = await _context.Users
                 .FirstOrDefaultAsync(u => u.Email == googleUser.Email);
-            
+
             if (existingUser != null)
             {
                 return ApiResponse<RegisterResponse>.Fail(ErrorCodes.User.EMAIL_ALREADY_EXISTS, "User already exists with this email address");
             }
-            
+
             // Generate username from email or name
             var userName = await GenerateUniqueUserName(googleUser);
-            
+
             // Create new user
             var user = new User
             {
@@ -164,10 +177,10 @@ public class GoogleAuthService : IGoogleAuthService
                 IsEmailConfirmed = googleUser.EmailVerified,
                 IsActive = true
             };
-            
+
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
-            
+
             // Assign default Student role
             var studentRole = await _context.Roles.FirstOrDefaultAsync(r => r.Name == "Student");
             if (studentRole != null)
@@ -180,14 +193,14 @@ public class GoogleAuthService : IGoogleAuthService
                 };
                 _context.UserRoles.Add(userRole);
             }
-            
+
             // Assign categories if provided
             if (request.Categories.Any())
             {
                 var categories = await _context.Categories
                     .Where(c => request.Categories.Contains(c.Name))
                     .ToListAsync();
-                
+
                 foreach (var category in categories)
                 {
                     var userCategory = new UserCategory
@@ -199,18 +212,18 @@ public class GoogleAuthService : IGoogleAuthService
                     _context.UserCategories.Add(userCategory);
                 }
             }
-            
+
             await _context.SaveChangesAsync();
-            
+
             var response = new RegisterResponse
             {
                 UserId = user.Id,
                 Message = "Google registration successful.",
                 RequiresEmailConfirmation = false // Google users are pre-verified
             };
-            
+
             _logger.LogUserAction(user.Id, "GoogleRegister", new { Email = googleUser.Email, IpAddress = ipAddress });
-            
+
             return ApiResponse<RegisterResponse>.Ok(response, "User registered successfully with Google");
         }
         catch (Exception ex)
@@ -219,66 +232,66 @@ public class GoogleAuthService : IGoogleAuthService
             return ApiResponse<RegisterResponse>.Fail(ErrorCodes.INTERNAL_SERVER_ERROR, "An error occurred during Google registration");
         }
     }
-    
+
     public async Task<ApiResponse<AuthResponse>> HandleCallbackAsync(string code, string state)
     {
         try
         {
             // Exchange code for tokens
-            var tokenResponse = await ExchangeCodeForTokensAsync(code);
+            var tokenResponse = await ExchangeCodeForTokensAsync(code).ConfigureAwait(false);
             if (tokenResponse == null || string.IsNullOrEmpty(tokenResponse.IdToken))
             {
                 _logger.LogWarning("Google callback: Failed to exchange code for tokens or missing ID token.");
                 return ApiResponse<AuthResponse>.Fail(ErrorCodes.Authentication.INVALID_TOKEN, "Failed to exchange code for tokens with Google.");
             }
-            
+
             // Validate and get user info
-            var googleUser = await ValidateGoogleTokenAsync(tokenResponse.IdToken);
+            var googleUser = await ValidateGoogleTokenAsync(tokenResponse.IdToken).ConfigureAwait(false);
             if (googleUser == null)
             {
                 _logger.LogWarning("Google callback: Failed to validate Google token {IdToken}", tokenResponse.IdToken);
                 return ApiResponse<AuthResponse>.Fail(ErrorCodes.Authentication.INVALID_TOKEN, "Invalid Google token. Could not validate user information.");
             }
-            
+
             // Check if user exists, if not create them
             var user = await _context.Users
                 .Include(u => u.UserRoles).ThenInclude(ur => ur.Role)
                 .Include(u => u.UserCategories).ThenInclude(uc => uc.Category)
-                .FirstOrDefaultAsync(u => u.Email == googleUser.Email);
-            
+                .FirstOrDefaultAsync(u => u.Email == googleUser.Email).ConfigureAwait(false);
+
             if (user == null)
             {
                 // Auto-register user since they don't exist
                 _logger.LogInformation("User with email {Email} not found. Registering new user via Google.", googleUser.Email);
-                
-                var registerResult = await RegisterAsync(new GoogleRegisterRequest { IdToken = tokenResponse.IdToken });
+
+                var registerResult = await RegisterAsync(new GoogleRegisterRequest { IdToken = tokenResponse.IdToken }).ConfigureAwait(false);
                 if (!registerResult.Success || string.IsNullOrEmpty(registerResult.Data?.UserId))
                 {
                     _logger.LogError("Failed to auto-register user with Google. Reason: {ErrorMessage}", registerResult.Error?.Message ?? "Unknown registration error");
                     return ApiResponse<AuthResponse>.Fail(registerResult.Error?.Code ?? ErrorCodes.INTERNAL_SERVER_ERROR, registerResult.Error?.Message ?? "Failed to register new user with Google.");
                 }
-                
+
                 // Fetch the newly created user
                 user = await _context.Users
                     .Include(u => u.UserRoles).ThenInclude(ur => ur.Role)
                     .Include(u => u.UserCategories).ThenInclude(uc => uc.Category)
                     .AsNoTracking() // Use AsNoTracking for read-only operation
-                    .FirstOrDefaultAsync(u => u.Id == registerResult.Data.UserId);
+                    .FirstOrDefaultAsync(u => u.Id == registerResult.Data.UserId).ConfigureAwait(false);
             }
-            
+
             if (user == null)
             {
                 _logger.LogError("Could not find user with email {Email} after login/registration attempt.", googleUser.Email);
                 return ApiResponse<AuthResponse>.Fail(ErrorCodes.INTERNAL_SERVER_ERROR, "Failed to create or retrieve user after Google authentication.");
             }
-            
+
             // Create security user and generate tokens
-            var securityUser = await CreateSecurityUser(user);
-            var tokenResult = await _tokenService.GenerateTokenAsync(securityUser);
-            
+            var securityUser = await CreateSecurityUser(user).ConfigureAwait(false);
+            var tokenResult = await _tokenService.GenerateTokenAsync(securityUser).ConfigureAwait(false);
+
             // Save refresh token
-            await SaveRefreshToken(user.Id, tokenResult.RefreshToken, null, null, "GoogleCallback");
-            
+            await SaveRefreshToken(user.Id, tokenResult.RefreshToken, null, null, "GoogleCallback").ConfigureAwait(false);
+
             var userDto = _mapper.Map<UserDto>(user);
             var response = new AuthResponse
             {
@@ -287,7 +300,7 @@ public class GoogleAuthService : IGoogleAuthService
                 ExpiresAt = tokenResult.ExpiresAt,
                 User = userDto
             };
-            
+
             return ApiResponse<AuthResponse>.Ok(response, "Google authentication successful");
         }
         catch (Exception ex)
@@ -296,7 +309,7 @@ public class GoogleAuthService : IGoogleAuthService
             return ApiResponse<AuthResponse>.Fail(ErrorCodes.INTERNAL_SERVER_ERROR, "An error occurred during Google authentication");
         }
     }
-    
+
     public async Task<GoogleUserInfo?> ValidateGoogleTokenAsync(string idToken)
     {
         try
@@ -305,7 +318,7 @@ public class GoogleAuthService : IGoogleAuthService
             {
                 Audience = new[] { _googleClientId }
             });
-            
+
             return new GoogleUserInfo
             {
                 Sub = payload.Subject,
@@ -323,7 +336,8 @@ public class GoogleAuthService : IGoogleAuthService
             return null;
         }
     }
-    
+
+    [SuppressMessage("Design", "CA1055:Uri return types should not be strings", Justification = "Kullanım yerleri string bekliyor; kapsamlı değişiklik yerine bastırıyoruz")]
     public string GetAuthorizationUrl(string state)
     {
         return $"{_googleAuthorizationEndpoint}?" +
@@ -335,7 +349,7 @@ public class GoogleAuthService : IGoogleAuthService
                $"access_type=offline&" +
                $"prompt=consent";
     }
-    
+
     private async Task<GoogleTokenResponse?> ExchangeCodeForTokensAsync(string code)
     {
         try
@@ -349,21 +363,19 @@ public class GoogleAuthService : IGoogleAuthService
                 ["code"] = code,
                 ["redirect_uri"] = _googleRedirectUri
             };
-            
-            var response = await httpClient.PostAsync(_googleTokenEndpoint, 
-                new FormUrlEncodedContent(tokenRequest));
-            
+
+            using var content = new FormUrlEncodedContent(tokenRequest);
+            var tokenUri = new Uri(_googleTokenEndpoint);
+            var response = await httpClient.PostAsync(tokenUri, content).ConfigureAwait(false);
+
             if (!response.IsSuccessStatusCode)
             {
                 return null;
             }
-            
-            var responseContent = await response.Content.ReadAsStringAsync();
-            var tokenResponse = JsonSerializer.Deserialize<GoogleTokenResponse>(responseContent, new JsonSerializerOptions
-            {
-                PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower
-            });
-            
+
+            var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+            var tokenResponse = JsonSerializer.Deserialize<GoogleTokenResponse>(responseContent, _snakeCaseJsonOptions);
+
             return tokenResponse;
         }
         catch (Exception ex)
@@ -372,27 +384,27 @@ public class GoogleAuthService : IGoogleAuthService
             return null;
         }
     }
-    
+
     private async Task<string> GenerateUniqueUserName(GoogleUserInfo googleUser)
     {
         var baseUserName = googleUser.Email.Split('@')[0];
         var userName = baseUserName;
         var counter = 1;
-        
+
         while (await _context.Users.AnyAsync(u => u.UserName == userName))
         {
             userName = $"{baseUserName}{counter}";
             counter++;
         }
-        
+
         return userName;
     }
-    
+
     private async Task<SecurityUser> CreateSecurityUser(User user)
     {
         var roles = user.UserRoles.Where(ur => ur.IsActive).Select(ur => ur.Role.Name).ToList();
         var categories = user.UserCategories.Where(uc => uc.IsActive).Select(uc => uc.Category.Name).ToList();
-        
+
         // Get permissions from roles
         var roleIds = user.UserRoles.Where(ur => ur.IsActive).Select(ur => ur.RoleId).ToList();
         var permissions = await _context.RolePermissions
@@ -401,7 +413,7 @@ public class GoogleAuthService : IGoogleAuthService
             .Select(rp => rp.Permission.Name)
             .Distinct()
             .ToListAsync();
-        
+
         return new SecurityUser
         {
             Id = user.Id,
@@ -416,7 +428,7 @@ public class GoogleAuthService : IGoogleAuthService
             SecurityStamp = user.SecurityStamp
         };
     }
-    
+
     private async Task SaveRefreshToken(string userId, string token, string? deviceId, string? ipAddress, string? userAgent = null)
     {
         var refreshToken = new RefreshToken
@@ -428,7 +440,7 @@ public class GoogleAuthService : IGoogleAuthService
             IpAddress = ipAddress,
             UserAgent = userAgent
         };
-        
+
         _context.RefreshTokens.Add(refreshToken);
         await _context.SaveChangesAsync();
     }

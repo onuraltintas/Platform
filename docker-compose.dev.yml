@@ -1,0 +1,19 @@
+services:
+  admin-panel-dev:
+    image: node:20-alpine
+    container_name: egitimplatform-admin-panel-dev
+    working_dir: /workspace
+    ports:
+      - "4200:4200"
+    volumes:
+      - ./Client/angular/admin-panel:/workspace
+    command: sh -c "npm ci --no-fund --no-audit && npm start -- --host 0.0.0.0"
+    environment:
+      - NG_CLI_ANALYTICS=false
+    networks:
+      - egitimplatform-network
+
+networks:
+  egitimplatform-network:
+    driver: bridge
+

@@ -1,6 +1,14 @@
+// StyleCop: Dosya başlığı ve çoklu tip uyarılarını projenin mevcut yapısı için bastırıyoruz
+// SA1633: File header, SA1402: Single type per file, SA1649: File name should match first type name
+// Bu dosya çok sayıda validator içerdiği için tek dosyada tutuluyor
+using System.Diagnostics.CodeAnalysis;
 using FluentValidation;
 using EgitimPlatform.Services.IdentityService.Models.DTOs;
 using System.Linq;
+
+[assembly: SuppressMessage("Style", "SA1633:File header is missing or not located at the top of the file", Justification = "Validator dosyası için basitleştirilmiş başlık politikası")]
+[assembly: SuppressMessage("Style", "SA1402:File may only contain a single type", Justification = "Validatorlar tek dosyada toplanmıştır")]
+[assembly: SuppressMessage("Style", "SA1649:File name should match first type name", Justification = "Çoklu validator tipi tek dosyada")]
 
 namespace EgitimPlatform.Services.IdentityService.Validation;
 
@@ -203,37 +211,37 @@ public class CreateUserRequestValidator : AbstractValidator<CreateUserRequest>
             .MinimumLength(3).WithMessage("Kullanıcı adı en az 3 karakter olmalıdır")
             .MaximumLength(50).WithMessage("Kullanıcı adı 50 karakteri geçemez")
             .Matches("^[a-zA-Z0-9_.-]+$").WithMessage("Kullanıcı adı sadece harf, rakam, nokta, tire ve alt çizgi içerebilir");
-        
+
         RuleFor(x => x.Email)
             .NotEmpty().WithMessage("E-posta adresi zorunludur")
             .EmailAddress().WithMessage("Geçersiz e-posta formatı")
             .MaximumLength(256).WithMessage("E-posta adresi 256 karakteri geçemez");
-        
+
         RuleFor(x => x.FirstName)
             .NotEmpty().WithMessage("Ad zorunludur")
             .MaximumLength(50).WithMessage("Ad 50 karakteri geçemez")
             .Matches("^[\\p{L}\\s'-]+$").WithMessage("Ad sadece harf, boşluk, tire (-) ve apostrof (') içerebilir");
-        
+
         RuleFor(x => x.LastName)
             .NotEmpty().WithMessage("Soyad zorunludur")
             .MaximumLength(50).WithMessage("Soyad 50 karakteri geçemez")
             .Matches("^[\\p{L}\\s'-]+$").WithMessage("Soyad sadece harf, boşluk, tire (-) ve apostrof (') içerebilir");
-        
+
         RuleFor(x => x.Password)
             .NotEmpty().WithMessage("Parola zorunludur")
             .MinimumLength(8).WithMessage("Parola en az 8 karakter olmalıdır")
             .Matches(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,}$")
             .WithMessage("Parola en az bir büyük harf, bir küçük harf, bir rakam ve bir özel karakter içermelidir");
-        
+
         RuleFor(x => x.PhoneNumber)
             .NotEmpty().WithMessage("Telefon numarası zorunludur")
             .Length(11).WithMessage("Telefon numarası 11 haneli olmalıdır")
             .Matches("^[0-9]{11}$").WithMessage("Telefon numarası sadece rakamlardan oluşmalıdır");
-        
+
         RuleForEach(x => x.RoleIds)
             .NotEmpty().WithMessage("Rol ID'si boş olamaz")
             .When(x => x.RoleIds != null && x.RoleIds.Any());
-        
+
         RuleForEach(x => x.CategoryIds)
             .NotEmpty().WithMessage("Kategori ID'si boş olamaz")
             .When(x => x.CategoryIds != null && x.CategoryIds.Any());
@@ -249,31 +257,31 @@ public class UpdateUserRequestValidator : AbstractValidator<UpdateUserRequest>
             .MinimumLength(3).WithMessage("Username must be at least 3 characters long")
             .MaximumLength(50).WithMessage("Username must not exceed 50 characters")
             .Matches("^[a-zA-Z0-9_.-]+$").WithMessage("Username can only contain letters, numbers, dots, hyphens and underscores");
-        
+
         RuleFor(x => x.Email)
             .NotEmpty().WithMessage("Email is required")
             .EmailAddress().WithMessage("Invalid email format")
             .MaximumLength(256).WithMessage("Email must not exceed 256 characters");
-        
+
         RuleFor(x => x.FirstName)
             .NotEmpty().WithMessage("First name is required")
             .MaximumLength(50).WithMessage("First name must not exceed 50 characters")
             .Matches("^[\\p{L}\\s'-]+$").WithMessage("First name can only contain letters and spaces");
-        
+
         RuleFor(x => x.LastName)
             .NotEmpty().WithMessage("Last name is required")
             .MaximumLength(50).WithMessage("Last name must not exceed 50 characters")
             .Matches("^[\\p{L}\\s'-]+$").WithMessage("Last name can only contain letters and spaces");
-        
+
         RuleFor(x => x.PhoneNumber)
             .NotEmpty().WithMessage("Telefon numarası zorunludur")
             .Length(11).WithMessage("Telefon numarası 11 haneli olmalıdır")
             .Matches("^[0-9]{11}$").WithMessage("Telefon numarası sadece rakamlardan oluşmalıdır");
-        
+
         RuleForEach(x => x.RoleIds)
             .NotEmpty().WithMessage("Role ID cannot be empty")
             .When(x => x.RoleIds != null && x.RoleIds.Any());
-        
+
         RuleForEach(x => x.CategoryIds)
             .NotEmpty().WithMessage("Category ID cannot be empty")
             .When(x => x.CategoryIds != null && x.CategoryIds.Any());

@@ -10,6 +10,9 @@ using EgitimPlatform.Shared.Logging.Services;
 
 namespace EgitimPlatform.Services.IdentityService.Controllers;
 
+using System.Diagnostics.CodeAnalysis;
+
+[SuppressMessage("Style", "SA1101:Prefix local calls with this", Justification = "Ekip stili gereği this prefix zorunlu değil")]
 [ApiController]
 [Route("api/[controller]")]
 [Authorize]
@@ -63,7 +66,7 @@ public class AdminController : ControllerBase
     {
         var result = await _adminService.GetRoleByIdAsync(roleId);
         return result.IsSuccess
-            ? Ok(ApiResponse.Ok(result.Data))
+            ? Ok(ApiResponse.Ok(result.Data ?? new RoleDto()))
             : NotFound(ApiResponse.Fail(ErrorCodes.NOT_FOUND, result.ErrorMessage ?? "Role not found"));
     }
 
@@ -142,7 +145,7 @@ public class AdminController : ControllerBase
     {
         var result = await _adminService.GetCategoryByIdAsync(categoryId);
         return result.IsSuccess
-            ? Ok(ApiResponse.Ok(result.Data))
+            ? Ok(ApiResponse.Ok(result.Data ?? new CategoryDto()))
             : NotFound(ApiResponse.Fail(ErrorCodes.NOT_FOUND, result.ErrorMessage ?? "Category not found"));
     }
 
@@ -221,7 +224,7 @@ public class AdminController : ControllerBase
     {
         var result = await _adminService.GetPermissionByIdAsync(permissionId);
         return result.IsSuccess
-            ? Ok(ApiResponse.Ok(result.Data))
+            ? Ok(ApiResponse.Ok(result.Data ?? new PermissionDto()))
             : NotFound(ApiResponse.Fail(ErrorCodes.NOT_FOUND, result.ErrorMessage ?? "Permission not found"));
     }
 
@@ -559,6 +562,10 @@ public class AdminController : ControllerBase
     [LogExecutionTime]
     public async Task<ActionResult<ApiResponse<object>>> CreateUser([FromBody] CreateUserRequest request)
     {
+        if (request == null)
+        {
+            return BadRequest(ApiResponse.Fail("BAD_REQUEST", "Request cannot be null"));
+        }
         _logger.LogInformation("CONTROLLER: CreateUser called with payload: {@Request}", new
         {
             UserName = request.UserName,
@@ -568,17 +575,17 @@ public class AdminController : ControllerBase
             RoleIdsCount = request.RoleIds?.Count ?? 0,
             CategoryIdsCount = request.CategoryIds?.Count ?? 0
         });
-        
-        var result = await _adminService.CreateUserAsync(request);
-        
+
+        var result = await _adminService.CreateUserAsync(request).ConfigureAwait(false);
+
         if (!result.IsSuccess)
         {
-            _logger.LogError("CONTROLLER: CreateUser failed. IsSuccess: {IsSuccess}, ErrorMessage: {ErrorMessage}, Data: {Data}", 
-                result.IsSuccess, result.ErrorMessage, result.Data);
+            _logger.LogError("CONTROLLER: CreateUser failed. IsSuccess: {IsSuccess}, ErrorMessage: {ErrorMessage}, Data: {Data}",
+                result.IsSuccess, result.ErrorMessage ?? string.Empty, (object?)result.Data ?? new object());
         }
-        
+
         return result.IsSuccess
-            ? Ok(ApiResponse.Ok(result.Data!))
+            ? Ok(ApiResponse.Ok(result.Data ?? new UserDto()))
             : BadRequest(ApiResponse.Fail("ERROR", result.ErrorMessage ?? "Failed to create user"));
     }
 
@@ -590,7 +597,11 @@ public class AdminController : ControllerBase
     [LogExecutionTime]
     public async Task<ActionResult<ApiResponse<object>>> UpdateUser(string userId, [FromBody] UpdateUserRequest request)
     {
-        var result = await _adminService.UpdateUserAsync(userId, request);
+        if (request == null)
+        {
+            return BadRequest(ApiResponse.Fail("BAD_REQUEST", "Request cannot be null"));
+        }
+        var result = await _adminService.UpdateUserAsync(userId, request).ConfigureAwait(false);
         return result.IsSuccess
             ? Ok(ApiResponse.Ok(result.Data!))
             : BadRequest(ApiResponse.Fail("ERROR", result.ErrorMessage ?? "Failed to update user"));
@@ -604,7 +615,7 @@ public class AdminController : ControllerBase
     [LogExecutionTime]
     public async Task<ActionResult<ApiResponse<object>>> DeactivateUser(string userId)
     {
-        var result = await _adminService.DeactivateUserAsync(userId);
+        var result = await _adminService.DeactivateUserAsync(userId).ConfigureAwait(false);
         return result.IsSuccess
             ? Ok(ApiResponse.Ok("User deactivated successfully"))
             : BadRequest(ApiResponse.Fail("ERROR", result.ErrorMessage ?? "Failed to deactivate user"));
@@ -618,7 +629,7 @@ public class AdminController : ControllerBase
     [LogExecutionTime]
     public async Task<ActionResult<ApiResponse<object>>> ActivateUser(string userId)
     {
-        var result = await _adminService.ActivateUserAsync(userId);
+        var result = await _adminService.ActivateUserAsync(userId).ConfigureAwait(false);
         return result.IsSuccess
             ? Ok(ApiResponse.Ok("User activated successfully"))
             : BadRequest(ApiResponse.Fail("ERROR", result.ErrorMessage ?? "Failed to activate user"));
@@ -632,7 +643,7 @@ public class AdminController : ControllerBase
     [LogExecutionTime]
     public async Task<ActionResult<ApiResponse<object>>> DeleteUser(string userId)
     {
-        var result = await _adminService.DeleteUserAsync(userId);
+        var result = await _adminService.DeleteUserAsync(userId).ConfigureAwait(false);
         return result.IsSuccess
             ? Ok(ApiResponse.Ok("User deleted successfully"))
             : BadRequest(ApiResponse.Fail("ERROR", result.ErrorMessage ?? "Failed to delete user"));

@@ -22,6 +22,11 @@ cp env.example .env
 docker compose up -d
 ```
 
+4) CI
+- GitHub Actions ile otomatik build çalışır: `backend (.NET)` ve `frontend (Angular)`
+- Badge:
+  - ![CI](https://github.com/onuraltintas/Platform/actions/workflows/ci.yml/badge.svg)
+
 3) Uygulamalar
 - Admin Panel (Angular): http://localhost:4200
 - IdentityService: http://localhost:5002

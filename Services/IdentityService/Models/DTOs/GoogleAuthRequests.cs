@@ -6,9 +6,9 @@ public class GoogleLoginRequest
 {
     [Required]
     public string IdToken { get; set; } = string.Empty;
-    
+
     public bool RememberMe { get; set; } = false;
-    
+
     public string? DeviceId { get; set; }
 }
 
@@ -16,9 +16,9 @@ public class GoogleRegisterRequest
 {
     [Required]
     public string IdToken { get; set; } = string.Empty;
-    
+
     public List<string> Categories { get; set; } = new();
-    
+
     public string? DeviceId { get; set; }
 }
 

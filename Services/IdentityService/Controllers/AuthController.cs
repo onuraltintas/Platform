@@ -9,9 +9,13 @@ using EgitimPlatform.Shared.Logging.Attributes;
 using Microsoft.EntityFrameworkCore;
 using EgitimPlatform.Services.IdentityService.Data;
 using EgitimPlatform.Services.IdentityService.Models.Entities;
+using Microsoft.Extensions.Logging;
 
 namespace EgitimPlatform.Services.IdentityService.Controllers;
 
+using System.Diagnostics.CodeAnalysis;
+
+[SuppressMessage("Style", "SA1309:Field names should not begin with underscore", Justification = "Alan adlandırma stili mevcut kodla uyumlu")]
 [ApiController]
 [Route("api/[controller]")]
 public class AuthController : ControllerBase
@@ -19,14 +23,16 @@ public class AuthController : ControllerBase
     private readonly IAuthService _authService;
     private readonly IGoogleAuthService _googleAuthService;
     private readonly IdentityDbContext _db;
-    
-    public AuthController(IAuthService authService, IGoogleAuthService googleAuthService, IdentityDbContext db)
+    private readonly ILogger<AuthController> _logger;
+
+    public AuthController(IAuthService authService, IGoogleAuthService googleAuthService, IdentityDbContext db, ILogger<AuthController> logger)
     {
         _authService = authService;
         _googleAuthService = googleAuthService;
         _db = db;
+        _logger = logger;
     }
-    
+
     /// <summary>
     /// Kullanıcı girişi
     /// </summary>
@@ -34,20 +40,24 @@ public class AuthController : ControllerBase
     [LogExecutionTime]
     public async Task<ActionResult<ApiResponse<AuthResponse>>> Login([FromBody] LoginRequest request)
     {
+        if (request == null)
+        {
+            return BadRequest(ApiResponse.Fail("BAD_REQUEST", "Request cannot be null"));
+        }
         var ipAddress = GetIpAddress();
-        var result = await _authService.LoginAsync(request, ipAddress);
-        
+        var result = await _authService.LoginAsync(request, ipAddress).ConfigureAwait(false);
+
         if (result.Success && request.RememberMe)
         {
             // Set persistent cookie for remember me
             SetRememberMeCookie(result.Data!.RefreshToken);
         }
-        
+
         return result.Success
             ? Ok(ApiResponse.Ok(result.Data!))
             : BadRequest(ApiResponse.Fail(result.Error?.Code ?? "ERROR", result.Error?.Message ?? "Login failed"));
     }
-    
+
     /// <summary>
     /// Google ile giriş
     /// </summary>
@@ -55,19 +65,23 @@ public class AuthController : ControllerBase
     [LogExecutionTime]
     public async Task<ActionResult<ApiResponse<AuthResponse>>> GoogleLogin([FromBody] GoogleLoginRequest request)
     {
+        if (request == null)
+        {
+            return BadRequest(ApiResponse.Fail("BAD_REQUEST", "Request cannot be null"));
+        }
         var ipAddress = GetIpAddress();
-        var result = await _googleAuthService.LoginAsync(request, ipAddress);
-        
+        var result = await _googleAuthService.LoginAsync(request, ipAddress).ConfigureAwait(false);
+
         if (result.Success && request.RememberMe)
         {
             SetRememberMeCookie(result.Data!.RefreshToken);
         }
-        
+
         return result.Success
             ? Ok(ApiResponse.Ok(result.Data!))
             : BadRequest(ApiResponse.Fail(result.Error?.Code ?? "ERROR", result.Error?.Message ?? "Login failed"));
     }
-    
+
     /// <summary>
     /// Kullanıcı kaydı
     /// </summary>
@@ -75,13 +89,17 @@ public class AuthController : ControllerBase
     [LogExecutionTime]
     public async Task<ActionResult<ApiResponse<RegisterResponse>>> Register([FromBody] RegisterRequest request)
     {
+        if (request == null)
+        {
+            return BadRequest(ApiResponse.Fail("BAD_REQUEST", "Request cannot be null"));
+        }
         var ipAddress = GetIpAddress();
-        var result = await _authService.RegisterAsync(request, ipAddress);
+        var result = await _authService.RegisterAsync(request, ipAddress).ConfigureAwait(false);
         return result.Success
             ? Ok(ApiResponse.Ok(result.Data!))
             : BadRequest(ApiResponse.Fail(result.Error?.Code ?? "ERROR", result.Error?.Message ?? "Register failed"));
     }
-    
+
     /// <summary>
     /// Google ile kayıt
     /// </summary>
@@ -89,13 +107,17 @@ public class AuthController : ControllerBase
     [LogExecutionTime]
     public async Task<ActionResult<ApiResponse<RegisterResponse>>> GoogleRegister([FromBody] GoogleRegisterRequest request)
     {
+        if (request == null)
+        {
+            return BadRequest(ApiResponse.Fail("BAD_REQUEST", "Request cannot be null"));
+        }
         var ipAddress = GetIpAddress();
-        var result = await _googleAuthService.RegisterAsync(request, ipAddress);
+        var result = await _googleAuthService.RegisterAsync(request, ipAddress).ConfigureAwait(false);
         return result.Success
             ? Ok(ApiResponse.Ok(result.Data!))
             : BadRequest(ApiResponse.Fail(result.Error?.Code ?? "ERROR", result.Error?.Message ?? "Register failed"));
     }
-    
+
     /// <summary>
     /// Token yenileme
     /// </summary>
@@ -105,16 +127,16 @@ public class AuthController : ControllerBase
     {
         // If no refresh token in body, try to get from cookie
         var refreshToken = request?.RefreshToken ?? GetRefreshTokenFromCookie();
-        
+
         if (string.IsNullOrEmpty(refreshToken))
         {
             return BadRequest(ApiResponse<AuthResponse>.Fail(ErrorCodes.BAD_REQUEST, "Refresh token is required"));
         }
-        
+
         var refreshRequest = new RefreshTokenRequest { RefreshToken = refreshToken, DeviceId = request?.DeviceId };
         var ipAddress = GetIpAddress();
         var result = await _authService.RefreshTokenAsync(refreshRequest, ipAddress);
-        
+
         if (result.Success)
         {
             // Update remember me cookie if it exists
@@ -127,7 +149,7 @@ public class AuthController : ControllerBase
             ? Ok(ApiResponse.Ok(result.Data!))
             : BadRequest(ApiResponse.Fail(result.Error?.Code ?? "ERROR", result.Error?.Message ?? "Refresh token failed"));
     }
-    
+
     /// <summary>
     /// Çıkış yap
     /// </summary>
@@ -136,17 +158,17 @@ public class AuthController : ControllerBase
     public async Task<ActionResult<ApiResponse<object>>> Logout([FromBody] LogoutRequest? request = null)
     {
         var refreshToken = request?.RefreshToken ?? GetRefreshTokenFromCookie();
-        
+
         if (!string.IsNullOrEmpty(refreshToken))
         {
             await _authService.LogoutAsync(refreshToken);
         }
-        
+
         ClearRememberMeCookie();
-        
+
         return Ok(ApiResponse.Ok("Logged out successfully"));
     }
-    
+
     /// <summary>
     /// Tüm cihazlardan çıkış yap
     /// </summary>
@@ -160,14 +182,14 @@ public class AuthController : ControllerBase
         {
             return BadRequest(ApiResponse.Fail(ErrorCodes.UNAUTHORIZED, "User not authenticated"));
         }
-        
+
         var result = await _authService.LogoutAllAsync(userId);
         ClearRememberMeCookie();
         return result.Success
             ? Ok(ApiResponse.Ok("Logged out from all devices"))
             : BadRequest(ApiResponse.Fail(result.Error?.Code ?? "ERROR", result.Error?.Message ?? "Logout all failed"));
     }
-    
+
     /// <summary>
     /// Şifremi unuttum
     /// </summary>
@@ -175,10 +197,14 @@ public class AuthController : ControllerBase
     [LogExecutionTime]
     public async Task<ActionResult<ApiResponse<PasswordResetResponse>>> ForgotPassword([FromBody] ForgotPasswordRequest request)
     {
-        var result = await _authService.ForgotPasswordAsync(request);
+        if (request == null)
+        {
+            return Ok(ApiResponse.Ok(new { }));
+        }
+        var result = await _authService.ForgotPasswordAsync(request).ConfigureAwait(false);
         return Ok(result); // Always return success to prevent email enumeration
     }
-    
+
     /// <summary>
     /// Şifre sıfırlama
     /// </summary>
@@ -186,12 +212,16 @@ public class AuthController : ControllerBase
     [LogExecutionTime]
     public async Task<ActionResult<ApiResponse<PasswordResetResponse>>> ResetPassword([FromBody] ResetPasswordRequest request)
     {
-        var result = await _authService.ResetPasswordAsync(request);
+        if (request == null)
+        {
+            return BadRequest(ApiResponse.Fail("BAD_REQUEST", "Request cannot be null"));
+        }
+        var result = await _authService.ResetPasswordAsync(request).ConfigureAwait(false);
         return result.Success
             ? Ok(ApiResponse.Ok(result.Data!))
             : BadRequest(ApiResponse.Fail(result.Error?.Code ?? "ERROR", result.Error?.Message ?? "Reset password failed"));
     }
-    
+
     /// <summary>
     /// Şifre değiştirme
     /// </summary>
@@ -205,8 +235,12 @@ public class AuthController : ControllerBase
         {
             return BadRequest(ApiResponse.Fail(ErrorCodes.UNAUTHORIZED, "User not authenticated"));
         }
-        
-        var result = await _authService.ChangePasswordAsync(userId, request);
+
+        if (request == null)
+        {
+            return BadRequest(ApiResponse.Fail("BAD_REQUEST", "Request cannot be null"));
+        }
+        var result = await _authService.ChangePasswordAsync(userId, request).ConfigureAwait(false);
         return result.Success
             ? Ok(ApiResponse.Ok("Password changed"))
             : BadRequest(ApiResponse.Fail(result.Error?.Code ?? "ERROR", result.Error?.Message ?? "Change password failed"));
@@ -224,14 +258,18 @@ public class AuthController : ControllerBase
             return BadRequest(ApiResponse.Fail(ErrorCodes.UNAUTHORIZED, "User not authenticated"));
         }
 
-        var result = await _authService.ChangeUserNameAsync(userId, request);
+        if (request == null)
+        {
+            return BadRequest(ApiResponse.Fail("BAD_REQUEST", "Request cannot be null"));
+        }
+        var result = await _authService.ChangeUserNameAsync(userId, request).ConfigureAwait(false);
         return result.Success
             ? Ok(ApiResponse.Ok("Username changed"))
             : BadRequest(ApiResponse.Fail(result.Error?.Code ?? "ERROR", result.Error?.Message ?? "Change username failed"));
     }
 
     // change-email endpoint removed per request
-    
+
     /// <summary>
     /// Email doğrulama
     /// </summary>
@@ -239,10 +277,14 @@ public class AuthController : ControllerBase
     [LogExecutionTime]
     public async Task<ActionResult<ApiResponse<EmailConfirmationResponse>>> ConfirmEmail([FromBody] ConfirmEmailRequest request)
     {
-        var result = await _authService.ConfirmEmailAsync(request);
+        if (request == null)
+        {
+            return BadRequest(ApiResponse.Fail("BAD_REQUEST", "Request cannot be null"));
+        }
+        var result = await _authService.ConfirmEmailAsync(request).ConfigureAwait(false);
         return result.Success ? Ok(result) : BadRequest(result);
     }
-    
+
     /// <summary>
     /// Email doğrulama yeniden gönder
     /// </summary>
@@ -250,18 +292,22 @@ public class AuthController : ControllerBase
     [LogExecutionTime]
     public async Task<ActionResult<ApiResponse<object>>> ResendEmailConfirmation([FromBody] ResendEmailConfirmationRequest request)
     {
-        var result = await _authService.ResendEmailConfirmationAsync(request.Email);
+        if (request == null)
+        {
+            return Ok(ApiResponse.Ok(new { }));
+        }
+        var result = await _authService.ResendEmailConfirmationAsync(request.Email).ConfigureAwait(false);
         return Ok(ApiResponse.Ok(result.Data ?? new { })); // Keep success to prevent email enumeration
     }
-    
+
     [HttpGet("me")]
     public IActionResult GetCurrentUser()
     {
-        return Ok(new { 
+        return Ok(new {
             success = true,
             data = new {
                 id = "google-user-123",
-                userName = "googleuser@gmail.com", 
+                userName = "googleuser@gmail.com",
                 email = "googleuser@gmail.com",
                 firstName = "Google",
                 lastName = "User",
@@ -275,7 +321,7 @@ public class AuthController : ControllerBase
             message = "User info retrieved successfully"
         });
     }
-    
+
     /// <summary>
     /// Beni hatırla durumunu kontrol et
     /// </summary>
@@ -309,7 +355,7 @@ public class AuthController : ControllerBase
         }).ToList();
         return Ok(list);
     }
-    
+
     /// <summary>
     /// Token geçerliliğini kontrol et
     /// </summary>
@@ -319,7 +365,7 @@ public class AuthController : ControllerBase
     {
         return Ok(ApiResponse.Ok(new { Valid = true, User = User.Identity?.Name }));
     }
-    
+
     /// <summary>
     /// Google OAuth callback
     /// </summary>
@@ -328,8 +374,14 @@ public class AuthController : ControllerBase
     {
         try
         {
+            if (string.IsNullOrWhiteSpace(code) || string.IsNullOrWhiteSpace(state))
+            {
+                _logger.LogWarning("Google callback missing parameters: code or state is empty");
+                var missingUrl = $"{GetFrontendUrl()}/auth/google/callback?message=Authentication%20failed";
+                return Redirect(missingUrl);
+            }
             var result = await _googleAuthService.HandleCallbackAsync(code, state);
-            
+
             if (result.Success)
             {
                 // Persist refresh token in HttpOnly cookie for remember-me behavior
@@ -337,30 +389,31 @@ public class AuthController : ControllerBase
                 {
                     SetRememberMeCookie(result.Data.RefreshToken);
                 }
-                
+
                 // Redirect to frontend callback route with URL-encoded tokens
                 var access = Uri.EscapeDataString(result.Data.AccessToken);
                 var refresh = Uri.EscapeDataString(result.Data.RefreshToken ?? string.Empty);
                 var redirectUrl = $"{GetFrontendUrl()}/auth/google-callback?token={access}&refresh={refresh}";
                 return Redirect(redirectUrl);
             }
-            
+
             // Redirect to frontend with error
             var errorUrl = $"{GetFrontendUrl()}/auth/google/callback?message={Uri.EscapeDataString(result.Error?.Message ?? "Authentication failed")}";
             return Redirect(errorUrl);
         }
-        catch (Exception)
+        catch (Exception ex)
         {
+            _logger.LogError(ex, "Google callback error for state {State}", state);
             var errorUrl = $"{GetFrontendUrl()}/auth/google/callback?message=Authentication%20failed";
             return Redirect(errorUrl);
         }
     }
-    
+
     private string GetIpAddress()
     {
         return HttpContext.Connection.RemoteIpAddress?.ToString() ?? "Unknown";
     }
-    
+
     private void SetRememberMeCookie(string refreshToken)
     {
         var cookieOptions = new CookieOptions
@@ -372,21 +425,21 @@ public class AuthController : ControllerBase
             Path = "/",
             IsEssential = true
         };
-        
+
         Response.Cookies.Append("refresh_token", refreshToken, cookieOptions);
         Response.Cookies.Append("remember_me", "true", cookieOptions);
     }
-    
+
     private string? GetRefreshTokenFromCookie()
     {
         return Request.Cookies["refresh_token"];
     }
-    
+
     private bool HasRememberMeCookie()
     {
         return Request.Cookies.ContainsKey("remember_me") && Request.Cookies["remember_me"] == "true";
     }
-    
+
     private void ClearRememberMeCookie()
     {
         var cookieOptions = new CookieOptions
@@ -397,12 +450,12 @@ public class AuthController : ControllerBase
             Expires = DateTimeOffset.UtcNow.AddDays(-1),
             Path = "/"
         };
-        
-        Response.Cookies.Append("refresh_token", "", cookieOptions);
-        Response.Cookies.Append("remember_me", "", cookieOptions);
+
+        Response.Cookies.Append("refresh_token", string.Empty, cookieOptions);
+        Response.Cookies.Append("remember_me", string.Empty, cookieOptions);
     }
-    
-    private string GetFrontendUrl()
+
+    private static string GetFrontendUrl()
     {
         return "http://localhost:4200"; // Frontend URL from configuration
     }

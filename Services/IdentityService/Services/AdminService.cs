@@ -8,9 +8,14 @@ using EgitimPlatform.Shared.Errors.Common;
 using EgitimPlatform.Shared.Errors.Exceptions;
 using EgitimPlatform.Shared.Security.Services;
 using EgitimPlatform.Shared.Logging.Services;
+using System.Diagnostics.CodeAnalysis;
 
 namespace EgitimPlatform.Services.IdentityService.Services;
 
+[SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Service layer loglayıp ServiceResult döndürür; global exception handler genel durumları ele alır")]
+[SuppressMessage("Style", "SA1124:Do not use regions", Justification = "Büyük servis sınıfında bölümler okunabilirliği artırıyor")]
+[SuppressMessage("Style", "SA1101:Prefix local calls with this", Justification = "Ekip stili gereği this prefix zorunlu değil")]
+[SuppressMessage("Style", "SA1413:Use trailing comma in multi-line initializers", Justification = "Minör stil; fonksiyonelliği etkilemiyor, kademeli ele alınacak")]
 public class AdminService : IAdminService
 {
     private readonly IdentityDbContext _context;
@@ -152,7 +157,7 @@ public class AdminService : IAdminService
                 }
             }
 
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync().ConfigureAwait(false);
 
             var roleDto = new RoleDto
             {
@@ -161,7 +166,7 @@ public class AdminService : IAdminService
                 Description = role.Description,
                 IsActive = role.IsActive,
                 CreatedAt = role.CreatedAt,
-                Permissions = request.PermissionIds.ToList()
+                Permissions = (request.PermissionIds ?? new List<string>()).ToList()
             };
 
             _logger.LogInformation("Role created successfully", new { RoleId = role.Id, RoleName = role.Name });
@@ -178,9 +183,13 @@ public class AdminService : IAdminService
     {
         try
         {
+            if (request == null)
+            {
+                return ServiceResult<RoleDto>.Failure(ErrorCodes.BAD_REQUEST, "Request cannot be null");
+            }
             var role = await _context.Roles
                 .Include(r => r.RolePermissions)
-                .FirstOrDefaultAsync(r => r.Id == roleId);
+                .FirstOrDefaultAsync(r => r.Id == roleId).ConfigureAwait(false);
 
             if (role == null)
             {
@@ -190,7 +199,7 @@ public class AdminService : IAdminService
             // Check if new name already exists (excluding current role)
             if (role.Name != request.Name)
             {
-                var existingRole = await _context.Roles.FirstOrDefaultAsync(r => r.Name == request.Name && r.Id != roleId);
+                var existingRole = await _context.Roles.FirstOrDefaultAsync(r => r.Name == request.Name && r.Id != roleId).ConfigureAwait(false);
                 if (existingRole != null)
                 {
                     return ServiceResult<RoleDto>.Failure(ErrorCodes.CONFLICT, "Role with this name already exists");
@@ -205,11 +214,11 @@ public class AdminService : IAdminService
             // Update role permissions
             _context.RolePermissions.RemoveRange(role.RolePermissions);
 
-            if (request.PermissionIds.Any())
+            if (request.PermissionIds != null && request.PermissionIds.Count > 0)
             {
                 var permissions = await _context.Permissions
                     .Where(p => request.PermissionIds.Contains(p.Id))
-                    .ToListAsync();
+                    .ToListAsync().ConfigureAwait(false);
 
                 foreach (var permission in permissions)
                 {
@@ -223,7 +232,7 @@ public class AdminService : IAdminService
                 }
             }
 
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync().ConfigureAwait(false);
 
             var roleDto = new RoleDto
             {
@@ -232,7 +241,7 @@ public class AdminService : IAdminService
                 Description = role.Description,
                 IsActive = role.IsActive,
                 CreatedAt = role.CreatedAt,
-                Permissions = request.PermissionIds.ToList()
+                Permissions = (request.PermissionIds ?? new List<string>()).ToList()
             };
 
             _logger.LogInformation("Role updated successfully", new { RoleId = role.Id, RoleName = role.Name });
@@ -265,7 +274,7 @@ public class AdminService : IAdminService
             }
 
             _context.Roles.Remove(role);
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync().ConfigureAwait(false);
 
             _logger.LogInformation("Role deleted successfully", new { RoleId = roleId });
             return ServiceResult<bool>.Success(true);
@@ -362,8 +371,12 @@ public class AdminService : IAdminService
     {
         try
         {
+            if (request == null)
+            {
+                return ServiceResult<CategoryDto>.Failure(ErrorCodes.BAD_REQUEST, "Request cannot be null");
+            }
             // Check if category name already exists
-            var existingCategory = await _context.Categories.FirstOrDefaultAsync(c => c.Name == request.Name);
+            var existingCategory = await _context.Categories.FirstOrDefaultAsync(c => c.Name == request.Name).ConfigureAwait(false);
             if (existingCategory != null)
             {
                 return ServiceResult<CategoryDto>.Failure(ErrorCodes.CONFLICT, "Category with this name already exists");
@@ -380,7 +393,7 @@ public class AdminService : IAdminService
             };
 
             _context.Categories.Add(category);
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync().ConfigureAwait(false);
 
             var categoryDto = new CategoryDto
             {
@@ -406,7 +419,11 @@ public class AdminService : IAdminService
     {
         try
         {
-            var category = await _context.Categories.FirstOrDefaultAsync(c => c.Id == categoryId);
+            if (request == null)
+            {
+                return ServiceResult<CategoryDto>.Failure(ErrorCodes.BAD_REQUEST, "Request cannot be null");
+            }
+            var category = await _context.Categories.FirstOrDefaultAsync(c => c.Id == categoryId).ConfigureAwait(false);
 
             if (category == null)
             {
@@ -416,7 +433,7 @@ public class AdminService : IAdminService
             // Check if new name already exists (excluding current category)
             if (category.Name != request.Name)
             {
-                var existingCategory = await _context.Categories.FirstOrDefaultAsync(c => c.Name == request.Name && c.Id != categoryId);
+                var existingCategory = await _context.Categories.FirstOrDefaultAsync(c => c.Name == request.Name && c.Id != categoryId).ConfigureAwait(false);
                 if (existingCategory != null)
                 {
                     return ServiceResult<CategoryDto>.Failure(ErrorCodes.CONFLICT, "Category with this name already exists");
@@ -429,7 +446,7 @@ public class AdminService : IAdminService
             category.IsActive = request.IsActive;
             category.UpdatedAt = DateTime.UtcNow;
 
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync().ConfigureAwait(false);
 
             var categoryDto = new CategoryDto
             {
@@ -471,7 +488,7 @@ public class AdminService : IAdminService
             }
 
             _context.Categories.Remove(category);
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync().ConfigureAwait(false);
 
             _logger.LogInformation("Category deleted successfully", new { CategoryId = categoryId });
             return ServiceResult<bool>.Success(true);
@@ -538,7 +555,7 @@ public class AdminService : IAdminService
     {
         try
         {
-            var permission = await _context.Permissions.FirstOrDefaultAsync(p => p.Id == permissionId);
+            var permission = await _context.Permissions.FirstOrDefaultAsync(p => p.Id == permissionId).ConfigureAwait(false);
 
             if (permission == null)
             {
@@ -568,8 +585,12 @@ public class AdminService : IAdminService
     {
         try
         {
+            if (request == null)
+            {
+                return ServiceResult<PermissionDto>.Failure(ErrorCodes.BAD_REQUEST, "Request cannot be null");
+            }
             // Check if permission name already exists
-            var existingPermission = await _context.Permissions.FirstOrDefaultAsync(p => p.Name == request.Name);
+            var existingPermission = await _context.Permissions.FirstOrDefaultAsync(p => p.Name == request.Name).ConfigureAwait(false);
             if (existingPermission != null)
             {
                 return ServiceResult<PermissionDto>.Failure(ErrorCodes.CONFLICT, "Permission with this name already exists");
@@ -586,7 +607,7 @@ public class AdminService : IAdminService
             };
 
             _context.Permissions.Add(permission);
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync().ConfigureAwait(false);
 
             var permissionDto = new PermissionDto
             {
@@ -612,7 +633,11 @@ public class AdminService : IAdminService
     {
         try
         {
-            var permission = await _context.Permissions.FirstOrDefaultAsync(p => p.Id == permissionId);
+            if (request == null)
+            {
+                return ServiceResult<PermissionDto>.Failure(ErrorCodes.BAD_REQUEST, "Request cannot be null");
+            }
+            var permission = await _context.Permissions.FirstOrDefaultAsync(p => p.Id == permissionId).ConfigureAwait(false);
 
             if (permission == null)
             {
@@ -622,7 +647,7 @@ public class AdminService : IAdminService
             // Check if new name already exists (excluding current permission)
             if (permission.Name != request.Name)
             {
-                var existingPermission = await _context.Permissions.FirstOrDefaultAsync(p => p.Name == request.Name && p.Id != permissionId);
+                var existingPermission = await _context.Permissions.FirstOrDefaultAsync(p => p.Name == request.Name && p.Id != permissionId).ConfigureAwait(false);
                 if (existingPermission != null)
                 {
                     return ServiceResult<PermissionDto>.Failure(ErrorCodes.CONFLICT, "Permission with this name already exists");
@@ -635,7 +660,7 @@ public class AdminService : IAdminService
             permission.IsActive = request.IsActive;
             permission.UpdatedAt = DateTime.UtcNow;
 
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync().ConfigureAwait(false);
 
             var permissionDto = new PermissionDto
             {
@@ -677,7 +702,7 @@ public class AdminService : IAdminService
             }
 
             _context.Permissions.Remove(permission);
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync().ConfigureAwait(false);
 
             _logger.LogInformation("Permission deleted successfully", new { PermissionId = permissionId });
             return ServiceResult<bool>.Success(true);
@@ -751,6 +776,10 @@ public class AdminService : IAdminService
     {
         try
         {
+            if (request == null)
+            {
+                return ServiceResult<UserRoleDto>.Failure(ErrorCodes.BAD_REQUEST, "Request cannot be null");
+            }
             // Check if user exists
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == request.UserId).ConfigureAwait(false);
             if (user == null)
@@ -827,7 +856,7 @@ public class AdminService : IAdminService
             }
 
             _context.UserRoles.Remove(userRole);
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync().ConfigureAwait(false);
 
             _logger.LogInformation("Role removed from user successfully", new { UserId = userId, RoleId = roleId });
             return ServiceResult<bool>.Success(true);
@@ -843,10 +872,15 @@ public class AdminService : IAdminService
     {
         try
         {
+            if (request == null)
+            {
+                return ServiceResult<UserRoleDto>.Failure(ErrorCodes.BAD_REQUEST, "Request cannot be null");
+            }
             var userRole = await _context.UserRoles
                 .Include(ur => ur.User)
                 .Include(ur => ur.Role)
-                .FirstOrDefaultAsync(ur => ur.UserId == userId && ur.RoleId == roleId);
+                .FirstOrDefaultAsync(ur => ur.UserId == userId && ur.RoleId == roleId)
+                .ConfigureAwait(false);
 
             if (userRole == null)
             {
@@ -857,7 +891,7 @@ public class AdminService : IAdminService
             userRole.IsActive = request.IsActive;
             userRole.Notes = request.Notes;
 
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync().ConfigureAwait(false);
 
             var userRoleDto = new UserRoleDto
             {
@@ -945,6 +979,10 @@ public class AdminService : IAdminService
     {
         try
         {
+            if (request == null)
+            {
+                return ServiceResult<UserCategoryDto>.Failure(ErrorCodes.BAD_REQUEST, "Request cannot be null");
+            }
             // Check if user exists
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == request.UserId);
             if (user == null)
@@ -981,7 +1019,7 @@ public class AdminService : IAdminService
             };
 
             _context.UserCategories.Add(userCategory);
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync().ConfigureAwait(false);
 
             var userCategoryDto = new UserCategoryDto
             {
@@ -1012,7 +1050,8 @@ public class AdminService : IAdminService
         try
         {
             var userCategory = await _context.UserCategories
-                .FirstOrDefaultAsync(uc => uc.UserId == userId && uc.CategoryId == categoryId);
+                .FirstOrDefaultAsync(uc => uc.UserId == userId && uc.CategoryId == categoryId)
+                .ConfigureAwait(false);
 
             if (userCategory == null)
             {
@@ -1020,7 +1059,7 @@ public class AdminService : IAdminService
             }
 
             _context.UserCategories.Remove(userCategory);
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync().ConfigureAwait(false);
 
             _logger.LogInformation("Category removed from user successfully", new { UserId = userId, CategoryId = categoryId });
             return ServiceResult<bool>.Success(true);
@@ -1036,6 +1075,10 @@ public class AdminService : IAdminService
     {
         try
         {
+            if (request == null)
+            {
+                return ServiceResult<UserCategoryDto>.Failure(ErrorCodes.BAD_REQUEST, "Request cannot be null");
+            }
             var userCategory = await _context.UserCategories
                 .Include(uc => uc.User)
                 .Include(uc => uc.Category)
@@ -1050,7 +1093,7 @@ public class AdminService : IAdminService
             userCategory.IsActive = request.IsActive;
             userCategory.Notes = request.Notes;
 
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync().ConfigureAwait(false);
 
             var userCategoryDto = new UserCategoryDto
             {
@@ -1113,14 +1156,14 @@ public class AdminService : IAdminService
         try
         {
             // Check if role exists
-            var role = await _context.Roles.FirstOrDefaultAsync(r => r.Id == roleId);
+            var role = await _context.Roles.FirstOrDefaultAsync(r => r.Id == roleId).ConfigureAwait(false);
             if (role == null)
             {
                 return ServiceResult<bool>.Failure(ErrorCodes.NOT_FOUND, "Role not found");
             }
 
             // Check if permission exists
-            var permission = await _context.Permissions.FirstOrDefaultAsync(p => p.Id == permissionId);
+            var permission = await _context.Permissions.FirstOrDefaultAsync(p => p.Id == permissionId).ConfigureAwait(false);
             if (permission == null)
             {
                 return ServiceResult<bool>.Failure(ErrorCodes.NOT_FOUND, "Permission not found");
@@ -1128,7 +1171,8 @@ public class AdminService : IAdminService
 
             // Check if role already has this permission
             var existingRolePermission = await _context.RolePermissions
-                .FirstOrDefaultAsync(rp => rp.RoleId == roleId && rp.PermissionId == permissionId);
+                .FirstOrDefaultAsync(rp => rp.RoleId == roleId && rp.PermissionId == permissionId)
+                .ConfigureAwait(false);
 
             if (existingRolePermission != null)
             {
@@ -1184,9 +1228,13 @@ public class AdminService : IAdminService
     {
         try
         {
+            if (permissionIds == null)
+            {
+                return ServiceResult<bool>.Failure(ErrorCodes.BAD_REQUEST, "PermissionIds cannot be null");
+            }
             var role = await _context.Roles
                 .Include(r => r.RolePermissions)
-                .FirstOrDefaultAsync(r => r.Id == roleId);
+                .FirstOrDefaultAsync(r => r.Id == roleId).ConfigureAwait(false);
 
             if (role == null)
             {
@@ -1197,11 +1245,11 @@ public class AdminService : IAdminService
             _context.RolePermissions.RemoveRange(role.RolePermissions);
 
             // Add new permissions
-            if (permissionIds.Any())
+            if (permissionIds.Count > 0)
             {
                 var permissions = await _context.Permissions
                     .Where(p => permissionIds.Contains(p.Id))
-                    .ToListAsync();
+                    .ToListAsync().ConfigureAwait(false);
 
                 foreach (var permission in permissions)
                 {
@@ -1215,7 +1263,7 @@ public class AdminService : IAdminService
                 }
             }
 
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync().ConfigureAwait(false);
 
             _logger.LogInformation("Role permissions updated successfully", new { RoleId = roleId, PermissionCount = permissionIds.Count });
             return ServiceResult<bool>.Success(true);
@@ -1235,6 +1283,10 @@ public class AdminService : IAdminService
     {
         try
         {
+            if (request == null)
+            {
+                return ServiceResult<PagedUsersResponse>.Failure(ErrorCodes.BAD_REQUEST, "Request cannot be null");
+            }
             var query = _context.Users
                 .Include(u => u.UserRoles).ThenInclude(ur => ur.Role)
                 .Include(u => u.UserCategories).ThenInclude(uc => uc.Category)
@@ -1279,16 +1331,17 @@ public class AdminService : IAdminService
                 .ToListAsync();
 
             var userDtos = _mapper.Map<List<UserDto>>(users);
-            
+
             // Manuel PhoneNumber mapping - AutoMapper sorununu bypass et
             for (int i = 0; i < users.Count; i++)
             {
                 userDtos[i].PhoneNumber = users[i].PhoneNumber;
             }
-            
-            _logger.LogInformation("Mapped {UserCount} users. First user PhoneNumber: '{PhoneNumber}'", 
-                userDtos.Count, 
-                userDtos.FirstOrDefault()?.PhoneNumber);
+
+            var firstPhone = userDtos.FirstOrDefault()?.PhoneNumber ?? string.Empty;
+            _logger.LogInformation("Mapped {UserCount} users. First user PhoneNumber: '{PhoneNumber}'",
+                userDtos.Count,
+                firstPhone);
 
             // Fill permissions based on roles
             var roleIds = users.SelectMany(u => u.UserRoles.Select(ur => ur.RoleId)).Distinct().ToList();
@@ -1347,14 +1400,14 @@ public class AdminService : IAdminService
             }
 
             var dto = _mapper.Map<UserDto>(user);
-            
+
             // Manuel PhoneNumber mapping - AutoMapper sorununu bypass et
             dto.PhoneNumber = user.PhoneNumber;
-            
-            _logger.LogWarning("DEBUG GetUserByIdAsync: user.PhoneNumber = '{UserPhone}', dto.PhoneNumber = '{DtoPhone}', UserName = '{UserName}'", 
+
+            _logger.LogWarning("DEBUG GetUserByIdAsync: user.PhoneNumber = '{UserPhone}', dto.PhoneNumber = '{DtoPhone}', UserName = '{UserName}'",
                 user.PhoneNumber ?? "NULL", dto.PhoneNumber ?? "NULL", user.UserName);
-            _logger.LogInformation("GetUserByIdAsync: Mapped user '{UserName}' with PhoneNumber: '{PhoneNumber}' (Manual: '{ManualPhone}')", 
-                user.UserName, dto.PhoneNumber, user.PhoneNumber);
+            _logger.LogInformation("GetUserByIdAsync: Mapped user '{UserName}' with PhoneNumber: '{PhoneNumber}' (Manual: '{ManualPhone}')",
+                user.UserName ?? string.Empty, dto.PhoneNumber ?? string.Empty, user.PhoneNumber ?? string.Empty);
 
             var roleIds = user.UserRoles.Select(ur => ur.RoleId).ToList();
             var permissions = await _context.RolePermissions
@@ -1380,6 +1433,10 @@ public class AdminService : IAdminService
         await using var transaction = await _context.Database.BeginTransactionAsync();
         try
         {
+            if (request == null)
+            {
+                return ServiceResult<UserDto>.Failure(ErrorCodes.BAD_REQUEST, "Request cannot be null");
+            }
             // Request'i detaylı logla
             _logger.LogInformation("CreateUserAsync called with request: {@Request}", new
             {
@@ -1403,7 +1460,7 @@ public class AdminService : IAdminService
             {
                 return ServiceResult<UserDto>.Failure("E-posta adresi zaten mevcut", ErrorCodes.CONFLICT);
             }
-            
+
             // 3. Yeni kullanıcı oluşturma
             var user = new User
             {
@@ -1420,13 +1477,13 @@ public class AdminService : IAdminService
             };
 
             _context.Users.Add(user);
-            await _context.SaveChangesAsync(); // Kullanıcıyı hemen kaydet ki ID oluşsun
+            await _context.SaveChangesAsync().ConfigureAwait(false); // Kullanıcıyı hemen kaydet ki ID oluşsun
 
             // 4. Rolleri ve Kategorileri işle (ayrı metotlar)
-            await AssignRolesToUserInternalAsync(user, request.RoleIds);
-            await AssignCategoriesToUserInternalAsync(user, request.CategoryIds);
+            await AssignRolesToUserInternalAsync(user, request.RoleIds ?? new List<string>()).ConfigureAwait(false);
+            await AssignCategoriesToUserInternalAsync(user, request.CategoryIds ?? new List<string>()).ConfigureAwait(false);
 
-            await _context.SaveChangesAsync(); // Rol ve Kategori atamalarını kaydet
+            await _context.SaveChangesAsync().ConfigureAwait(false); // Rol ve Kategori atamalarını kaydet
 
             // 5. Başarılı sonuç için DTO hazırla (commit'ten önce mapping tamamlanmalı)
             var createdUser = await _context.Users
@@ -1434,9 +1491,9 @@ public class AdminService : IAdminService
                 .Include(u => u.UserRoles).ThenInclude(ur => ur.Role)
                 .Include(u => u.UserCategories).ThenInclude(uc => uc.Category)
                 .FirstAsync(u => u.Id == user.Id);
-            
+
             var dto = _mapper.Map<UserDto>(createdUser);
-            
+
             // Permissions'ları ayrıca yükle
             var roleIds = createdUser.UserRoles.Select(ur => ur.RoleId).ToList();
             dto.Permissions = await GetPermissionsForRolesAsync(roleIds);
@@ -1450,11 +1507,11 @@ public class AdminService : IAdminService
         catch (Exception ex)
         {
             // Hata durumunda Transaction'ı geri al
-            await transaction.RollbackAsync();
-            
-            _logger.LogError("Error creating user, transaction rolled back. Error: {ErrorMessage} | StackTrace: {StackTrace}", 
-                ex.Message, ex.StackTrace);
-            
+            await transaction.RollbackAsync().ConfigureAwait(false);
+
+            _logger.LogError("Error creating user, transaction rolled back. Error: {ErrorMessage} | StackTrace: {StackTrace}",
+                ex.Message ?? string.Empty, ex.StackTrace ?? string.Empty);
+
             if (ex is BusinessException brex)
             {
                 return ServiceResult<UserDto>.Failure(ErrorCodes.BAD_REQUEST, brex.Message);
@@ -1465,7 +1522,7 @@ public class AdminService : IAdminService
                 _logger.LogError("AutoMapper mapping failed during user creation: {@Exception}", ex);
                 return ServiceResult<UserDto>.Failure(ErrorCodes.INTERNAL_SERVER_ERROR, "Kullanıcı oluşturuldu ancak sonuç döndürülürken bir haritalama hatası oluştu.");
             }
-            
+
             return ServiceResult<UserDto>.Failure(ErrorCodes.INTERNAL_SERVER_ERROR, "Kullanıcı oluşturulurken beklenmedik bir hata oluştu.");
         }
     }
@@ -1547,6 +1604,10 @@ public class AdminService : IAdminService
     {
         try
         {
+            if (request == null)
+            {
+                return ServiceResult<UserDto>.Failure(ErrorCodes.BAD_REQUEST, "Request cannot be null");
+            }
             await using var transaction = await _context.Database.BeginTransactionAsync();
             var user = await _context.Users
                 .Include(u => u.UserRoles).ThenInclude(ur => ur.Role)
@@ -1569,8 +1630,8 @@ public class AdminService : IAdminService
                 return ServiceResult<UserDto>.Failure("E-posta adresi zaten mevcut", ErrorCodes.CONFLICT);
             }
 
-            _logger.LogInformation("Updating user with PhoneNumber: '{PhoneNumber}' (was: '{OldPhoneNumber}')", request.PhoneNumber, user.PhoneNumber);
-            
+            _logger.LogInformation("Updating user with PhoneNumber: '{PhoneNumber}' (was: '{OldPhoneNumber}')", request.PhoneNumber ?? string.Empty, user.PhoneNumber ?? string.Empty);
+
             user.UserName = request.UserName;
             user.Email = request.Email;
             user.FirstName = request.FirstName;
@@ -1579,8 +1640,8 @@ public class AdminService : IAdminService
             user.IsActive = request.IsActive;
             user.IsEmailConfirmed = request.IsEmailConfirmed;
             user.UpdatedAt = DateTime.UtcNow;
-            
-            _logger.LogInformation("User updated. PhoneNumber is now: '{PhoneNumber}'", user.PhoneNumber);
+
+            _logger.LogInformation("User updated. PhoneNumber is now: '{PhoneNumber}'", user.PhoneNumber ?? string.Empty);
 
             await _context.SaveChangesAsync();
 

@@ -33,12 +33,12 @@ builder.Services.AddSwaggerGen(c =>
         Type = Microsoft.OpenApi.Models.SecuritySchemeType.ApiKey,
         Scheme = "Bearer"
     });
-    c.AddSecurityRequirement(new()
+    c.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement
     {
         {
-            new()
+            new Microsoft.OpenApi.Models.OpenApiSecurityScheme
             {
-                Reference = new() { Type = Microsoft.OpenApi.Models.ReferenceType.SecurityScheme, Id = "Bearer" }
+                Reference = new Microsoft.OpenApi.Models.OpenApiReference { Type = Microsoft.OpenApi.Models.ReferenceType.SecurityScheme, Id = "Bearer" }
             },
             Array.Empty<string>()
         }
@@ -115,7 +115,7 @@ using (var scope = app.Services.CreateScope())
         logger.LogInformation("Applying database migrations");
         context.Database.Migrate();
         logger.LogInformation("Database migrations applied successfully");
-        
+
         // Seed all permissions from constants
         logger.LogInformation("Seeding permissions...");
         var existingPermissions = context.Permissions.Select(p => p.Name).ToList();
@@ -123,17 +123,17 @@ using (var scope = app.Services.CreateScope())
             .GetNestedTypes()
             .SelectMany(c => c.GetFields(System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.FlattenHierarchy))
             .Where(fi => fi.IsLiteral && !fi.IsInitOnly && fi.FieldType == typeof(string))
-            .Select(x => (string)x.GetRawConstantValue())
+            .Select(x => (string?)x.GetRawConstantValue() ?? string.Empty)
             .ToList();
 
         var newPermissions = allPermissions
-            .Where(p => !existingPermissions.Contains(p))
+            .Where(p => !existingPermissions.Contains(p ?? string.Empty))
             .Select(p => new EgitimPlatform.Services.IdentityService.Models.Entities.Permission
             {
                 Id = Guid.NewGuid().ToString(),
-                Name = p,
-                Description = $"Permission for {p.Replace(".", " ")}",
-                Group = p.Split('.').FirstOrDefault() ?? "System"
+                Name = p ?? string.Empty,
+                Description = $"Permission for {(p ?? string.Empty).Replace(".", " ", StringComparison.Ordinal)}",
+                Group = (p ?? string.Empty).Split('.').FirstOrDefault() ?? "System",
             }).ToList();
 
         if (newPermissions.Any())
@@ -146,7 +146,7 @@ using (var scope = app.Services.CreateScope())
         {
             logger.LogInformation("All permissions already exist in the database.");
         }
-        
+
         // Ensure Admin role exists
         var adminRole = context.Roles.FirstOrDefault(r => r.Name == "Admin");
         if (adminRole == null)
@@ -177,7 +177,7 @@ using (var scope = app.Services.CreateScope())
                 Id = Guid.NewGuid().ToString(),
                 RoleId = adminRole.Id,
                 PermissionId = pid,
-                AssignedBy = "System"
+                AssignedBy = "System",
             }).ToList();
 
         if (permissionsToGrant.Any())
@@ -195,7 +195,7 @@ using (var scope = app.Services.CreateScope())
         var passwordService = scope.ServiceProvider.GetRequiredService<EgitimPlatform.Shared.Security.Services.IPasswordService>();
         var adminPassword = Environment.GetEnvironmentVariable("IDENTITY_ADMIN_PASSWORD") ?? "VForVan_40!";
         var correctPasswordHash = passwordService.HashPassword(adminPassword);
-        
+
         var existingAdmin = context.Users.FirstOrDefault(u => u.UserName == "admin");
         if (existingAdmin != null)
         {
@@ -210,7 +210,7 @@ using (var scope = app.Services.CreateScope())
         else
         {
             logger.LogInformation("Creating admin user");
-            
+
             // Create admin user
             var adminUser = new EgitimPlatform.Services.IdentityService.Models.Entities.User
             {
@@ -224,7 +224,7 @@ using (var scope = app.Services.CreateScope())
                 IsActive = true
             };
             context.Users.Add(adminUser);
-            
+
             // Assign admin role
             var userRole = new EgitimPlatform.Services.IdentityService.Models.Entities.UserRole
             {
@@ -234,11 +234,11 @@ using (var scope = app.Services.CreateScope())
                 AssignedBy = "System"
             };
             context.UserRoles.Add(userRole);
-            
+
             context.SaveChanges();
             logger.LogInformation("Admin user created successfully");
         }
-        
+
         logger.LogInformation("Database setup completed successfully");
     }
     catch (Exception ex)
