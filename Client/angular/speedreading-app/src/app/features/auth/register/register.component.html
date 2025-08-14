@@ -1,0 +1,206 @@
+<div class="auth-container">
+  <div class="auth-wrapper">
+    <!-- Sol Panel: Marka Kimliği -->
+    <div class="auth-brand-panel">
+      <div class="brand-content">
+        <div class="brand-logo">
+          <i class="bi bi-person-plus"></i>
+        </div>
+        <h1 class="brand-title">Hızlı Okuma</h1>
+        <p class="brand-tagline">Yeni Beceriler Keşfedin</p>
+      </div>
+    </div>
+
+    <!-- Sağ Panel: Kayıt Formu -->
+    <div class="auth-form-panel">
+      <div class="form-content">
+        <div class="form-header">
+          <h2>Hesap Oluştur</h2>
+          <p>Hızlı okuma yolculuğunuza başlamak için kayıt olun.</p>
+        </div>
+
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+          <!-- Ad ve Soyad (yan yana) -->
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <div class="form-floating">
+                <input 
+                  class="form-control" 
+                  id="firstName" 
+                  type="text" 
+                  placeholder="Adınız" 
+                  formControlName="firstName" 
+                  [class.is-invalid]="isFieldInvalid('firstName')">
+                <label for="firstName">Adınız</label>
+                <div class="invalid-feedback">
+                  {{ getFieldError('firstName') }}
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-floating">
+                <input 
+                  class="form-control" 
+                  id="lastName" 
+                  type="text" 
+                  placeholder="Soyadınız" 
+                  formControlName="lastName" 
+                  [class.is-invalid]="isFieldInvalid('lastName')">
+                <label for="lastName">Soyadınız</label>
+                <div class="invalid-feedback">
+                  {{ getFieldError('lastName') }}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Kullanıcı Adı -->
+          <div class="form-floating mb-3">
+            <input 
+              class="form-control" 
+              id="userName" 
+              type="text" 
+              placeholder="Kullanıcı Adı" 
+              formControlName="userName" 
+              [class.is-invalid]="isFieldInvalid('userName')">
+            <label for="userName">Kullanıcı Adı</label>
+            <div class="invalid-feedback">
+              {{ getFieldError('userName') }}
+            </div>
+          </div>
+
+          <!-- Email -->
+          <div class="form-floating mb-3">
+            <input 
+              class="form-control" 
+              id="email" 
+              type="email" 
+              placeholder="Email" 
+              formControlName="email" 
+              [class.is-invalid]="isFieldInvalid('email')">
+            <label for="email">Email</label>
+            <div class="invalid-feedback">
+              {{ getFieldError('email') }}
+            </div>
+          </div>
+
+          <!-- Telefon (opsiyonel) -->
+          <div class="form-floating mb-3">
+            <input 
+              class="form-control" 
+              id="phoneNumber" 
+              type="tel" 
+              placeholder="0555 555 55 55 (Opsiyonel)" 
+              formControlName="phoneNumber" 
+              [class.is-invalid]="isFieldInvalid('phoneNumber')" 
+              (input)="onPhoneInput($event)">
+            <label for="phoneNumber">Telefon Numarası (Opsiyonel)</label>
+            <div class="invalid-feedback">
+              {{ getFieldError('phoneNumber') }}
+            </div>
+          </div>
+
+          <!-- Şifre -->
+          <div class="mb-3">
+            <div class="input-group">
+              <div class="form-floating">
+                <input 
+                  class="form-control" 
+                  id="password" 
+                  [type]="passwordVisible ? 'text' : 'password'" 
+                  placeholder="Şifre" 
+                  formControlName="password" 
+                  [class.is-invalid]="isFieldInvalid('password')">
+                <label for="password">Şifre</label>
+              </div>
+              <button 
+                class="btn btn-outline-secondary" 
+                type="button" 
+                (click)="togglePasswordVisibility('password')">
+                <i class="bi" [class.bi-eye]="!passwordVisible" [class.bi-eye-slash]="passwordVisible"></i>
+              </button>
+            </div>
+            <div class="invalid-feedback" [style.display]="isFieldInvalid('password') ? 'block' : 'none'">
+              {{ getFieldError('password') }}
+            </div>
+          </div>
+
+          <!-- Şifre Tekrar -->
+          <div class="mb-3">
+            <div class="input-group">
+              <div class="form-floating">
+                <input 
+                  class="form-control" 
+                  id="confirmPassword" 
+                  [type]="confirmPasswordVisible ? 'text' : 'password'" 
+                  placeholder="Şifre Tekrarı" 
+                  formControlName="confirmPassword" 
+                  [class.is-invalid]="isFieldInvalid('confirmPassword') || registerForm.errors?.['passwordMismatch']">
+                <label for="confirmPassword">Şifre Tekrarı</label>
+              </div>
+              <button 
+                class="btn btn-outline-secondary" 
+                type="button" 
+                (click)="togglePasswordVisibility('confirmPassword')">
+                <i class="bi" [class.bi-eye]="!confirmPasswordVisible" [class.bi-eye-slash]="confirmPasswordVisible"></i>
+              </button>
+            </div>
+            <div class="invalid-feedback" [style.display]="(isFieldInvalid('confirmPassword') || registerForm.errors?.['passwordMismatch']) ? 'block' : 'none'">
+              {{ getFieldError('confirmPassword') }}
+            </div>
+          </div>
+
+          <!-- Kullanım Şartları -->
+          <div class="form-check mb-4">
+            <input 
+              class="form-check-input" 
+              type="checkbox" 
+              id="acceptTerms" 
+              formControlName="acceptTerms" 
+              [class.is-invalid]="isFieldInvalid('acceptTerms')">
+            <label class="form-check-label" for="acceptTerms">
+              <strong>Kullanım Şartları</strong>'nı okudum ve kabul ediyorum.
+            </label>
+            <div class="invalid-feedback">
+              {{ getFieldError('acceptTerms') }}
+            </div>
+          </div>
+
+          <!-- Kayıt Butonu -->
+          <div class="d-grid mb-3">
+            <button 
+              class="btn btn-success btn-lg" 
+              type="submit" 
+              [disabled]="isLoading">
+              <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-2"></span>
+              {{ isLoading ? 'Kayıt Oluşturuluyor...' : 'Hesap Oluştur' }}
+            </button>
+          </div>
+        </form>
+
+        <div class="or-separator">
+          <span>veya</span>
+        </div>
+
+        <div class="d-grid mb-4">
+          <button 
+            type="button" 
+            class="btn btn-google w-100" 
+            (click)="googleRegister()" 
+            [disabled]="isLoading">
+            <i class="bi bi-google"></i> Google ile Kayıt Ol
+          </button>
+        </div>
+
+        <div class="text-center">
+          <p class="text-muted">
+            Zaten hesabınız var mı? 
+            <a [routerLink]="['/auth/login']" class="text-decoration-none">
+              Giriş Yapın
+            </a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -80,6 +80,38 @@ export class SidebarComponent {
           ]
         }
       ]
+    },
+    {
+      name: 'Hızlı Okuma',
+      url: '/sr',
+      icon: 'cil-book',
+      children: [
+        {
+          name: 'Metinler',
+          url: '/sr/texts',
+          icon: 'cil-description'
+        },
+        {
+          name: 'Egzersizler',
+          url: '/sr/exercises',
+          icon: 'cil-check-circle'
+        },
+        {
+          name: 'Sorular',
+          url: '/sr/questions',
+          icon: 'bi bi-question-circle'
+        },
+        {
+          name: 'Seviyeler',
+          url: '/sr/levels',
+          icon: 'cil-layers'
+        },
+        {
+          name: 'Raporlar',
+          url: '/sr/reports',
+          icon: 'cil-chart'
+        }
+      ]
     }
   ];
 

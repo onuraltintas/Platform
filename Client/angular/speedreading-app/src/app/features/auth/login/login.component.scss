@@ -1,0 +1,217 @@
+/* Genel Kapsayıcı ve Hizalama */
+:host {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f4f7f6;
+}
+
+.auth-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.auth-wrapper {
+  display: flex;
+  width: 100%;
+  max-width: 1200px;
+  height: 80vh;
+  min-height: 600px;
+  max-height: 700px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+  border-radius: 20px;
+  overflow: hidden;
+  background-color: #fff;
+}
+
+/* Sol Panel: Marka Kimliği */
+.auth-brand-panel {
+  width: 50%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 40px;
+
+  .brand-content {
+    .brand-logo {
+      font-size: 60px;
+      margin-bottom: 20px;
+      i {
+        text-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      }
+    }
+    .brand-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .brand-tagline {
+      font-size: 1.1rem;
+      color: rgba(255, 255, 255, 0.85);
+    }
+  }
+}
+
+/* Sağ Panel: Giriş Formu */
+.auth-form-panel {
+  width: 50%;
+  padding: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  .form-content {
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .form-header {
+    text-align: center;
+    margin-bottom: 30px;
+    h2 {
+      font-weight: 600;
+      color: #333;
+    }
+    p {
+      color: #777;
+    }
+  }
+}
+
+/* Form Elemanları */
+.input-group {
+  .input-group-text {
+    background-color: transparent;
+    border-right: 0;
+    padding-right: 0;
+    i { color: #aaa; }
+  }
+  .form-control {
+    border-left: 0;
+    &:focus {
+      box-shadow: none;
+      border-color: #667eea;
+      & + label {
+        color: #667eea;
+      }
+    }
+  }
+  .form-floating > .form-control:placeholder-shown ~ label {
+    padding-left: 0;
+  }
+}
+
+.form-check-label {
+  font-size: 0.9rem;
+}
+
+a {
+  font-size: 0.9rem;
+  color: #667eea;
+  &:hover {
+    text-decoration: underline !important;
+  }
+}
+
+.btn-primary {
+  padding: 12px;
+  font-weight: 600;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  transition: opacity 0.3s ease;
+  &:hover {
+    opacity: 0.9;
+  }
+}
+
+.or-separator {
+  text-align: center;
+  margin: 20px 0;
+  color: #ccc;
+  display: flex;
+  align-items: center;
+  &::before, &::after {
+    content: '';
+    flex-grow: 1;
+    height: 1px;
+    background-color: #eee;
+  }
+  span {
+    padding: 0 15px;
+  }
+}
+
+.btn-google {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px;
+  font-weight: 600;
+  border-radius: 8px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  color: #555;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+
+  &:hover {
+    background-color: #f8f8f8;
+    border-color: #ccc;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  }
+  i {
+    color: #DB4437;
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .auth-wrapper {
+    flex-direction: column;
+    height: 100vh;
+    border-radius: 0;
+    max-height: none;
+  }
+  
+  .auth-brand-panel, .auth-form-panel {
+    width: 100%;
+  }
+  
+  .auth-brand-panel {
+    height: 30%;
+    padding: 20px;
+    
+    .brand-content {
+      .brand-logo {
+        font-size: 40px;
+        margin-bottom: 10px;
+      }
+      .brand-title {
+        font-size: 1.8rem;
+        margin-bottom: 5px;
+      }
+      .brand-tagline {
+        font-size: 0.9rem;
+      }
+    }
+  }
+  
+  .auth-form-panel {
+    padding: 30px 20px;
+    height: 70%;
+    
+    .form-content {
+      max-width: 100%;
+    }
+  }
+}

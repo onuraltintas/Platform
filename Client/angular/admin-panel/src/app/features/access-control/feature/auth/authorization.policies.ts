@@ -19,5 +19,13 @@ export const AUTHORIZATION_POLICIES: AuthorizationPolicy[] = [
 
   // Raporlar (ileride kullanılırsa örnek)
   { match: /^\/reports(\/.*)?$/, requiredRoles: ['Admin', 'Moderator', 'Support'], requiredPermissions: ['Reports.View'] }
+  ,
+  // Hızlı Okuma (Speed Reading) yönetimi
+  { match: /^\/sr\/texts(\/.*)?$/, requiredRoles: ['Admin'], requiredPermissions: ['sr.content.manage'] },
+  { match: /^\/sr\/exercises(\/.*)?$/, requiredRoles: ['Admin'], requiredPermissions: ['sr.content.manage'] },
+  { match: /^\/sr\/questions(\/.*)?$/, requiredRoles: ['Admin'], requiredPermissions: ['sr.content.manage'] },
+  { match: /^\/sr\/levels(\/.*)?$/, requiredRoles: ['Admin'], requiredPermissions: ['sr.content.manage'] },
+  { match: /^\/sr\/profiles(\/.*)?$/, requiredRoles: ['Admin'], requiredPermissions: ['sr.profile.manage'] },
+  { match: /^\/sr\/reports(\/.*)?$/, requiredRoles: ['Admin', 'Support'], requiredPermissions: ['sr.progress.read.all'] }
 ];
 

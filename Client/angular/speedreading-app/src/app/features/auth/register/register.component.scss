@@ -1,0 +1,251 @@
+/* Genel Kapsayıcı ve Hizalama */
+:host {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f4f7f6;
+}
+
+.auth-container {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 0;
+}
+
+.auth-wrapper {
+  display: flex;
+  width: 100%;
+  max-width: 1200px;
+  min-height: 700px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+  border-radius: 20px;
+  overflow: hidden;
+  background-color: #fff;
+}
+
+/* Sol Panel: Marka Kimliği */
+.auth-brand-panel {
+  width: 40%;
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 40px;
+
+  .brand-content {
+    .brand-logo {
+      font-size: 60px;
+      margin-bottom: 20px;
+      i {
+        text-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      }
+    }
+    .brand-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .brand-tagline {
+      font-size: 1.1rem;
+      color: rgba(255, 255, 255, 0.85);
+    }
+  }
+}
+
+/* Sağ Panel: Kayıt Formu */
+.auth-form-panel {
+  width: 60%;
+  padding: 40px 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  overflow-y: auto;
+
+  .form-content {
+    width: 100%;
+    max-width: 500px;
+  }
+
+  .form-header {
+    text-align: center;
+    margin-bottom: 30px;
+    h2 {
+      font-weight: 600;
+      color: #333;
+    }
+    p {
+      color: #777;
+    }
+  }
+}
+
+/* Form Elemanları */
+.form-floating {
+  .form-control {
+    &:focus {
+      box-shadow: none;
+      border-color: #28a745;
+      & + label {
+        color: #28a745;
+      }
+    }
+  }
+}
+
+.input-group {
+  .form-control {
+    &:focus {
+      box-shadow: none;
+      border-color: #28a745;
+    }
+  }
+  
+  .btn-outline-secondary {
+    border-color: #ced4da;
+    &:hover {
+      background-color: #f8f9fa;
+      border-color: #28a745;
+    }
+  }
+}
+
+.form-check {
+  .form-check-input {
+    &:checked {
+      background-color: #28a745;
+      border-color: #28a745;
+    }
+    &:focus {
+      box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+    }
+  }
+  
+  .form-check-label {
+    font-size: 0.9rem;
+    color: #555;
+    
+    strong {
+      color: #28a745;
+    }
+  }
+}
+
+.invalid-feedback {
+  font-size: 0.875rem;
+}
+
+a {
+  font-size: 0.9rem;
+  color: #28a745;
+  &:hover {
+    text-decoration: underline !important;
+  }
+}
+
+.btn-success {
+  padding: 12px;
+  font-weight: 600;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+  border: none;
+  transition: opacity 0.3s ease;
+  &:hover {
+    opacity: 0.9;
+  }
+}
+
+.or-separator {
+  text-align: center;
+  margin: 20px 0;
+  color: #ccc;
+  display: flex;
+  align-items: center;
+  &::before, &::after {
+    content: '';
+    flex-grow: 1;
+    height: 1px;
+    background-color: #eee;
+  }
+  span {
+    padding: 0 15px;
+  }
+}
+
+.btn-google {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px;
+  font-weight: 600;
+  border-radius: 8px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  color: #555;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+
+  &:hover {
+    background-color: #f8f8f8;
+    border-color: #ccc;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  }
+  i {
+    color: #DB4437;
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .auth-wrapper {
+    flex-direction: column;
+    min-height: 100vh;
+    border-radius: 0;
+  }
+  
+  .auth-brand-panel, .auth-form-panel {
+    width: 100%;
+  }
+  
+  .auth-brand-panel {
+    height: 25vh;
+    min-height: 200px;
+    padding: 20px;
+    
+    .brand-content {
+      .brand-logo {
+        font-size: 40px;
+        margin-bottom: 10px;
+      }
+      .brand-title {
+        font-size: 1.8rem;
+        margin-bottom: 5px;
+      }
+      .brand-tagline {
+        font-size: 0.9rem;
+      }
+    }
+  }
+  
+  .auth-form-panel {
+    padding: 30px 20px;
+    min-height: 75vh;
+    
+    .form-content {
+      max-width: 100%;
+    }
+  }
+
+  .row {
+    .col-md-6 {
+      margin-bottom: 1rem;
+    }
+  }
+}

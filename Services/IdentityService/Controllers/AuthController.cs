@@ -457,6 +457,8 @@ public class AuthController : ControllerBase
 
     private static string GetFrontendUrl()
     {
-        return "http://localhost:4200"; // Frontend URL from configuration
+        // Check if request comes from speedreading app
+        // You can pass this as a parameter from the frontend or check the referer
+        return "http://localhost:4202"; // Speedreading app URL
     }
 }

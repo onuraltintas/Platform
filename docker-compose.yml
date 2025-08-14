@@ -275,6 +275,78 @@ services:
       timeout: 10s
       retries: 5
 
+  # SpeedReading Content Service
+  sr-content-service:
+    build:
+      context: .
+      dockerfile: Services/SpeedReading.ContentService/Dockerfile
+    container_name: egitimplatform-sr-content-service
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
+      - ASPNETCORE_URLS=http://+:80
+      - ConnectionStrings__DefaultConnection=Server=${DB_SERVER};Database=SpeedReading_Content;User Id=${DB_USER};Password=${DB_PASSWORD};TrustServerCertificate=${DB_TRUST_SERVER_CERTIFICATE}
+      - Jwt__SecretKey=${JWT_SECRET_KEY}
+      - Jwt__Issuer=${JWT_ISSUER}
+      - Jwt__Audience=${JWT_AUDIENCE}
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    networks:
+      - egitimplatform-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  # SpeedReading Profile Service
+  sr-profile-service:
+    build:
+      context: .
+      dockerfile: Services/SpeedReading.ProfileService/Dockerfile
+    container_name: egitimplatform-sr-profile-service
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
+      - ASPNETCORE_URLS=http://+:80
+      - ConnectionStrings__DefaultConnection=Server=${DB_SERVER};Database=SpeedReading_Profile;User Id=${DB_USER};Password=${DB_PASSWORD};TrustServerCertificate=${DB_TRUST_SERVER_CERTIFICATE}
+      - Jwt__SecretKey=${JWT_SECRET_KEY}
+      - Jwt__Issuer=${JWT_ISSUER}
+      - Jwt__Audience=${JWT_AUDIENCE}
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    networks:
+      - egitimplatform-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  # SpeedReading Progress Service
+  sr-progress-service:
+    build:
+      context: .
+      dockerfile: Services/SpeedReading.ProgressService/Dockerfile
+    container_name: egitimplatform-sr-progress-service
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
+      - ASPNETCORE_URLS=http://+:80
+      - ConnectionStrings__DefaultConnection=Server=${DB_SERVER};Database=SpeedReading_Progress;User Id=${DB_USER};Password=${DB_PASSWORD};TrustServerCertificate=${DB_TRUST_SERVER_CERTIFICATE}
+      - Jwt__SecretKey=${JWT_SECRET_KEY}
+      - Jwt__Issuer=${JWT_ISSUER}
+      - Jwt__Audience=${JWT_AUDIENCE}
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    networks:
+      - egitimplatform-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
   # Portainer Dashboard
   portainer:
     image: portainer/portainer-ce:latest

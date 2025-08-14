@@ -83,6 +83,14 @@ public static class Permissions
         public const string Toggle = "FeatureFlags.Toggle";
     }
     
+    public static class SpeedReading
+    {
+        public const string ContentManage = "sr.content.manage";
+        public const string ProfileManage = "sr.profile.manage";
+        public const string ProgressReadAll = "sr.progress.read.all";
+        public const string ProgressExport = "sr.progress.export";
+    }
+    
     public static IEnumerable<string> GetAllPermissions()
     {
         var permissions = new List<string>();
@@ -94,6 +102,7 @@ public static class Permissions
         permissions.AddRange(typeof(System).GetFields().Select(f => f.GetValue(null)?.ToString() ?? string.Empty));
         permissions.AddRange(typeof(Notifications).GetFields().Select(f => f.GetValue(null)?.ToString() ?? string.Empty));
         permissions.AddRange(typeof(FeatureFlags).GetFields().Select(f => f.GetValue(null)?.ToString() ?? string.Empty));
+        permissions.AddRange(typeof(SpeedReading).GetFields().Select(f => f.GetValue(null)?.ToString() ?? string.Empty));
         
         return permissions.Where(p => !string.IsNullOrEmpty(p));
     }

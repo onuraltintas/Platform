@@ -206,6 +206,23 @@ using (var scope = app.Services.CreateScope())
             existingAdmin.IsLocked = false;
             context.SaveChanges();
             logger.LogInformation("Admin user updated successfully");
+
+            // Ensure Admin role is assigned to existing admin user
+            var hasAdminRole = context.UserRoles.Any(ur => ur.UserId == existingAdmin.Id && ur.RoleId == adminRole!.Id);
+            if (!hasAdminRole)
+            {
+                logger.LogInformation("Assigning Admin role to existing admin user");
+                var userRoleAssign = new EgitimPlatform.Services.IdentityService.Models.Entities.UserRole
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    UserId = existingAdmin.Id,
+                    RoleId = adminRole!.Id,
+                    AssignedBy = "System"
+                };
+                context.UserRoles.Add(userRoleAssign);
+                context.SaveChanges();
+                logger.LogInformation("Admin role assigned to existing admin user");
+            }
         }
         else
         {
@@ -237,6 +254,32 @@ using (var scope = app.Services.CreateScope())
 
             context.SaveChanges();
             logger.LogInformation("Admin user created successfully");
+        }
+
+        // Seed default authorization policies if empty
+        try
+        {
+            if (!context.AuthorizationPolicies.Any())
+            {
+                logger.LogInformation("Seeding default authorization policies...");
+                context.AuthorizationPolicies.Add(new EgitimPlatform.Services.IdentityService.Models.Entities.AuthorizationPolicy
+                {
+                    Id = "default-admin",
+                    MatchRegex = "^/api/sr-.*",
+                    RequiredRolesJson = "[\"Admin\"]",
+                    RequiredPermissionsJson = "[\"sr.content.manage\",\"sr.profile.manage\",\"sr.progress.read.all\"]",
+                    IsActive = true,
+                    TenantId = null,
+                    UpdatedAt = DateTime.UtcNow,
+                    UpdatedBy = "System"
+                });
+                context.SaveChanges();
+                logger.LogInformation("Default authorization policies seeded.");
+            }
+        }
+        catch (Exception ex)
+        {
+            logger.LogWarning(ex, "AuthorizationPolicies seeding skipped due to error");
         }
 
         logger.LogInformation("Database setup completed successfully");

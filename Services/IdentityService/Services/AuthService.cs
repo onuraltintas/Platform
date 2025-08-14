@@ -219,7 +219,7 @@ public class AuthService : IAuthService
             _logger.LogInformation("User saved successfully. Now attempting email confirmation for {Email}", user.Email);
 
             // Send email confirmation
-            var confirmationLink = $"http://localhost:4200/auth/confirm-email?token={Uri.EscapeDataString(user.EmailConfirmationToken ?? string.Empty)}&userId={user.Id}";
+            var confirmationLink = $"http://localhost:4202/auth/confirm-email?token={Uri.EscapeDataString(user.EmailConfirmationToken ?? string.Empty)}&userId={user.Id}";
             var emailSubject = "EğitimPlatform | Hesabınızı Doğrulayın";
             var emailBody = $@"
 <!doctype html>
@@ -451,7 +451,7 @@ public class AuthService : IAuthService
             await _context.SaveChangesAsync().ConfigureAwait(false);
 
             // Send password reset email
-            var resetLink = $"http://localhost:4200/reset-password?token={Uri.EscapeDataString(user.PasswordResetToken ?? string.Empty)}&email={Uri.EscapeDataString(user.Email)}";
+            var resetLink = $"http://localhost:4202/reset-password?token={Uri.EscapeDataString(user.PasswordResetToken ?? string.Empty)}&email={Uri.EscapeDataString(user.Email)}";
             var emailSubject = "Şifre Sıfırlama Talebi - EğitimPlatform";
             var emailBody = $@"
 <html>
@@ -688,7 +688,7 @@ public class AuthService : IAuthService
             await _context.SaveChangesAsync().ConfigureAwait(false);
 
             // Send email confirmation
-            var confirmationLink = $"http://localhost:4200/auth/confirm-email?token={Uri.EscapeDataString(user.EmailConfirmationToken ?? string.Empty)}&userId={user.Id}";
+            var confirmationLink = $"http://localhost:4202/auth/confirm-email?token={Uri.EscapeDataString(user.EmailConfirmationToken ?? string.Empty)}&userId={user.Id}";
             var emailSubject = "EğitimPlatform | Hesabınızı Doğrulayın";
             var emailBody = $@"
 <!doctype html>

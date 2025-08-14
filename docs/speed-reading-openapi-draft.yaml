@@ -1,0 +1,63 @@
+openapi: 3.0.3
+info:
+  title: Speed Reading APIs (Draft)
+  version: v1
+servers:
+  - url: /sr-profile
+  - url: /sr-content
+  - url: /sr-progress
+paths:
+  /api/v1/profile/me:
+    get:
+      summary: Get my reading profile
+      responses:
+        '200': { description: OK }
+    put:
+      summary: Update my reading profile
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { type: object }
+      responses:
+        '200': { description: OK }
+  /api/v1/admin/texts:
+    get:
+      summary: List texts (admin)
+      responses: { '200': { description: OK } }
+    post:
+      summary: Create text (admin)
+      responses: { '201': { description: Created } }
+  /api/v1/admin/texts/{id}:
+    get:
+      summary: Get text by id (admin)
+      parameters: [ { name: id, in: path, required: true, schema: { type: string, format: uuid } } ]
+      responses: { '200': { description: OK } }
+    put:
+      summary: Update text (admin)
+      parameters: [ { name: id, in: path, required: true, schema: { type: string, format: uuid } } ]
+      responses: { '200': { description: OK } }
+    delete:
+      summary: Delete text (admin)
+      parameters: [ { name: id, in: path, required: true, schema: { type: string, format: uuid } } ]
+      responses: { '204': { description: No Content } }
+  /api/v1/admin/sessions:
+    get:
+      summary: List sessions (admin)
+      responses: { '200': { description: OK } }
+  /api/v1/admin/attempts:
+    get:
+      summary: List attempts (admin)
+      responses: { '200': { description: OK } }
+  /api/v1/session/start:
+    post:
+      summary: Start a reading session
+      responses: { '202': { description: Accepted } }
+  /api/v1/session/end:
+    post:
+      summary: End a reading session
+      responses: { '202': { description: Accepted } }
+  /api/v1/exercise/complete:
+    post:
+      summary: Complete an exercise
+      responses: { '202': { description: Accepted } }

@@ -5,6 +5,9 @@ export const environment = {
   userApiUrl: 'http://localhost:5004/api', 
   notificationApiUrl: 'http://localhost:5006/api',
   featureFlagApiUrl: 'http://localhost:5008/api',
+  speedReadingContentApiUrl: '/api/sr-content/api/v1',
+  speedReadingProfileApiUrl: '/api/sr-profile/api/v1',
+  speedReadingProgressApiUrl: '/api/sr-progress/api/v1',
   googleClientId: '419291322983-k4rl6v4set9caq2p3prk0q6hd03hngik.apps.googleusercontent.com',
   googleRedirectUri: 'http://localhost:4200/auth/google/callback',
   backendGoogleRedirectUri: 'http://localhost:5002/api/auth/google/callback'

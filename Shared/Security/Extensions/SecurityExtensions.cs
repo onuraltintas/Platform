@@ -125,6 +125,16 @@ public static class SecurityExtensions
             // System permissions
             options.AddPolicy(Permissions.System.Admin, policy =>
                 policy.Requirements.Add(new PermissionRequirement(Permissions.System.Admin)));
+
+            // Speed Reading permissions
+            options.AddPolicy(Permissions.SpeedReading.ContentManage, policy =>
+                policy.Requirements.Add(new PermissionRequirement(Permissions.SpeedReading.ContentManage)));
+            options.AddPolicy(Permissions.SpeedReading.ProfileManage, policy =>
+                policy.Requirements.Add(new PermissionRequirement(Permissions.SpeedReading.ProfileManage)));
+            options.AddPolicy(Permissions.SpeedReading.ProgressReadAll, policy =>
+                policy.Requirements.Add(new PermissionRequirement(Permissions.SpeedReading.ProgressReadAll)));
+            options.AddPolicy(Permissions.SpeedReading.ProgressExport, policy =>
+                policy.Requirements.Add(new PermissionRequirement(Permissions.SpeedReading.ProgressExport)));
         });
         
         return services;

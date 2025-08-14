@@ -19,6 +19,15 @@ import { CategoriesListComponent } from './features/categories/ui/categories/cat
 import { CategoryFormComponent } from './features/categories/ui/categories/category-form.component';
 import { ProfileComponent } from './features/profile/feature/profile/profile.component';
 import { SettingsComponent } from './features/profile/feature/profile/settings.component';
+import { SrTextsListComponent } from './features/speed-reading/ui/texts/sr-texts-list.component';
+import { SrTextsFormComponent } from './features/speed-reading/ui/texts/sr-texts-form.component';
+import { SrExercisesListComponent } from './features/speed-reading/ui/exercises/sr-exercises-list.component';
+import { SrExercisesFormComponent } from './features/speed-reading/ui/exercises/sr-exercises-form.component';
+import { SrQuestionsListComponent } from './features/speed-reading/ui/questions/sr-questions-list.component';
+import { SrLevelsListComponent } from './features/speed-reading/ui/levels/sr-levels-list.component';
+import { SrReportsComponent } from './features/speed-reading/ui/reports/sr-reports.component';
+import { SrQuestionsFormComponent } from './features/speed-reading/ui/questions/sr-questions-form.component';
+import { SrLevelsFormComponent } from './features/speed-reading/ui/levels/sr-levels-form.component';
 
 export const routes: Routes = [
   // Public auth routes (with /auth prefix)
@@ -59,6 +68,20 @@ export const routes: Routes = [
       { path: 'categories/:id', component: CategoryFormComponent, canActivate: [permissionGuard] },
       { path: 'profile', component: ProfileComponent },
       { path: 'settings', component: SettingsComponent },
+      // Speed Reading Admin
+      { path: 'sr/texts', component: SrTextsListComponent, canActivate: [permissionGuard], data: { requiredPermissions: ['sr.content.manage'] } },
+      { path: 'sr/texts/new', component: SrTextsFormComponent, canActivate: [permissionGuard], data: { requiredPermissions: ['sr.content.manage'] } },
+      { path: 'sr/texts/:id', component: SrTextsFormComponent, canActivate: [permissionGuard], data: { requiredPermissions: ['sr.content.manage'] } },
+      { path: 'sr/exercises', component: SrExercisesListComponent, canActivate: [permissionGuard], data: { requiredPermissions: ['sr.content.manage'] } },
+      { path: 'sr/exercises/new', component: SrExercisesFormComponent, canActivate: [permissionGuard], data: { requiredPermissions: ['sr.content.manage'] } },
+      { path: 'sr/exercises/:id', component: SrExercisesFormComponent, canActivate: [permissionGuard], data: { requiredPermissions: ['sr.content.manage'] } },
+      { path: 'sr/questions', component: SrQuestionsListComponent, canActivate: [permissionGuard], data: { requiredPermissions: ['sr.content.manage'] } },
+      { path: 'sr/questions/new', component: SrQuestionsFormComponent, canActivate: [permissionGuard], data: { requiredPermissions: ['sr.content.manage'] } },
+      { path: 'sr/questions/:id', component: SrQuestionsFormComponent, canActivate: [permissionGuard], data: { requiredPermissions: ['sr.content.manage'] } },
+      { path: 'sr/levels', component: SrLevelsListComponent, canActivate: [permissionGuard], data: { requiredPermissions: ['sr.content.manage'] } },
+      { path: 'sr/levels/new', component: SrLevelsFormComponent, canActivate: [permissionGuard], data: { requiredPermissions: ['sr.content.manage'] } },
+      { path: 'sr/levels/:id', component: SrLevelsFormComponent, canActivate: [permissionGuard], data: { requiredPermissions: ['sr.content.manage'] } },
+      { path: 'sr/reports', component: SrReportsComponent, canActivate: [permissionGuard], data: { requiredPermissions: ['sr.progress.read.all'] } },
     ],
   },
   { path: '**', redirectTo: 'dashboard' },
