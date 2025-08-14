@@ -1,12 +1,12 @@
-import { ApplicationConfig, ErrorHandler, importProvidersFrom, APP_INITIALIZER } from '@angular/core';
+import { ApplicationConfig, ErrorHandler, APP_INITIALIZER } from '@angular/core';
 import { PreloadAllModules, provideRouter, withPreloading } from '@angular/router';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideToastr } from 'ngx-toastr';
 import { provideHttpClient, withInterceptors, withInterceptorsFromDi } from '@angular/common/http';
 import { routes } from './app.routes';
-import { TokenInterceptor } from './interceptors/token.interceptor';
+import { TokenInterceptor } from './core/interceptors/interceptors/token.interceptor';
 import { GlobalErrorHandler } from './core/global-error-handler';
-import { AuthorizationPolicyService, preloadAuthorizationPolicies } from './services/authorization-policy.service';
+import { AuthorizationPolicyService, preloadAuthorizationPolicies } from './features/access-control/data-access/authorization-policy.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
