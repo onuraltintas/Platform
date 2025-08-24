@@ -4,7 +4,7 @@ import { RouterModule, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { UserAdminService, PagedUsersResponse, UserSummaryDto, RoleDto, CategoryDto } from '../../data-access/user-admin.service';
 
-declare var bootstrap: any;
+declare var coreui: any;
 
 @Component({
   standalone: true,
@@ -153,7 +153,7 @@ export class UsersListComponent {
     this.deleteTargetName = name;
     const el = document.getElementById('confirmDeleteModal');
     if (el) {
-      this.deleteModal = new bootstrap.Modal(el);
+      this.deleteModal = new coreui.Modal(el);
       this.deleteModal.show();
     }
   }

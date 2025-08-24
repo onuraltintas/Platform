@@ -1,0 +1,267 @@
+.progress-chart-container {
+  padding: 0;
+
+  .chart-toggle {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 24px;
+
+    .toggle-btn {
+      padding: 8px 16px;
+      border: 1px solid #e5e7eb;
+      background: white;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #6b7280;
+      cursor: pointer;
+      transition: all 0.2s ease;
+
+      &:hover {
+        border-color: #d1d5db;
+        background: #f9fafb;
+      }
+
+      &.active {
+        background: #3b82f6;
+        border-color: #3b82f6;
+        color: white;
+        box-shadow: 0 1px 3px rgba(59, 130, 246, 0.3);
+      }
+    }
+  }
+
+  .chart-area {
+    margin-bottom: 20px;
+
+    .chart-grid {
+      display: flex;
+      height: 200px;
+      position: relative;
+
+      .y-axis {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 50px;
+        padding-right: 10px;
+
+        .y-label {
+          font-size: 12px;
+          color: #6b7280;
+          text-align: right;
+        }
+      }
+
+      .chart-content {
+        flex: 1;
+        position: relative;
+        background: linear-gradient(to top, #f9fafb 0%, #ffffff 100%);
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+
+        .grid-lines {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+
+          .grid-line {
+            height: 1px;
+            background: #f3f4f6;
+            width: 100%;
+          }
+        }
+
+        .chart-bars {
+          position: absolute;
+          bottom: 0;
+          width: 100%;
+          height: 100%;
+          display: flex;
+          align-items: end;
+          justify-content: space-around;
+          padding: 10px;
+
+          .chart-bar {
+            width: 24px;
+            border-radius: 4px 4px 0 0;
+            position: relative;
+            transition: all 0.3s ease;
+            cursor: pointer;
+
+            &:hover {
+              transform: translateY(-2px);
+              filter: brightness(1.1);
+            }
+
+            .bar-value {
+              position: absolute;
+              top: -25px;
+              left: 50%;
+              transform: translateX(-50%);
+              font-size: 11px;
+              font-weight: 600;
+              color: #374151;
+              background: white;
+              padding: 2px 6px;
+              border-radius: 4px;
+              box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+              opacity: 0;
+              transition: opacity 0.2s ease;
+            }
+
+            &:hover .bar-value {
+              opacity: 1;
+            }
+          }
+        }
+
+        .chart-line {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          padding: 10px;
+
+          .line-svg {
+            width: 100%;
+            height: 100%;
+
+            .speed-line {
+              fill: none;
+              stroke: #3b82f6;
+              stroke-width: 3;
+              stroke-linecap: round;
+              stroke-linejoin: round;
+            }
+
+            .comprehension-line {
+              fill: none;
+              stroke: #10b981;
+              stroke-width: 3;
+              stroke-linecap: round;
+              stroke-linejoin: round;
+            }
+
+            .data-point {
+              transition: all 0.2s ease;
+              cursor: pointer;
+
+              &.speed-point {
+                fill: #3b82f6;
+              }
+
+              &.comprehension-point {
+                fill: #10b981;
+              }
+
+              &:hover {
+                r: 6;
+                filter: brightness(1.2);
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .x-axis {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 10px;
+      padding-left: 50px;
+
+      .x-label {
+        font-size: 12px;
+        color: #6b7280;
+        text-align: center;
+        flex: 1;
+      }
+    }
+  }
+
+  .chart-stats {
+    display: flex;
+    gap: 20px;
+    padding: 16px;
+    background: #f8fafc;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 1;
+      position: relative;
+
+      .stat-label {
+        font-size: 12px;
+        color: #64748b;
+        margin-bottom: 4px;
+        font-weight: 500;
+      }
+
+      .stat-value {
+        font-size: 18px;
+        font-weight: 700;
+        color: #1e293b;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+
+        i {
+          font-size: 14px;
+        }
+      }
+
+      &:not(:last-child)::after {
+        content: '';
+        position: absolute;
+        right: -10px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 1px;
+        height: 60%;
+        background: #e2e8f0;
+      }
+    }
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .progress-chart-container {
+    .chart-toggle {
+      flex-wrap: wrap;
+    }
+
+    .chart-area .chart-grid {
+      height: 160px;
+
+      .y-axis {
+        width: 40px;
+      }
+
+      .chart-content .chart-bars .chart-bar {
+        width: 16px;
+      }
+    }
+
+    .chart-stats {
+      flex-direction: column;
+      gap: 12px;
+
+      .stat-item {
+        flex-direction: row;
+        justify-content: space-between;
+
+        &:not(:last-child)::after {
+          display: none;
+        }
+      }
+    }
+  }
+}

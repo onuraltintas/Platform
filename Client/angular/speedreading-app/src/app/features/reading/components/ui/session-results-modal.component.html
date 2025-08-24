@@ -1,0 +1,271 @@
+<div class="session-results-modal" *ngIf="results">
+  <div class="modal-overlay" (click)="onClose()"></div>
+  
+  <div class="modal-container">
+    <div class="modal-header">
+      <h2>Okuma Oturumu Tamamlandı!</h2>
+      <button class="close-btn" (click)="onClose()">
+        <i class="bi bi-x"></i>
+      </button>
+    </div>
+
+    <div class="modal-content">
+      
+      <!-- Session Summary -->
+      <div class="session-summary">
+        <div class="summary-header">
+          <div class="session-icon">
+            <i class="bi" [class]="getModeIcon()"></i>
+          </div>
+          <div class="session-info">
+            <h3>{{ getModeDisplayName() }}</h3>
+            <p class="session-time">{{ formatTime(results.session.totalDuration) }}</p>
+          </div>
+        </div>
+
+        <div class="summary-stats">
+          <div class="stat-card primary">
+            <div class="stat-value">{{ results.session.wordsPerMinute }}</div>
+            <div class="stat-label">Ortalama WPM</div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-value">{{ results.session.wordCount }}</div>
+            <div class="stat-label">Okunan Kelime</div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-value">{{ Math.round(getReadingProgress()) }}%</div>
+            <div class="stat-label">Tamamlanan</div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-value">{{ results.session.pauseCount }}</div>
+            <div class="stat-label">Mola Sayısı</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Performance Metrics -->
+      <div class="performance-section">
+        <h4>Performans Metrikleri</h4>
+        
+        <div class="metrics-grid">
+          <div class="metric-item">
+            <div class="metric-header">
+              <span class="metric-label">Verimlilik</span>
+              <span class="metric-value">{{ results.efficiency }}%</span>
+            </div>
+            <div class="metric-bar">
+              <div class="metric-fill efficiency" 
+                   [style.width.%]="results.efficiency"></div>
+            </div>
+            <p class="metric-description">Hız ve anlama dengesini gösterir</p>
+          </div>
+
+          <div class="metric-item">
+            <div class="metric-header">
+              <span class="metric-label">Tutarlılık</span>
+              <span class="metric-value">{{ results.consistency }}%</span>
+            </div>
+            <div class="metric-bar">
+              <div class="metric-fill consistency" 
+                   [style.width.%]="results.consistency"></div>
+            </div>
+            <p class="metric-description">Okuma hızı tutarlılığı</p>
+          </div>
+
+          <div class="metric-item">
+            <div class="metric-header">
+              <span class="metric-label">Gelişim</span>
+              <span class="metric-value" 
+                    [class.positive]="results.improvement > 0"
+                    [class.negative]="results.improvement < 0">
+                {{ results.improvement > 0 ? '+' : '' }}{{ results.improvement }}%
+              </span>
+            </div>
+            <div class="metric-bar">
+              <div class="metric-fill improvement" 
+                   [style.width.%]="Math.abs(results.improvement)"
+                   [class.positive]="results.improvement > 0"
+                   [class.negative]="results.improvement < 0"></div>
+            </div>
+            <p class="metric-description">Önceki oturumlara göre değişim</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Detailed Statistics -->
+      <div class="detailed-stats">
+        <h4>Detaylı İstatistikler</h4>
+        
+        <div class="stats-tabs">
+          <button class="stats-tab" 
+                  [class.active]="activeStatsTab === 'timing'"
+                  (click)="setStatsTab('timing')">
+            <i class="bi bi-clock"></i>
+            Zamanlama
+          </button>
+          
+          <button class="stats-tab" 
+                  [class.active]="activeStatsTab === 'behavior'"
+                  (click)="setStatsTab('behavior')">
+            <i class="bi bi-activity"></i>
+            Davranış
+          </button>
+          
+          <button class="stats-tab" 
+                  [class.active]="activeStatsTab === 'settings'"
+                  (click)="setStatsTab('settings')">
+            <i class="bi bi-gear"></i>
+            Ayarlar
+          </button>
+        </div>
+
+        <div class="stats-content">
+          
+          <!-- Timing Stats -->
+          <div class="stats-panel" *ngIf="activeStatsTab === 'timing'">
+            <div class="stats-row">
+              <span class="stats-label">Toplam Süre:</span>
+              <span class="stats-value">{{ formatTime(results.session.totalDuration) }}</span>
+            </div>
+            <div class="stats-row">
+              <span class="stats-label">Okuma Süresi:</span>
+              <span class="stats-value">{{ formatTime(results.session.readingDuration) }}</span>
+            </div>
+            <div class="stats-row">
+              <span class="stats-label">Mola Süresi:</span>
+              <span class="stats-value">{{ formatTime(results.session.pauseDuration) }}</span>
+            </div>
+            <div class="stats-row">
+              <span class="stats-label">Karakter/Dakika:</span>
+              <span class="stats-value">{{ results.session.charactersPerMinute }}</span>
+            </div>
+          </div>
+
+          <!-- Behavior Stats -->
+          <div class="stats-panel" *ngIf="activeStatsTab === 'behavior'">
+            <div class="stats-row">
+              <span class="stats-label">Geri Dönüş Sayısı:</span>
+              <span class="stats-value">{{ results.session.regressionCount }}</span>
+            </div>
+            <div class="stats-row">
+              <span class="stats-label">Kaydırma Olayları:</span>
+              <span class="stats-value">{{ results.session.scrollEvents }}</span>
+            </div>
+            <div class="stats-row">
+              <span class="stats-label">Mola Sıklığı:</span>
+              <span class="stats-value">{{ getPauseFrequency() }} dk/mola</span>
+            </div>
+            <div class="stats-row">
+              <span class="stats-label">Okuma Verimi:</span>
+              <span class="stats-value">{{ getReadingEfficiency() }}%</span>
+            </div>
+          </div>
+
+          <!-- Settings Stats -->
+          <div class="stats-panel" *ngIf="activeStatsTab === 'settings'">
+            <div class="stats-row">
+              <span class="stats-label">Hedef WPM:</span>
+              <span class="stats-value">{{ results.session.settings.wordsPerMinute }}</span>
+            </div>
+            <div class="stats-row" *ngIf="isChunkMode()">
+              <span class="stats-label">Grup Boyutu:</span>
+              <span class="stats-value">{{ results.session.settings.chunkSize }} kelime</span>
+            </div>
+            <div class="stats-row">
+              <span class="stats-label">Font Boyutu:</span>
+              <span class="stats-value">{{ results.session.settings.fontSize }}px</span>
+            </div>
+            <div class="stats-row">
+              <span class="stats-label">Okuma Modu:</span>
+              <span class="stats-value">{{ getModeDisplayName() }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recommendations -->
+      <div class="recommendations-section" *ngIf="results.suggestedExercises.length > 0 || results.nextSteps.length > 0">
+        <h4>Öneriler ve Sonraki Adımlar</h4>
+        
+        <div class="recommendations-grid">
+          
+          <!-- Suggested Exercises -->
+          <div class="recommendation-card" *ngIf="results.suggestedExercises.length > 0">
+            <div class="card-header">
+              <i class="bi bi-trophy"></i>
+              <h5>Önerilen Egzersizler</h5>
+            </div>
+            <ul class="recommendation-list">
+              <li *ngFor="let exercise of results.suggestedExercises" class="exercise-item">
+                <i class="bi bi-check-circle"></i>
+                <span>{{ exercise }}</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Next Steps -->
+          <div class="recommendation-card" *ngIf="results.nextSteps.length > 0">
+            <div class="card-header">
+              <i class="bi bi-arrow-right-circle"></i>
+              <h5>Sonraki Adımlar</h5>
+            </div>
+            <ul class="recommendation-list">
+              <li *ngFor="let step of results.nextSteps" class="step-item">
+                <i class="bi bi-chevron-right"></i>
+                <span>{{ step }}</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Speed Recommendation -->
+        <div class="speed-recommendation" *ngIf="results.recommendedSpeed !== results.session.settings.wordsPerMinute">
+          <div class="recommendation-content">
+            <i class="bi bi-speedometer2"></i>
+            <div class="recommendation-text">
+              <h5>Önerilen Hız</h5>
+              <p>Performansınıza göre bir sonraki oturum için {{ results.recommendedSpeed }} WPM öneriyoruz.</p>
+            </div>
+            <button class="apply-recommendation-btn" (click)="applyRecommendedSpeed()">
+              Uygula
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Comparison Chart -->
+      <div class="comparison-section" *ngIf="showComparison && previousSessions.length > 0">
+        <h4>Gelişim Grafiği</h4>
+        <div class="chart-container">
+          <div class="chart-placeholder">
+            <!-- Simple progress chart -->
+            <div class="progress-chart">
+              <div *ngFor="let session of recentSessions; let i = index" 
+                   class="chart-bar"
+                   [style.height.%]="(session.wordsPerMinute / maxWPM) * 100"
+                   [class.current]="i === recentSessions.length - 1">
+                <div class="bar-value">{{ session.wordsPerMinute }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Actions -->
+    <div class="modal-actions">
+      <button class="action-btn secondary" (click)="onFinish()">
+        <i class="bi bi-check-circle"></i>
+        Bitir
+      </button>
+      
+      <button class="action-btn secondary" (click)="onRetryReading()">
+        <i class="bi bi-arrow-clockwise"></i>
+        Yeniden Başlat
+      </button>
+    </div>
+  </div>
+</div>

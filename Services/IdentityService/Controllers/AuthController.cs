@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using EgitimPlatform.Services.IdentityService.Data;
 using EgitimPlatform.Services.IdentityService.Models.Entities;
 using Microsoft.Extensions.Logging;
+using System.Text.Json;
 
 namespace EgitimPlatform.Services.IdentityService.Controllers;
 
@@ -24,13 +25,15 @@ public class AuthController : ControllerBase
     private readonly IGoogleAuthService _googleAuthService;
     private readonly IdentityDbContext _db;
     private readonly ILogger<AuthController> _logger;
+    private readonly IConfiguration _configuration;
 
-    public AuthController(IAuthService authService, IGoogleAuthService googleAuthService, IdentityDbContext db, ILogger<AuthController> logger)
+    public AuthController(IAuthService authService, IGoogleAuthService googleAuthService, IdentityDbContext db, ILogger<AuthController> logger, IConfiguration configuration)
     {
         _authService = authService;
         _googleAuthService = googleAuthService;
         _db = db;
         _logger = logger;
+        _configuration = configuration;
     }
 
     /// <summary>
@@ -377,34 +380,47 @@ public class AuthController : ControllerBase
             if (string.IsNullOrWhiteSpace(code) || string.IsNullOrWhiteSpace(state))
             {
                 _logger.LogWarning("Google callback missing parameters: code or state is empty");
-                var missingUrl = $"{GetFrontendUrl()}/auth/google/callback?message=Authentication%20failed";
-                return Redirect(missingUrl);
+                // Cannot determine client, so cannot redirect safely. Return a generic error.
+                return BadRequest("Authentication failed: missing required parameters.");
             }
+
+            // Extract client name from state
+            var stateParts = state.Split(':');
+            var clientName = stateParts.Length > 0 ? stateParts[0] : null;
+            
+            var frontendUrl = GetFrontendUrlForClient(clientName);
+            if (string.IsNullOrEmpty(frontendUrl))
+            {
+                _logger.LogWarning("Invalid client '{ClientName}' specified in state.", clientName);
+                return BadRequest("Authentication failed: invalid client specified.");
+            }
+            
             var result = await _googleAuthService.HandleCallbackAsync(code, state);
 
             if (result.Success)
             {
-                // Persist refresh token in HttpOnly cookie for remember-me behavior
                 if (!string.IsNullOrEmpty(result.Data!.RefreshToken))
                 {
                     SetRememberMeCookie(result.Data.RefreshToken);
                 }
 
-                // Redirect to frontend callback route with URL-encoded tokens
                 var access = Uri.EscapeDataString(result.Data.AccessToken);
                 var refresh = Uri.EscapeDataString(result.Data.RefreshToken ?? string.Empty);
-                var redirectUrl = $"{GetFrontendUrl()}/auth/google-callback?token={access}&refresh={refresh}";
+                var redirectUrl = $"{frontendUrl}/auth/google-callback?token={access}&refresh={refresh}";
                 return Redirect(redirectUrl);
             }
 
-            // Redirect to frontend with error
-            var errorUrl = $"{GetFrontendUrl()}/auth/google/callback?message={Uri.EscapeDataString(result.Error?.Message ?? "Authentication failed")}";
+            var errorUrl = $"{frontendUrl}/auth/google/callback?message={Uri.EscapeDataString(result.Error?.Message ?? "Authentication failed")}";
             return Redirect(errorUrl);
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Google callback error for state {State}", state);
-            var errorUrl = $"{GetFrontendUrl()}/auth/google/callback?message=Authentication%20failed";
+            // Try to get the client name even in case of an error to redirect back
+            var stateParts = state.Split(':');
+            var clientName = stateParts.Length > 0 ? stateParts[0] : null;
+            var frontendUrl = GetFrontendUrlForClient(clientName) ?? "http://localhost:4200"; // Fallback
+            var errorUrl = $"{frontendUrl}/auth/google/callback?message=Authentication%20failed";
             return Redirect(errorUrl);
         }
     }
@@ -454,11 +470,15 @@ public class AuthController : ControllerBase
         Response.Cookies.Append("refresh_token", string.Empty, cookieOptions);
         Response.Cookies.Append("remember_me", string.Empty, cookieOptions);
     }
-
-    private static string GetFrontendUrl()
+    
+    private string? GetFrontendUrlForClient(string? clientName)
     {
-        // Check if request comes from speedreading app
-        // You can pass this as a parameter from the frontend or check the referer
-        return "http://localhost:4202"; // Speedreading app URL
+        if (string.IsNullOrEmpty(clientName))
+        {
+            return null;
+        }
+
+        var clientUrl = _configuration[$"OAuthClients:{clientName}"];
+        return clientUrl;
     }
 }

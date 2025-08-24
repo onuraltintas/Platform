@@ -1,0 +1,169 @@
+<div class="rsvp-reader" [style]="getContainerStyles()">
+  
+  <!-- RSVP Display Area -->
+  <div class="rsvp-display" [style]="getDisplayStyles()">
+    
+    <!-- Focus Point (optional) -->
+    <div class="focus-point" 
+         *ngIf="settings.rsvpFocusPoint && !isCompleted"
+         [style]="getFocusPointStyles()"></div>
+    
+    <!-- Current Word Display with ORP -->
+    <div class="word-display" 
+         *ngIf="!isCompleted && currentWord"
+         [style]="getWordDisplayStyles()">
+      <span class="current-word" [style]="getCurrentWordStyles()">
+        <span class="word-prefix">{{ currentWordPrefix }}</span><span class="word-focus" [style]="getFocusLetterStyle()">{{ focusLetter }}</span><span class="word-suffix">{{ currentWordSuffix }}</span>
+      </span>
+    </div>
+
+    <!-- Context Words (optional) -->
+    <div class="context-display" 
+         *ngIf="settings.showContext && !isCompleted"
+         [style]="getContextStyles()">
+      <span class="prev-word" 
+            [style]="getPrevWordStyles()">{{ previousWord?.text || '' }}</span>
+      <span class="next-word" 
+            [style]="getNextWordStyles()">{{ nextWord?.text || '' }}</span>
+    </div>
+  </div>
+
+  <!-- Progress Bar -->
+  <div class="progress-container" *ngIf="settings.showProgress">
+    <div class="progress-bar">
+      <div class="progress-fill" 
+           [style.width.%]="readingProgress"
+           [style]="getProgressBarStyles()"></div>
+    </div>
+    <div class="progress-text">
+      <span>{{ currentWordIndex + 1 }} / {{ totalWords }}</span>
+      <span>{{ Math.round(readingProgress) }}%</span>
+    </div>
+  </div>
+
+  <!-- Hız kontrolleri kaldırıldı: hız ayarı sadece Settings sayfasında yapılır -->
+
+  <!-- Reading Stats -->
+  <div class="reading-stats" *ngIf="isActive || isCompleted">
+    <div class="stat-group">
+      <div class="stat-item">
+        <span class="stat-label">Hız</span>
+        <span class="stat-value">{{ currentWPM }} WPM</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">Süre</span>
+        <span class="stat-value">{{ formatTime(elapsedTime) }}</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">Kalp Atışı</span>
+        <span class="stat-value">{{ Math.round(60000 / wordDuration) }} BPM</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- RSVP Settings Panel -->
+  <div class="rsvp-settings" *ngIf="!isActive && !isCompleted">
+    <h4>RSVP Ayarları</h4>
+    
+    <div class="setting-group">
+      <label class="setting-item">
+        <input type="checkbox" 
+               [checked]="settings.rsvpFocusPoint" 
+               (change)="toggleFocusPoint($event)">
+        <span class="checkmark"></span>
+        Odak Noktası Göster
+      </label>
+      
+      <label class="setting-item">
+        <input type="checkbox" 
+               [checked]="settings.showContext" 
+               (change)="toggleShowContext($event)">
+        <span class="checkmark"></span>
+        Önceki/Sonraki Kelime Göster
+      </label>
+      
+      <label class="setting-item">
+        <input type="checkbox" 
+               [checked]="settings.enableSounds" 
+               (change)="toggleSounds($event)">
+        <span class="checkmark"></span>
+        Ses Efektleri
+      </label>
+    </div>
+
+    <div class="visual-settings">
+      <div class="setting-row">
+        <label>Font Boyutu:</label>
+        <input type="range" 
+               [value]="settings.fontSize" 
+               (input)="onFontSizeChange($event)"
+               min="12" 
+               max="48" 
+               step="2">
+        <span>{{ settings.fontSize }}px</span>
+      </div>
+      
+      <div class="setting-row">
+        <label>Odak Uzaklığı:</label>
+        <input type="range" 
+               [value]="focusDistance" 
+               (input)="onFocusDistanceChange($event)"
+               min="1" 
+               max="10" 
+               step="1">
+        <span>{{ focusDistance }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Completion Screen -->
+  <div class="completion-screen" *ngIf="isCompleted">
+    <div class="completion-content">
+      <div class="completion-icon">
+        <i class="bi bi-eye-fill"></i>
+      </div>
+      <h3>RSVP Okuma Tamamlandı!</h3>
+      <p>{{ totalWords }} kelimeyi {{ formatTime(elapsedTime) }} sürede okudunuz.</p>
+      
+      <div class="final-stats">
+        <div class="stat-card">
+          <div class="stat-value">{{ finalWPM }}</div>
+          <div class="stat-label">Ortalama WPM</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">{{ Math.round(readingProgress) }}%</div>
+          <div class="stat-label">Tamamlanan</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">{{ Math.round(consistency) }}%</div>
+          <div class="stat-label">Tutarlılık</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">{{ regressionCount }}</div>
+          <div class="stat-label">Geri Dönüş</div>
+        </div>
+      </div>
+
+      <div class="performance-message">
+        <p *ngIf="finalWPM >= 300" class="excellent">
+          🏆 Mükemmel! Çok hızlı okuyorsunuz.
+        </p>
+        <p *ngIf="finalWPM >= 200 && finalWPM < 300" class="good">
+          👍 İyi! Okuma hızınız ortalamanın üstünde.
+        </p>
+        <p *ngIf="finalWPM < 200" class="improvement">
+          💪 Pratik yaparak daha da gelişebilirsiniz.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pause Overlay -->
+  <div class="pause-overlay" *ngIf="isPaused && isActive">
+    <div class="pause-content">
+      <i class="bi bi-pause-circle"></i>
+      <h3>Duraklatıldı</h3>
+      <p>Devam etmek için oynat butonuna basın</p>
+    </div>
+  </div>
+</div>

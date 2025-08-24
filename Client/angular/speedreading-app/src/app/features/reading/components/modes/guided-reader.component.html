@@ -1,0 +1,285 @@
+<div class="guided-reader" [style]="getContainerStyles()">
+  
+  <!-- Reading Area -->
+  <div class="reading-area" [style]="getReadingAreaStyles()">
+    
+    <!-- Text Content -->
+    <div class="text-content" 
+         [style]="getTextStyles()"
+         #textContainer>
+      
+      <!-- Text Paragraphs -->
+      <div class="text-paragraphs">
+        <p *ngFor="let paragraph of paragraphs; let pIndex = index" 
+           class="text-paragraph"
+           [id]="'paragraph-' + pIndex">
+          
+          <span *ngFor="let word of paragraph.words; let wIndex = index"
+                class="text-word"
+                [class.current-word]="isCurrentWord(pIndex, wIndex)"
+                [class.read-word]="isReadWord(pIndex, wIndex)"
+                [class.in-window]="isInFocusWindow(pIndex, wIndex)"
+                [id]="'word-' + pIndex + '-' + wIndex"
+                [style]="getWordStyle(pIndex, wIndex)">{{ word.text }}</span>
+        </p>
+      </div>
+    </div>
+
+    <!-- Moving Highlighter -->
+    <div class="reading-highlighter" 
+         *ngIf="isActive && settings.showReadingGuide"
+         [style]="getHighlighterStyles()"
+         #highlighter></div>
+
+    <!-- Focus Window -->
+    <div class="focus-window" 
+         *ngIf="settings.showFocusWindow && isActive"
+         [style]="getFocusWindowStyles()"></div>
+
+    <!-- Guide Lines -->
+    <div class="guide-lines" *ngIf="settings.showGuideLines && isActive">
+      <div class="guide-line top-line" [style]="getGuideLineStyles('top')"></div>
+      <div class="guide-line bottom-line" [style]="getGuideLineStyles('bottom')"></div>
+    </div>
+
+    <!-- Speed Indicator -->
+    <div class="speed-indicator" *ngIf="showSpeedIndicator">
+      <div class="speed-value">{{ Math.round(currentSpeed) }} WPM</div>
+      <div class="speed-bar">
+        <div class="speed-fill" 
+             [style.width.%]="(currentSpeed / maxSpeed) * 100"
+             [style]="getSpeedBarStyles()"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Guided Reading Controls (speed controls removed: use Settings page) -->
+  <div class="guided-controls" *ngIf="!isActive && !isCompleted">
+    <h4>Rehberli Okuma Ayarları</h4>
+    
+    <div class="control-group">
+
+      <div class="control-row">
+        <label>Vurgu Yüksekliği:</label>
+        <div class="height-controls">
+          <input type="range" 
+                 [value]="highlighterHeight" 
+                 (input)="onHeightChange($event)"
+                 min="1" 
+                 max="8" 
+                 step="1"
+                 class="height-slider">
+          <span class="height-value">{{ highlighterHeight }} satır</span>
+        </div>
+      </div>
+
+      <div class="control-row">
+        <label>Odak Penceresi Boyutu:</label>
+        <div class="window-controls">
+          <input type="range" 
+                 [value]="focusWindowSize" 
+                 (input)="onWindowSizeChange($event)"
+                 min="3" 
+                 max="15" 
+                 step="1"
+                 class="window-slider">
+          <span class="window-value">{{ focusWindowSize }} kelime</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="visual-options">
+      <label class="option-item">
+        <input type="checkbox" 
+               [checked]="settings.showReadingGuide" 
+               (change)="toggleReadingGuide($event)">
+        <span class="checkmark"></span>
+        Hareket Eden Vurgu Çubuğu
+      </label>
+      
+      <label class="option-item">
+        <input type="checkbox" 
+               [checked]="settings.showFocusWindow" 
+               (change)="toggleFocusWindow($event)">
+        <span class="checkmark"></span>
+        Odak Penceresi
+      </label>
+      
+      <label class="option-item">
+        <input type="checkbox" 
+               [checked]="settings.showGuideLines" 
+               (change)="toggleGuideLines($event)">
+        <span class="checkmark"></span>
+        Rehber Çizgileri
+      </label>
+      
+      <label class="option-item">
+        <input type="checkbox" 
+               [checked]="smoothScrolling" 
+               (change)="toggleSmoothScrolling($event)">
+        <span class="checkmark"></span>
+        Yumuşak Geçiş
+      </label>
+    </div>
+
+    <div class="color-settings">
+      <div class="color-row">
+        <label>Vurgu Rengi:</label>
+        <div class="color-picker">
+          <input type="color" 
+                 [value]="highlighterColor" 
+                 (change)="onColorChange($event)"
+                 class="color-input">
+          <span class="color-preview" [style.background-color]="highlighterColor"></span>
+        </div>
+      </div>
+      
+      <div class="opacity-row">
+        <label>Vurgu Şeffaflığı:</label>
+        <input type="range" 
+               [value]="highlighterOpacity" 
+               (input)="onOpacityChange($event)"
+               min="10" 
+               max="80" 
+               step="10"
+               class="opacity-slider">
+        <span class="opacity-value">{{ highlighterOpacity }}%</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Reading Progress -->
+  <div class="reading-progress" *ngIf="settings.showProgress">
+    <div class="progress-header">
+      <span class="progress-label">İlerleme</span>
+      <span class="progress-percentage">{{ Math.round(readingProgress) }}%</span>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill" 
+           [style.width.%]="readingProgress"
+           [style]="getProgressBarStyles()"></div>
+      <div class="progress-marker" 
+           [style.left.%]="readingProgress"
+           [style]="getProgressMarkerStyles()"></div>
+    </div>
+    <div class="progress-info">
+      <span>{{ currentWordIndex + 1 }} / {{ totalWords }} kelime</span>
+      <span>{{ formatTime(elapsedTime) }}</span>
+    </div>
+  </div>
+
+  <!-- Performance Metrics -->
+  <div class="performance-metrics" *ngIf="isActive || isCompleted">
+    <div class="metrics-grid">
+      <div class="metric-item">
+        <div class="metric-icon"><i class="bi bi-speedometer2"></i></div>
+        <div class="metric-content">
+          <div class="metric-value">{{ currentWPM }}</div>
+          <div class="metric-label">Mevcut WPM</div>
+        </div>
+      </div>
+      
+      <div class="metric-item">
+        <div class="metric-icon"><i class="bi bi-bullseye"></i></div>
+        <div class="metric-content">
+          <div class="metric-value">{{ Math.round(followAccuracy) }}%</div>
+          <div class="metric-label">Takip Doğruluğu</div>
+        </div>
+      </div>
+      
+      <div class="metric-item">
+        <div class="metric-icon"><i class="bi bi-graph-up"></i></div>
+        <div class="metric-content">
+          <div class="metric-value">{{ consistency }}%</div>
+          <div class="metric-label">Tutarlılık</div>
+        </div>
+      </div>
+      
+      <div class="metric-item">
+        <div class="metric-icon"><i class="bi bi-eye"></i></div>
+        <div class="metric-content">
+          <div class="metric-value">{{ regressionCount }}</div>
+          <div class="metric-label">Geri Dönüş</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Completion Screen -->
+  <div class="completion-screen" *ngIf="isCompleted">
+    <div class="completion-content">
+      <div class="completion-icon">
+        <i class="bi bi-arrow-right-circle-fill"></i>
+      </div>
+      <h3>Rehberli Okuma Tamamlandı!</h3>
+      <p>{{ totalWords }} kelimeyi rehber hızında {{ formatTime(elapsedTime) }} sürede okudunuz.</p>
+      
+      <div class="completion-stats">
+        <div class="stat-section">
+          <h4>Hız Performansı</h4>
+          <div class="stat-grid">
+            <div class="stat-card">
+              <div class="stat-value">{{ finalWPM }}</div>
+              <div class="stat-label">Ortalama WPM</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value">{{ Math.round(speedConsistency) }}%</div>
+              <div class="stat-label">Hız Tutarlılığı</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="stat-section">
+          <h4>Takip Performansı</h4>
+          <div class="stat-grid">
+            <div class="stat-card">
+              <div class="stat-value">{{ Math.round(followAccuracy) }}%</div>
+              <div class="stat-label">Takip Doğruluğu</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value">{{ regressionCount }}</div>
+              <div class="stat-label">Geri Dönüş Sayısı</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="performance-evaluation">
+        <div class="evaluation-item" *ngIf="followAccuracy >= 85">
+          <i class="bi bi-check-circle-fill text-success"></i>
+          <span>Mükemmel rehber takibi!</span>
+        </div>
+        <div class="evaluation-item" *ngIf="speedConsistency >= 80">
+          <i class="bi bi-graph-up text-info"></i>
+          <span>Tutarlı okuma hızı</span>
+        </div>
+        <div class="evaluation-item" *ngIf="regressionCount <= 2">
+          <i class="bi bi-eye-fill text-warning"></i>
+          <span>Az geri dönüş - iyi odaklanma</span>
+        </div>
+        
+        <div class="improvement-tips" *ngIf="followAccuracy < 75 || speedConsistency < 70">
+          <h5>Gelişim Önerileri:</h5>
+          <ul>
+            <li *ngIf="followAccuracy < 75">Rehber hızını düşürmeyi deneyin</li>
+            <li *ngIf="speedConsistency < 70">Daha tutarlı okuma ritmi geliştirin</li>
+            <li *ngIf="regressionCount > 5">Odaklanma egzersizleri yapın</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Eye Strain Warning -->
+  <div class="eye-strain-warning" 
+       *ngIf="showEyeStrainWarning"
+       [style]="getEyeStrainWarningStyles()">
+    <div class="warning-content">
+      <i class="bi bi-exclamation-triangle"></i>
+      <span>{{ formatTime(continuousReadingTime) }} süredir okuyorsunuz. Göz dinlendirme molası verin.</span>
+      <button class="dismiss-btn" (click)="dismissEyeStrainWarning()">
+        <i class="bi bi-x"></i>
+      </button>
+    </div>
+  </div>
+</div>

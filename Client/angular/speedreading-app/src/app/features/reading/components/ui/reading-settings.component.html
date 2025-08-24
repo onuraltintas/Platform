@@ -1,0 +1,552 @@
+<div class="reading-settings">
+  
+  <!-- Settings Header -->
+  <div class="settings-header">
+    <h3>Okuma Ayarları</h3>
+    <div class="btn-group me-auto">
+      <button class="btn btn-sm btn-outline-secondary" (click)="toggleSimpleMode()">
+        {{ showSimple ? 'Gelişmiş Ayarlar' : 'Basit Ayarlar' }}
+      </button>
+    </div>
+    <button class="close-btn" (click)="closeSettings()">
+      <i class="bi bi-x"></i>
+    </button>
+  </div>
+
+  <!-- Settings Tabs -->
+  <div class="settings-tabs" *ngIf="!showSimple">
+    <button class="tab-btn" 
+            [class.active]="activeTab === 'general'"
+            (click)="setActiveTab('general')">
+      <i class="bi bi-gear"></i>
+      Genel
+    </button>
+    
+    <button class="tab-btn" 
+            [class.active]="activeTab === 'visual'"
+            (click)="setActiveTab('visual')">
+      <i class="bi bi-palette"></i>
+      Görsel
+    </button>
+    
+    <button class="tab-btn" 
+            [class.active]="activeTab === 'behavior'"
+            (click)="setActiveTab('behavior')">
+      <i class="bi bi-activity"></i>
+      Davranış
+    </button>
+    
+    <button class="tab-btn" 
+            [class.active]="activeTab === 'mode'"
+            (click)="setActiveTab('mode')">
+      <i class="bi bi-layers"></i>
+      Mod Ayarları
+    </button>
+  </div>
+
+  <!-- Settings Content -->
+  <div class="settings-content" *ngIf="!showSimple">
+    
+    <!-- General Settings -->
+    <div class="settings-panel" *ngIf="activeTab === 'general'">
+      <div class="setting-group">
+        <h4>Hız Ayarları</h4>
+        
+        <div class="setting-item">
+          <label>Okuma Hızı (WPM):</label>
+          <div class="range-input">
+            <input type="range" 
+                   [value]="currentSettings.wordsPerMinute" 
+                   (input)="onWordsPerMinuteChange($event)"
+                   min="60" 
+                   max="1000" 
+                   step="5"
+                   class="setting-range">
+            <input type="number" 
+                   [value]="currentSettings.wordsPerMinute" 
+                   (change)="onWordsPerMinuteNumberChange($event)"
+                   min="60" 
+                   max="1000" 
+                   step="5"
+                   class="setting-number">
+          </div>
+        </div>
+
+        <div class="setting-item" *ngIf="isChunkMode()">
+          <label>Grup Boyutu:</label>
+          <div class="chunk-size-controls">
+            <button class="size-btn" (click)="changeChunkSize(-1)" [disabled]="currentSettings.chunkSize <= 1">-</button>
+            <span class="size-value">{{ currentSettings.chunkSize }} kelime</span>
+            <button class="size-btn" (click)="changeChunkSize(1)" [disabled]="currentSettings.chunkSize >= 7">+</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="setting-group">
+        <h4>Mod Seçimi</h4>
+        <div class="mode-selection">
+          <div class="mode-option" 
+               *ngFor="let mode of availableModes"
+               [class.selected]="currentMode === mode.id"
+               (click)="selectMode(mode.id)">
+            <div class="mode-icon">
+              <i class="bi" [class]="mode.icon"></i>
+            </div>
+            <div class="mode-info">
+              <h5>{{ mode.name }}</h5>
+              <p>{{ mode.description }}</p>
+            </div>
+            <div class="mode-radio">
+              <input type="radio" 
+                     [checked]="currentMode === mode.id"
+                     [value]="mode.id"
+                     name="readingMode">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Visual Settings -->
+    <div class="settings-panel" *ngIf="activeTab === 'visual'">
+      <div class="setting-group">
+        <h4>Yazı Tipi</h4>
+        
+        <div class="setting-item">
+          <label>Font Boyutu:</label>
+          <div class="range-input">
+            <input type="range" 
+                   [value]="currentSettings.fontSize" 
+                   (input)="onFontSizeChange($event)"
+                   min="12" 
+                   max="48" 
+                   step="2"
+                   class="setting-range">
+            <span class="setting-value">{{ currentSettings.fontSize }}px</span>
+          </div>
+        </div>
+
+        <div class="setting-item">
+          <label>Font Ailesi:</label>
+          <select [value]="currentSettings.fontFamily" 
+                  (change)="onFontFamilyChange($event)"
+                  class="setting-select">
+            <option value="Inter, sans-serif">Inter</option>
+            <option value="Georgia, serif">Georgia</option>
+            <option value="Times New Roman, serif">Times New Roman</option>
+            <option value="Arial, sans-serif">Arial</option>
+            <option value="Helvetica, sans-serif">Helvetica</option>
+            <option value="Roboto, sans-serif">Roboto</option>
+            <option value="Open Sans, sans-serif">Open Sans</option>
+          </select>
+        </div>
+
+        <div class="setting-item">
+          <label>Satır Yüksekliği:</label>
+          <div class="range-input">
+            <input type="range" 
+                   [value]="currentSettings.lineHeight" 
+                   (input)="onLineHeightChange($event)"
+                   min="1.0" 
+                   max="2.5" 
+                   step="0.1"
+                   class="setting-range">
+            <span class="setting-value">{{ currentSettings.lineHeight }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="setting-group">
+        <h4>Renkler</h4>
+        
+        <div class="setting-item">
+          <label>Arka Plan Rengi:</label>
+          <div class="color-picker">
+            <input type="color" 
+                   [value]="currentSettings.backgroundColor" 
+                   (change)="onBackgroundColorChange($event)"
+                   class="color-input">
+            <div class="color-presets">
+              <button *ngFor="let color of backgroundPresets" 
+                      class="color-preset"
+                      [style.background-color]="color"
+                      (click)="setBackgroundColor(color)"
+                      [class.active]="currentSettings.backgroundColor === color">
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="setting-item">
+          <label>Metin Rengi:</label>
+          <div class="color-picker">
+            <input type="color" 
+                   [value]="currentSettings.textColor" 
+                   (change)="onTextColorChange($event)"
+                   class="color-input">
+            <div class="color-presets">
+              <button *ngFor="let color of textPresets" 
+                      class="color-preset"
+                      [style.background-color]="color"
+                      (click)="setTextColor(color)"
+                      [class.active]="currentSettings.textColor === color">
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="setting-item">
+          <label>Vurgu Rengi:</label>
+          <div class="color-picker">
+            <input type="color" 
+                   [value]="currentSettings.highlightColor" 
+                   (change)="onHighlightColorChange($event)"
+                   class="color-input">
+            <div class="color-presets">
+              <button *ngFor="let color of highlightPresets" 
+                      class="color-preset"
+                      [style.background-color]="color"
+                      (click)="setHighlightColor(color)"
+                      [class.active]="currentSettings.highlightColor === color">
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="setting-group">
+        <h4>Tema Hazır Ayarları</h4>
+        <div class="theme-presets">
+          <button *ngFor="let theme of themePresets" 
+                  class="theme-preset"
+                  (click)="applyTheme(theme)"
+                  [class.active]="isThemeActive(theme)">
+            <div class="theme-preview">
+              <div class="theme-bg" [style.background-color]="theme.backgroundColor"></div>
+              <div class="theme-text" [style.color]="theme.textColor">Aa</div>
+              <div class="theme-highlight" [style.background-color]="theme.highlightColor"></div>
+            </div>
+            <span class="theme-name">{{ theme.name }}</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Behavior Settings -->
+    <div class="settings-panel" *ngIf="activeTab === 'behavior'">
+      <div class="setting-group">
+        <h4>Otomatik Davranışlar</h4>
+        
+        <div class="setting-item">
+          <label class="checkbox-label">
+            <input type="checkbox" 
+                   [checked]="currentSettings.autoStart" 
+                   (change)="onAutoStartChange($event)">
+            <span class="checkmark"></span>
+            Otomatik Başlat
+          </label>
+          <p class="setting-description">Mod seçildikten sonra otomatik olarak okumaya başla</p>
+        </div>
+
+        <div class="setting-item">
+          <label class="checkbox-label">
+            <input type="checkbox" 
+                   [checked]="currentSettings.autoPause" 
+                   (change)="onAutoPauseChange($event)">
+            <span class="checkmark"></span>
+            Otomatik Mola
+          </label>
+          <p class="setting-description">Belirli aralıklarla otomatik mola ver</p>
+        </div>
+
+        <div class="setting-item">
+          <label class="checkbox-label">
+            <input type="checkbox" 
+                   [checked]="currentSettings.showProgress" 
+                   (change)="onShowProgressChange($event)">
+            <span class="checkmark"></span>
+            İlerleme Göster
+          </label>
+          <p class="setting-description">Okuma ilerlemesini ekranda göster</p>
+        </div>
+
+        <div class="setting-item">
+          <label class="checkbox-label">
+            <input type="checkbox" 
+                   [checked]="currentSettings.enableSounds" 
+                   (change)="onEnableSoundsChange($event)">
+            <span class="checkmark"></span>
+            Ses Efektleri
+          </label>
+          <p class="setting-description">Geçişlerde ve uyarılarda ses çal</p>
+        </div>
+      </div>
+
+      <div class="setting-group" *ngIf="isClassicMode()">
+        <h4>Klasik Okuma</h4>
+        
+        <div class="setting-item">
+          <label class="checkbox-label">
+            <input type="checkbox" 
+                   [checked]="currentSettings.enableSpeedMode" 
+                   (change)="onEnableSpeedModeChange($event)">
+            <span class="checkmark"></span>
+            Hız Modu
+          </label>
+        </div>
+
+        <div class="setting-item">
+          <label class="checkbox-label">
+            <input type="checkbox" 
+                   [checked]="currentSettings.enableHighlighting" 
+                   (change)="onEnableHighlightingChange($event)">
+            <span class="checkmark"></span>
+            Kelime Vurgulama
+          </label>
+        </div>
+
+        <div class="setting-item" *ngIf="currentSettings.enableHighlighting">
+          <label>Vurgu Aralığı:</label>
+          <div class="range-input">
+            <input type="range" 
+                   [value]="currentSettings.highlightRange" 
+                   (input)="onHighlightRangeChange($event)"
+                   min="1" 
+                   max="10" 
+                   step="1"
+                   class="setting-range">
+            <span class="setting-value">{{ currentSettings.highlightRange }} kelime</span>
+          </div>
+        </div>
+
+        <div class="setting-item">
+          <label class="checkbox-label">
+            <input type="checkbox" 
+                   [checked]="currentSettings.bionicEnabled" 
+                   (change)="currentSettings.bionicEnabled = $event.target.checked; onSettingsChange()">
+            <span class="checkmark"></span>
+            Bionic Reading (kelime başını kalın göster)
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mode-specific Settings -->
+    <div class="settings-panel" *ngIf="activeTab === 'mode'">
+      
+      <!-- RSVP Settings -->
+      <div class="setting-group" *ngIf="isRSVPMode()">
+        <h4>RSVP Ayarları</h4>
+        
+        <div class="setting-item">
+          <label class="checkbox-label">
+            <input type="checkbox" 
+                   [checked]="currentSettings.rsvpFocusPoint" 
+                   (change)="onRSVPFocusPointChange($event)">
+            <span class="checkmark"></span>
+            Odak Noktası Göster
+          </label>
+        </div>
+
+        <div class="setting-item">
+          <label>Kelime Süresi (ms):</label>
+          <div class="range-input">
+            <input type="range" 
+                   [value]="currentSettings.rsvpWordDuration" 
+                   (input)="onRSVPWordDurationChange($event)"
+                   min="100" 
+                   max="1000" 
+                   step="50"
+                   class="setting-range">
+            <span class="setting-value">{{ currentSettings.rsvpWordDuration }} ms</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Chunk Settings -->
+      <div class="setting-group" *ngIf="isChunkMode()">
+        <h4>Grup Okuma Ayarları</h4>
+        
+        <div class="setting-item">
+          <label>Vurgu Süresi (ms):</label>
+          <div class="range-input">
+            <input type="range" 
+                   [value]="currentSettings.chunkHighlightDuration" 
+                   (input)="onChunkHighlightDurationChange($event)"
+                   min="200" 
+                   max="2000" 
+                   step="100"
+                   class="setting-range">
+            <span class="setting-value">{{ currentSettings.chunkHighlightDuration }} ms</span>
+          </div>
+        </div>
+
+        <div class="setting-item">
+          <label>Mola Süresi (ms):</label>
+          <div class="range-input">
+            <input type="range" 
+                   [value]="currentSettings.chunkPauseDuration" 
+                   (input)="onChunkPauseDurationChange($event)"
+                   min="50" 
+                   max="500" 
+                   step="50"
+                   class="setting-range">
+            <span class="setting-value">{{ currentSettings.chunkPauseDuration }} ms</span>
+          </div>
+        </div>
+
+        <div class="setting-item">
+          <label class="checkbox-label">
+            <input type="checkbox" 
+                   [checked]="currentSettings.showContext" 
+                   (change)="onShowContextChange($event)">
+            <span class="checkmark"></span>
+            Çevre Grupları Göster
+          </label>
+        </div>
+
+        <div class="setting-item">
+          <label class="checkbox-label">
+            <input type="checkbox" 
+                   [checked]="currentSettings.showFocusPoint" 
+                   (change)="onShowFocusPointChange($event)">
+            <span class="checkmark"></span>
+            Odak Noktası Göster
+          </label>
+        </div>
+      </div>
+
+      <!-- Guided Settings -->
+      <div class="setting-group" *ngIf="isGuidedMode()">
+        <h4>Rehberli Okuma Ayarları</h4>
+        
+        <div class="setting-item">
+          <label>Rehber Hızı (WPM):</label>
+          <div class="range-input">
+            <input type="range" 
+                   [value]="currentSettings.highlighterSpeed" 
+                   (input)="onHighlighterSpeedChange($event)"
+                   min="150" 
+                   max="800" 
+                   step="25"
+                   class="setting-range">
+            <span class="setting-value">{{ currentSettings.highlighterSpeed }} WPM</span>
+          </div>
+        </div>
+
+        <div class="setting-item">
+          <label>Vurgu Yüksekliği:</label>
+          <div class="range-input">
+            <input type="range" 
+                   [value]="currentSettings.highlighterHeight" 
+                   (input)="onHighlighterHeightChange($event)"
+                   min="1" 
+                   max="8" 
+                   step="1"
+                   class="setting-range">
+            <span class="setting-value">{{ currentSettings.highlighterHeight }} satır</span>
+          </div>
+        </div>
+
+        <div class="setting-item">
+          <label class="checkbox-label">
+            <input type="checkbox" 
+                   [checked]="currentSettings.showReadingGuide" 
+                   (change)="onShowReadingGuideChange($event)">
+            <span class="checkmark"></span>
+            Okuma Rehberi Göster
+          </label>
+        </div>
+
+        <div class="setting-item">
+          <label class="checkbox-label">
+            <input type="checkbox" 
+                   [checked]="currentSettings.showFocusWindow" 
+                   (change)="onShowFocusWindowChange($event)">
+            <span class="checkmark"></span>
+            Odak Penceresi Göster
+          </label>
+        </div>
+
+        <div class="setting-item">
+          <label class="checkbox-label">
+            <input type="checkbox" 
+                   [checked]="currentSettings.showGuideLines" 
+                   (change)="onShowGuideLinesChange($event)">
+            <span class="checkmark"></span>
+            Rehber Çizgileri Göster
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Simple Settings -->
+  <div class="settings-content" *ngIf="showSimple">
+    <div class="settings-panel">
+      <div class="setting-group">
+        <h4>Temel</h4>
+        <div class="setting-item">
+          <label>Okuma Hızı (WPM):</label>
+          <input type="range" [value]="currentSettings.wordsPerMinute" (input)="onWordsPerMinuteChange($event)" min="60" max="700" step="5" class="setting-range" />
+          <span class="setting-value">{{ currentSettings.wordsPerMinute }} WPM</span>
+        </div>
+        <div class="setting-item">
+          <label>Tema:</label>
+          <div class="theme-presets">
+            <button *ngFor="let theme of themePresets" class="theme-preset" (click)="applyTheme(theme)" [class.active]="isThemeActive(theme)">
+              <span class="theme-name">{{ theme.name }}</span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="setting-group" *ngIf="isRSVPMode()">
+        <h4>RSVP</h4>
+        <label class="checkbox-label">
+          <input type="checkbox" [checked]="currentSettings.rsvpFocusPoint" (change)="onRSVPFocusPointChange($event)"> Odak Noktası
+        </label>
+      </div>
+      <div class="setting-group" *ngIf="isChunkMode()">
+        <h4>Grup Okuma</h4>
+        <div class="chunk-size-controls">
+          <button class="size-btn" (click)="changeChunkSize(-1)">-</button>
+          <span class="size-value">{{ currentSettings.chunkSize }}</span>
+          <button class="size-btn" (click)="changeChunkSize(1)">+</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Settings Actions -->
+  <div class="settings-actions">
+    <button class="action-btn secondary" (click)="resetToDefaults()">
+      <i class="bi bi-arrow-clockwise"></i>
+      Varsayılana Sıfırla
+    </button>
+    
+    <button class="action-btn secondary" (click)="loadPreset()">
+      <i class="bi bi-cloud-download"></i>
+      Hazır Ayar Yükle
+    </button>
+    
+    <button class="action-btn secondary" (click)="savePreset()">
+      <i class="bi bi-cloud-upload"></i>
+      Ayarları Kaydet
+    </button>
+    
+    <button class="action-btn primary" (click)="applySettings()">
+      <i class="bi bi-check"></i>
+      Uygula
+    </button>
+  </div>
+
+  <!-- Preview Area -->
+  <div class="preview-area" *ngIf="showPreview">
+    <h4>Önizleme</h4>
+    <div class="preview-text" [style]="getPreviewStyles()">
+      Bu bir örnek metindir. Seçtiğiniz ayarların nasıl görüneceğini görmek için bu önizlemeyi kullanabilirsiniz.
+      <span class="highlighted-word" [style]="getHighlightPreviewStyles()">Vurgulanmış</span>
+      kelimeler böyle görünecektir.
+    </div>
+  </div>
+</div>

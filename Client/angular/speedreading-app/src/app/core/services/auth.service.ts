@@ -62,6 +62,10 @@ export class AuthService {
     return this.http.post<PasswordResetResponse>(`${this.apiUrl}/reset-password`, request);
   }
 
+  confirmEmail(request: { userId: string; token: string }): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/confirm-email`, request);
+  }
+
   logout(): Observable<any> {
     const refreshToken = this.getRefreshToken();
     
@@ -89,6 +93,10 @@ export class AuthService {
     return sessionStorage.getItem('accessToken') ?? localStorage.getItem('accessToken');
   }
 
+  getToken(): string | null {
+    return this.getAccessToken();
+  }
+
   private getRefreshToken(): string | null {
     return sessionStorage.getItem('refreshToken') ?? localStorage.getItem('refreshToken');
   }
@@ -98,7 +106,7 @@ export class AuthService {
   }
 
   getCurrentUser(): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/user`, { withCredentials: true });
+    return this.http.get<any>(`${this.apiUrl}/me`, { withCredentials: true });
   }
 
   getCurrentUserValue(): User | null {
@@ -110,6 +118,9 @@ export class AuthService {
   }
 
   googleLogin(): void {
+    const csrfToken = Date.now().toString(); // Simple CSRF token
+    const state = `speedreading:${csrfToken}`;
+    
     const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?` +
                     `client_id=${environment.googleClientId}&` +
                     `redirect_uri=${encodeURIComponent(environment.backendGoogleRedirectUri)}&` +
@@ -117,7 +128,7 @@ export class AuthService {
                     `scope=openid%20profile%20email&` +
                     `access_type=offline&` +
                     `prompt=select_account&` +
-                    `state=some_state_value`;
+                    `state=${state}`;
 
     console.log('Redirecting to Google OAuth URL:', authUrl);
     window.location.href = authUrl;

@@ -23,6 +23,7 @@ export class RegisterComponent implements OnInit {
   isLoading = false;
   passwordVisible = false;
   confirmPasswordVisible = false;
+  showTermsModal = false;
 
   ngOnInit(): void {
     // Any initialization logic
@@ -45,7 +46,7 @@ export class RegisterComponent implements OnInit {
       lastName: ['', [Validators.required, Validators.maxLength(50), Validators.pattern("^[a-zA-ZçğıöşüÇĞIİÖŞÜ\\s'-]+$")]],
       password: ['', [Validators.required, Validators.minLength(8), this.passwordComplexityValidator]],
       confirmPassword: ['', [Validators.required]],
-      phoneNumber: ['', [Validators.pattern('^\\d{11}$')]],
+      phoneNumber: ['', [Validators.required, Validators.pattern('^\\d{11}$')]],
       acceptTerms: [false, [Validators.requiredTrue]]
     }, { 
       validators: this.passwordMatchValidator 
@@ -72,6 +73,15 @@ export class RegisterComponent implements OnInit {
     } else {
       this.confirmPasswordVisible = !this.confirmPasswordVisible;
     }
+  }
+
+  openTermsModal(event: Event): void {
+    event.preventDefault();
+    this.showTermsModal = true;
+  }
+
+  closeTermsModal(): void {
+    this.showTermsModal = false;
   }
 
   onSubmit(): void {

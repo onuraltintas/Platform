@@ -84,17 +84,17 @@
             </div>
           </div>
 
-          <!-- Telefon (opsiyonel) -->
+          <!-- Telefon (zorunlu) -->
           <div class="form-floating mb-3">
             <input 
               class="form-control" 
               id="phoneNumber" 
               type="tel" 
-              placeholder="0555 555 55 55 (Opsiyonel)" 
+              placeholder="0555 555 55 55" 
               formControlName="phoneNumber" 
               [class.is-invalid]="isFieldInvalid('phoneNumber')" 
               (input)="onPhoneInput($event)">
-            <label for="phoneNumber">Telefon Numarası (Opsiyonel)</label>
+            <label for="phoneNumber">Telefon Numarası</label>
             <div class="invalid-feedback">
               {{ getFieldError('phoneNumber') }}
             </div>
@@ -159,7 +159,7 @@
               formControlName="acceptTerms" 
               [class.is-invalid]="isFieldInvalid('acceptTerms')">
             <label class="form-check-label" for="acceptTerms">
-              <strong>Kullanım Şartları</strong>'nı okudum ve kabul ediyorum.
+              <a href="#" class="terms-link" (click)="openTermsModal($event)"><strong>Kullanım Şartları</strong></a>'nı okudum ve kabul ediyorum.
             </label>
             <div class="invalid-feedback">
               {{ getFieldError('acceptTerms') }}
@@ -201,6 +201,34 @@
           </p>
         </div>
       </div>
+    </div>
+  </div>
+
+  <!-- Kullanım Şartları Modal -->
+  <div class="modal-backdrop" *ngIf="showTermsModal" (click)="closeTermsModal()"></div>
+  <div class="modal-container" *ngIf="showTermsModal" role="dialog" aria-modal="true">
+    <div class="modal-header">
+      <h5 class="modal-title">Kullanım Şartları</h5>
+      <button type="button" class="btn-close" aria-label="Kapat" (click)="closeTermsModal()"></button>
+    </div>
+    <div class="modal-body">
+      <p>
+        Bu platformu kullanarak, sağlanan içerikleri kişisel gelişim amaçlı kullanmayı, yetkisiz paylaşım yapmamayı
+        ve topluluk kurallarına uymayı kabul etmiş olursunuz. Hesap güvenliğinizden siz sorumlusunuz. Hatalı veya
+        kötüye kullanım tespiti halinde hesabınız kısıtlanabilir. Gizlilik politikası ve veri işleme aydınlatma
+        metnini kabul etmiş sayılırsınız.
+      </p>
+      <p>
+        Hizmet, makul aralıklarla güncellenebilir. Sunulan özellikler haber verilmeksizin değiştirilebilir. Üçüncü taraf
+        bağlantılardan doğabilecek sorunlardan platform sorumlu değildir. Uygulama; eğitim, ilerleme takibi ve profil
+        servisleri ile bütünleşik çalışır.
+      </p>
+      <p>
+        Detaylı bilgi için destek ekibimizle iletişime geçebilirsiniz.
+      </p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-success" (click)="closeTermsModal()">Kapat</button>
     </div>
   </div>
 </div>

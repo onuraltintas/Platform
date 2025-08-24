@@ -1,6 +1,6 @@
 export const environment = {
   production: false,
-  apiUrl: '/api', // proxy.conf.json ile dev ortamında gateway'e yönlenir
+  apiUrl: 'http://localhost:5200/api',
   identityApiUrl: 'http://localhost:5002/api',
   userApiUrl: 'http://localhost:5004/api', 
   notificationApiUrl: 'http://localhost:5006/api',

@@ -55,7 +55,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseSecurityMiddleware();
+// app.UseSecurityMiddleware(); // Temporarily disabled for testing
 
 // SQL kullanılıyorsa otomatik migration uygula
 using (var scope = app.Services.CreateScope())

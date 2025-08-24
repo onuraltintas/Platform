@@ -17,6 +17,7 @@ public class ClientIngestController : ControllerBase
     public record SessionEndRequest(Guid SessionId, DateTime EndedAtUtc, int DurationSeconds, int? WPM, decimal? ComprehensionScore, string? EyeTrackingMetricsJson);
     public record ExerciseCompleteRequest(Guid AttemptId, Guid ExerciseId, DateTime CompletedAtUtc, int DurationSeconds, int? WPM, decimal? Score, string? EyeTrackingMetricsJson, string? Feedback);
     public record QuestionResponseRequest(Guid ResponseId, Guid AttemptId, Guid QuestionId, string GivenAnswer, bool? IsCorrect, int? ResponseTimeMs);
+    public record SessionResultsRequest(Guid SessionId, int Efficiency, int Consistency, int Improvement, int RecommendedSpeed, IEnumerable<string> SuggestedExercises, IEnumerable<string> NextSteps, DateTime SubmittedAt);
 
     [HttpPost("session/start")]
     public async Task<IActionResult> StartSession([FromBody] SessionStartRequest request)
@@ -71,6 +72,13 @@ public class ClientIngestController : ControllerBase
             await _db.SaveChangesAsync();
         }
         return Accepted(new { request.AttemptId });
+    }
+
+    [HttpPost("session-results")]
+    public IActionResult SubmitSessionResults([FromBody] SessionResultsRequest request)
+    {
+        // For now, accept and return without persistence. Can be extended to persist analytics.
+        return Accepted(new { request.SessionId, request.SubmittedAt });
     }
 
     [HttpPost("response")] 

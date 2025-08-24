@@ -1,0 +1,252 @@
+<div class="chunk-reader" [style]="getContainerStyles()">
+  
+  <!-- Chunk Display Area -->
+  <div class="chunk-display" [style]="getDisplayStyles()">
+    
+    <!-- Current Chunk -->
+    <div class="chunk-container" 
+         *ngIf="!isCompleted && currentChunk"
+         [style]="getChunkContainerStyles()">
+      <div class="chunk-words" [style]="getChunkWordsStyles()">
+        <span *ngFor="let word of currentChunk.words; let i = index"
+              class="chunk-word"
+              [class.focus-word]="i === focusWordIndex"
+              [style]="getChunkWordStyles(i)">{{ word }}</span>
+      </div>
+    </div>
+
+    <!-- Focus Indicator -->
+    <div class="focus-indicator" 
+         *ngIf="settings.showFocusPoint && !isCompleted"
+         [style]="getFocusIndicatorStyles()"></div>
+
+    <!-- Context Chunks (previous/next) -->
+    <div class="context-chunks" 
+         *ngIf="settings.showContext && !isCompleted"
+         [style]="getContextStyles()">
+      <div class="prev-chunk" [style]="getPrevChunkStyles()">
+        <span *ngFor="let word of previousChunk?.words"
+              class="context-word prev-word">{{ word }}</span>
+      </div>
+      <div class="next-chunk" [style]="getNextChunkStyles()">
+        <span *ngFor="let word of nextChunk?.words"
+              class="context-word next-word">{{ word }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Progress Visualization -->
+  <div class="progress-section" *ngIf="settings.showProgress">
+    <div class="chunk-progress-bar">
+      <div class="chunk-progress-fill" 
+           [style.width.%]="readingProgress"
+           [style]="getProgressBarStyles()"></div>
+    </div>
+    <div class="progress-info">
+      <div class="chunk-info">
+        <span>Grup {{ currentChunkIndex + 1 }} / {{ totalChunks }}</span>
+        <span>{{ currentWordIndex + 1 }} / {{ totalWords }} kelime</span>
+      </div>
+      <div class="percentage">{{ Math.round(readingProgress) }}%</div>
+    </div>
+  </div>
+
+  <!-- Chunk Settings -->
+  <div class="chunk-settings" *ngIf="!isActive && !isCompleted">
+    <h4>Grup Okuma Ayarları</h4>
+    
+    <div class="setting-group">
+      <div class="setting-row">
+        <label>Grup Boyutu:</label>
+        <div class="chunk-size-controls">
+          <button class="size-btn" 
+                  (click)="changeChunkSize(-1)" 
+                  [disabled]="currentChunkSize <= 1">-</button>
+          <span class="size-value">{{ currentChunkSize }} kelime</span>
+          <button class="size-btn" 
+                  (click)="changeChunkSize(1)" 
+                  [disabled]="currentChunkSize >= 7">+</button>
+        </div>
+      </div>
+
+      <div class="setting-row">
+        <label>Gösterim Süresi:</label>
+        <div class="duration-controls">
+          <input type="range" 
+                 [value]="displayDuration" 
+                 (input)="onDisplayDurationChange($event)"
+                 min="300" 
+                 max="2000" 
+                 step="100"
+                 class="duration-slider">
+          <span class="duration-value">{{ displayDuration }} ms</span>
+        </div>
+      </div>
+
+      <div class="setting-row">
+        <label>Mola Süresi:</label>
+        <div class="pause-controls">
+          <input type="range" 
+                 [value]="pauseDuration" 
+                 (input)="onPauseDurationChange($event)"
+                 min="50" 
+                 max="500" 
+                 step="50"
+                 class="pause-slider">
+          <span class="pause-value">{{ pauseDuration }} ms</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="visual-settings">
+      <label class="setting-item">
+        <input type="checkbox" 
+               [checked]="settings.showFocusPoint" 
+               (change)="toggleFocusPoint($event)">
+        <span class="checkmark"></span>
+        Odak Noktası Göster
+      </label>
+      
+      <label class="setting-item">
+        <input type="checkbox" 
+               [checked]="settings.showContext" 
+               (change)="toggleShowContext($event)">
+        <span class="checkmark"></span>
+        Önceki/Sonraki Grup Göster
+      </label>
+      
+      <label class="setting-item">
+        <input type="checkbox" 
+               [checked]="rhythmMode" 
+               (change)="toggleRhythmMode($event)">
+        <span class="checkmark"></span>
+        Ritim Modu
+      </label>
+    </div>
+
+    <div class="font-settings">
+      <div class="setting-row">
+        <label>Font Boyutu:</label>
+        <input type="range" 
+               [value]="settings.fontSize" 
+               (input)="onFontSizeChange($event)"
+               min="14" 
+               max="48" 
+               step="2">
+        <span>{{ settings.fontSize }}px</span>
+      </div>
+      
+      <div class="setting-row">
+        <label>Kelime Aralığı:</label>
+        <input type="range" 
+               [value]="wordSpacing" 
+               (input)="onWordSpacingChange($event)"
+               min="5" 
+               max="30" 
+               step="5">
+        <span>{{ wordSpacing }}px</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Reading Statistics -->
+  <div class="reading-stats" *ngIf="isActive || isCompleted">
+    <div class="stats-grid">
+      <div class="stat-item">
+        <span class="stat-value">{{ currentWPM }}</span>
+        <span class="stat-label">WPM</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-value">{{ formatTime(elapsedTime) }}</span>
+        <span class="stat-label">Süre</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-value">{{ currentChunkSize }}</span>
+        <span class="stat-label">Grup Boyutu</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-value">{{ Math.round(1000 / displayDuration * 60) }}</span>
+        <span class="stat-label">Grup/Dk</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Completion Screen -->
+  <div class="completion-screen" *ngIf="isCompleted">
+    <div class="completion-content">
+      <div class="completion-icon">
+        <i class="bi bi-layers-fill"></i>
+      </div>
+      <h3>Grup Okuma Tamamlandı!</h3>
+      <p>{{ totalWords }} kelimeyi {{ totalChunks }} grup halinde {{ formatTime(elapsedTime) }} sürede okudunuz.</p>
+      
+      <div class="final-stats-grid">
+        <div class="final-stat-card">
+          <div class="stat-icon"><i class="bi bi-speedometer2"></i></div>
+          <div class="stat-content">
+            <div class="stat-value">{{ finalWPM }}</div>
+            <div class="stat-label">Ortalama WPM</div>
+          </div>
+        </div>
+        
+        <div class="final-stat-card">
+          <div class="stat-icon"><i class="bi bi-bullseye"></i></div>
+          <div class="stat-content">
+            <div class="stat-value">{{ averageChunkSize }}</div>
+            <div class="stat-label">Ort. Grup Boyutu</div>
+          </div>
+        </div>
+        
+        <div class="final-stat-card">
+          <div class="stat-icon"><i class="bi bi-graph-up"></i></div>
+          <div class="stat-content">
+            <div class="stat-value">{{ Math.round(efficiency) }}%</div>
+            <div class="stat-label">Verimlilik</div>
+          </div>
+        </div>
+        
+        <div class="final-stat-card">
+          <div class="stat-icon"><i class="bi bi-hourglass-split"></i></div>
+          <div class="stat-content">
+            <div class="stat-value">{{ displayDuration }}</div>
+            <div class="stat-label">ms/Grup</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="performance-analysis">
+        <h4>Performans Analizi</h4>
+        <div class="analysis-item" *ngIf="finalWPM >= 400">
+          <i class="bi bi-star-fill text-success"></i>
+          <span>Excellent chunk reading speed!</span>
+        </div>
+        <div class="analysis-item" *ngIf="averageChunkSize >= 4">
+          <i class="bi bi-eye-fill text-info"></i>
+          <span>Good peripheral vision utilization</span>
+        </div>
+        <div class="analysis-item" *ngIf="consistency >= 80">
+          <i class="bi bi-heart-fill text-warning"></i>
+          <span>Consistent reading rhythm maintained</span>
+        </div>
+        
+        <div class="recommendations" *ngIf="finalWPM < 300 || averageChunkSize < 3">
+          <h5>Öneriler:</h5>
+          <ul>
+            <li *ngIf="finalWPM < 300">Grup boyutunu küçültmeyi deneyin</li>
+            <li *ngIf="averageChunkSize < 3">Çevresel görüş egzersizleri yapın</li>
+            <li>Düzenli pratik yaparak ritim geliştirin</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Rhythm Indicator -->
+  <div class="rhythm-indicator" 
+       *ngIf="rhythmMode && isActive"
+       [style]="getRhythmIndicatorStyles()">
+    <div class="rhythm-pulse" 
+         [class.pulse-active]="showRhythmPulse"
+         [style]="getRhythmPulseStyles()"></div>
+  </div>
+</div>

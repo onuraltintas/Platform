@@ -1,0 +1,85 @@
+<div class="classic-reader" [style]="getContainerStyles()">
+
+
+  <!-- Hız ayarları kaldırıldı: sadece Settings sayfasında değiştirilecek -->
+
+  <!-- Reading Area (Bottom) -->
+  <div class="reading-area" #readingArea [style]="getReadingAreaStyles()">
+    
+    <!-- Text Content -->
+    <div class="text-content" 
+         [style]="getTextStyles()"
+         (scroll)="onScroll($event)"
+         #textContainer>
+      
+      <!-- Text with word highlighting -->
+      <div class="text-paragraphs">
+        <p *ngFor="let paragraph of paragraphs; let pIndex = index" 
+           class="text-paragraph"
+           [id]="'paragraph-' + pIndex">
+          
+          <ng-container *ngFor="let word of paragraph.words; let wIndex = index">
+            <span *ngIf="!settings.bionicEnabled"
+                  class="text-word"
+                  [class.current-word]="isCurrentWord(pIndex, wIndex)"
+                  [class.read-word]="isReadWord(pIndex, wIndex)"
+                  [id]="'word-' + pIndex + '-' + wIndex"
+                  [style]="getWordStyle(pIndex, wIndex)">{{ word.text }}</span>
+            <span *ngIf="settings.bionicEnabled"
+                  class="text-word"
+                  [class.current-word]="isCurrentWord(pIndex, wIndex)"
+                  [class.read-word]="isReadWord(pIndex, wIndex)"
+                  
+                  [id]="'word-' + pIndex + '-' + wIndex"
+                  [style]="getWordStyle(pIndex, wIndex)">
+              <ng-container [ngTemplateOutlet]="bionicTpl" [ngTemplateOutletContext]="{ $implicit: word.text }"></ng-container>
+            </span>
+            <ng-template #bionicTpl let-w>
+              <ng-container [ngSwitch]="true">
+                <ng-container *ngSwitchCase="(w?.length||0) <= 1">{{ w }}</ng-container>
+                <ng-container *ngSwitchDefault>
+                  <b>{{ w.slice(0, Math.ceil(w.length*0.4)) }}</b>{{ w.slice(Math.ceil(w.length*0.4)) }}
+                </ng-container>
+              </ng-container>
+            </ng-template>
+          </ng-container>
+        </p>
+      </div>
+    </div>
+
+    <!-- Reading Guide (optional) - DISABLED -->
+    <!-- <div class="reading-guide" 
+         *ngIf="settings.showReadingGuide && isActive"
+         [style]="getGuideStyles()"></div> -->
+
+    <!-- Progress Indicator -->
+    <div class="progress-indicator" *ngIf="showProgressIndicator">
+      <div class="progress-line" [style.height.%]="scrollProgress"></div>
+    </div>
+  </div>
+
+
+
+  <!-- Completion Message -->
+  <div class="completion-message" *ngIf="isCompleted">
+    <div class="completion-content">
+      <i class="bi bi-book-fill"></i>
+      <h3>Klasik Okuma Tamamlandı!</h3>
+      <p>{{ totalWords }} kelimeyi {{ formatTime(elapsedTime) }} sürede okudunuz.</p>
+      <div class="final-stats">
+        <div class="final-stat">
+          <span class="value">{{ finalWPM }}</span>
+          <span class="label">Ortalama WPM</span>
+        </div>
+        <div class="final-stat">
+          <span class="value">{{ Math.round(readingProgress) }}%</span>
+          <span class="label">Tamamlanan</span>
+        </div>
+        <div class="final-stat">
+          <span class="value">{{ scrollEvents }}</span>
+          <span class="label">Kaydırma</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

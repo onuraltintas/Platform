@@ -1,0 +1,132 @@
+<div class="reading-interface dark-theme">
+  <!-- Header -->
+  <div class="reading-header">
+    <div class="header-left">
+      <button class="back-btn" (click)="goBack()">
+        <i class="bi bi-arrow-left"></i>
+        Geri
+      </button>
+    </div>
+    
+  </div>
+
+  <!-- Main Content Area -->
+  <div class="reading-content">
+    
+    
+
+    <!-- Reading Area -->
+    <div class="reading-area">
+      
+      <!-- Mode Selection + Start (before session starts) -->
+      <div class="mode-selection" *ngIf="!sessionActive && currentText">
+        <h3>Okuma Modunu Seçin</h3>
+        <p class="subtitle">Kendinize uygun modu seçin, ayarları özelleştirin ve okumaya başlayın.</p>
+        <div class="mode-cards">
+          <div 
+            class="mode-card" 
+            *ngFor="let mode of availableModes"
+            [class.selected]="selectedMode === mode.id"
+            (click)="selectMode(mode.id)">
+            <div class="mode-icon">
+              <i class="bi" [class]="mode.icon"></i>
+            </div>
+            <h4>{{ mode.name }}</h4>
+            <p>{{ mode.description }}</p>
+            <div class="mode-features">
+              <span *ngFor="let feature of mode.features" class="feature-tag">{{ feature }}</span>
+            </div>
+            <div class="card-footer">
+              <span>Seç</span>
+              <i class="bi bi-arrow-right"></i>
+            </div>
+          </div>
+        </div>
+        
+        <div class="start-section">
+          <button class="btn-start" (click)="goToSettings()" [disabled]="!selectedMode">
+            <i class="bi bi-gear"></i>
+            Ayarları Yap ve Başla
+          </button>
+        </div>
+      </div>
+
+      <!-- Active Reader Modes -->
+      <ng-container *ngIf="sessionActive && currentText">
+        <app-classic-reader *ngIf="selectedMode === 'classic'"
+          [textContent]="currentText"
+          [settings]="readingSettings"
+          [isActive]="isPlaying"
+          (wordsRead)="onWordsRead($event)"
+          (completed)="onReadingCompleted()">
+        </app-classic-reader>
+
+        <app-rsvp-reader *ngIf="selectedMode === 'rsvp'"
+          [textContent]="currentText"
+          [settings]="readingSettings"
+          [isActive]="isPlaying"
+          [speed]="readingSettings.wordsPerMinute"
+          (wordsRead)="onWordsRead($event)"
+          (completed)="onReadingCompleted()">
+        </app-rsvp-reader>
+
+        <app-guided-reader *ngIf="selectedMode === 'guided'"
+          [textContent]="currentText"
+          [settings]="readingSettings"
+          [isActive]="isPlaying"
+          [speed]="readingSettings.highlighterSpeed || readingSettings.wordsPerMinute"
+          (wordsRead)="onWordsRead($event)"
+          (completed)="onReadingCompleted()">
+        </app-guided-reader>
+
+        <app-chunk-reader *ngIf="selectedMode === 'chunk'"
+          [textContent]="currentText"
+          [settings]="readingSettings"
+          [isActive]="isPlaying"
+          (wordsRead)="onWordsRead($event)"
+          (completed)="onReadingCompleted()">
+        </app-chunk-reader>
+      </ng-container>
+
+    </div>
+  </div>
+
+  <!-- Session Results Modal -->
+  <app-session-results-modal
+    *ngIf="showResults"
+    [results]="sessionResults"
+    (finish)="finishReading()"
+    (retryReading)="retryReading()">
+  </app-session-results-modal>
+
+  <!-- Onboarding Overlay -->
+  <div class="onboarding-overlay" *ngIf="showOnboarding">
+    <div class="onboarding-content">
+      <h3>Hoş geldiniz!</h3>
+      <ul>
+        <li>Okuma modunu seçin ve "Okumaya Başla"ya tıklayın.</li>
+        <li>Space ile başlat/duraklat.</li>
+        <li>RSVP modunda odak harfi vurgulanır; cümle sonlarında otomatik yavaşlar.</li>
+      </ul>
+      <div class="d-flex gap-2 justify-content-end">
+        <button class="btn btn-primary" (click)="closeOnboarding()">Anladım</button>
+      </div>
+    </div>
+  </div>
+  <!-- Comprehension Test Modal -->
+  <app-comprehension-test
+    *ngIf="sessionActive === false && currentText && showResults === false && showComprehensionTest"
+    [textId]="currentText && currentText.id ? currentText.id : ''"
+    [questions]="comprehensionQuestions"
+    (completed)="onComprehensionCompleted($event)"
+    (skipped)="onComprehensionSkipped()">
+  </app-comprehension-test>
+
+  <!-- Loading State -->
+  <div class="loading-overlay" *ngIf="isLoading">
+    <div class="loading-content">
+      <div class="spinner"></div>
+      <p>Metin hazırlanıyor...</p>
+    </div>
+  </div>
+</div>

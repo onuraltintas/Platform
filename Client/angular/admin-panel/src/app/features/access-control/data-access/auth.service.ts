@@ -64,6 +64,9 @@ export class AuthService {
 
   googleLogin(): void {
     try {
+      const csrfToken = Date.now().toString(); // Simple CSRF token
+      const state = `admin:${csrfToken}`;
+      
       const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?` +
                       `client_id=${environment.googleClientId}&` +
                       `redirect_uri=${encodeURIComponent(environment.backendGoogleRedirectUri)}&` +
@@ -71,7 +74,7 @@ export class AuthService {
                       `scope=openid%20profile%20email&` +
                       `access_type=offline&` +
                       `prompt=select_account&` +
-                      `state=some_state_value`;
+                      `state=${state}`;
 
       console.log('Redirecting to Google OAuth URL:', authUrl);
 

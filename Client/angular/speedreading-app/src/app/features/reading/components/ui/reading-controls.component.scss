@@ -1,0 +1,932 @@
+// Reading Controls Component Styles
+
+.reading-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 20px;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  border-radius: 12px;
+  border: 1px solid #cbd5e1;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  
+  &.controls-active {
+    border-color: #3b82f6;
+    box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.2);
+  }
+}
+
+// Single Row Controls - NEW LAYOUT
+.single-row-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: nowrap;
+}
+
+// Main Control Bar (Fallback)
+.control-bar {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+// Playback Controls
+.playback-controls {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.control-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 44px;
+  height: 44px;
+  
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+  
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none !important;
+  }
+  
+  i {
+    font-size: 16px;
+  }
+}
+
+.play-btn {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+  
+  &:hover {
+    background: linear-gradient(135deg, #059669 0%, #047857 100%);
+  }
+}
+
+.pause-btn {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  color: white;
+  
+  &:hover {
+    background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+  }
+}
+
+.stop-btn {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  color: white;
+  
+  &:hover {
+    background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+  }
+}
+
+
+// Speed Controls
+.speed-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.speed-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 8px 12px;
+  background: white;
+  border-radius: 6px;
+  border: 1px solid #e2e8f0;
+  min-width: 80px;
+}
+
+.speed-label {
+  font-size: 11px;
+  font-weight: 500;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.speed-value {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.speed-adjustment {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.speed-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid #cbd5e1;
+  background: white;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #475569;
+  
+  &:hover {
+    border-color: #3b82f6;
+    color: #3b82f6;
+    background: #f1f5f9;
+  }
+  
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+.speed-slider-container {
+  display: flex;
+  align-items: center;
+}
+
+.speed-slider {
+  width: 100px;
+  height: 4px;
+  border-radius: 2px;
+  background: #e2e8f0;
+  outline: none;
+  cursor: pointer;
+  
+  &::-webkit-slider-thumb {
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #3b82f6;
+    cursor: pointer;
+    border: 2px solid white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    
+    &:hover {
+      background: #1d4ed8;
+      transform: scale(1.1);
+    }
+  }
+  
+  &::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #3b82f6;
+    cursor: pointer;
+    border: 2px solid white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+}
+
+// Secondary Controls
+.secondary-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #e2e8f0;
+  flex-wrap: wrap;
+}
+
+// Card-based Session Stats - COMPACT for single row
+.session-stats-grid {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 8px;
+  margin-bottom: 0;
+  justify-content: flex-start;
+  align-items: center;
+  overflow-x: auto;
+  flex: 1;
+  max-width: 350px;
+}
+
+.stat-card {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 8px;
+  border-radius: 6px;
+  border: 1px solid;
+  transition: all 0.2s ease;
+  cursor: default;
+  min-width: 90px;
+  flex: 0 0 auto;
+  white-space: nowrap;
+  
+  &.primary {
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    border-color: #cbd5e1;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+    
+    &:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+  }
+  
+  &.secondary {
+    background: linear-gradient(135deg, #fefce8 0%, #fef3c7 100%);
+    border-color: #fbbf24;
+    opacity: 0.9;
+    
+    &:hover {
+      opacity: 1;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(251, 191, 36, 0.2);
+    }
+  }
+}
+
+.card-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  flex-shrink: 0;
+  
+  .primary & {
+    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+    color: white;
+  }
+  
+  .secondary & {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    color: white;
+  }
+  
+  i {
+    font-size: 14px;
+  }
+}
+
+.card-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.card-label {
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  
+  .primary & {
+    color: #64748b;
+  }
+  
+  .secondary & {
+    color: #92400e;
+  }
+}
+
+.card-value {
+  font-size: 11px;
+  font-weight: 700;
+  
+  .primary & {
+    color: #1e293b;
+  }
+  
+  .secondary & {
+    color: #78350f;
+  }
+}
+
+
+.mode-indicator {
+  display: flex;
+  align-items: center;
+}
+
+.mode-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: 9999px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  border: 1px solid transparent;
+
+  i {
+    font-size: 16px;
+  }
+
+  &.mode-classic {
+    background: #eff6ff;
+    color: #1d4ed8;
+    border-color: #bfdbfe;
+  }
+  
+  &.mode-rsvp {
+    background: #ecfdf5;
+    color: #059669;
+    border-color: #a7f3d0;
+  }
+  
+  &.mode-chunk {
+    background: #fffbeb;
+    color: #d97706;
+    border-color: #fde68a;
+  }
+  
+  &.mode-guided {
+    background: #eef2ff;
+    color: #4f46e5;
+    border-color: #c7d2fe;
+  }
+}
+
+.quick-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid #cbd5e1;
+  background: white;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #64748b;
+  
+  &:hover {
+    border-color: #3b82f6;
+    color: #3b82f6;
+    background: #f1f5f9;
+  }
+  
+  &.active {
+    background: #3b82f6;
+    color: white;
+    border-color: #3b82f6;
+  }
+  
+  i {
+    font-size: 16px;
+  }
+}
+
+
+
+// Status Messages
+.status-messages {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+
+.status-message {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  max-width: 300px;
+  
+  &.success {
+    background: #dcfce7;
+    color: #166534;
+    border: 1px solid #bbf7d0;
+  }
+  
+  &.info {
+    background: #dbeafe;
+    color: #1e40af;
+    border: 1px solid #bfdbfe;
+  }
+  
+  &.warning {
+    background: #fef3c7;
+    color: #92400e;
+    border: 1px solid #fde68a;
+  }
+  
+  &.error {
+    background: #fee2e2;
+    color: #991b1b;
+    border: 1px solid #fecaca;
+  }
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 2px;
+  margin-left: auto;
+  color: inherit;
+  opacity: 0.7;
+  
+  &:hover {
+    opacity: 1;
+  }
+}
+
+// Keyboard Shortcuts
+.shortcuts-hint {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  max-width: 300px;
+}
+
+.shortcuts-content {
+  h5 {
+    margin: 0 0 12px 0;
+    color: #1e293b;
+    font-size: 14px;
+  }
+}
+
+.shortcut-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.shortcut-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 13px;
+  
+  kbd {
+    background: #f1f5f9;
+    padding: 4px 8px;
+    border-radius: 4px;
+    border: 1px solid #cbd5e1;
+    font-family: monospace;
+    font-size: 11px;
+    color: #475569;
+  }
+}
+
+.close-shortcuts {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  color: #64748b;
+  
+  &:hover {
+    color: #1e293b;
+  }
+}
+
+// Mini Controls (for fullscreen)
+.mini-controls {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 20px;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+  border-radius: 24px;
+  z-index: 1000;
+}
+
+.mini-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.1);
+  }
+  
+  &.exit-fullscreen {
+    background: rgba(239, 68, 68, 0.8);
+    
+    &:hover {
+      background: rgba(239, 68, 68, 1);
+    }
+  }
+}
+
+.mini-progress {
+  width: 120px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.mini-progress-fill {
+  height: 100%;
+  background: white;
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+.mini-wpm {
+  font-size: 12px;
+  font-weight: 600;
+  color: white;
+  white-space: nowrap;
+}
+
+// Animations
+@keyframes shimmer {
+  0% { opacity: 0.5; }
+  50% { opacity: 1; }
+  100% { opacity: 0.5; }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .reading-controls {
+    padding: 16px;
+    gap: 12px;
+  }
+  
+  .control-bar {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  
+  .speed-controls {
+    order: 2;
+  }
+  
+  .secondary-controls {
+    flex-direction: column;
+    gap: 12px;
+    align-items: stretch;
+  }
+  
+  // Mobile Card Layout
+  .session-stats-grid {
+    flex-direction: column;
+    gap: 8px;
+    
+    .stat-card {
+      padding: 10px;
+      gap: 8px;
+      
+      .card-icon {
+        width: 28px;
+        height: 28px;
+        
+        i {
+          font-size: 12px;
+        }
+      }
+      
+      .card-label {
+        font-size: 10px;
+      }
+      
+      .card-value {
+        font-size: 12px;
+      }
+    }
+  }
+  
+  .shortcuts-hint {
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    max-width: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .control-btn {
+    padding: 8px 12px;
+    font-size: 13px;
+    min-width: 40px;
+    height: 40px;
+  }
+  
+  .playback-controls {
+    justify-content: center;
+  }
+  
+  .speed-adjustment {
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .info-item {
+    flex-direction: column;
+    text-align: center;
+    gap: 4px;
+  }
+}
+
+// Dark theme support
+:host-context(.dark-theme) {
+  .reading-controls {
+    background: linear-gradient(135deg, #1f2937 0%, #374151 100%) !important;
+    border: 1px solid #4b5563 !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3) !important;
+    
+    &.controls-active {
+      border-color: #60a5fa !important;
+      box-shadow: 0 4px 6px -1px rgba(96, 165, 250, 0.3) !important;
+    }
+  }
+  
+  // Dark theme for stat cards - MISSING SECTION ADDED
+  .secondary-controls {
+    border-top: 1px solid #4b5563 !important;
+  }
+  
+  .stat-card {
+    &.primary {
+      background: linear-gradient(135deg, #374151 0%, #4b5563 100%) !important;
+      border-color: #6b7280 !important;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+      
+      &:hover {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4) !important;
+      }
+    }
+    
+    &.secondary {
+      background: linear-gradient(135deg, #4b5563 0%, #6b7280 100%) !important;
+      border-color: #9ca3af !important;
+      
+      &:hover {
+        box-shadow: 0 4px 12px rgba(156, 163, 175, 0.3) !important;
+      }
+    }
+  }
+  
+  .card-icon {
+    .primary & {
+      background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%) !important;
+      color: white !important;
+    }
+    
+    .secondary & {
+      background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%) !important;
+      color: white !important;
+    }
+  }
+  
+  .card-label {
+    .primary & {
+      color: #d1d5db !important;
+    }
+    
+    .secondary & {
+      color: #e5e7eb !important;
+    }
+  }
+  
+  .card-value {
+    .primary & {
+      color: #f9fafb !important;
+    }
+    
+    .secondary & {
+      color: #f3f4f6 !important;
+    }
+  }
+  
+  
+  // Speed Controls
+  .speed-display {
+    background: #4b5563 !important;
+    border: 1px solid #6b7280 !important;
+    
+    .speed-label {
+      color: #d1d5db !important;
+    }
+    
+    .speed-value {
+      color: #f9fafb !important;
+    }
+  }
+  
+  .speed-btn {
+    background: #4b5563 !important;
+    color: #f9fafb !important;
+    border: 1px solid #6b7280 !important;
+    
+    &:hover:not(:disabled) {
+      background: #6b7280 !important;
+    }
+    
+    &:disabled {
+      background: #374151 !important;
+      color: #9ca3af !important;
+    }
+  }
+  
+  .speed-slider {
+    background: #4b5563 !important;
+    
+    &::-webkit-slider-track {
+      background: #374151 !important;
+    }
+    
+    &::-webkit-slider-thumb {
+      background: #60a5fa !important;
+      border: 2px solid #1f2937 !important;
+    }
+    
+    &::-moz-range-track {
+      background: #374151 !important;
+    }
+    
+    &::-moz-range-thumb {
+      background: #60a5fa !important;
+      border: 2px solid #1f2937 !important;
+    }
+  }
+  
+  
+  .mode-indicator .mode-badge {
+    background: #4b5563 !important;
+    color: #f9fafb !important;
+    border: 1px solid #6b7280 !important;
+    
+    i {
+      color: #60a5fa !important;
+    }
+  }
+  
+  .action-btn {
+    background: #4b5563 !important;
+    color: #f9fafb !important;
+    border: 1px solid #6b7280 !important;
+    
+    &:hover {
+      background: #6b7280 !important;
+    }
+    
+    &.active {
+      background: #60a5fa !important;
+      color: white !important;
+    }
+  }
+  
+  
+  // Status Messages
+  .status-message {
+    background: #374151 !important;
+    color: #f9fafb !important;
+    border: 1px solid #4b5563 !important;
+    
+    &.success {
+      background: #059669 !important;
+    }
+    
+    &.warning {
+      background: #d97706 !important;
+    }
+    
+    &.error {
+      background: #dc2626 !important;
+    }
+    
+    .close-btn {
+      color: #f9fafb !important;
+      
+      &:hover {
+        background: rgba(255, 255, 255, 0.1) !important;
+      }
+    }
+  }
+  
+  // Keyboard Shortcuts
+  .shortcuts-hint {
+    background: rgba(31, 41, 55, 0.95) !important;
+  }
+  
+  .shortcuts-content {
+    background: #374151 !important;
+    border: 1px solid #4b5563 !important;
+    color: #f9fafb !important;
+    
+    h5 {
+      color: #f9fafb !important;
+      border-bottom: 1px solid #4b5563 !important;
+    }
+    
+    .shortcut-item {
+      color: #f9fafb !important;
+      
+      kbd {
+        background: #4b5563 !important;
+        color: #f9fafb !important;
+        border: 1px solid #6b7280 !important;
+      }
+    }
+    
+    .close-shortcuts {
+      color: #f9fafb !important;
+      
+      &:hover {
+        background: #4b5563 !important;
+      }
+    }
+  }
+  
+  // Mini Controls (Fullscreen)
+  .mini-controls {
+    background: rgba(31, 41, 55, 0.9) !important;
+    border: 1px solid #4b5563 !important;
+    
+    .mini-btn {
+      background: #4b5563 !important;
+      color: #f9fafb !important;
+      border: 1px solid #6b7280 !important;
+      
+      &:hover {
+        background: #6b7280 !important;
+      }
+    }
+    
+    .mini-progress {
+      background: #4b5563 !important;
+    }
+    
+    .mini-wpm {
+      color: #f9fafb !important;
+    }
+  }
+}

@@ -218,7 +218,7 @@ public class AuthService : IAuthService
 
             _logger.LogInformation("User saved successfully. Now attempting email confirmation for {Email}", user.Email);
 
-            // Send email confirmation
+            // Send email confirmation (speedreading-app)
             var confirmationLink = $"http://localhost:4202/auth/confirm-email?token={Uri.EscapeDataString(user.EmailConfirmationToken ?? string.Empty)}&userId={user.Id}";
             var emailSubject = "EğitimPlatform | Hesabınızı Doğrulayın";
             var emailBody = $@"
@@ -450,7 +450,7 @@ public class AuthService : IAuthService
 
             await _context.SaveChangesAsync().ConfigureAwait(false);
 
-            // Send password reset email
+            // Send password reset email (speedreading-app)
             var resetLink = $"http://localhost:4202/reset-password?token={Uri.EscapeDataString(user.PasswordResetToken ?? string.Empty)}&email={Uri.EscapeDataString(user.Email)}";
             var emailSubject = "Şifre Sıfırlama Talebi - EğitimPlatform";
             var emailBody = $@"
@@ -687,7 +687,7 @@ public class AuthService : IAuthService
 
             await _context.SaveChangesAsync().ConfigureAwait(false);
 
-            // Send email confirmation
+            // Send email confirmation (speedreading-app)
             var confirmationLink = $"http://localhost:4202/auth/confirm-email?token={Uri.EscapeDataString(user.EmailConfirmationToken ?? string.Empty)}&userId={user.Id}";
             var emailSubject = "EğitimPlatform | Hesabınızı Doğrulayın";
             var emailBody = $@"

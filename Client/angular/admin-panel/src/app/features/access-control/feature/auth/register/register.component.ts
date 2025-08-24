@@ -6,7 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../../../data-access/auth.service';
 import { RegisterRequest } from '../../../models/auth.models';
 
-declare var bootstrap: any;
+declare var coreui: any;
 
 @Component({
   selector: 'app-register',
@@ -31,7 +31,7 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
     const modalElement = document.getElementById('kvkkModal');
     if (modalElement) {
-      this.kvkkModal = new bootstrap.Modal(modalElement);
+      this.kvkkModal = new coreui.Modal(modalElement);
     }
   }
 

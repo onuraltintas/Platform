@@ -1,1 +1,10 @@
-/* You can add global styles to this file, and also import other style files */
+/* Global base to prevent white background flash and enforce dark mode canvas */
+html, body {
+  height: 100%;
+  background-color: #0a0e1a;
+  color: #ffffff;
+}
+
+body {
+  margin: 0;
+}

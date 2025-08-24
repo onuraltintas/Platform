@@ -1,0 +1,152 @@
+<div class="reading-controls" [class.controls-active]="session">
+  
+  <!-- Single Row Control Bar -->
+  <div class="single-row-controls" *ngIf="showSecondaryControls">
+    
+    <!-- Playback Controls -->
+    <div class="playback-controls">
+      <button class="control-btn play-btn" 
+              *ngIf="!isPlaying"
+              (click)="onPlay()"
+              [disabled]="!session"
+              title="Başlat">
+        <i class="bi bi-play-fill"></i>
+      </button>
+      
+      <button class="control-btn pause-btn" 
+              *ngIf="isPlaying"
+              (click)="onPause()"
+              title="Duraklat">
+        <i class="bi bi-pause-fill"></i>
+      </button>
+      
+      <button class="control-btn stop-btn" 
+              (click)="onStop()"
+              [disabled]="!session"
+              title="Durdur">
+        <i class="bi bi-stop-fill"></i>
+      </button>
+    </div>
+
+    <!-- Stats Cards (Compact) -->
+    <div class="session-stats-grid">
+      <!-- Words Progress Card -->
+      <div class="stat-card primary">
+        <div class="card-icon">
+          <i class="bi bi-book"></i>
+        </div>
+        <div class="card-content">
+          <div class="card-label">Kelime</div>
+          <div class="card-value">{{ wordsRead || 0 }} / {{ totalWords || 0 }}</div>
+        </div>
+      </div>
+      
+      <!-- Time Card -->
+      <div class="stat-card primary">
+        <div class="card-icon">
+          <i class="bi bi-clock"></i>
+        </div>
+        <div class="card-content">
+          <div class="card-label">Süre</div>
+          <div class="card-value">{{ formatTime(sessionDuration) }}</div>
+        </div>
+      </div>
+      
+      <!-- Progress Card -->
+      <div class="stat-card primary" *ngIf="readingProgress !== undefined">
+        <div class="card-icon">
+          <i class="bi bi-percent"></i>
+        </div>
+        <div class="card-content">
+          <div class="card-label">İlerleme</div>
+          <div class="card-value">{{ Math.round(readingProgress) }}%</div>
+        </div>
+      </div>
+    </div>
+
+    
+
+    <!-- Mode Indicator -->
+    <div class="mode-indicator">
+      <div class="mode-badge" [class]="'mode-' + getModeClass()">
+        <i class="bi" [class]="getModeIcon()"></i>
+        <span>{{ getModeDisplayName() }}</span>
+      </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="quick-actions">
+      <button class="action-btn" 
+              (click)="toggleFullscreen()"
+              [class.active]="isFullscreen"
+              title="Tam Ekran">
+        <i class="bi bi-fullscreen"></i>
+      </button>
+    </div>
+  </div>
+
+
+  <!-- Status Messages -->
+  <div class="status-messages" *ngIf="statusMessage">
+    <div class="status-message" 
+         [class]="statusMessageType"
+         [@slideIn]>
+      <i class="bi" [class]="getStatusIcon()"></i>
+      <span>{{ statusMessage }}</span>
+      <button class="close-btn" (click)="clearStatusMessage()">
+        <i class="bi bi-x"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Keyboard Shortcuts Hint -->
+  <div class="shortcuts-hint" *ngIf="showShortcuts">
+    <div class="shortcuts-content">
+      <h5>Klavye Kısayolları</h5>
+      <div class="shortcut-list">
+        <div class="shortcut-item">
+          <kbd>Space</kbd>
+          <span>Başlat/Duraklat</span>
+        </div>
+        <div class="shortcut-item">
+          <kbd>Esc</kbd>
+          <span>Durdur</span>
+        </div>
+        
+        <div class="shortcut-item">
+          <kbd>F</kbd>
+          <span>Tam Ekran</span>
+        </div>
+      </div>
+      <button class="close-shortcuts" (click)="hideShortcuts()">
+        <i class="bi bi-x"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mini Controls (for fullscreen mode) -->
+  <div class="mini-controls" *ngIf="isFullscreen && session">
+    <button class="mini-btn" 
+            *ngIf="!isPlaying"
+            (click)="onPlay()">
+      <i class="bi bi-play-fill"></i>
+    </button>
+    
+    <button class="mini-btn" 
+            *ngIf="isPlaying"
+            (click)="onPause()">
+      <i class="bi bi-pause-fill"></i>
+    </button>
+    
+    <div class="mini-progress">
+      <div class="mini-progress-fill" [style.width.%]="progress"></div>
+    </div>
+    
+    <span class="mini-wpm">{{ currentWPM }} WPM</span>
+    
+    <button class="mini-btn exit-fullscreen" 
+            (click)="toggleFullscreen()">
+      <i class="bi bi-fullscreen-exit"></i>
+    </button>
+  </div>
+</div>

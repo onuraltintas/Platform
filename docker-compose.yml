@@ -98,6 +98,7 @@ services:
 
   # Identity Service
   identity-service:
+    image: identity-service:${TAG:-latest}
     build:
       context: .
       dockerfile: Services/IdentityService/Dockerfile
@@ -114,11 +115,17 @@ services:
       - ASPNETCORE_ENVIRONMENT=Docker
       - ASPNETCORE_URLS=http://+:80
       - ConnectionStrings__DefaultConnection=Server=${DB_SERVER};Database=${DB_NAME_IDENTITY};User Id=${DB_USER};Password=${DB_PASSWORD};TrustServerCertificate=${DB_TRUST_SERVER_CERTIFICATE}
-      - ConnectionStrings__Redis=${REDIS_HOST}:${REDIS_PORT}
+      - JwtSettings__Secret=${JWT_SECRET}
+      - JwtSettings__Issuer=${JWT_ISSUER}
+      - JwtSettings__Audience=${JWT_AUDIENCE}
+      - OAuthClients__admin=${OAuthClients__admin}
+      - OAuthClients__speedreading=${OAuthClients__speedreading}
+      - EmailSettings__SmtpServer=${EMAIL_SMTP_SERVER}
+      - EmailSettings__SmtpPort=${EMAIL_SMTP_PORT}
+      - EmailSettings__SmtpUser=${EMAIL_SMTP_USER}
       - Jwt__SecretKey=${JWT_SECRET_KEY}
       - Jwt__Issuer=${JWT_ISSUER}
       - Jwt__Audience=${JWT_AUDIENCE}
-      - Jwt__ExpirationMinutes=${JWT_EXPIRATION_MINUTES}
       - Google__ClientId=${GOOGLE_CLIENT_ID}
       - Google__ClientSecret=${GOOGLE_CLIENT_SECRET}
       - Google__RedirectUri=${GOOGLE_REDIRECT_URI}
@@ -291,6 +298,8 @@ services:
     depends_on:
       sqlserver:
         condition: service_healthy
+    ports:
+      - "5105:80"
     networks:
       - egitimplatform-network
     healthcheck:
