@@ -12,6 +12,8 @@
 8. [Deployment Guide](#deployment-guide)
 9. [Development Workflow](#development-workflow)
 10. [Çalıştırma Rehberi ve Ortam Standartları](#çalıştırma-rehberi-ve-ortam-standartları)
+11. [Hızlı Başlangıç (Quick Start)](#hızlı-başlangıç-quick-start)
+12. [Frontend (Angular) Geliştirme](#frontend-angular-geliştirme)
 
 ---
 
@@ -836,3 +838,48 @@ curl -I http://localhost:5001/api/v1/gdpr/export/json
 curl -I http://localhost:5001/api/v1/exercises
 curl -I http://localhost:5001/api/v1/reading-texts
 ```
+
+---
+
+## ⚡ Hızlı Başlangıç (Quick Start)
+
+### 1) Ortam Değişkenleri
+```
+cp config/env/shared.env config/env/shared.env
+cp config/env/dev.env config/env/dev.env
+# secrets.env dosyasını doldurun (git’e eklenmez)
+cp config/env/secrets.env config/env/secrets.env
+```
+
+Google OAuth için `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `GOOGLE_REDIRECT_URI` değerlerini `secrets.env` içinde tanımlayın.
+
+### 2) Docker ile servisleri çalıştırma
+```
+docker compose -f docker-compose.yml -f docker-compose.dev.yml up -d --build
+```
+- Gateway: http://localhost:5001
+- Identity API: container içi 80 (gateway üzerinden erişin)
+- Postgres/Redis/RabbitMQ otomatik ayağa kalkar.
+
+### 3) Frontend (Admin Panel) geliştirme
+```
+cd src/Frontend/Angular/AdminPanel
+npm ci
+npm start -- --port 4201
+```
+Varsayılan API Gateway URL’leri `src/Frontend/Angular/AdminPanel/src/environments/environment.ts` içindedir.
+
+---
+
+## 🖥️ Frontend (Angular) Geliştirme
+
+### Scriptler
+```
+npm start              # dev server
+npm run build         # prod build
+npm run test          # jest unit tests
+```
+
+### Google OAuth Callback (Dev)
+- Authorized redirect URI: `http://localhost:5001/api/v1/auth/google/callback`
+- FE callback route: `/auth/google/callback`
