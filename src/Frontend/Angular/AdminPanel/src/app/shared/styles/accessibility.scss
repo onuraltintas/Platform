@@ -1,0 +1,405 @@
+// Screen Reader Only Content
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+// Screen Reader Only - Focusable (shows when focused)
+.sr-only-focusable:focus {
+  position: static !important;
+  width: auto !important;
+  height: auto !important;
+  padding: inherit !important;
+  margin: inherit !important;
+  overflow: visible !important;
+  clip: auto !important;
+  white-space: inherit !important;
+  border: inherit !important;
+}
+
+// Focus Visible Polyfill Support
+.focus-visible {
+  outline: 2px solid var(--bs-primary);
+  outline-offset: 2px;
+}
+
+// Remove default focus outline when focus-visible is available
+.js-focus-visible :focus:not(.focus-visible) {
+  outline: none;
+}
+
+// High Contrast Mode Support
+@media (prefers-contrast: high) {
+  .table-striped > tbody > tr:nth-of-type(odd) > td,
+  .table-striped > tbody > tr:nth-of-type(odd) > th {
+    background-color: var(--bs-gray-100);
+  }
+
+  .btn {
+    border-width: 2px;
+  }
+
+  .form-control,
+  .form-select {
+    border-width: 2px;
+  }
+}
+
+// Reduced Motion Support
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .skeleton-loading,
+  .pulse {
+    animation: none !important;
+  }
+}
+
+// Focus Management
+.focus-trap {
+  isolation: isolate;
+}
+
+.focus-guard {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
+// Keyboard Navigation Indicators
+.keyboard-navigation-active {
+  [data-keyboard-focused] {
+    outline: 2px solid var(--bs-primary);
+    outline-offset: 2px;
+  }
+}
+
+// Skip Links
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 6px;
+  background: var(--bs-primary);
+  color: white;
+  padding: 8px;
+  text-decoration: none;
+  border-radius: 4px;
+  z-index: 1100;
+  font-weight: bold;
+
+  &:focus {
+    top: 6px;
+  }
+}
+
+// ARIA Live Regions
+.live-region {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+// Table Accessibility
+.table {
+  // Ensure table headers are properly associated
+  th[scope="col"] {
+    background-color: var(--bs-gray-100);
+    font-weight: 600;
+  }
+
+  th[scope="row"] {
+    background-color: var(--bs-gray-50);
+    font-weight: 600;
+  }
+
+  // Row hover for better visual feedback
+  tbody tr:hover {
+    background-color: var(--bs-gray-100);
+  }
+
+  // Selected row indication
+  tbody tr[aria-selected="true"] {
+    background-color: var(--bs-primary-bg-subtle);
+    border-color: var(--bs-primary);
+  }
+}
+
+// Form Accessibility
+.form-group {
+  .form-label {
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+  }
+
+  .form-text {
+    margin-top: 0.25rem;
+    font-size: 0.875em;
+    color: var(--bs-secondary);
+  }
+
+  .invalid-feedback {
+    display: block;
+    margin-top: 0.25rem;
+    font-size: 0.875em;
+    color: var(--bs-danger);
+  }
+
+  .valid-feedback {
+    display: block;
+    margin-top: 0.25rem;
+    font-size: 0.875em;
+    color: var(--bs-success);
+  }
+}
+
+// Required field indicator
+.form-label.required::after {
+  content: " *";
+  color: var(--bs-danger);
+  font-weight: bold;
+}
+
+// Button Accessibility
+.btn {
+  // Ensure buttons have minimum touch target size
+  min-height: 44px;
+  min-width: 44px;
+
+  // Loading state
+  &.loading {
+    position: relative;
+    color: transparent !important;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 1rem;
+      height: 1rem;
+      margin: -0.5rem 0 0 -0.5rem;
+      border: 2px solid currentColor;
+      border-right-color: transparent;
+      border-radius: 50%;
+      animation: spin 0.75s linear infinite;
+    }
+  }
+
+  // Icon-only buttons should have accessible labels
+  &[aria-label] i:only-child {
+    pointer-events: none;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// Navigation Accessibility
+.pagination {
+  .page-link {
+    min-height: 44px;
+    min-width: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .page-item.active .page-link {
+    font-weight: bold;
+  }
+}
+
+// Alert/Toast Accessibility
+.alert {
+  border-left: 4px solid;
+
+  &.alert-primary {
+    border-left-color: var(--bs-primary);
+  }
+
+  &.alert-success {
+    border-left-color: var(--bs-success);
+  }
+
+  &.alert-warning {
+    border-left-color: var(--bs-warning);
+  }
+
+  &.alert-danger {
+    border-left-color: var(--bs-danger);
+  }
+
+  &.alert-info {
+    border-left-color: var(--bs-info);
+  }
+}
+
+// Modal Accessibility
+.modal {
+  .modal-header .btn-close {
+    margin: -0.5rem -0.5rem -0.5rem auto;
+  }
+}
+
+// Dropdown Accessibility
+.dropdown-menu {
+  .dropdown-item {
+    &:focus,
+    &.focus {
+      background-color: var(--bs-primary);
+      color: var(--bs-white);
+    }
+
+    &.active {
+      font-weight: 600;
+    }
+  }
+}
+
+// Color-only Information
+.status-indicator {
+  &::before {
+    content: attr(data-status) ": ";
+    position: absolute;
+    left: -10000px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+}
+
+// Progress Indicators
+.progress {
+  overflow: visible;
+
+  .progress-bar {
+    position: relative;
+
+    &::after {
+      content: attr(aria-valuenow) "%";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 0.75rem;
+      font-weight: bold;
+      color: var(--bs-white);
+      text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+    }
+  }
+}
+
+// Loading States
+.loading-content {
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+  }
+
+  &[aria-busy="true"]::before {
+    content: "Yükleniyor...";
+    font-weight: bold;
+    color: var(--bs-primary);
+  }
+}
+
+// Error States
+.error-boundary {
+  border: 2px solid var(--bs-danger);
+  border-radius: 4px;
+  padding: 1rem;
+  margin: 1rem 0;
+  background-color: var(--bs-danger-bg-subtle);
+
+  .error-title {
+    color: var(--bs-danger);
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+
+  .error-details {
+    font-family: monospace;
+    font-size: 0.875rem;
+    background: rgba(0, 0, 0, 0.1);
+    padding: 0.5rem;
+    border-radius: 2px;
+    margin-top: 0.5rem;
+  }
+}
+
+// Dark Mode Support
+@media (prefers-color-scheme: dark) {
+  .table-striped > tbody > tr:nth-of-type(odd) > td,
+  .table-striped > tbody > tr:nth-of-type(odd) > th {
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+
+  .table tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.075);
+  }
+
+  .skeleton-text {
+    background: linear-gradient(90deg,
+      #2a2a2a 25%,
+      #3a3a3a 50%,
+      #2a2a2a 75%
+    );
+  }
+}
+
+// Print Styles
+@media print {
+  .sr-only {
+    position: static !important;
+    width: auto !important;
+    height: auto !important;
+    padding: inherit !important;
+    margin: inherit !important;
+    overflow: visible !important;
+    clip: auto !important;
+    white-space: inherit !important;
+    border: inherit !important;
+  }
+
+  .btn,
+  .pagination,
+  .breadcrumb {
+    display: none !important;
+  }
+}
+

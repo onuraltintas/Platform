@@ -1,0 +1,425 @@
+using Microsoft.AspNetCore.Mvc;
+using SpeedReading.API.Models;
+using SpeedReading.Application.Services;
+using SpeedReading.Domain.Repositories;
+using SpeedReading.Domain.Entities;
+using SpeedReading.Domain.Enums;
+using SpeedReading.Application.Interfaces;
+using System.ComponentModel.DataAnnotations;
+
+namespace SpeedReading.API.Controllers;
+
+/// <summary>
+/// Controller for managing exercises and exercise generation
+/// </summary>
+[ApiController]
+[Route("api/[controller]")]
+[Produces("application/json")]
+[ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
+[ProducesResponseType(typeof(ApiResponse), StatusCodes.Status500InternalServerError)]
+public class ExerciseController : ControllerBase
+{
+    private readonly IExerciseRepository _exerciseRepository;
+    private readonly ExerciseGenerationService _exerciseGenerationService;
+    private readonly ILogger<ExerciseController> _logger;
+
+    /// <summary>
+    /// Initializes a new instance of the ExerciseController
+    /// </summary>
+    public ExerciseController(
+        IExerciseRepository exerciseRepository,
+        ExerciseGenerationService exerciseGenerationService,
+        ILogger<ExerciseController> logger)
+    {
+        _exerciseRepository = exerciseRepository;
+        _exerciseGenerationService = exerciseGenerationService;
+        _logger = logger;
+    }
+
+    /// <summary>
+    /// Generates a new exercise based on reading text
+    /// </summary>
+    /// <param name="request">Exercise generation request</param>
+    /// <returns>Generated exercise</returns>
+    [HttpPost("generate")]
+    [ProducesResponseType(typeof(ApiResponse<ExerciseResponse>), StatusCodes.Status201Created)]
+    public async Task<ActionResult<ApiResponse<ExerciseResponse>>> GenerateExercise(
+        [FromBody] GenerateExerciseRequest request)
+    {
+        try
+        {
+            Exercise exercise;
+            
+            // Get reading text
+            // For now, assume reading text exists
+            // var readingText = await _readingTextRepository.GetByIdAsync(request.ReadingTextId);
+            if (readingText == null)
+            {
+                return BadRequest(ApiResponse<ExerciseResponse>.Fail("Reading text not found"));
+            }
+
+            // Create exercise generation request
+            var generationRequest = new ExerciseGenerationRequest
+            {
+                Title = request.Title,
+                Description = request.Description,
+                ExerciseType = request.ExerciseType,
+                ReadingText = readingText,
+                TargetEducationLevel = request.TargetEducationLevel,
+                DifficultyLevel = request.DifficultyLevel,
+                QuestionCount = request.QuestionCount,
+                TimeLimit = request.TimeLimit,
+                PassingScore = request.PassingScore,
+                IsRandomized = false
+            };
+
+            exercise = await _exerciseGenerationService.GenerateExerciseAsync(generationRequest);
+
+            // Update exercise settings if provided
+            if (request.TimeLimit.HasValue || request.PassingScore != 60)
+            {
+                exercise.UpdateSettings(
+                    request.TimeLimit ?? exercise.TimeLimit,
+                    exercise.MaxScore,
+                    request.PassingScore,
+                    request.TimeLimit.HasValue,
+                    request.IsRandomized,
+                    true, // Show results
+                    request.AllowRetry,
+                    request.MaxRetries);
+            }
+
+            await _exerciseRepository.AddAsync(exercise);
+
+            var response = MapToExerciseResponse(exercise);
+            
+            _logger.LogInformation("Generated {ExerciseType} exercise {Id} for user {UserId}",
+                request.ExerciseType, exercise.Id, request.CreatedBy);
+
+            return CreatedAtAction(
+                nameof(GetExercise),
+                new { id = exercise.Id },
+                ApiResponse<ExerciseResponse>.Ok(response));
+        }
+        catch (ArgumentException ex)
+        {
+            _logger.LogWarning("Invalid exercise generation request: {Message}", ex.Message);
+            return BadRequest(ApiResponse<ExerciseResponse>.Fail(ex.Message));
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error generating exercise");
+            return StatusCode(500, ApiResponse<ExerciseResponse>.Fail(
+                "An error occurred while generating the exercise"));
+        }
+    }
+
+    /// <summary>
+    /// Gets an exercise by ID
+    /// </summary>
+    /// <param name="id">Exercise ID</param>
+    /// <param name="includeQuestions">Whether to include questions in response</param>
+    /// <returns>Exercise details</returns>
+    [HttpGet("{id:guid}")]
+    [ProducesResponseType(typeof(ApiResponse<ExerciseResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<ApiResponse<ExerciseResponse>>> GetExercise(
+        [FromRoute] Guid id,
+        [FromQuery] bool includeQuestions = false)
+    {
+        try
+        {
+            var exercise = includeQuestions
+                ? await _exerciseRepository.GetByIdWithQuestionsAsync(id)
+                : await _exerciseRepository.GetByIdAsync(id);
+
+            if (exercise == null)
+            {
+                return NotFound(ApiResponse.Fail("Exercise not found"));
+            }
+
+            var response = MapToExerciseResponse(exercise, includeQuestions);
+            return Ok(ApiResponse<ExerciseResponse>.Ok(response));
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error retrieving exercise {Id}", id);
+            return StatusCode(500, ApiResponse<ExerciseResponse>.Fail(
+                "An error occurred while retrieving the exercise"));
+        }
+    }
+
+    /// <summary>
+    /// Updates an existing exercise
+    /// </summary>
+    /// <param name="id">Exercise ID</param>
+    /// <param name="request">Exercise update request</param>
+    /// <returns>Updated exercise</returns>
+    [HttpPut("{id:guid}")]
+    [ProducesResponseType(typeof(ApiResponse<ExerciseResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<ApiResponse<ExerciseResponse>>> UpdateExercise(
+        [FromRoute] Guid id,
+        [FromBody] UpdateExerciseRequest request)
+    {
+        try
+        {
+            var exercise = await _exerciseRepository.GetByIdAsync(id);
+            if (exercise == null)
+            {
+                return NotFound(ApiResponse.Fail("Exercise not found"));
+            }
+
+            // Update fields if provided
+            if (!string.IsNullOrEmpty(request.Title))
+            {
+                exercise.UpdateTitle(request.Title);
+            }
+
+            if (!string.IsNullOrEmpty(request.Description))
+            {
+                exercise.UpdateDescription(request.Description);
+            }
+
+            if (request.TimeLimit.HasValue || request.PassingScore.HasValue || 
+                request.IsRandomized.HasValue || request.AllowRetry.HasValue || 
+                request.MaxRetries.HasValue)
+            {
+                exercise.UpdateSettings(
+                    request.TimeLimit ?? exercise.TimeLimit,
+                    exercise.MaxScore,
+                    request.PassingScore ?? exercise.PassingScore,
+                    request.TimeLimit.HasValue ? request.TimeLimit.HasValue : exercise.IsTimeLimited,
+                    request.IsRandomized ?? exercise.IsRandomized,
+                    true,
+                    request.AllowRetry ?? exercise.AllowRetry,
+                    request.MaxRetries ?? exercise.MaxRetries);
+            }
+
+            if (request.IsPublished.HasValue)
+            {
+                if (request.IsPublished.Value)
+                    exercise.Publish();
+                else
+                    exercise.UnPublish();
+            }
+
+            await _exerciseRepository.UpdateAsync(exercise);
+
+            var response = MapToExerciseResponse(exercise);
+
+            _logger.LogInformation("Updated exercise {Id}", id);
+
+            return Ok(ApiResponse<ExerciseResponse>.Ok(response));
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error updating exercise {Id}", id);
+            return StatusCode(500, ApiResponse<ExerciseResponse>.Fail(
+                "An error occurred while updating the exercise"));
+        }
+    }
+
+    /// <summary>
+    /// Deletes an exercise
+    /// </summary>
+    /// <param name="id">Exercise ID</param>
+    /// <returns>Deletion confirmation</returns>
+    [HttpDelete("{id:guid}")]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<ApiResponse>> DeleteExercise([FromRoute] Guid id)
+    {
+        try
+        {
+            var exercise = await _exerciseRepository.GetByIdAsync(id);
+            if (exercise == null)
+            {
+                return NotFound(ApiResponse.Fail("Exercise not found"));
+            }
+
+            await _exerciseRepository.DeleteAsync(id);
+
+            _logger.LogInformation("Deleted exercise {Id}", id);
+
+            return Ok(ApiResponse.Ok());
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error deleting exercise {Id}", id);
+            return StatusCode(500, ApiResponse.Fail("An error occurred while deleting the exercise"));
+        }
+    }
+
+    /// <summary>
+    /// Searches exercises with filters and pagination
+    /// </summary>
+    /// <param name="request">Search parameters</param>
+    /// <returns>Paginated search results</returns>
+    [HttpGet]
+    [ProducesResponseType(typeof(PagedApiResponse<ExerciseResponse>), StatusCodes.Status200OK)]
+    public async Task<ActionResult<PagedApiResponse<ExerciseResponse>>> SearchExercises(
+        [FromQuery] SearchExercisesRequest request)
+    {
+        try
+        {
+            var searchResults = await _exerciseRepository.SearchAsync(
+                request.Query,
+                request.Type,
+                request.EducationLevel,
+                request.Difficulty,
+                request.CreatedBy,
+                request.Status,
+                request.OnlyPublished ?? true,
+                request.Page,
+                request.PageSize,
+                request.SortBy,
+                request.SortDirection);
+
+            var response = searchResults.Items
+                .Select(exercise => MapToExerciseResponse(exercise, false))
+                .ToList();
+
+            return Ok(PagedApiResponse<ExerciseResponse>.Ok(
+                response, request.Page, request.PageSize, searchResults.TotalCount));
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error searching exercises");
+            return StatusCode(500, PagedApiResponse<ExerciseResponse>.Fail(
+                "An error occurred while searching exercises"));
+        }
+    }
+
+    /// <summary>
+    /// Gets recommended exercises for a user
+    /// </summary>
+    /// <param name="userId">User ID</param>
+    /// <param name="educationLevel">Target education level</param>
+    /// <param name="difficulty">Target difficulty</param>
+    /// <param name="count">Number of recommendations</param>
+    /// <returns>List of recommended exercises</returns>
+    [HttpGet("recommendations")]
+    [ProducesResponseType(typeof(ApiResponse<List<ExerciseResponse>>), StatusCodes.Status200OK)]
+    public async Task<ActionResult<ApiResponse<List<ExerciseResponse>>>> GetRecommendations(
+        [FromQuery] Guid? userId = null,
+        [FromQuery] EducationCategory? educationLevel = null,
+        [FromQuery] TextDifficulty? difficulty = null,
+        [FromQuery, Range(1, 50)] int count = 10)
+    {
+        try
+        {
+            var recommendations = userId.HasValue
+                ? await _exerciseRepository.GetRecommendedForUserAsync(userId.Value, count)
+                : await _exerciseRepository.GetRecommendedAsync(educationLevel, difficulty, count);
+
+            var response = recommendations
+                .Select(exercise => MapToExerciseResponse(exercise, false))
+                .ToList();
+
+            return Ok(ApiResponse<List<ExerciseResponse>>.Ok(response));
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error getting exercise recommendations");
+            return StatusCode(500, ApiResponse<List<ExerciseResponse>>.Fail(
+                "An error occurred while getting recommendations"));
+        }
+    }
+
+    /// <summary>
+    /// Publishes an exercise
+    /// </summary>
+    /// <param name="id">Exercise ID</param>
+    /// <returns>Updated exercise</returns>
+    [HttpPut("{id:guid}/publish")]
+    [ProducesResponseType(typeof(ApiResponse<ExerciseResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<ApiResponse<ExerciseResponse>>> PublishExercise([FromRoute] Guid id)
+    {
+        try
+        {
+            var exercise = await _exerciseRepository.GetByIdAsync(id);
+            if (exercise == null)
+            {
+                return NotFound(ApiResponse.Fail("Exercise not found"));
+            }
+
+            exercise.Publish();
+            await _exerciseRepository.UpdateAsync(exercise);
+
+            var response = MapToExerciseResponse(exercise);
+
+            _logger.LogInformation("Published exercise {Id}", id);
+
+            return Ok(ApiResponse<ExerciseResponse>.Ok(response));
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error publishing exercise {Id}", id);
+            return StatusCode(500, ApiResponse<ExerciseResponse>.Fail(
+                "An error occurred while publishing the exercise"));
+        }
+    }
+
+    private ExerciseResponse MapToExerciseResponse(Exercise exercise, bool includeQuestions = false)
+    {
+        var response = new ExerciseResponse
+        {
+            Id = exercise.Id,
+            Title = exercise.Title,
+            Description = exercise.Description,
+            Instructions = exercise.Instructions,
+            Type = exercise.Type,
+            TargetEducationLevel = exercise.TargetEducationLevel,
+            DifficultyLevel = exercise.DifficultyLevel,
+            Status = exercise.Status,
+            IsPublished = exercise.IsPublished,
+            CreatedBy = exercise.CreatedBy,
+            CreatedAt = exercise.CreatedAt,
+            UpdatedAt = exercise.UpdatedAt,
+            Settings = new ExerciseSettingsDto
+            {
+                TimeLimit = exercise.TimeLimit,
+                MaxScore = exercise.MaxScore,
+                PassingScore = exercise.PassingScore,
+                IsTimeLimited = exercise.IsTimeLimited,
+                IsRandomized = exercise.IsRandomized,
+                AllowMultipleAttempts = exercise.AllowMultipleAttempts,
+                AllowRetry = exercise.AllowRetry,
+                MaxRetries = exercise.MaxRetries
+            },
+            ReadingText = new ExerciseReadingTextDto
+            {
+                Id = exercise.ReadingTextId,
+                Title = "Reading Text", // Would need to load from repository
+                Content = "...", // Would need to load from repository
+                WordCount = 0, // Would need to load from repository
+                EstimatedReadingTime = 0 // Would need to load from repository
+            }
+        };
+
+        if (includeQuestions && exercise.Questions?.Any() == true)
+        {
+            response.Questions = exercise.Questions.Select(q => new QuestionDto
+            {
+                Id = q.Id,
+                Text = q.Text,
+                Type = q.Type,
+                Points = q.Points,
+                OrderIndex = q.OrderIndex,
+                Metadata = q.Metadata,
+                Options = q.Options.Select(o => new QuestionOptionDto
+                {
+                    Id = o.Id,
+                    Text = o.Text,
+                    IsCorrect = null, // Hidden from students
+                    OrderIndex = o.OrderIndex,
+                    Explanation = null // Shown only after answering
+                }).ToList()
+            }).ToList();
+        }
+
+        return response;
+    }
+}

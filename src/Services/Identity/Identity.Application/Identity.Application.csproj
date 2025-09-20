@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <NoWarn>$(NoWarn);1591;1998;8618;8602;8604;8601</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" />
+    <PackageReference Include="FluentValidation" />
+    <PackageReference Include="MediatR" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
+    <PackageReference Include="Google.Apis.Auth" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Identity.Core\Identity.Core.csproj" />
+    <ProjectReference Include="..\Identity.Infrastructure\Identity.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\..\Shared\Enterprise.Shared.Common\Enterprise.Shared.Common.csproj" />
+    <ProjectReference Include="..\..\..\Shared\Enterprise.Shared.Security\Enterprise.Shared.Security.csproj" />
+    <ProjectReference Include="..\..\..\Shared\Enterprise.Shared.Validation\Enterprise.Shared.Validation.csproj" />
+    <ProjectReference Include="..\..\..\Shared\Enterprise.Shared.Email\Enterprise.Shared.Email.csproj" />
+    <ProjectReference Include="..\..\..\Shared\Enterprise.Shared.Events\Enterprise.Shared.Events.csproj" />
+    <ProjectReference Include="..\..\..\Shared\Enterprise.Shared.Caching\Enterprise.Shared.Caching.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,46 @@
+{
+  "name": "Speed Reading Admin Panel",
+  "short_name": "SR Admin",
+  "description": "Modern web-based admin panel for speed reading platform management",
+  "theme_color": "#667eea",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "orientation": "any",
+  "scope": "./",
+  "start_url": "./",
+  "categories": ["productivity", "education", "utilities"],
+  "lang": "tr-TR",
+  "dir": "ltr",
+  "icons": [
+    { "src": "icons/icon-72x72.png", "sizes": "72x72", "type": "image/png", "purpose": "maskable any" },
+    { "src": "icons/icon-96x96.png", "sizes": "96x96", "type": "image/png", "purpose": "maskable any" },
+    { "src": "icons/icon-128x128.png", "sizes": "128x128", "type": "image/png", "purpose": "maskable any" },
+    { "src": "icons/icon-144x144.png", "sizes": "144x144", "type": "image/png", "purpose": "maskable any" },
+    { "src": "icons/icon-152x152.png", "sizes": "152x152", "type": "image/png", "purpose": "maskable any" },
+    { "src": "icons/icon-192x192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable any" },
+    { "src": "icons/icon-384x384.png", "sizes": "384x384", "type": "image/png", "purpose": "maskable any" },
+    { "src": "icons/icon-512x512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable any" }
+  ],
+  "shortcuts": [
+    { "name": "Dashboard", "short_name": "Dashboard", "description": "Go to admin dashboard", "url": "./dashboard", "icons": [{ "src": "icons/icon-192x192.png", "sizes": "192x192" }] },
+    { "name": "Texts Management", "short_name": "Texts", "description": "Manage speed reading texts", "url": "./sr/texts", "icons": [{ "src": "icons/icon-192x192.png", "sizes": "192x192" }] },
+    { "name": "Users Management", "short_name": "Users", "description": "Manage system users", "url": "./users", "icons": [{ "src": "icons/icon-192x192.png", "sizes": "192x192" }] },
+    { "name": "Reports", "short_name": "Reports", "description": "View analytics and reports", "url": "./sr/reports", "icons": [{ "src": "icons/icon-192x192.png", "sizes": "192x192" }] }
+  ],
+  "share_target": {
+    "action": "./share-target",
+    "method": "POST",
+    "enctype": "multipart/form-data",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url",
+      "files": [ { "name": "files", "accept": ["text/plain", ".txt", ".doc", ".docx", ".pdf"] } ]
+    }
+  },
+  "screenshots": [
+    { "src": "screenshots/dashboard-desktop.png", "sizes": "1280x720", "type": "image/png", "platform": "wide" },
+    { "src": "screenshots/dashboard-mobile.png", "sizes": "375x812", "type": "image/png" }
+  ]
+}
+

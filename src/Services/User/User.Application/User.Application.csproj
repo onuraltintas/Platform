@@ -1,0 +1,34 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <NoWarn>NU1701;NU1604;NU1602;NU1603</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" />
+    <PackageReference Include="FluentValidation" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" />
+    <PackageReference Include="MassTransit" />
+    <PackageReference Include="MediatR" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../User.Core/User.Core.csproj" />
+    <ProjectReference Include="../../../Shared/Enterprise.Shared.Common/Enterprise.Shared.Common.csproj" />
+    <ProjectReference Include="../../../Shared/Enterprise.Shared.ErrorHandling/Enterprise.Shared.ErrorHandling.csproj" />
+    <ProjectReference Include="../../../Shared/Enterprise.Shared.Validation/Enterprise.Shared.Validation.csproj" />
+    <ProjectReference Include="../../../Shared/Enterprise.Shared.Events/Enterprise.Shared.Events.csproj" />
+    <ProjectReference Include="../../../Shared/Enterprise.Shared.Caching/Enterprise.Shared.Caching.csproj" />
+    <ProjectReference Include="../../../Shared/Enterprise.Shared.Email/Enterprise.Shared.Email.csproj" />
+    <ProjectReference Include="../../../Shared/Enterprise.Shared.Privacy/Enterprise.Shared.Privacy.csproj" />
+  </ItemGroup>
+
+</Project>

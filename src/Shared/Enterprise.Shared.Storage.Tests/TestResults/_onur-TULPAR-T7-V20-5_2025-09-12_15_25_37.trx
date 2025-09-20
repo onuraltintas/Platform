@@ -1,0 +1,1112 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="42e9f050-e604-41c4-9216-c52a78a32d9f" name="@onur-TULPAR-T7-V20-5 2025-09-12 15:25:37" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2025-09-12T15:25:37.3993767+03:00" queuing="2025-09-12T15:25:37.3993768+03:00" start="2025-09-12T15:25:36.5606480+03:00" finish="2025-09-12T15:25:39.4280040+03:00" />
+  <TestSettings name="default" id="ca5e6185-72d1-40d6-824f-522426a6fd1c">
+    <Deployment runDeploymentRoot="_onur-TULPAR-T7-V20-5_2025-09-12_15_25_37" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="750e41cd-6329-4aef-80c9-5564ff2a5a69" testId="7288a54e-575a-a093-4ab8-963830294c29" testName="Enterprise.Shared.Storage.Tests.Services.ResimIslemeServisTestleri.ResimIsleAsync_BuyukResim_KucukResimlerleIslenmisResimDondururMeli" computerName="onur-TULPAR-T7-V20-5" duration="00:00:01.3060000" startTime="2025-09-12T15:25:38.6557376+03:00" endTime="2025-09-12T15:25:38.6557379+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="750e41cd-6329-4aef-80c9-5564ff2a5a69" />
+    <UnitTestResult executionId="579c071e-6a55-41dc-a17b-17fea5989712" testId="057adc5d-b9c7-9ec4-b79a-8781edbe539f" testName="Enterprise.Shared.Storage.Tests.Services.ClamAVTarayiciServisTestleri.Constructor_NullLogger_ArgumentNullExceptionFirlatmali" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0006668" startTime="2025-09-12T15:25:37.3855965+03:00" endTime="2025-09-12T15:25:37.3855965+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="579c071e-6a55-41dc-a17b-17fea5989712" />
+    <UnitTestResult executionId="f451c629-107b-4b16-a5c5-7c7a7e9127e2" testId="6725ca6e-2db4-d52b-666e-c5c0c5700fbf" testName="Enterprise.Shared.Storage.Tests.Models.StorageModelsTests.ValidationResult_Success_BasariliSonucOlusturmali" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0013201" startTime="2025-09-12T15:25:37.3870835+03:00" endTime="2025-09-12T15:25:37.3870835+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="f451c629-107b-4b16-a5c5-7c7a7e9127e2" />
+    <UnitTestResult executionId="7424b0bb-ee08-4684-939f-92afa3349dc1" testId="d2c34e9e-d124-d5ac-2582-481d1b778665" testName="Enterprise.Shared.Storage.Tests.Extensions.ServiceCollectionExtensionsTests.AddEnterpriseStorage_VarsayilanAyarlar_DefaultDegerlerleServislerEklenmeli" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0003310" startTime="2025-09-12T15:25:37.3669749+03:00" endTime="2025-09-12T15:25:37.3669750+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="7424b0bb-ee08-4684-939f-92afa3349dc1" />
+    <UnitTestResult executionId="2d89331d-1497-439b-8d46-8c7f6cd80982" testId="e41f65a5-124b-abc8-1f30-3ea05e547824" testName="Enterprise.Shared.Storage.Tests.Services.VirusTarayiciServisTestleri.TaraAsync_CancellationToken_IptalEdildigindeOperationCanceledFirlatmali" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0030731" startTime="2025-09-12T15:25:37.3674879+03:00" endTime="2025-09-12T15:25:37.3674879+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="2d89331d-1497-439b-8d46-8c7f6cd80982" />
+    <UnitTestResult executionId="c9def8f8-f932-4451-914e-e81985bd3e8f" testId="1c33ab4a-bd84-adef-0a00-ad253a33a66f" testName="Enterprise.Shared.Storage.Tests.Services.VirusTarayiciServisTestleri.TaraAsync_FarkliDosyaBoyutlari_UygunSonucVermeli(dosyaBoyutu: 50000)" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0000743" startTime="2025-09-12T15:25:37.3674597+03:00" endTime="2025-09-12T15:25:37.3674597+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="c9def8f8-f932-4451-914e-e81985bd3e8f" />
+    <UnitTestResult executionId="fd488323-dd72-4da0-95d4-d7b43fab0e82" testId="272b23ff-f63d-4eb8-3096-16de66a4efef" testName="Enterprise.Shared.Storage.Tests.Models.StorageModelsTests.YedekTipi_GecerliDegerler_EnumDegerleriTanimliOlmali(tip: DifferansiyalYedek)" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0003298" startTime="2025-09-12T15:25:37.3889281+03:00" endTime="2025-09-12T15:25:37.3889281+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="fd488323-dd72-4da0-95d4-d7b43fab0e82" />
+    <UnitTestResult executionId="94bad1d7-6d9f-41af-805a-49f3f1add773" testId="3e00b09b-68c1-faa6-6b39-9e8efa1da9eb" testName="Enterprise.Shared.Storage.Tests.Services.ResimIslemeServisTestleri.ResimDosyasiMi_FarkliIcerikTurleri_DogruSonucVermeli(icerikTuru: &quot;image/png&quot;, beklenenSonuc: True)" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0000430" startTime="2025-09-12T15:25:37.3670737+03:00" endTime="2025-09-12T15:25:37.3670738+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="94bad1d7-6d9f-41af-805a-49f3f1add773" />
+    <UnitTestResult executionId="c61d91c9-5a03-445c-8d83-bd2cb962dcc7" testId="a09e1861-d612-ccea-38e2-f226c6a5598f" testName="Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri.DosyaUzantisiGecerliMi_YasakliUzanti_FalseDondurmeli" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0002042" startTime="2025-09-12T15:25:37.3858128+03:00" endTime="2025-09-12T15:25:37.3858129+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="c61d91c9-5a03-445c-8d83-bd2cb962dcc7" />
+    <UnitTestResult executionId="4b5804d1-bf7b-47fc-a865-30101f0f4e88" testId="eec139e4-b8d2-4787-eec5-f37b72dfef14" testName="Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri.DosyaBoyutuGecerliMi_SifirVeyaNegatif_FalseDondurmeli" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0002127" startTime="2025-09-12T15:25:37.3882858+03:00" endTime="2025-09-12T15:25:37.3882859+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="4b5804d1-bf7b-47fc-a865-30101f0f4e88" />
+    <UnitTestResult executionId="ef78d08c-0896-4753-ade2-ed438f327eb5" testId="2880c561-d0d4-fc66-c6b3-dcac566a0be5" testName="Enterprise.Shared.Storage.Tests.Models.StorageModelsTests.DosyaYuklemeIstegi_ExitFields_ValidationFailed(alanAdi: &quot;&quot;, beklenenHata: &quot;Dosya adı gereklidir&quot;)" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0010552" startTime="2025-09-12T15:25:37.3850658+03:00" endTime="2025-09-12T15:25:37.3850659+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="ef78d08c-0896-4753-ade2-ed438f327eb5">
+      <Output>
+        <ErrorInfo>
+          <Message>Expected isValid to be False, but found True.</Message>
+          <StackTrace>   at FluentAssertions.Execution.XUnit2TestFramework.Throw(String message)
+   at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+   at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(String message, Object[] args)
+   at FluentAssertions.Primitives.BooleanAssertions`1.BeFalse(String because, Object[] becauseArgs)
+   at Enterprise.Shared.Storage.Tests.Models.StorageModelsTests.DosyaYuklemeIstegi_ExitFields_ValidationFailed(String alanAdi, String beklenenHata) in /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/Models/StorageModelsTests.cs:line 88
+   at InvokeStub_StorageModelsTests.DosyaYuklemeIstegi_ExitFields_ValidationFailed(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="8e245dc3-da93-4185-a59b-caba5c711245" testId="e256f369-04ce-2b10-12bb-4a7231d718f0" testName="Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri.ValidateAsync_GecersizKarakterler_HataVermeliMeli(dosyaAdi: &quot;test&lt;file&gt;.txt&quot;)" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0003628" startTime="2025-09-12T15:25:37.3879698+03:00" endTime="2025-09-12T15:25:37.3879699+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="8e245dc3-da93-4185-a59b-caba5c711245">
+      <Output>
+        <ErrorInfo>
+          <Message>Expected sonuc.IsValid to be False, but found True.</Message>
+          <StackTrace>   at FluentAssertions.Execution.XUnit2TestFramework.Throw(String message)
+   at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+   at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(String message, Object[] args)
+   at FluentAssertions.Primitives.BooleanAssertions`1.BeFalse(String because, Object[] becauseArgs)
+   at Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri.ValidateAsync_GecersizKarakterler_HataVermeliMeli(String dosyaAdi) in /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/Services/FileValidationServiceTests.cs:line 187
+--- End of stack trace from previous location ---</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="9734cfd0-ed2e-4d0c-8484-6f67f8d6ff05" testId="050f5418-717c-0616-f15d-60ec01d72cca" testName="Enterprise.Shared.Storage.Tests.Models.StorageModelsTests.DosyaYuklemeIstegi_ValidModel_ValidationPassed" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0005079" startTime="2025-09-12T15:25:37.3893241+03:00" endTime="2025-09-12T15:25:37.3893242+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="9734cfd0-ed2e-4d0c-8484-6f67f8d6ff05" />
+    <UnitTestResult executionId="f55a8d0e-a81c-4c8e-9f71-d8287de8b240" testId="340b429b-cb7c-f1cb-c7fd-563586b2e442" testName="Enterprise.Shared.Storage.Tests.Extensions.DepolamaServisiFactoryTests.Constructor_NullServiceProvider_ArgumentNullExceptionFirlatmali" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0005844" startTime="2025-09-12T15:25:37.3657788+03:00" endTime="2025-09-12T15:25:37.3657788+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="f55a8d0e-a81c-4c8e-9f71-d8287de8b240" />
+    <UnitTestResult executionId="24123d28-8968-437c-bbad-abadca240643" testId="c8a7a4b8-68dc-6d4c-01fc-9f5efada5ae5" testName="Enterprise.Shared.Storage.Tests.Extensions.ServiceCollectionExtensionsTests.GetStorageSettings_GecerliKonfigürasyon_AyarlariDondururMeli" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0007885" startTime="2025-09-12T15:25:37.3891851+03:00" endTime="2025-09-12T15:25:37.3891851+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="24123d28-8968-437c-bbad-abadca240643">
+      <Output>
+        <ErrorInfo>
+          <Message>Expected ayarlar.MinIO.Endpoint to be "test:9000" with a length of 9, but "localhost:9000" has a length of 14, differs near "loc" (index 0).</Message>
+          <StackTrace>   at FluentAssertions.Execution.XUnit2TestFramework.Throw(String message)
+   at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+   at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Primitives.StringEqualityValidator.ValidateAgainstLengthDifferences()
+   at FluentAssertions.Primitives.StringValidator.Validate()
+   at FluentAssertions.Primitives.StringAssertions`1.Be(String expected, String because, Object[] becauseArgs)
+   at Enterprise.Shared.Storage.Tests.Extensions.ServiceCollectionExtensionsTests.GetStorageSettings_GecerliKonfigürasyon_AyarlariDondururMeli() in /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/Extensions/ServiceCollectionExtensionsTests.cs:line 213
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="ae983fa6-0944-490c-87a6-aa8134a653c2" testId="25e2a728-abcd-630a-d595-081c7325d260" testName="Enterprise.Shared.Storage.Tests.Models.StorageModelsTests.DepolamaAyarlari_ConfigSection_DogruSectionAdiniDondurmeli" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0011042" startTime="2025-09-12T15:25:37.3874758+03:00" endTime="2025-09-12T15:25:37.3874758+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="ae983fa6-0944-490c-87a6-aa8134a653c2">
+      <Output>
+        <ErrorInfo>
+          <Message>Expected DepolamaAyarlari.ConfigSection to be "Storage" with a length of 7, but "StorageSettings" has a length of 15, differs near "Set" (index 7).</Message>
+          <StackTrace>   at FluentAssertions.Execution.XUnit2TestFramework.Throw(String message)
+   at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+   at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Primitives.StringEqualityValidator.ValidateAgainstLengthDifferences()
+   at FluentAssertions.Primitives.StringValidator.Validate()
+   at FluentAssertions.Primitives.StringAssertions`1.Be(String expected, String because, Object[] becauseArgs)
+   at Enterprise.Shared.Storage.Tests.Models.StorageModelsTests.DepolamaAyarlari_ConfigSection_DogruSectionAdiniDondurmeli() in /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/Models/StorageModelsTests.cs:line 20
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="7bf5c61f-7c62-4363-ab78-85b058563c99" testId="a1a2d839-21cc-3aa6-021e-714c84266652" testName="Enterprise.Shared.Storage.Tests.Models.StorageModelsTests.DosyaYuklemeIstegi_ExitFields_ValidationFailed(alanAdi: &quot;test.jpg&quot;, beklenenHata: &quot;İçerik türü gereklidir&quot;)" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0564764" startTime="2025-09-12T15:25:37.3847641+03:00" endTime="2025-09-12T15:25:37.3847642+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="7bf5c61f-7c62-4363-ab78-85b058563c99">
+      <Output>
+        <ErrorInfo>
+          <Message>Expected isValid to be False, but found True.</Message>
+          <StackTrace>   at FluentAssertions.Execution.XUnit2TestFramework.Throw(String message)
+   at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+   at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(String message, Object[] args)
+   at FluentAssertions.Primitives.BooleanAssertions`1.BeFalse(String because, Object[] becauseArgs)
+   at Enterprise.Shared.Storage.Tests.Models.StorageModelsTests.DosyaYuklemeIstegi_ExitFields_ValidationFailed(String alanAdi, String beklenenHata) in /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/Models/StorageModelsTests.cs:line 88
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="a5447990-70be-4038-ad03-29687a5b2ce8" testId="f7194480-9399-0052-3b84-846249066dbf" testName="Enterprise.Shared.Storage.Tests.Models.StorageModelsTests.ValidationResult_Failure_HataileFailureSonucuOlusturmali" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0001462" startTime="2025-09-12T15:25:37.3892566+03:00" endTime="2025-09-12T15:25:37.3892566+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="a5447990-70be-4038-ad03-29687a5b2ce8" />
+    <UnitTestResult executionId="17281658-7e15-4871-9351-8e3455041451" testId="a60dd689-bb3d-0403-fed6-74ea9caff3d2" testName="Enterprise.Shared.Storage.Tests.Services.ResimIslemeServisTestleri.DesteklenenFormatlar_ListelenmisFormatlar_DogruFormatlariIcermeliMeli" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0031650" startTime="2025-09-12T15:25:37.3671185+03:00" endTime="2025-09-12T15:25:37.3671186+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="17281658-7e15-4871-9351-8e3455041451" />
+    <UnitTestResult executionId="1d0277b2-ee5d-49f4-9cc2-c37065c7d1b8" testId="ac0bc820-4f76-beb5-ec12-ae63c751fbef" testName="Enterprise.Shared.Storage.Tests.Services.ResimIslemeServisTestleri.KucukResimOlusturAsync_GecerliResim_KucukResimDondururMeli" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0533544" startTime="2025-09-12T15:25:39.3551305+03:00" endTime="2025-09-12T15:25:39.3551310+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="1d0277b2-ee5d-49f4-9cc2-c37065c7d1b8" />
+    <UnitTestResult executionId="6c8bf34b-8c9b-4a45-842e-d4b1221e5c4f" testId="ace63b21-b7f0-20d8-5d67-074f4026efd0" testName="Enterprise.Shared.Storage.Tests.Services.ResimIslemeServisTestleri.ResimDosyasiMi_FarkliIcerikTurleri_DogruSonucVermeli(icerikTuru: &quot;text/plain&quot;, beklenenSonuc: False)" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0000518" startTime="2025-09-12T15:25:37.3670520+03:00" endTime="2025-09-12T15:25:37.3670520+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="6c8bf34b-8c9b-4a45-842e-d4b1221e5c4f" />
+    <UnitTestResult executionId="baddad0f-99bb-45c8-97db-5700393d5ccd" testId="7b36674a-6731-09c1-bb69-026aa2292060" testName="Enterprise.Shared.Storage.Tests.Services.VirusTarayiciServisTestleri.SonGuncellemeTarihiAsync_MockServis_BugununTarihiniDondurmeli" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0013410" startTime="2025-09-12T15:25:37.3676050+03:00" endTime="2025-09-12T15:25:37.3676050+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="baddad0f-99bb-45c8-97db-5700393d5ccd" />
+    <UnitTestResult executionId="8110da2a-e5bb-4755-8242-7edc341739d6" testId="238d6161-d560-b29b-9b2b-f26a292d411e" testName="Enterprise.Shared.Storage.Tests.Models.StorageModelsTests.ValidationResult_AddError_ErrorEklenmeli" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0001372" startTime="2025-09-12T15:25:37.3858616+03:00" endTime="2025-09-12T15:25:37.3858617+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="8110da2a-e5bb-4755-8242-7edc341739d6" />
+    <UnitTestResult executionId="da5c023e-0b3f-48fd-9bbb-e29153607299" testId="66e4263d-a33f-9f76-5248-e0ea0462567e" testName="Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri.MimeTipiGecerliMi_GecerliTip_TrueDondurmeli" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0001984" startTime="2025-09-12T15:25:37.3885459+03:00" endTime="2025-09-12T15:25:37.3885460+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="da5c023e-0b3f-48fd-9bbb-e29153607299" />
+    <UnitTestResult executionId="021acf79-5fff-4438-bc6c-9e7e2780ac75" testId="22df29ca-1919-bfd8-40d0-5cffe65d98c0" testName="Enterprise.Shared.Storage.Tests.Extensions.DepolamaServisiFactoryTests.CreateStorageService_MinIOProvider_IDepolamaServisinerendurmeli" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0380155" startTime="2025-09-12T15:25:37.3371867+03:00" endTime="2025-09-12T15:25:37.3371868+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="021acf79-5fff-4438-bc6c-9e7e2780ac75" />
+    <UnitTestResult executionId="1a3e20b8-09d2-4d39-b713-eee8ccff64c8" testId="acfc01fa-94be-4bdb-e207-7fd8de9a95cd" testName="Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri.ValidateAsync_BuyukDosya_HataVermeliMeli" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0012963" startTime="2025-09-12T15:25:37.3882359+03:00" endTime="2025-09-12T15:25:37.3882359+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="1a3e20b8-09d2-4d39-b713-eee8ccff64c8" />
+    <UnitTestResult executionId="4b152a05-b7ae-4f54-b333-069dd8f9ef63" testId="8f242e89-bf70-67a6-4013-7e1bcb746ba1" testName="Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri.DosyaUzantisiGecerliMi_GecerliUzanti_TrueDondurmeli" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0002003" startTime="2025-09-12T15:25:37.3882603+03:00" endTime="2025-09-12T15:25:37.3882603+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="4b152a05-b7ae-4f54-b333-069dd8f9ef63" />
+    <UnitTestResult executionId="0d1a8d29-f123-474f-bdfd-cf01bd7deb42" testId="1c88859b-4113-0216-b2f3-2b25555ba917" testName="Enterprise.Shared.Storage.Tests.Services.ResimIslemeServisTestleri.ResimMetadataAlAsync_GecerliResim_MetadataVermeli" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0143933" startTime="2025-09-12T15:25:39.3731473+03:00" endTime="2025-09-12T15:25:39.3731474+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="0d1a8d29-f123-474f-bdfd-cf01bd7deb42" />
+    <UnitTestResult executionId="7a0b6a0b-c767-4493-85a4-536abafa775d" testId="51579947-a00a-89fd-8c29-c2c7b7c4f814" testName="Enterprise.Shared.Storage.Tests.Services.ClamAVTarayiciServisTestleri.Constructor_NullHttpClient_ArgumentNullExceptionFirlatmali" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0010136" startTime="2025-09-12T15:25:37.3848699+03:00" endTime="2025-09-12T15:25:37.3848700+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="7a0b6a0b-c767-4493-85a4-536abafa775d" />
+    <UnitTestResult executionId="847223a7-30e8-41bb-b12a-df84e63fd00c" testId="61fd8226-7b52-b909-bd0a-4672fb4bf31b" testName="Enterprise.Shared.Storage.Tests.Extensions.DepolamaServisiFactoryTests.CreateStorageService_DesteklenmevenProvider_NotSupportedExceptionFirlatmali" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0017927" startTime="2025-09-12T15:25:37.3655264+03:00" endTime="2025-09-12T15:25:37.3655266+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="847223a7-30e8-41bb-b12a-df84e63fd00c" />
+    <UnitTestResult executionId="a51b4837-ee23-41f6-b813-d8f71d2a7df6" testId="f711a204-d998-0916-98b3-93660763166b" testName="Enterprise.Shared.Storage.Tests.Services.VirusTarayiciServisTestleri.SaglikliMiAsync_MockServis_HepSaglikliDondurmeli" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0007149" startTime="2025-09-12T15:25:37.3675116+03:00" endTime="2025-09-12T15:25:37.3675116+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="a51b4837-ee23-41f6-b813-d8f71d2a7df6" />
+    <UnitTestResult executionId="fc961cbe-a4de-433b-bca6-1031ad902d3d" testId="3932fc5c-8a7d-db96-142c-68fffa2dd87c" testName="Enterprise.Shared.Storage.Tests.Extensions.ServiceCollectionExtensionsTests.HasStorageSettings_KonfigürasyonYok_FalseDondurmeli" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0018241" startTime="2025-09-12T15:25:37.3659213+03:00" endTime="2025-09-12T15:25:37.3659213+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="fc961cbe-a4de-433b-bca6-1031ad902d3d" />
+    <UnitTestResult executionId="be307966-3ed2-4aee-b4a8-b80b58e58d8d" testId="a841b8c6-52fb-8406-beef-ffef5bf7c9f1" testName="Enterprise.Shared.Storage.Tests.Models.StorageModelsTests.YedekTipi_GecerliDegerler_EnumDegerleriTanimliOlmali(tip: TamYedek)" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0000060" startTime="2025-09-12T15:25:37.3892314+03:00" endTime="2025-09-12T15:25:37.3892314+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="be307966-3ed2-4aee-b4a8-b80b58e58d8d" />
+    <UnitTestResult executionId="1e2bb421-2ef5-4daa-a578-1e3250320874" testId="1b49adf1-4016-2333-bfa5-3112e1389a5a" testName="Enterprise.Shared.Storage.Tests.Extensions.DepolamaServisiFactoryTests.CreateBackupService_IYedeklemeServisinerendurmeli" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0020704" startTime="2025-09-12T15:25:37.3657466+03:00" endTime="2025-09-12T15:25:37.3657466+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="1e2bb421-2ef5-4daa-a578-1e3250320874" />
+    <UnitTestResult executionId="e2d6c0d0-d38b-435d-8c7a-9a59a0f8862a" testId="aa616321-cac9-b063-562c-1b535b053cef" testName="Enterprise.Shared.Storage.Tests.Services.VirusTarayiciServisTestleri.TaraAsync_KucukDosya_TemizSonucuVermeli" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0006698" startTime="2025-09-12T15:25:37.3675583+03:00" endTime="2025-09-12T15:25:37.3675583+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="e2d6c0d0-d38b-435d-8c7a-9a59a0f8862a" />
+    <UnitTestResult executionId="588f25bc-75e6-4226-99e4-1229fc8f06bb" testId="1ebb3d19-c1f5-6337-c253-fab534601faf" testName="Enterprise.Shared.Storage.Tests.Services.ResimIslemeServisTestleri.WatermarkEkleAsync_GecerliResim_WatermarkEklenmisResimDondururMeli" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.4735765" startTime="2025-09-12T15:25:39.2182250+03:00" endTime="2025-09-12T15:25:39.2182253+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="588f25bc-75e6-4226-99e4-1229fc8f06bb">
+      <Output>
+        <ErrorInfo>
+          <Message>SixLabors.Fonts.FontFamilyNotFoundException : The "Arial" font family could not be found in the following directories:
+ * /usr/local/share/fonts/
+ * /usr/share/fonts/</Message>
+          <StackTrace>   at SixLabors.Fonts.FontCollection.GetImpl(String name, CultureInfo culture)
+   at SixLabors.Fonts.FontCollection.Get(String name, CultureInfo culture)
+   at SixLabors.Fonts.SystemFontCollection.Get(String name, CultureInfo culture)
+   at SixLabors.Fonts.SystemFontCollection.Get(String name)
+   at SixLabors.Fonts.SystemFonts.CreateFont(String name, Single size)
+   at Enterprise.Shared.Storage.Services.ResimIslemeServisi.&lt;&gt;c__DisplayClass11_1.&lt;WatermarkEkleAsync&gt;b__0(IImageProcessingContext x) in /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage/Services/ImageProcessingService.cs:line 193
+   at SixLabors.ImageSharp.Processing.ProcessingExtensions.ProcessingVisitor.Visit[TPixel](Image`1 image)
+   at SixLabors.ImageSharp.Image`1.Accept(IImageVisitor visitor)
+   at SixLabors.ImageSharp.Advanced.AdvancedImageExtensions.AcceptVisitor(Image source, IImageVisitor visitor)
+   at SixLabors.ImageSharp.Processing.ProcessingExtensions.Mutate(Image source, Configuration configuration, Action`1 operation)
+   at SixLabors.ImageSharp.Processing.ProcessingExtensions.Mutate(Image source, Action`1 operation)
+   at Enterprise.Shared.Storage.Services.ResimIslemeServisi.WatermarkEkleAsync(Stream resimStream, String watermarkMetni, CancellationToken cancellationToken) in /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage/Services/ImageProcessingService.cs:line 193
+   at Enterprise.Shared.Storage.Tests.Services.ResimIslemeServisTestleri.WatermarkEkleAsync_GecerliResim_WatermarkEklenmisResimDondururMeli() in /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/Services/ImageProcessingServiceTests.cs:line 140
+--- End of stack trace from previous location ---</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="826f2bfa-142d-449e-9eb5-9a15121b50d8" testId="c785965f-54f5-0958-d1b3-031adc08431b" testName="Enterprise.Shared.Storage.Tests.Extensions.DepolamaServisiFactoryTests.CreateStorageService_NullProvider_DefaultServiceDondurmeli" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0004295" startTime="2025-09-12T15:25:37.3658358+03:00" endTime="2025-09-12T15:25:37.3658358+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="826f2bfa-142d-449e-9eb5-9a15121b50d8" />
+    <UnitTestResult executionId="f92708d0-7285-4ccd-94b8-408cf0be5d26" testId="79cfc419-cc18-83db-6883-06584171e046" testName="Enterprise.Shared.Storage.Tests.Models.StorageModelsTests.ValidationResult_AddInfo_InfoEklenmeli" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0021705" startTime="2025-09-12T15:25:37.3883102+03:00" endTime="2025-09-12T15:25:37.3883103+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="f92708d0-7285-4ccd-94b8-408cf0be5d26" />
+    <UnitTestResult executionId="a00b8b10-5ea9-4e2e-8c53-e1e436c95f40" testId="6eb99c4a-01bc-c2e9-d8c3-c10f390a5232" testName="Enterprise.Shared.Storage.Tests.Services.ClamAVTarayiciServisTestleri.Constructor_NullOptions_ArgumentNullExceptionFirlatmali" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0721392" startTime="2025-09-12T15:25:37.3836293+03:00" endTime="2025-09-12T15:25:37.3836294+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="a00b8b10-5ea9-4e2e-8c53-e1e436c95f40">
+      <Output>
+        <ErrorInfo>
+          <Message>Expected a &lt;System.ArgumentNullException&gt; to be thrown, but found &lt;System.NullReferenceException&gt;:
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at Enterprise.Shared.Storage.Services.ClamAVTarayiciServisi..ctor(HttpClient httpClient, IOptions`1 ayarlar, ILogger`1 logger) in /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage/Services/VirusScannerService.cs:line 25
+   at Enterprise.Shared.Storage.Tests.Services.ClamAVTarayiciServisTestleri.&lt;&gt;c__DisplayClass1_0.&lt;Constructor_NullOptions_ArgumentNullExceptionFirlatmali&gt;b__0() in /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/Services/VirusScannerServiceTests.cs:line 175
+   at FluentAssertions.Specialized.FunctionAssertions`1.InvokeSubject()
+   at FluentAssertions.Specialized.DelegateAssertions`2.InvokeSubjectWithInterception().</Message>
+          <StackTrace>   at FluentAssertions.Execution.XUnit2TestFramework.Throw(String message)
+   at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+   at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(String message, Object[] args)
+   at FluentAssertions.Specialized.DelegateAssertionsBase`2.ThrowInternal[TException](Exception exception, String because, Object[] becauseArgs)
+   at FluentAssertions.Specialized.DelegateAssertions`2.Throw[TException](String because, Object[] becauseArgs)
+   at Enterprise.Shared.Storage.Tests.Services.ClamAVTarayiciServisTestleri.Constructor_NullOptions_ArgumentNullExceptionFirlatmali() in /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/Services/VirusScannerServiceTests.cs:line 176
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="2ebb42e8-6c39-4c7c-9ecb-936fa81fe7b7" testId="bf57b459-8be1-2213-c2f2-d0d3bb54333c" testName="Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri.ValidateAsync_GeçersizDosyaAdi_HataVermeliMeli(dosyaAdi: &quot;   &quot;)" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0743488" startTime="2025-09-12T15:25:37.3845818+03:00" endTime="2025-09-12T15:25:37.3845818+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="2ebb42e8-6c39-4c7c-9ecb-936fa81fe7b7">
+      <Output>
+        <ErrorInfo>
+          <Message>Expected sonuc.ErrorMessages {"Desteklenmeyen dosya uzantısı: "} to have an item matching x.Contains("Dosya adı").</Message>
+          <StackTrace>   at FluentAssertions.Execution.XUnit2TestFramework.Throw(String message)
+   at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+   at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(String message, Object[] args)
+   at FluentAssertions.Collections.GenericCollectionAssertions`3.Contain(Expression`1 predicate, String because, Object[] becauseArgs)
+   at Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri.ValidateAsync_GeçersizDosyaAdi_HataVermeliMeli(String dosyaAdi) in /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/Services/FileValidationServiceTests.cs:line 156
+--- End of stack trace from previous location ---</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="a9719249-3859-446d-8bf2-56be358705bb" testId="e03b5bdd-230d-53c3-fbcb-79212c2eceea" testName="Enterprise.Shared.Storage.Tests.Services.VirusTarayiciServisTestleri.TemizMiAsync_HerDosya_TrueDondurmeli" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0006480" startTime="2025-09-12T15:25:37.3675351+03:00" endTime="2025-09-12T15:25:37.3675352+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="a9719249-3859-446d-8bf2-56be358705bb" />
+    <UnitTestResult executionId="30a330b9-664e-459c-8cc4-8a745f62eb48" testId="01e9ce06-687f-1328-629f-877fb3d6b1de" testName="Enterprise.Shared.Storage.Tests.Models.StorageModelsTests.ResimIslemeSecenekleri_DefaultValues_VarsayilanDegerereSahipOlmali" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0007817" startTime="2025-09-12T15:25:37.3908332+03:00" endTime="2025-09-12T15:25:37.3908333+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="30a330b9-664e-459c-8cc4-8a745f62eb48">
+      <Output>
+        <ErrorInfo>
+          <Message>Expected secenekler.MaksimumGenislik to be 2000, but found 1920 (difference of -80).</Message>
+          <StackTrace>   at FluentAssertions.Execution.XUnit2TestFramework.Throw(String message)
+   at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+   at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(String message, Object[] args)
+   at FluentAssertions.Numeric.NumericAssertions`2.Be(T expected, String because, Object[] becauseArgs)
+   at Enterprise.Shared.Storage.Tests.Models.StorageModelsTests.ResimIslemeSecenekleri_DefaultValues_VarsayilanDegerereSahipOlmali() in /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/Models/StorageModelsTests.cs:line 222
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="a77bdaee-4fc9-4abe-ac84-dbd37d8992ed" testId="5522037e-e5a0-021b-d0b7-c7d234eb0f03" testName="Enterprise.Shared.Storage.Tests.Services.ResimIslemeServisTestleri.ResimDosyasiMi_FarkliIcerikTurleri_DogruSonucVermeli(icerikTuru: &quot;image/jpeg&quot;, beklenenSonuc: True)" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0483757" startTime="2025-09-12T15:25:37.3658990+03:00" endTime="2025-09-12T15:25:37.3658990+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="a77bdaee-4fc9-4abe-ac84-dbd37d8992ed" />
+    <UnitTestResult executionId="6ba6f022-742c-4771-baac-8444cb18ff2f" testId="ccbf1a1c-bb15-00d8-6c30-83490d79c7a4" testName="Enterprise.Shared.Storage.Tests.Models.StorageModelsTests.DosyaMetadata_TurkiyeSaatiSonDegistirilme_TurkiyeSaatiniDondurmeli" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0006679" startTime="2025-09-12T15:25:37.3858372+03:00" endTime="2025-09-12T15:25:37.3858373+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="6ba6f022-742c-4771-baac-8444cb18ff2f" />
+    <UnitTestResult executionId="f9b070dd-ded1-441c-92f3-887528d0a68b" testId="2a3523ac-fdf5-c5b9-c307-497d28bb65f8" testName="Enterprise.Shared.Storage.Tests.Extensions.ServiceCollectionExtensionsTests.AddMinIOStorage_OzelAyarlar_MinIOAyarlariGuncellenmeli" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0006376" startTime="2025-09-12T15:25:37.3882111+03:00" endTime="2025-09-12T15:25:37.3882112+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="f9b070dd-ded1-441c-92f3-887528d0a68b" />
+    <UnitTestResult executionId="b94ca161-ed5d-4eb1-ae2c-35ef24eae169" testId="733d28bf-5c7c-b507-4fcc-10f98a754bb9" testName="Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri.ValidateAsync_GecersizKarakterler_HataVermeliMeli(dosyaAdi: &quot;test|file.txt&quot;)" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0008013" startTime="2025-09-12T15:25:37.3872608+03:00" endTime="2025-09-12T15:25:37.3872609+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="b94ca161-ed5d-4eb1-ae2c-35ef24eae169">
+      <Output>
+        <ErrorInfo>
+          <Message>Expected sonuc.IsValid to be False, but found True.</Message>
+          <StackTrace>   at FluentAssertions.Execution.XUnit2TestFramework.Throw(String message)
+   at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+   at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(String message, Object[] args)
+   at FluentAssertions.Primitives.BooleanAssertions`1.BeFalse(String because, Object[] becauseArgs)
+   at Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri.ValidateAsync_GecersizKarakterler_HataVermeliMeli(String dosyaAdi) in /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/Services/FileValidationServiceTests.cs:line 187
+--- End of stack trace from previous location ---</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="76d9c82e-7ad5-4d46-966d-a91f16480a08" testId="be82b51c-3be8-bcc0-0e3f-6e24abe28fed" testName="Enterprise.Shared.Storage.Tests.Models.StorageModelsTests.GuvenlikAyarlari_BosAllowedExtensions_ValidasyonHatasiVermeli(extension: &quot;   &quot;)" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0003180" startTime="2025-09-12T15:25:37.3886744+03:00" endTime="2025-09-12T15:25:37.3886744+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="76d9c82e-7ad5-4d46-966d-a91f16480a08" />
+    <UnitTestResult executionId="d5a567d8-9f2c-407c-8f1e-93ecb43bf090" testId="5b952f12-da7a-60a0-2d0b-adb17c4e2527" testName="Enterprise.Shared.Storage.Tests.Services.VirusTarayiciServisTestleri.TaraAsync_FarkliDosyaBoyutlari_UygunSonucVermeli(dosyaBoyutu: 500)" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0526188" startTime="2025-09-12T15:25:37.3671415+03:00" endTime="2025-09-12T15:25:37.3671415+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="d5a567d8-9f2c-407c-8f1e-93ecb43bf090" />
+    <UnitTestResult executionId="ccd700fe-8f3c-4cf1-8882-fdb22669797c" testId="172d5222-b9fc-660d-50b2-49274d6424c1" testName="Enterprise.Shared.Storage.Tests.Models.StorageModelsTests.YedekTipi_GecerliDegerler_EnumDegerleriTanimliOlmali(tip: TransaksiyonLogYedek)" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0001622" startTime="2025-09-12T15:25:37.3892112+03:00" endTime="2025-09-12T15:25:37.3892112+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="ccd700fe-8f3c-4cf1-8882-fdb22669797c" />
+    <UnitTestResult executionId="88a8f059-44d0-4f2c-af3c-68f9170ed0a9" testId="975bb357-e96e-64a7-408f-e212511c9c2e" testName="Enterprise.Shared.Storage.Tests.Extensions.ServiceCollectionExtensionsTests.AddClamAVVirusScanner_Ayarlar_VirusServisiveHttpClientEklenmeli" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0443522" startTime="2025-09-12T15:25:37.3658489+03:00" endTime="2025-09-12T15:25:37.3658489+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="88a8f059-44d0-4f2c-af3c-68f9170ed0a9" />
+    <UnitTestResult executionId="2c1a52a6-1e77-44c1-8f6b-8da90491e827" testId="d8edb4ad-4531-f937-2bac-550c98aef40e" testName="Enterprise.Shared.Storage.Tests.Extensions.ServiceCollectionExtensionsTests.AddEnterpriseStorage_ActionKonfigürasyon_ServislerEklenmeli" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0005677" startTime="2025-09-12T15:25:37.3868656+03:00" endTime="2025-09-12T15:25:37.3868657+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="2c1a52a6-1e77-44c1-8f6b-8da90491e827" />
+    <UnitTestResult executionId="4b954ef5-2e6b-4421-aef7-0e557c071c17" testId="fa73ac31-f989-94e7-97d6-5698892d9422" testName="Enterprise.Shared.Storage.Tests.Models.StorageModelsTests.YedekBilgisi_DefaultConstructor_PropertilerBaslatilmali" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0128339" startTime="2025-09-12T15:25:37.3153002+03:00" endTime="2025-09-12T15:25:37.3153597+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="4b954ef5-2e6b-4421-aef7-0e557c071c17" />
+    <UnitTestResult executionId="2b8054e0-3d5f-41a2-b8b5-25162af70b17" testId="90d351de-9252-a77d-cb14-a74503773f9c" testName="Enterprise.Shared.Storage.Tests.Extensions.ServiceCollectionExtensionsTests.HasStorageSettings_KonfigürasyonVar_TrueDondurmeli" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0254641" startTime="2025-09-12T15:25:37.3840717+03:00" endTime="2025-09-12T15:25:37.3840717+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="2b8054e0-3d5f-41a2-b8b5-25162af70b17">
+      <Output>
+        <ErrorInfo>
+          <Message>Expected configuration.HasStorageSettings() to be True, but found False.</Message>
+          <StackTrace>   at FluentAssertions.Execution.XUnit2TestFramework.Throw(String message)
+   at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+   at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(String message, Object[] args)
+   at FluentAssertions.Primitives.BooleanAssertions`1.BeTrue(String because, Object[] becauseArgs)
+   at Enterprise.Shared.Storage.Tests.Extensions.ServiceCollectionExtensionsTests.HasStorageSettings_KonfigürasyonVar_TrueDondurmeli() in /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/Extensions/ServiceCollectionExtensionsTests.cs:line 230
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="bb4be269-1a9b-4302-b4a2-a13b9246ebd2" testId="00d1ae19-1e33-a988-217e-102646f74288" testName="Enterprise.Shared.Storage.Tests.Services.ResimIslemeServisTestleri.ResimFormatiniDegistirAsync_JpegdenWebp_WebpDondururMeli" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0839165" startTime="2025-09-12T15:25:39.3020974+03:00" endTime="2025-09-12T15:25:39.3020976+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="bb4be269-1a9b-4302-b4a2-a13b9246ebd2">
+      <Output>
+        <ErrorInfo>
+          <Message>Expected sonucResim.Metadata.DecodedImageFormat?.Name to be "WEBP", but "Webp" differs near "ebp" (index 1).</Message>
+          <StackTrace>   at FluentAssertions.Execution.XUnit2TestFramework.Throw(String message)
+   at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+   at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(String message, Object[] args)
+   at FluentAssertions.Primitives.StringEqualityValidator.ValidateAgainstMismatch()
+   at FluentAssertions.Primitives.StringValidator.Validate()
+   at FluentAssertions.Primitives.StringAssertions`1.Be(String expected, String because, Object[] becauseArgs)
+   at Enterprise.Shared.Storage.Tests.Services.ResimIslemeServisTestleri.ResimFormatiniDegistirAsync_JpegdenWebp_WebpDondururMeli() in /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/Services/ImageProcessingServiceTests.cs:line 127
+--- End of stack trace from previous location ---</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="a5424011-0234-4d3e-9f23-71106783f808" testId="14f66f59-ce3c-9807-2426-71130979e6d4" testName="Enterprise.Shared.Storage.Tests.Services.VirusTarayiciServisTestleri.TaraAsync_FarkliDosyaBoyutlari_UygunSonucVermeli(dosyaBoyutu: 0)" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0005425" startTime="2025-09-12T15:25:37.3674386+03:00" endTime="2025-09-12T15:25:37.3674386+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="a5424011-0234-4d3e-9f23-71106783f808" />
+    <UnitTestResult executionId="648c70a2-f917-420c-8612-f4fb99e7839f" testId="0cf4f303-b8ae-c881-1399-73c030b9a8c3" testName="Enterprise.Shared.Storage.Tests.Extensions.ServiceCollectionExtensionsTests.AddImageProcessing_KonfigurasyonAction_ResimServisiEklenmeli" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0019039" startTime="2025-09-12T15:25:37.3861979+03:00" endTime="2025-09-12T15:25:37.3861979+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="648c70a2-f917-420c-8612-f4fb99e7839f">
+      <Output>
+        <ErrorInfo>
+          <Message>System.InvalidOperationException : Unable to resolve service for type 'Microsoft.Extensions.Logging.ILogger`1[Enterprise.Shared.Storage.Services.ResimIslemeServisi]' while attempting to activate 'Enterprise.Shared.Storage.Services.ResimIslemeServisi'.</Message>
+          <StackTrace>   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateArgumentCallSites(ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain callSiteChain, ParameterInfo[] parameters, Boolean throwIfCallSiteNotFound)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.TryCreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.TryCreateExact(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateCallSite(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.GetCallSite(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.CreateServiceAccessor(ServiceIdentifier serviceIdentifier)
+   at System.Collections.Concurrent.ConcurrentDictionary`2.GetOrAdd(TKey key, Func`2 valueFactory)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.GetService(ServiceIdentifier serviceIdentifier, ServiceProviderEngineScope serviceProviderEngineScope)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.GetService(Type serviceType)
+   at Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetService[T](IServiceProvider provider)
+   at Enterprise.Shared.Storage.Tests.Extensions.ServiceCollectionExtensionsTests.AddImageProcessing_KonfigurasyonAction_ResimServisiEklenmeli() in /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/Extensions/ServiceCollectionExtensionsTests.cs:line 137
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="21441a40-7fc0-4e92-807b-95af4b5827af" testId="0e876ae0-e77c-4ca7-7879-98cd54300afa" testName="Enterprise.Shared.Storage.Tests.Models.StorageModelsTests.DosyaBilgisi_TamYolProperty_BucketveNesneAdiniIcermeli" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0005063" startTime="2025-09-12T15:25:37.3185045+03:00" endTime="2025-09-12T15:25:37.3185046+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="21441a40-7fc0-4e92-807b-95af4b5827af" />
+    <UnitTestResult executionId="0192fc78-e636-4df7-b1a7-54b5d3cefdb7" testId="c616ef4a-ff6a-726e-c8c2-0be8e6f710ca" testName="Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri.DosyaImzasiGecerliMiAsync_YanlisImza_FalseDondurmeli" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0005596" startTime="2025-09-12T15:25:37.3865208+03:00" endTime="2025-09-12T15:25:37.3865208+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="0192fc78-e636-4df7-b1a7-54b5d3cefdb7" />
+    <UnitTestResult executionId="b93af572-c6b2-4d2b-8f77-a74c442a0751" testId="f05caa87-f69e-b71e-3668-ed6af5dc5a8c" testName="Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri.ValidateAsync_UzunDosyaAdi_HataVermeliMeli" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0008976" startTime="2025-09-12T15:25:37.3886498+03:00" endTime="2025-09-12T15:25:37.3886499+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="b93af572-c6b2-4d2b-8f77-a74c442a0751" />
+    <UnitTestResult executionId="1b65c6b6-2cef-4630-9aa6-40cc8127e0d1" testId="1635d350-77c7-937d-5384-a1d89274fb26" testName="Enterprise.Shared.Storage.Tests.Extensions.DepolamaServisiFactoryTests.CreateImageProcessingService_IResimIslemeServisimrDerendurmeli" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0006305" startTime="2025-09-12T15:25:37.3658031+03:00" endTime="2025-09-12T15:25:37.3658031+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="1b65c6b6-2cef-4630-9aa6-40cc8127e0d1" />
+    <UnitTestResult executionId="e7dc05f9-b00e-4218-9644-6438f747fdf3" testId="1cd0370b-9adf-338b-b1eb-b461a43afc4c" testName="Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri.ValidateAsync_GeçersizDosyaAdi_HataVermeliMeli(dosyaAdi: &quot;&quot;)" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0005444" startTime="2025-09-12T15:25:37.3848481+03:00" endTime="2025-09-12T15:25:37.3848481+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="e7dc05f9-b00e-4218-9644-6438f747fdf3" />
+    <UnitTestResult executionId="f36b18d6-3805-43e2-abe4-fed167253c5f" testId="2b7d0b21-4591-5f61-149f-2d20880e8c4e" testName="Enterprise.Shared.Storage.Tests.Extensions.ServiceCollectionExtensionsTests.GetMinIOConnectionString_GecerliAyarlar_ConnectionStringOlusturmali" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0019765" startTime="2025-09-12T15:25:37.3881799+03:00" endTime="2025-09-12T15:25:37.3881799+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="f36b18d6-3805-43e2-abe4-fed167253c5f">
+      <Output>
+        <ErrorInfo>
+          <Message>Expected connectionString to be "https://admin:password123@minio:9000" with a length of 36, but "http://minioadmin:minioadmin@localhost:9000" has a length of 43, differs near "://" (index 4).</Message>
+          <StackTrace>   at FluentAssertions.Execution.XUnit2TestFramework.Throw(String message)
+   at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+   at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Primitives.StringEqualityValidator.ValidateAgainstLengthDifferences()
+   at FluentAssertions.Primitives.StringValidator.Validate()
+   at FluentAssertions.Primitives.StringAssertions`1.Be(String expected, String because, Object[] becauseArgs)
+   at Enterprise.Shared.Storage.Tests.Extensions.ServiceCollectionExtensionsTests.GetMinIOConnectionString_GecerliAyarlar_ConnectionStringOlusturmali() in /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/Extensions/ServiceCollectionExtensionsTests.cs:line 265
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="58a9f5e2-f05a-4a42-b860-f9d0baa4fb20" testId="36bf94e8-b2fb-7995-11dd-0edf10cf9046" testName="Enterprise.Shared.Storage.Tests.Models.StorageModelsTests.GuvenlikAyarlari_BosAllowedExtensions_ValidasyonHatasiVermeli(extension: null)" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0009805" startTime="2025-09-12T15:25:37.3886294+03:00" endTime="2025-09-12T15:25:37.3886294+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="58a9f5e2-f05a-4a42-b860-f9d0baa4fb20" />
+    <UnitTestResult executionId="4ee1d308-8b35-4a09-8189-99b5b0443cff" testId="5c451b10-6d89-dedd-df26-8d95496c7669" testName="Enterprise.Shared.Storage.Tests.Services.ResimIslemeServisTestleri.ResimIsleAsync_BozukResim_HataFirlatmali" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0034189" startTime="2025-09-12T15:25:39.3586906+03:00" endTime="2025-09-12T15:25:39.3586907+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="4ee1d308-8b35-4a09-8189-99b5b0443cff" />
+    <UnitTestResult executionId="40b27803-2a51-476f-8eb0-e8c0516a3351" testId="d1e7751a-f78a-d6d6-e4d1-3b177d5d2849" testName="Enterprise.Shared.Storage.Tests.Extensions.ServiceCollectionExtensionsTests.AddEnterpriseStorage_GecerliKonfigürasyon_ServislerEklenmeli" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0017104" startTime="2025-09-12T15:25:37.3886032+03:00" endTime="2025-09-12T15:25:37.3886033+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="40b27803-2a51-476f-8eb0-e8c0516a3351" />
+    <UnitTestResult executionId="58e35e3f-4778-401f-b415-199c2898b82d" testId="5fce9f5b-44f5-4e68-b548-4157a52c2c21" testName="Enterprise.Shared.Storage.Tests.Models.StorageModelsTests.IslenmisResim_StreamProperty_DisposableOlmali" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0003932" startTime="2025-09-12T15:25:37.3895796+03:00" endTime="2025-09-12T15:25:37.3895797+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="58e35e3f-4778-401f-b415-199c2898b82d" />
+    <UnitTestResult executionId="ed6d1127-f9de-47b1-ae44-3ef55231efcf" testId="9d7e727e-d8d8-98fc-bf7a-c68a835e6513" testName="Enterprise.Shared.Storage.Tests.Models.StorageModelsTests.DosyaYuklemeIstegi_ExitFields_ValidationFailed(alanAdi: null, beklenenHata: &quot;Dosya stream'i gereklidir&quot;)" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0003471" startTime="2025-09-12T15:25:37.3852570+03:00" endTime="2025-09-12T15:25:37.3852570+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="ed6d1127-f9de-47b1-ae44-3ef55231efcf">
+      <Output>
+        <ErrorInfo>
+          <Message>Expected isValid to be False, but found True.</Message>
+          <StackTrace>   at FluentAssertions.Execution.XUnit2TestFramework.Throw(String message)
+   at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+   at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(String message, Object[] args)
+   at FluentAssertions.Primitives.BooleanAssertions`1.BeFalse(String because, Object[] becauseArgs)
+   at Enterprise.Shared.Storage.Tests.Models.StorageModelsTests.DosyaYuklemeIstegi_ExitFields_ValidationFailed(String alanAdi, String beklenenHata) in /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/Models/StorageModelsTests.cs:line 88
+   at InvokeStub_StorageModelsTests.DosyaYuklemeIstegi_ExitFields_ValidationFailed(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="ccf9cda0-59aa-4537-8e70-327d34a76d4a" testId="e7892a4f-a7f9-4559-9176-4da4301dff02" testName="Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri.ValidateAsync_GeçersizDosyaAdi_HataVermeliMeli(dosyaAdi: null)" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0012278" startTime="2025-09-12T15:25:37.3857816+03:00" endTime="2025-09-12T15:25:37.3857816+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="ccf9cda0-59aa-4537-8e70-327d34a76d4a">
+      <Output>
+        <ErrorInfo>
+          <Message>Expected sonuc.ErrorMessages {"Validasyon hatası: Object reference not set to an instance of an object."} to have an item matching x.Contains("Dosya adı").</Message>
+          <StackTrace>   at FluentAssertions.Execution.XUnit2TestFramework.Throw(String message)
+   at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+   at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(String message, Object[] args)
+   at FluentAssertions.Collections.GenericCollectionAssertions`3.Contain(Expression`1 predicate, String because, Object[] becauseArgs)
+   at Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri.ValidateAsync_GeçersizDosyaAdi_HataVermeliMeli(String dosyaAdi) in /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/Services/FileValidationServiceTests.cs:line 156
+--- End of stack trace from previous location ---</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="acf56943-7753-48c8-8314-7bfc383475f2" testId="ac2cb801-acd3-e8d1-6e82-b6d4b1b48910" testName="Enterprise.Shared.Storage.Tests.Services.ResimIslemeServisTestleri.ResimBoyutlandirAsync_GecerliResim_BoyutlandirilmisDondururMeli" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0868705" startTime="2025-09-12T15:25:38.7427351+03:00" endTime="2025-09-12T15:25:38.7427353+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="acf56943-7753-48c8-8314-7bfc383475f2" />
+    <UnitTestResult executionId="78279ae6-4af5-4647-9938-d624a08612a7" testId="f69d475d-04a3-9295-61fa-6ab20d8f5671" testName="Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri.ValidateAsync_GecersizKarakterler_HataVermeliMeli(dosyaAdi: &quot;test?file.txt&quot;)" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0010269" startTime="2025-09-12T15:25:37.3870577+03:00" endTime="2025-09-12T15:25:37.3870577+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="78279ae6-4af5-4647-9938-d624a08612a7">
+      <Output>
+        <ErrorInfo>
+          <Message>Expected sonuc.IsValid to be False, but found True.</Message>
+          <StackTrace>   at FluentAssertions.Execution.XUnit2TestFramework.Throw(String message)
+   at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+   at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(String message, Object[] args)
+   at FluentAssertions.Primitives.BooleanAssertions`1.BeFalse(String because, Object[] becauseArgs)
+   at Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri.ValidateAsync_GecersizKarakterler_HataVermeliMeli(String dosyaAdi) in /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/Services/FileValidationServiceTests.cs:line 187
+--- End of stack trace from previous location ---</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="929ebc7e-4727-4fb0-9de7-f75304adbd50" testId="81e8f42e-2b74-f5ee-0e5a-f94f93713110" testName="Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri.DosyaImzasiGecerliMiAsync_GecerliJpegImza_TrueDondurmeli" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0005034" startTime="2025-09-12T15:25:37.3889049+03:00" endTime="2025-09-12T15:25:37.3889049+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="929ebc7e-4727-4fb0-9de7-f75304adbd50" />
+    <UnitTestResult executionId="ad22b22f-136d-4f77-acd3-0f3169c65f49" testId="3da88a3e-b6f5-d800-66e5-348fb3505fed" testName="Enterprise.Shared.Storage.Tests.Models.StorageModelsTests.ValidationResult_AddWarning_WarningEklenmeli" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0001651" startTime="2025-09-12T15:25:37.3862402+03:00" endTime="2025-09-12T15:25:37.3862403+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="ad22b22f-136d-4f77-acd3-0f3169c65f49" />
+    <UnitTestResult executionId="7fc05736-46a6-42d2-806d-7630ead9bea4" testId="f8298d54-baa5-d2dc-db6d-c9ef0bf1832a" testName="Enterprise.Shared.Storage.Tests.Services.VirusTarayiciServisTestleri.TaraAsync_BuyukDosya_SuspheliSonucuVermeli" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0007581" startTime="2025-09-12T15:25:37.3675813+03:00" endTime="2025-09-12T15:25:37.3675813+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="7fc05736-46a6-42d2-806d-7630ead9bea4" />
+    <UnitTestResult executionId="6cebd62f-6d5e-43a1-900c-39e50498cc3c" testId="e290abb5-4a4c-a6bc-7766-5c20f40d23f0" testName="Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri.DosyaBoyutuGecerliMi_GecerliBoyut_TrueDondurmeli" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0001814" startTime="2025-09-12T15:25:37.3885786+03:00" endTime="2025-09-12T15:25:37.3885786+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="6cebd62f-6d5e-43a1-900c-39e50498cc3c" />
+    <UnitTestResult executionId="dbfdb6ef-9398-4048-9288-fec1849ed0d6" testId="6cd4aab2-0a9a-d20f-25d8-3ba767ab2bf5" testName="Enterprise.Shared.Storage.Tests.Services.ResimIslemeServisTestleri.ResimDosyasiMi_FarkliIcerikTurleri_DogruSonucVermeli(icerikTuru: &quot;application/pdf&quot;, beklenenSonuc: False)" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0000382" startTime="2025-09-12T15:25:37.3670932+03:00" endTime="2025-09-12T15:25:37.3670932+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="dbfdb6ef-9398-4048-9288-fec1849ed0d6" />
+    <UnitTestResult executionId="f068859e-3b47-4aba-b18b-7a6af0c4fcfe" testId="9ff69c44-faa5-e60c-d71c-2cfcdff220ca" testName="Enterprise.Shared.Storage.Tests.Services.ResimIslemeServisTestleri.ResimDosyasiMi_FarkliIcerikTurleri_DogruSonucVermeli(icerikTuru: &quot;image/webp&quot;, beklenenSonuc: True)" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0005428" startTime="2025-09-12T15:25:37.3670106+03:00" endTime="2025-09-12T15:25:37.3670107+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="f068859e-3b47-4aba-b18b-7a6af0c4fcfe" />
+    <UnitTestResult executionId="948a434b-8ea2-4b94-8a0e-d93107fe944e" testId="ecf06a14-ada8-ce31-dbf3-612d3b2c4fdd" testName="Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri.ValidateAsync_GecerliDosya_BasariliSonucDondururMeli" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0005966" startTime="2025-09-12T15:25:37.3892823+03:00" endTime="2025-09-12T15:25:37.3892823+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="948a434b-8ea2-4b94-8a0e-d93107fe944e" />
+    <UnitTestResult executionId="5bfec521-369a-4778-83ac-ee363d83dffa" testId="9507dc98-5599-be8a-b135-ace9c72db944" testName="Enterprise.Shared.Storage.Tests.Models.StorageModelsTests.VirusTaramaSonucu_TemizDosya_DogruPropertilerleOlusturmali" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0003029" startTime="2025-09-12T15:25:37.3892996+03:00" endTime="2025-09-12T15:25:37.3892997+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="5bfec521-369a-4778-83ac-ee363d83dffa" />
+    <UnitTestResult executionId="56e0b373-c4cb-48e9-9a4b-f19e5efdcbd7" testId="4c92c0a2-9077-a097-915f-460bf7eda0c3" testName="Enterprise.Shared.Storage.Tests.Models.StorageModelsTests.GuvenlikAyarlari_BosAllowedExtensions_ValidasyonHatasiVermeli(extension: &quot;&quot;)" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0000201" startTime="2025-09-12T15:25:37.3887029+03:00" endTime="2025-09-12T15:25:37.3887029+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="56e0b373-c4cb-48e9-9a4b-f19e5efdcbd7" />
+    <UnitTestResult executionId="a39f5e5e-f748-4450-9fe0-f26de280f9da" testId="cf8667da-b6a3-bb34-46c4-02e50a6f4aa1" testName="Enterprise.Shared.Storage.Tests.Extensions.ServiceCollectionExtensionsTests.AddMockVirusScanner_MockServisEklenmeli" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0006597" startTime="2025-09-12T15:25:37.3868297+03:00" endTime="2025-09-12T15:25:37.3868297+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="a39f5e5e-f748-4450-9fe0-f26de280f9da">
+      <Output>
+        <ErrorInfo>
+          <Message>System.InvalidOperationException : Unable to resolve service for type 'Microsoft.Extensions.Logging.ILogger`1[Enterprise.Shared.Storage.Services.MockVirusTarayiciServisi]' while attempting to activate 'Enterprise.Shared.Storage.Services.MockVirusTarayiciServisi'.</Message>
+          <StackTrace>   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateArgumentCallSites(ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain callSiteChain, ParameterInfo[] parameters, Boolean throwIfCallSiteNotFound)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.TryCreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.TryCreateExact(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateCallSite(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.GetCallSite(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.CreateServiceAccessor(ServiceIdentifier serviceIdentifier)
+   at System.Collections.Concurrent.ConcurrentDictionary`2.GetOrAdd(TKey key, Func`2 valueFactory)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.GetService(ServiceIdentifier serviceIdentifier, ServiceProviderEngineScope serviceProviderEngineScope)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.GetService(Type serviceType)
+   at Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetService[T](IServiceProvider provider)
+   at Enterprise.Shared.Storage.Tests.Extensions.ServiceCollectionExtensionsTests.AddMockVirusScanner_MockServisEklenmeli() in /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/Extensions/ServiceCollectionExtensionsTests.cs:line 181
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="e32e2d41-afe2-4989-b340-e0886797e458" testId="f8ea8402-12b5-9b66-aba4-1b9181b3d22f" testName="Enterprise.Shared.Storage.Tests.Services.ResimIslemeServisTestleri.ResimDosyasiMi_FarkliIcerikTurleri_DogruSonucVermeli(icerikTuru: &quot;image/gif&quot;, beklenenSonuc: True)" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0000993" startTime="2025-09-12T15:25:37.3670319+03:00" endTime="2025-09-12T15:25:37.3670319+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="e32e2d41-afe2-4989-b340-e0886797e458" />
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Models.StorageModelsTests.DosyaYuklemeIstegi_ExitFields_ValidationFailed(alanAdi: &quot;test.jpg&quot;, beklenenHata: &quot;İçerik türü gereklidir&quot;)" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="a1a2d839-21cc-3aa6-021e-714c84266652">
+      <Execution id="7bf5c61f-7c62-4363-ab78-85b058563c99" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Models.StorageModelsTests" name="DosyaYuklemeIstegi_ExitFields_ValidationFailed" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Services.ResimIslemeServisTestleri.KucukResimOlusturAsync_GecerliResim_KucukResimDondururMeli" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="ac0bc820-4f76-beb5-ec12-ae63c751fbef">
+      <Execution id="1d0277b2-ee5d-49f4-9cc2-c37065c7d1b8" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Services.ResimIslemeServisTestleri" name="KucukResimOlusturAsync_GecerliResim_KucukResimDondururMeli" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri.DosyaImzasiGecerliMiAsync_GecerliJpegImza_TrueDondurmeli" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="81e8f42e-2b74-f5ee-0e5a-f94f93713110">
+      <Execution id="929ebc7e-4727-4fb0-9de7-f75304adbd50" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri" name="DosyaImzasiGecerliMiAsync_GecerliJpegImza_TrueDondurmeli" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Models.StorageModelsTests.DosyaMetadata_TurkiyeSaatiSonDegistirilme_TurkiyeSaatiniDondurmeli" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="ccbf1a1c-bb15-00d8-6c30-83490d79c7a4">
+      <Execution id="6ba6f022-742c-4771-baac-8444cb18ff2f" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Models.StorageModelsTests" name="DosyaMetadata_TurkiyeSaatiSonDegistirilme_TurkiyeSaatiniDondurmeli" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri.MimeTipiGecerliMi_GecerliTip_TrueDondurmeli" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="66e4263d-a33f-9f76-5248-e0ea0462567e">
+      <Execution id="da5c023e-0b3f-48fd-9bbb-e29153607299" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri" name="MimeTipiGecerliMi_GecerliTip_TrueDondurmeli" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Models.StorageModelsTests.DepolamaAyarlari_ConfigSection_DogruSectionAdiniDondurmeli" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="25e2a728-abcd-630a-d595-081c7325d260">
+      <Execution id="ae983fa6-0944-490c-87a6-aa8134a653c2" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Models.StorageModelsTests" name="DepolamaAyarlari_ConfigSection_DogruSectionAdiniDondurmeli" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Models.StorageModelsTests.IslenmisResim_StreamProperty_DisposableOlmali" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="5fce9f5b-44f5-4e68-b548-4157a52c2c21">
+      <Execution id="58e35e3f-4778-401f-b415-199c2898b82d" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Models.StorageModelsTests" name="IslenmisResim_StreamProperty_DisposableOlmali" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Extensions.ServiceCollectionExtensionsTests.AddEnterpriseStorage_ActionKonfigürasyon_ServislerEklenmeli" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="d8edb4ad-4531-f937-2bac-550c98aef40e">
+      <Execution id="2c1a52a6-1e77-44c1-8f6b-8da90491e827" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Extensions.ServiceCollectionExtensionsTests" name="AddEnterpriseStorage_ActionKonfigürasyon_ServislerEklenmeli" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Services.ResimIslemeServisTestleri.ResimMetadataAlAsync_GecerliResim_MetadataVermeli" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="1c88859b-4113-0216-b2f3-2b25555ba917">
+      <Execution id="0d1a8d29-f123-474f-bdfd-cf01bd7deb42" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Services.ResimIslemeServisTestleri" name="ResimMetadataAlAsync_GecerliResim_MetadataVermeli" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri.DosyaBoyutuGecerliMi_SifirVeyaNegatif_FalseDondurmeli" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="eec139e4-b8d2-4787-eec5-f37b72dfef14">
+      <Execution id="4b5804d1-bf7b-47fc-a865-30101f0f4e88" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri" name="DosyaBoyutuGecerliMi_SifirVeyaNegatif_FalseDondurmeli" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri.DosyaUzantisiGecerliMi_GecerliUzanti_TrueDondurmeli" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="8f242e89-bf70-67a6-4013-7e1bcb746ba1">
+      <Execution id="4b152a05-b7ae-4f54-b333-069dd8f9ef63" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri" name="DosyaUzantisiGecerliMi_GecerliUzanti_TrueDondurmeli" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri.DosyaUzantisiGecerliMi_YasakliUzanti_FalseDondurmeli" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="a09e1861-d612-ccea-38e2-f226c6a5598f">
+      <Execution id="c61d91c9-5a03-445c-8d83-bd2cb962dcc7" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri" name="DosyaUzantisiGecerliMi_YasakliUzanti_FalseDondurmeli" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Extensions.DepolamaServisiFactoryTests.CreateStorageService_MinIOProvider_IDepolamaServisinerendurmeli" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="22df29ca-1919-bfd8-40d0-5cffe65d98c0">
+      <Execution id="021acf79-5fff-4438-bc6c-9e7e2780ac75" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Extensions.DepolamaServisiFactoryTests" name="CreateStorageService_MinIOProvider_IDepolamaServisinerendurmeli" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Services.VirusTarayiciServisTestleri.TaraAsync_FarkliDosyaBoyutlari_UygunSonucVermeli(dosyaBoyutu: 50000)" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="1c33ab4a-bd84-adef-0a00-ad253a33a66f">
+      <Execution id="c9def8f8-f932-4451-914e-e81985bd3e8f" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Services.VirusTarayiciServisTestleri" name="TaraAsync_FarkliDosyaBoyutlari_UygunSonucVermeli" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Extensions.DepolamaServisiFactoryTests.CreateImageProcessingService_IResimIslemeServisimrDerendurmeli" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="1635d350-77c7-937d-5384-a1d89274fb26">
+      <Execution id="1b65c6b6-2cef-4630-9aa6-40cc8127e0d1" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Extensions.DepolamaServisiFactoryTests" name="CreateImageProcessingService_IResimIslemeServisimrDerendurmeli" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Services.ClamAVTarayiciServisTestleri.Constructor_NullOptions_ArgumentNullExceptionFirlatmali" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="6eb99c4a-01bc-c2e9-d8c3-c10f390a5232">
+      <Execution id="a00b8b10-5ea9-4e2e-8c53-e1e436c95f40" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Services.ClamAVTarayiciServisTestleri" name="Constructor_NullOptions_ArgumentNullExceptionFirlatmali" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Extensions.DepolamaServisiFactoryTests.CreateBackupService_IYedeklemeServisinerendurmeli" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="1b49adf1-4016-2333-bfa5-3112e1389a5a">
+      <Execution id="1e2bb421-2ef5-4daa-a578-1e3250320874" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Extensions.DepolamaServisiFactoryTests" name="CreateBackupService_IYedeklemeServisinerendurmeli" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Models.StorageModelsTests.DosyaBilgisi_TamYolProperty_BucketveNesneAdiniIcermeli" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="0e876ae0-e77c-4ca7-7879-98cd54300afa">
+      <Execution id="21441a40-7fc0-4e92-807b-95af4b5827af" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Models.StorageModelsTests" name="DosyaBilgisi_TamYolProperty_BucketveNesneAdiniIcermeli" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Extensions.DepolamaServisiFactoryTests.CreateStorageService_DesteklenmevenProvider_NotSupportedExceptionFirlatmali" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="61fd8226-7b52-b909-bd0a-4672fb4bf31b">
+      <Execution id="847223a7-30e8-41bb-b12a-df84e63fd00c" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Extensions.DepolamaServisiFactoryTests" name="CreateStorageService_DesteklenmevenProvider_NotSupportedExceptionFirlatmali" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Models.StorageModelsTests.VirusTaramaSonucu_TemizDosya_DogruPropertilerleOlusturmali" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="9507dc98-5599-be8a-b135-ace9c72db944">
+      <Execution id="5bfec521-369a-4778-83ac-ee363d83dffa" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Models.StorageModelsTests" name="VirusTaramaSonucu_TemizDosya_DogruPropertilerleOlusturmali" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Extensions.ServiceCollectionExtensionsTests.HasStorageSettings_KonfigürasyonVar_TrueDondurmeli" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="90d351de-9252-a77d-cb14-a74503773f9c">
+      <Execution id="2b8054e0-3d5f-41a2-b8b5-25162af70b17" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Extensions.ServiceCollectionExtensionsTests" name="HasStorageSettings_KonfigürasyonVar_TrueDondurmeli" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Models.StorageModelsTests.YedekTipi_GecerliDegerler_EnumDegerleriTanimliOlmali(tip: TransaksiyonLogYedek)" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="172d5222-b9fc-660d-50b2-49274d6424c1">
+      <Execution id="ccd700fe-8f3c-4cf1-8882-fdb22669797c" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Models.StorageModelsTests" name="YedekTipi_GecerliDegerler_EnumDegerleriTanimliOlmali" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Models.StorageModelsTests.GuvenlikAyarlari_BosAllowedExtensions_ValidasyonHatasiVermeli(extension: null)" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="36bf94e8-b2fb-7995-11dd-0edf10cf9046">
+      <Execution id="58a9f5e2-f05a-4a42-b860-f9d0baa4fb20" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Models.StorageModelsTests" name="GuvenlikAyarlari_BosAllowedExtensions_ValidasyonHatasiVermeli" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Models.StorageModelsTests.ResimIslemeSecenekleri_DefaultValues_VarsayilanDegerereSahipOlmali" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="01e9ce06-687f-1328-629f-877fb3d6b1de">
+      <Execution id="30a330b9-664e-459c-8cc4-8a745f62eb48" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Models.StorageModelsTests" name="ResimIslemeSecenekleri_DefaultValues_VarsayilanDegerereSahipOlmali" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Services.VirusTarayiciServisTestleri.SonGuncellemeTarihiAsync_MockServis_BugununTarihiniDondurmeli" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="7b36674a-6731-09c1-bb69-026aa2292060">
+      <Execution id="baddad0f-99bb-45c8-97db-5700393d5ccd" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Services.VirusTarayiciServisTestleri" name="SonGuncellemeTarihiAsync_MockServis_BugununTarihiniDondurmeli" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri.ValidateAsync_BuyukDosya_HataVermeliMeli" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="acfc01fa-94be-4bdb-e207-7fd8de9a95cd">
+      <Execution id="1a3e20b8-09d2-4d39-b713-eee8ccff64c8" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri" name="ValidateAsync_BuyukDosya_HataVermeliMeli" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Services.ClamAVTarayiciServisTestleri.Constructor_NullLogger_ArgumentNullExceptionFirlatmali" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="057adc5d-b9c7-9ec4-b79a-8781edbe539f">
+      <Execution id="579c071e-6a55-41dc-a17b-17fea5989712" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Services.ClamAVTarayiciServisTestleri" name="Constructor_NullLogger_ArgumentNullExceptionFirlatmali" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Services.ResimIslemeServisTestleri.WatermarkEkleAsync_GecerliResim_WatermarkEklenmisResimDondururMeli" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="1ebb3d19-c1f5-6337-c253-fab534601faf">
+      <Execution id="588f25bc-75e6-4226-99e4-1229fc8f06bb" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Services.ResimIslemeServisTestleri" name="WatermarkEkleAsync_GecerliResim_WatermarkEklenmisResimDondururMeli" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Extensions.DepolamaServisiFactoryTests.Constructor_NullServiceProvider_ArgumentNullExceptionFirlatmali" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="340b429b-cb7c-f1cb-c7fd-563586b2e442">
+      <Execution id="f55a8d0e-a81c-4c8e-9f71-d8287de8b240" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Extensions.DepolamaServisiFactoryTests" name="Constructor_NullServiceProvider_ArgumentNullExceptionFirlatmali" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Extensions.ServiceCollectionExtensionsTests.AddImageProcessing_KonfigurasyonAction_ResimServisiEklenmeli" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="0cf4f303-b8ae-c881-1399-73c030b9a8c3">
+      <Execution id="648c70a2-f917-420c-8612-f4fb99e7839f" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Extensions.ServiceCollectionExtensionsTests" name="AddImageProcessing_KonfigurasyonAction_ResimServisiEklenmeli" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri.DosyaImzasiGecerliMiAsync_YanlisImza_FalseDondurmeli" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="c616ef4a-ff6a-726e-c8c2-0be8e6f710ca">
+      <Execution id="0192fc78-e636-4df7-b1a7-54b5d3cefdb7" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri" name="DosyaImzasiGecerliMiAsync_YanlisImza_FalseDondurmeli" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Services.ClamAVTarayiciServisTestleri.Constructor_NullHttpClient_ArgumentNullExceptionFirlatmali" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="51579947-a00a-89fd-8c29-c2c7b7c4f814">
+      <Execution id="7a0b6a0b-c767-4493-85a4-536abafa775d" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Services.ClamAVTarayiciServisTestleri" name="Constructor_NullHttpClient_ArgumentNullExceptionFirlatmali" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri.DosyaBoyutuGecerliMi_GecerliBoyut_TrueDondurmeli" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="e290abb5-4a4c-a6bc-7766-5c20f40d23f0">
+      <Execution id="6cebd62f-6d5e-43a1-900c-39e50498cc3c" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri" name="DosyaBoyutuGecerliMi_GecerliBoyut_TrueDondurmeli" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Extensions.ServiceCollectionExtensionsTests.AddEnterpriseStorage_GecerliKonfigürasyon_ServislerEklenmeli" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="d1e7751a-f78a-d6d6-e4d1-3b177d5d2849">
+      <Execution id="40b27803-2a51-476f-8eb0-e8c0516a3351" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Extensions.ServiceCollectionExtensionsTests" name="AddEnterpriseStorage_GecerliKonfigürasyon_ServislerEklenmeli" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Services.ResimIslemeServisTestleri.ResimDosyasiMi_FarkliIcerikTurleri_DogruSonucVermeli(icerikTuru: &quot;image/gif&quot;, beklenenSonuc: True)" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="f8ea8402-12b5-9b66-aba4-1b9181b3d22f">
+      <Execution id="e32e2d41-afe2-4989-b340-e0886797e458" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Services.ResimIslemeServisTestleri" name="ResimDosyasiMi_FarkliIcerikTurleri_DogruSonucVermeli" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Services.ResimIslemeServisTestleri.ResimBoyutlandirAsync_GecerliResim_BoyutlandirilmisDondururMeli" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="ac2cb801-acd3-e8d1-6e82-b6d4b1b48910">
+      <Execution id="acf56943-7753-48c8-8314-7bfc383475f2" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Services.ResimIslemeServisTestleri" name="ResimBoyutlandirAsync_GecerliResim_BoyutlandirilmisDondururMeli" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Services.ResimIslemeServisTestleri.ResimIsleAsync_BuyukResim_KucukResimlerleIslenmisResimDondururMeli" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="7288a54e-575a-a093-4ab8-963830294c29">
+      <Execution id="750e41cd-6329-4aef-80c9-5564ff2a5a69" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Services.ResimIslemeServisTestleri" name="ResimIsleAsync_BuyukResim_KucukResimlerleIslenmisResimDondururMeli" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri.ValidateAsync_GeçersizDosyaAdi_HataVermeliMeli(dosyaAdi: &quot;   &quot;)" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="bf57b459-8be1-2213-c2f2-d0d3bb54333c">
+      <Execution id="2ebb42e8-6c39-4c7c-9ecb-936fa81fe7b7" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri" name="ValidateAsync_GeçersizDosyaAdi_HataVermeliMeli" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri.ValidateAsync_GecersizKarakterler_HataVermeliMeli(dosyaAdi: &quot;test&lt;file&gt;.txt&quot;)" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="e256f369-04ce-2b10-12bb-4a7231d718f0">
+      <Execution id="8e245dc3-da93-4185-a59b-caba5c711245" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri" name="ValidateAsync_GecersizKarakterler_HataVermeliMeli" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Services.ResimIslemeServisTestleri.ResimDosyasiMi_FarkliIcerikTurleri_DogruSonucVermeli(icerikTuru: &quot;image/png&quot;, beklenenSonuc: True)" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="3e00b09b-68c1-faa6-6b39-9e8efa1da9eb">
+      <Execution id="94bad1d7-6d9f-41af-805a-49f3f1add773" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Services.ResimIslemeServisTestleri" name="ResimDosyasiMi_FarkliIcerikTurleri_DogruSonucVermeli" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Extensions.ServiceCollectionExtensionsTests.GetMinIOConnectionString_GecerliAyarlar_ConnectionStringOlusturmali" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="2b7d0b21-4591-5f61-149f-2d20880e8c4e">
+      <Execution id="f36b18d6-3805-43e2-abe4-fed167253c5f" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Extensions.ServiceCollectionExtensionsTests" name="GetMinIOConnectionString_GecerliAyarlar_ConnectionStringOlusturmali" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Services.ResimIslemeServisTestleri.ResimIsleAsync_BozukResim_HataFirlatmali" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="5c451b10-6d89-dedd-df26-8d95496c7669">
+      <Execution id="4ee1d308-8b35-4a09-8189-99b5b0443cff" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Services.ResimIslemeServisTestleri" name="ResimIsleAsync_BozukResim_HataFirlatmali" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Services.ResimIslemeServisTestleri.ResimDosyasiMi_FarkliIcerikTurleri_DogruSonucVermeli(icerikTuru: &quot;application/pdf&quot;, beklenenSonuc: False)" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="6cd4aab2-0a9a-d20f-25d8-3ba767ab2bf5">
+      <Execution id="dbfdb6ef-9398-4048-9288-fec1849ed0d6" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Services.ResimIslemeServisTestleri" name="ResimDosyasiMi_FarkliIcerikTurleri_DogruSonucVermeli" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Services.ResimIslemeServisTestleri.ResimFormatiniDegistirAsync_JpegdenWebp_WebpDondururMeli" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="00d1ae19-1e33-a988-217e-102646f74288">
+      <Execution id="bb4be269-1a9b-4302-b4a2-a13b9246ebd2" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Services.ResimIslemeServisTestleri" name="ResimFormatiniDegistirAsync_JpegdenWebp_WebpDondururMeli" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri.ValidateAsync_UzunDosyaAdi_HataVermeliMeli" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="f05caa87-f69e-b71e-3668-ed6af5dc5a8c">
+      <Execution id="b93af572-c6b2-4d2b-8f77-a74c442a0751" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri" name="ValidateAsync_UzunDosyaAdi_HataVermeliMeli" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Models.StorageModelsTests.DosyaYuklemeIstegi_ExitFields_ValidationFailed(alanAdi: null, beklenenHata: &quot;Dosya stream'i gereklidir&quot;)" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="9d7e727e-d8d8-98fc-bf7a-c68a835e6513">
+      <Execution id="ed6d1127-f9de-47b1-ae44-3ef55231efcf" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Models.StorageModelsTests" name="DosyaYuklemeIstegi_ExitFields_ValidationFailed" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Models.StorageModelsTests.YedekBilgisi_DefaultConstructor_PropertilerBaslatilmali" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="fa73ac31-f989-94e7-97d6-5698892d9422">
+      <Execution id="4b954ef5-2e6b-4421-aef7-0e557c071c17" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Models.StorageModelsTests" name="YedekBilgisi_DefaultConstructor_PropertilerBaslatilmali" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Extensions.DepolamaServisiFactoryTests.CreateStorageService_NullProvider_DefaultServiceDondurmeli" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="c785965f-54f5-0958-d1b3-031adc08431b">
+      <Execution id="826f2bfa-142d-449e-9eb5-9a15121b50d8" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Extensions.DepolamaServisiFactoryTests" name="CreateStorageService_NullProvider_DefaultServiceDondurmeli" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Models.StorageModelsTests.GuvenlikAyarlari_BosAllowedExtensions_ValidasyonHatasiVermeli(extension: &quot;   &quot;)" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="be82b51c-3be8-bcc0-0e3f-6e24abe28fed">
+      <Execution id="76d9c82e-7ad5-4d46-966d-a91f16480a08" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Models.StorageModelsTests" name="GuvenlikAyarlari_BosAllowedExtensions_ValidasyonHatasiVermeli" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Extensions.ServiceCollectionExtensionsTests.GetStorageSettings_GecerliKonfigürasyon_AyarlariDondururMeli" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="c8a7a4b8-68dc-6d4c-01fc-9f5efada5ae5">
+      <Execution id="24123d28-8968-437c-bbad-abadca240643" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Extensions.ServiceCollectionExtensionsTests" name="GetStorageSettings_GecerliKonfigürasyon_AyarlariDondururMeli" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri.ValidateAsync_GecerliDosya_BasariliSonucDondururMeli" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="ecf06a14-ada8-ce31-dbf3-612d3b2c4fdd">
+      <Execution id="948a434b-8ea2-4b94-8a0e-d93107fe944e" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri" name="ValidateAsync_GecerliDosya_BasariliSonucDondururMeli" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Services.VirusTarayiciServisTestleri.TaraAsync_BuyukDosya_SuspheliSonucuVermeli" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="f8298d54-baa5-d2dc-db6d-c9ef0bf1832a">
+      <Execution id="7fc05736-46a6-42d2-806d-7630ead9bea4" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Services.VirusTarayiciServisTestleri" name="TaraAsync_BuyukDosya_SuspheliSonucuVermeli" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Models.StorageModelsTests.ValidationResult_AddInfo_InfoEklenmeli" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="79cfc419-cc18-83db-6883-06584171e046">
+      <Execution id="f92708d0-7285-4ccd-94b8-408cf0be5d26" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Models.StorageModelsTests" name="ValidationResult_AddInfo_InfoEklenmeli" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Services.VirusTarayiciServisTestleri.TaraAsync_FarkliDosyaBoyutlari_UygunSonucVermeli(dosyaBoyutu: 0)" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="14f66f59-ce3c-9807-2426-71130979e6d4">
+      <Execution id="a5424011-0234-4d3e-9f23-71106783f808" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Services.VirusTarayiciServisTestleri" name="TaraAsync_FarkliDosyaBoyutlari_UygunSonucVermeli" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri.ValidateAsync_GecersizKarakterler_HataVermeliMeli(dosyaAdi: &quot;test?file.txt&quot;)" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="f69d475d-04a3-9295-61fa-6ab20d8f5671">
+      <Execution id="78279ae6-4af5-4647-9938-d624a08612a7" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri" name="ValidateAsync_GecersizKarakterler_HataVermeliMeli" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Services.VirusTarayiciServisTestleri.TaraAsync_KucukDosya_TemizSonucuVermeli" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="aa616321-cac9-b063-562c-1b535b053cef">
+      <Execution id="e2d6c0d0-d38b-435d-8c7a-9a59a0f8862a" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Services.VirusTarayiciServisTestleri" name="TaraAsync_KucukDosya_TemizSonucuVermeli" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Models.StorageModelsTests.ValidationResult_Success_BasariliSonucOlusturmali" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="6725ca6e-2db4-d52b-666e-c5c0c5700fbf">
+      <Execution id="f451c629-107b-4b16-a5c5-7c7a7e9127e2" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Models.StorageModelsTests" name="ValidationResult_Success_BasariliSonucOlusturmali" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Extensions.ServiceCollectionExtensionsTests.HasStorageSettings_KonfigürasyonYok_FalseDondurmeli" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="3932fc5c-8a7d-db96-142c-68fffa2dd87c">
+      <Execution id="fc961cbe-a4de-433b-bca6-1031ad902d3d" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Extensions.ServiceCollectionExtensionsTests" name="HasStorageSettings_KonfigürasyonYok_FalseDondurmeli" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Models.StorageModelsTests.ValidationResult_AddWarning_WarningEklenmeli" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="3da88a3e-b6f5-d800-66e5-348fb3505fed">
+      <Execution id="ad22b22f-136d-4f77-acd3-0f3169c65f49" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Models.StorageModelsTests" name="ValidationResult_AddWarning_WarningEklenmeli" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri.ValidateAsync_GeçersizDosyaAdi_HataVermeliMeli(dosyaAdi: null)" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="e7892a4f-a7f9-4559-9176-4da4301dff02">
+      <Execution id="ccf9cda0-59aa-4537-8e70-327d34a76d4a" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri" name="ValidateAsync_GeçersizDosyaAdi_HataVermeliMeli" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Models.StorageModelsTests.DosyaYuklemeIstegi_ExitFields_ValidationFailed(alanAdi: &quot;&quot;, beklenenHata: &quot;Dosya adı gereklidir&quot;)" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="2880c561-d0d4-fc66-c6b3-dcac566a0be5">
+      <Execution id="ef78d08c-0896-4753-ade2-ed438f327eb5" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Models.StorageModelsTests" name="DosyaYuklemeIstegi_ExitFields_ValidationFailed" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Models.StorageModelsTests.ValidationResult_AddError_ErrorEklenmeli" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="238d6161-d560-b29b-9b2b-f26a292d411e">
+      <Execution id="8110da2a-e5bb-4755-8242-7edc341739d6" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Models.StorageModelsTests" name="ValidationResult_AddError_ErrorEklenmeli" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Models.StorageModelsTests.DosyaYuklemeIstegi_ValidModel_ValidationPassed" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="050f5418-717c-0616-f15d-60ec01d72cca">
+      <Execution id="9734cfd0-ed2e-4d0c-8484-6f67f8d6ff05" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Models.StorageModelsTests" name="DosyaYuklemeIstegi_ValidModel_ValidationPassed" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Extensions.ServiceCollectionExtensionsTests.AddClamAVVirusScanner_Ayarlar_VirusServisiveHttpClientEklenmeli" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="975bb357-e96e-64a7-408f-e212511c9c2e">
+      <Execution id="88a8f059-44d0-4f2c-af3c-68f9170ed0a9" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Extensions.ServiceCollectionExtensionsTests" name="AddClamAVVirusScanner_Ayarlar_VirusServisiveHttpClientEklenmeli" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri.ValidateAsync_GecersizKarakterler_HataVermeliMeli(dosyaAdi: &quot;test|file.txt&quot;)" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="733d28bf-5c7c-b507-4fcc-10f98a754bb9">
+      <Execution id="b94ca161-ed5d-4eb1-ae2c-35ef24eae169" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri" name="ValidateAsync_GecersizKarakterler_HataVermeliMeli" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Services.VirusTarayiciServisTestleri.TaraAsync_FarkliDosyaBoyutlari_UygunSonucVermeli(dosyaBoyutu: 500)" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="5b952f12-da7a-60a0-2d0b-adb17c4e2527">
+      <Execution id="d5a567d8-9f2c-407c-8f1e-93ecb43bf090" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Services.VirusTarayiciServisTestleri" name="TaraAsync_FarkliDosyaBoyutlari_UygunSonucVermeli" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Services.ResimIslemeServisTestleri.ResimDosyasiMi_FarkliIcerikTurleri_DogruSonucVermeli(icerikTuru: &quot;image/webp&quot;, beklenenSonuc: True)" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="9ff69c44-faa5-e60c-d71c-2cfcdff220ca">
+      <Execution id="f068859e-3b47-4aba-b18b-7a6af0c4fcfe" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Services.ResimIslemeServisTestleri" name="ResimDosyasiMi_FarkliIcerikTurleri_DogruSonucVermeli" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Services.VirusTarayiciServisTestleri.SaglikliMiAsync_MockServis_HepSaglikliDondurmeli" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="f711a204-d998-0916-98b3-93660763166b">
+      <Execution id="a51b4837-ee23-41f6-b813-d8f71d2a7df6" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Services.VirusTarayiciServisTestleri" name="SaglikliMiAsync_MockServis_HepSaglikliDondurmeli" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Models.StorageModelsTests.YedekTipi_GecerliDegerler_EnumDegerleriTanimliOlmali(tip: DifferansiyalYedek)" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="272b23ff-f63d-4eb8-3096-16de66a4efef">
+      <Execution id="fd488323-dd72-4da0-95d4-d7b43fab0e82" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Models.StorageModelsTests" name="YedekTipi_GecerliDegerler_EnumDegerleriTanimliOlmali" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Models.StorageModelsTests.GuvenlikAyarlari_BosAllowedExtensions_ValidasyonHatasiVermeli(extension: &quot;&quot;)" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="4c92c0a2-9077-a097-915f-460bf7eda0c3">
+      <Execution id="56e0b373-c4cb-48e9-9a4b-f19e5efdcbd7" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Models.StorageModelsTests" name="GuvenlikAyarlari_BosAllowedExtensions_ValidasyonHatasiVermeli" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Extensions.ServiceCollectionExtensionsTests.AddMockVirusScanner_MockServisEklenmeli" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="cf8667da-b6a3-bb34-46c4-02e50a6f4aa1">
+      <Execution id="a39f5e5e-f748-4450-9fe0-f26de280f9da" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Extensions.ServiceCollectionExtensionsTests" name="AddMockVirusScanner_MockServisEklenmeli" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Services.ResimIslemeServisTestleri.ResimDosyasiMi_FarkliIcerikTurleri_DogruSonucVermeli(icerikTuru: &quot;image/jpeg&quot;, beklenenSonuc: True)" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="5522037e-e5a0-021b-d0b7-c7d234eb0f03">
+      <Execution id="a77bdaee-4fc9-4abe-ac84-dbd37d8992ed" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Services.ResimIslemeServisTestleri" name="ResimDosyasiMi_FarkliIcerikTurleri_DogruSonucVermeli" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri.ValidateAsync_GeçersizDosyaAdi_HataVermeliMeli(dosyaAdi: &quot;&quot;)" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="1cd0370b-9adf-338b-b1eb-b461a43afc4c">
+      <Execution id="e7dc05f9-b00e-4218-9644-6438f747fdf3" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri" name="ValidateAsync_GeçersizDosyaAdi_HataVermeliMeli" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Models.StorageModelsTests.ValidationResult_Failure_HataileFailureSonucuOlusturmali" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="f7194480-9399-0052-3b84-846249066dbf">
+      <Execution id="a5447990-70be-4038-ad03-29687a5b2ce8" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Models.StorageModelsTests" name="ValidationResult_Failure_HataileFailureSonucuOlusturmali" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Services.VirusTarayiciServisTestleri.TaraAsync_CancellationToken_IptalEdildigindeOperationCanceledFirlatmali" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="e41f65a5-124b-abc8-1f30-3ea05e547824">
+      <Execution id="2d89331d-1497-439b-8d46-8c7f6cd80982" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Services.VirusTarayiciServisTestleri" name="TaraAsync_CancellationToken_IptalEdildigindeOperationCanceledFirlatmali" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Models.StorageModelsTests.YedekTipi_GecerliDegerler_EnumDegerleriTanimliOlmali(tip: TamYedek)" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="a841b8c6-52fb-8406-beef-ffef5bf7c9f1">
+      <Execution id="be307966-3ed2-4aee-b4a8-b80b58e58d8d" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Models.StorageModelsTests" name="YedekTipi_GecerliDegerler_EnumDegerleriTanimliOlmali" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Services.VirusTarayiciServisTestleri.TemizMiAsync_HerDosya_TrueDondurmeli" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="e03b5bdd-230d-53c3-fbcb-79212c2eceea">
+      <Execution id="a9719249-3859-446d-8bf2-56be358705bb" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Services.VirusTarayiciServisTestleri" name="TemizMiAsync_HerDosya_TrueDondurmeli" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Services.ResimIslemeServisTestleri.ResimDosyasiMi_FarkliIcerikTurleri_DogruSonucVermeli(icerikTuru: &quot;text/plain&quot;, beklenenSonuc: False)" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="ace63b21-b7f0-20d8-5d67-074f4026efd0">
+      <Execution id="6c8bf34b-8c9b-4a45-842e-d4b1221e5c4f" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Services.ResimIslemeServisTestleri" name="ResimDosyasiMi_FarkliIcerikTurleri_DogruSonucVermeli" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Services.ResimIslemeServisTestleri.DesteklenenFormatlar_ListelenmisFormatlar_DogruFormatlariIcermeliMeli" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="a60dd689-bb3d-0403-fed6-74ea9caff3d2">
+      <Execution id="17281658-7e15-4871-9351-8e3455041451" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Services.ResimIslemeServisTestleri" name="DesteklenenFormatlar_ListelenmisFormatlar_DogruFormatlariIcermeliMeli" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Extensions.ServiceCollectionExtensionsTests.AddMinIOStorage_OzelAyarlar_MinIOAyarlariGuncellenmeli" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="2a3523ac-fdf5-c5b9-c307-497d28bb65f8">
+      <Execution id="f9b070dd-ded1-441c-92f3-887528d0a68b" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Extensions.ServiceCollectionExtensionsTests" name="AddMinIOStorage_OzelAyarlar_MinIOAyarlariGuncellenmeli" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Extensions.ServiceCollectionExtensionsTests.AddEnterpriseStorage_VarsayilanAyarlar_DefaultDegerlerleServislerEklenmeli" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="d2c34e9e-d124-d5ac-2582-481d1b778665">
+      <Execution id="7424b0bb-ee08-4684-939f-92afa3349dc1" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Extensions.ServiceCollectionExtensionsTests" name="AddEnterpriseStorage_VarsayilanAyarlar_DefaultDegerlerleServislerEklenmeli" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="7288a54e-575a-a093-4ab8-963830294c29" executionId="750e41cd-6329-4aef-80c9-5564ff2a5a69" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="057adc5d-b9c7-9ec4-b79a-8781edbe539f" executionId="579c071e-6a55-41dc-a17b-17fea5989712" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="6725ca6e-2db4-d52b-666e-c5c0c5700fbf" executionId="f451c629-107b-4b16-a5c5-7c7a7e9127e2" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="d2c34e9e-d124-d5ac-2582-481d1b778665" executionId="7424b0bb-ee08-4684-939f-92afa3349dc1" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="e41f65a5-124b-abc8-1f30-3ea05e547824" executionId="2d89331d-1497-439b-8d46-8c7f6cd80982" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="1c33ab4a-bd84-adef-0a00-ad253a33a66f" executionId="c9def8f8-f932-4451-914e-e81985bd3e8f" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="272b23ff-f63d-4eb8-3096-16de66a4efef" executionId="fd488323-dd72-4da0-95d4-d7b43fab0e82" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="3e00b09b-68c1-faa6-6b39-9e8efa1da9eb" executionId="94bad1d7-6d9f-41af-805a-49f3f1add773" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="a09e1861-d612-ccea-38e2-f226c6a5598f" executionId="c61d91c9-5a03-445c-8d83-bd2cb962dcc7" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="eec139e4-b8d2-4787-eec5-f37b72dfef14" executionId="4b5804d1-bf7b-47fc-a865-30101f0f4e88" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="2880c561-d0d4-fc66-c6b3-dcac566a0be5" executionId="ef78d08c-0896-4753-ade2-ed438f327eb5" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="e256f369-04ce-2b10-12bb-4a7231d718f0" executionId="8e245dc3-da93-4185-a59b-caba5c711245" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="050f5418-717c-0616-f15d-60ec01d72cca" executionId="9734cfd0-ed2e-4d0c-8484-6f67f8d6ff05" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="340b429b-cb7c-f1cb-c7fd-563586b2e442" executionId="f55a8d0e-a81c-4c8e-9f71-d8287de8b240" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="c8a7a4b8-68dc-6d4c-01fc-9f5efada5ae5" executionId="24123d28-8968-437c-bbad-abadca240643" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="25e2a728-abcd-630a-d595-081c7325d260" executionId="ae983fa6-0944-490c-87a6-aa8134a653c2" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="a1a2d839-21cc-3aa6-021e-714c84266652" executionId="7bf5c61f-7c62-4363-ab78-85b058563c99" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="f7194480-9399-0052-3b84-846249066dbf" executionId="a5447990-70be-4038-ad03-29687a5b2ce8" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="a60dd689-bb3d-0403-fed6-74ea9caff3d2" executionId="17281658-7e15-4871-9351-8e3455041451" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="ac0bc820-4f76-beb5-ec12-ae63c751fbef" executionId="1d0277b2-ee5d-49f4-9cc2-c37065c7d1b8" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="ace63b21-b7f0-20d8-5d67-074f4026efd0" executionId="6c8bf34b-8c9b-4a45-842e-d4b1221e5c4f" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="7b36674a-6731-09c1-bb69-026aa2292060" executionId="baddad0f-99bb-45c8-97db-5700393d5ccd" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="238d6161-d560-b29b-9b2b-f26a292d411e" executionId="8110da2a-e5bb-4755-8242-7edc341739d6" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="66e4263d-a33f-9f76-5248-e0ea0462567e" executionId="da5c023e-0b3f-48fd-9bbb-e29153607299" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="22df29ca-1919-bfd8-40d0-5cffe65d98c0" executionId="021acf79-5fff-4438-bc6c-9e7e2780ac75" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="acfc01fa-94be-4bdb-e207-7fd8de9a95cd" executionId="1a3e20b8-09d2-4d39-b713-eee8ccff64c8" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="8f242e89-bf70-67a6-4013-7e1bcb746ba1" executionId="4b152a05-b7ae-4f54-b333-069dd8f9ef63" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="1c88859b-4113-0216-b2f3-2b25555ba917" executionId="0d1a8d29-f123-474f-bdfd-cf01bd7deb42" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="51579947-a00a-89fd-8c29-c2c7b7c4f814" executionId="7a0b6a0b-c767-4493-85a4-536abafa775d" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="61fd8226-7b52-b909-bd0a-4672fb4bf31b" executionId="847223a7-30e8-41bb-b12a-df84e63fd00c" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="f711a204-d998-0916-98b3-93660763166b" executionId="a51b4837-ee23-41f6-b813-d8f71d2a7df6" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="3932fc5c-8a7d-db96-142c-68fffa2dd87c" executionId="fc961cbe-a4de-433b-bca6-1031ad902d3d" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="a841b8c6-52fb-8406-beef-ffef5bf7c9f1" executionId="be307966-3ed2-4aee-b4a8-b80b58e58d8d" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="1b49adf1-4016-2333-bfa5-3112e1389a5a" executionId="1e2bb421-2ef5-4daa-a578-1e3250320874" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="aa616321-cac9-b063-562c-1b535b053cef" executionId="e2d6c0d0-d38b-435d-8c7a-9a59a0f8862a" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="1ebb3d19-c1f5-6337-c253-fab534601faf" executionId="588f25bc-75e6-4226-99e4-1229fc8f06bb" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="c785965f-54f5-0958-d1b3-031adc08431b" executionId="826f2bfa-142d-449e-9eb5-9a15121b50d8" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="79cfc419-cc18-83db-6883-06584171e046" executionId="f92708d0-7285-4ccd-94b8-408cf0be5d26" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="6eb99c4a-01bc-c2e9-d8c3-c10f390a5232" executionId="a00b8b10-5ea9-4e2e-8c53-e1e436c95f40" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="bf57b459-8be1-2213-c2f2-d0d3bb54333c" executionId="2ebb42e8-6c39-4c7c-9ecb-936fa81fe7b7" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="e03b5bdd-230d-53c3-fbcb-79212c2eceea" executionId="a9719249-3859-446d-8bf2-56be358705bb" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="01e9ce06-687f-1328-629f-877fb3d6b1de" executionId="30a330b9-664e-459c-8cc4-8a745f62eb48" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="5522037e-e5a0-021b-d0b7-c7d234eb0f03" executionId="a77bdaee-4fc9-4abe-ac84-dbd37d8992ed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="ccbf1a1c-bb15-00d8-6c30-83490d79c7a4" executionId="6ba6f022-742c-4771-baac-8444cb18ff2f" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="2a3523ac-fdf5-c5b9-c307-497d28bb65f8" executionId="f9b070dd-ded1-441c-92f3-887528d0a68b" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="733d28bf-5c7c-b507-4fcc-10f98a754bb9" executionId="b94ca161-ed5d-4eb1-ae2c-35ef24eae169" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="be82b51c-3be8-bcc0-0e3f-6e24abe28fed" executionId="76d9c82e-7ad5-4d46-966d-a91f16480a08" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="5b952f12-da7a-60a0-2d0b-adb17c4e2527" executionId="d5a567d8-9f2c-407c-8f1e-93ecb43bf090" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="172d5222-b9fc-660d-50b2-49274d6424c1" executionId="ccd700fe-8f3c-4cf1-8882-fdb22669797c" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="975bb357-e96e-64a7-408f-e212511c9c2e" executionId="88a8f059-44d0-4f2c-af3c-68f9170ed0a9" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="d8edb4ad-4531-f937-2bac-550c98aef40e" executionId="2c1a52a6-1e77-44c1-8f6b-8da90491e827" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="fa73ac31-f989-94e7-97d6-5698892d9422" executionId="4b954ef5-2e6b-4421-aef7-0e557c071c17" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="90d351de-9252-a77d-cb14-a74503773f9c" executionId="2b8054e0-3d5f-41a2-b8b5-25162af70b17" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="00d1ae19-1e33-a988-217e-102646f74288" executionId="bb4be269-1a9b-4302-b4a2-a13b9246ebd2" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="14f66f59-ce3c-9807-2426-71130979e6d4" executionId="a5424011-0234-4d3e-9f23-71106783f808" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="0cf4f303-b8ae-c881-1399-73c030b9a8c3" executionId="648c70a2-f917-420c-8612-f4fb99e7839f" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="0e876ae0-e77c-4ca7-7879-98cd54300afa" executionId="21441a40-7fc0-4e92-807b-95af4b5827af" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="c616ef4a-ff6a-726e-c8c2-0be8e6f710ca" executionId="0192fc78-e636-4df7-b1a7-54b5d3cefdb7" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="f05caa87-f69e-b71e-3668-ed6af5dc5a8c" executionId="b93af572-c6b2-4d2b-8f77-a74c442a0751" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="1635d350-77c7-937d-5384-a1d89274fb26" executionId="1b65c6b6-2cef-4630-9aa6-40cc8127e0d1" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="1cd0370b-9adf-338b-b1eb-b461a43afc4c" executionId="e7dc05f9-b00e-4218-9644-6438f747fdf3" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="2b7d0b21-4591-5f61-149f-2d20880e8c4e" executionId="f36b18d6-3805-43e2-abe4-fed167253c5f" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="36bf94e8-b2fb-7995-11dd-0edf10cf9046" executionId="58a9f5e2-f05a-4a42-b860-f9d0baa4fb20" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="5c451b10-6d89-dedd-df26-8d95496c7669" executionId="4ee1d308-8b35-4a09-8189-99b5b0443cff" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="d1e7751a-f78a-d6d6-e4d1-3b177d5d2849" executionId="40b27803-2a51-476f-8eb0-e8c0516a3351" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="5fce9f5b-44f5-4e68-b548-4157a52c2c21" executionId="58e35e3f-4778-401f-b415-199c2898b82d" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="9d7e727e-d8d8-98fc-bf7a-c68a835e6513" executionId="ed6d1127-f9de-47b1-ae44-3ef55231efcf" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="e7892a4f-a7f9-4559-9176-4da4301dff02" executionId="ccf9cda0-59aa-4537-8e70-327d34a76d4a" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="ac2cb801-acd3-e8d1-6e82-b6d4b1b48910" executionId="acf56943-7753-48c8-8314-7bfc383475f2" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="f69d475d-04a3-9295-61fa-6ab20d8f5671" executionId="78279ae6-4af5-4647-9938-d624a08612a7" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="81e8f42e-2b74-f5ee-0e5a-f94f93713110" executionId="929ebc7e-4727-4fb0-9de7-f75304adbd50" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="3da88a3e-b6f5-d800-66e5-348fb3505fed" executionId="ad22b22f-136d-4f77-acd3-0f3169c65f49" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="f8298d54-baa5-d2dc-db6d-c9ef0bf1832a" executionId="7fc05736-46a6-42d2-806d-7630ead9bea4" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="e290abb5-4a4c-a6bc-7766-5c20f40d23f0" executionId="6cebd62f-6d5e-43a1-900c-39e50498cc3c" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="6cd4aab2-0a9a-d20f-25d8-3ba767ab2bf5" executionId="dbfdb6ef-9398-4048-9288-fec1849ed0d6" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="9ff69c44-faa5-e60c-d71c-2cfcdff220ca" executionId="f068859e-3b47-4aba-b18b-7a6af0c4fcfe" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="ecf06a14-ada8-ce31-dbf3-612d3b2c4fdd" executionId="948a434b-8ea2-4b94-8a0e-d93107fe944e" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="9507dc98-5599-be8a-b135-ace9c72db944" executionId="5bfec521-369a-4778-83ac-ee363d83dffa" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="4c92c0a2-9077-a097-915f-460bf7eda0c3" executionId="56e0b373-c4cb-48e9-9a4b-f19e5efdcbd7" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="cf8667da-b6a3-bb34-46c4-02e50a6f4aa1" executionId="a39f5e5e-f748-4450-9fe0-f26de280f9da" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="f8ea8402-12b5-9b66-aba4-1b9181b3d22f" executionId="e32e2d41-afe2-4989-b340-e0886797e458" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Failed">
+    <Counters total="81" executed="81" passed="63" failed="18" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.4.5+1caef2f33e (64-bit .NET 8.0.19)
+[xUnit.net 00:00:00.37]   Discovering: Enterprise.Shared.Storage.Tests
+[xUnit.net 00:00:00.41]   Discovered:  Enterprise.Shared.Storage.Tests
+[xUnit.net 00:00:00.42]   Starting:    Enterprise.Shared.Storage.Tests
+[xUnit.net 00:00:00.54]       Expected a &lt;System.ArgumentNullException&gt; to be thrown, but found &lt;System.NullReferenceException&gt;:
+[xUnit.net 00:00:00.54]       System.NullReferenceException: Object reference not set to an instance of an object.
+[xUnit.net 00:00:00.54]          at Enterprise.Shared.Storage.Services.ClamAVTarayiciServisi..ctor(HttpClient httpClient, IOptions`1 ayarlar, ILogger`1 logger) in /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage/Services/VirusScannerService.cs:line 25
+[xUnit.net 00:00:00.54]          at Enterprise.Shared.Storage.Tests.Services.ClamAVTarayiciServisTestleri.&lt;&gt;c__DisplayClass1_0.&lt;Constructor_NullOptions_ArgumentNullExceptionFirlatmali&gt;b__0() in /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/Services/VirusScannerServiceTests.cs:line 175
+[xUnit.net 00:00:00.54]          at FluentAssertions.Specialized.FunctionAssertions`1.InvokeSubject()
+[xUnit.net 00:00:00.54]          at FluentAssertions.Specialized.DelegateAssertions`2.InvokeSubjectWithInterception().
+[xUnit.net 00:00:00.54]       Stack Trace:
+[xUnit.net 00:00:00.54]            at FluentAssertions.Execution.XUnit2TestFramework.Throw(String message)
+[xUnit.net 00:00:00.54]            at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+[xUnit.net 00:00:00.54]            at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+[xUnit.net 00:00:00.54]            at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+[xUnit.net 00:00:00.54]            at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+[xUnit.net 00:00:00.54]            at FluentAssertions.Execution.AssertionScope.FailWith(String message, Object[] args)
+[xUnit.net 00:00:00.54]            at FluentAssertions.Specialized.DelegateAssertionsBase`2.ThrowInternal[TException](Exception exception, String because, Object[] becauseArgs)
+[xUnit.net 00:00:00.54]            at FluentAssertions.Specialized.DelegateAssertions`2.Throw[TException](String because, Object[] becauseArgs)
+[xUnit.net 00:00:00.54]         /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/Services/VirusScannerServiceTests.cs(176,0): at Enterprise.Shared.Storage.Tests.Services.ClamAVTarayiciServisTestleri.Constructor_NullOptions_ArgumentNullExceptionFirlatmali()
+[xUnit.net 00:00:00.54]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+[xUnit.net 00:00:00.54]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+[xUnit.net 00:00:00.54]       Expected configuration.HasStorageSettings() to be True, but found False.
+[xUnit.net 00:00:00.54]       Stack Trace:
+[xUnit.net 00:00:00.54]            at FluentAssertions.Execution.XUnit2TestFramework.Throw(String message)
+[xUnit.net 00:00:00.54]            at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+[xUnit.net 00:00:00.54]            at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+[xUnit.net 00:00:00.54]            at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+[xUnit.net 00:00:00.54]            at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+[xUnit.net 00:00:00.54]            at FluentAssertions.Execution.AssertionScope.FailWith(String message, Object[] args)
+[xUnit.net 00:00:00.54]            at FluentAssertions.Primitives.BooleanAssertions`1.BeTrue(String because, Object[] becauseArgs)
+[xUnit.net 00:00:00.54]         /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/Extensions/ServiceCollectionExtensionsTests.cs(230,0): at Enterprise.Shared.Storage.Tests.Extensions.ServiceCollectionExtensionsTests.HasStorageSettings_KonfigürasyonVar_TrueDondurmeli()
+[xUnit.net 00:00:00.54]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+[xUnit.net 00:00:00.54]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+[xUnit.net 00:00:00.54]       Expected sonuc.ErrorMessages {"Desteklenmeyen dosya uzantısı: "} to have an item matching x.Contains("Dosya adı").
+[xUnit.net 00:00:00.54]       Stack Trace:
+[xUnit.net 00:00:00.54]            at FluentAssertions.Execution.XUnit2TestFramework.Throw(String message)
+[xUnit.net 00:00:00.54]            at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+[xUnit.net 00:00:00.54]            at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+[xUnit.net 00:00:00.54]            at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+[xUnit.net 00:00:00.54]            at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+[xUnit.net 00:00:00.54]            at FluentAssertions.Execution.AssertionScope.FailWith(String message, Object[] args)
+[xUnit.net 00:00:00.54]            at FluentAssertions.Collections.GenericCollectionAssertions`3.Contain(Expression`1 predicate, String because, Object[] becauseArgs)
+[xUnit.net 00:00:00.54]         /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/Services/FileValidationServiceTests.cs(156,0): at Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri.ValidateAsync_GeçersizDosyaAdi_HataVermeliMeli(String dosyaAdi)
+[xUnit.net 00:00:00.54]         --- End of stack trace from previous location ---
+[xUnit.net 00:00:00.54]       Expected isValid to be False, but found True.
+[xUnit.net 00:00:00.54]       Stack Trace:
+[xUnit.net 00:00:00.54]            at FluentAssertions.Execution.XUnit2TestFramework.Throw(String message)
+[xUnit.net 00:00:00.54]            at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+[xUnit.net 00:00:00.54]            at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+[xUnit.net 00:00:00.54]            at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+[xUnit.net 00:00:00.54]            at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+[xUnit.net 00:00:00.54]            at FluentAssertions.Execution.AssertionScope.FailWith(String message, Object[] args)
+[xUnit.net 00:00:00.54]            at FluentAssertions.Primitives.BooleanAssertions`1.BeFalse(String because, Object[] becauseArgs)
+[xUnit.net 00:00:00.54]         /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/Models/StorageModelsTests.cs(88,0): at Enterprise.Shared.Storage.Tests.Models.StorageModelsTests.DosyaYuklemeIstegi_ExitFields_ValidationFailed(String alanAdi, String beklenenHata)
+[xUnit.net 00:00:00.54]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+[xUnit.net 00:00:00.54]            at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+[xUnit.net 00:00:00.54]       Expected isValid to be False, but found True.
+[xUnit.net 00:00:00.54]       Stack Trace:
+[xUnit.net 00:00:00.54]            at FluentAssertions.Execution.XUnit2TestFramework.Throw(String message)
+[xUnit.net 00:00:00.54]            at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+[xUnit.net 00:00:00.54]            at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+[xUnit.net 00:00:00.54]            at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+[xUnit.net 00:00:00.54]            at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+[xUnit.net 00:00:00.54]            at FluentAssertions.Execution.AssertionScope.FailWith(String message, Object[] args)
+[xUnit.net 00:00:00.54]            at FluentAssertions.Primitives.BooleanAssertions`1.BeFalse(String because, Object[] becauseArgs)
+[xUnit.net 00:00:00.54]         /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/Models/StorageModelsTests.cs(88,0): at Enterprise.Shared.Storage.Tests.Models.StorageModelsTests.DosyaYuklemeIstegi_ExitFields_ValidationFailed(String alanAdi, String beklenenHata)
+[xUnit.net 00:00:00.54]            at InvokeStub_StorageModelsTests.DosyaYuklemeIstegi_ExitFields_ValidationFailed(Object, Span`1)
+[xUnit.net 00:00:00.54]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:00.54]       Expected isValid to be False, but found True.
+[xUnit.net 00:00:00.54]       Stack Trace:
+[xUnit.net 00:00:00.54]            at FluentAssertions.Execution.XUnit2TestFramework.Throw(String message)
+[xUnit.net 00:00:00.54]            at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+[xUnit.net 00:00:00.54]            at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+[xUnit.net 00:00:00.54]            at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+[xUnit.net 00:00:00.54]            at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+[xUnit.net 00:00:00.54]            at FluentAssertions.Execution.AssertionScope.FailWith(String message, Object[] args)
+[xUnit.net 00:00:00.54]            at FluentAssertions.Primitives.BooleanAssertions`1.BeFalse(String because, Object[] becauseArgs)
+[xUnit.net 00:00:00.54]         /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/Models/StorageModelsTests.cs(88,0): at Enterprise.Shared.Storage.Tests.Models.StorageModelsTests.DosyaYuklemeIstegi_ExitFields_ValidationFailed(String alanAdi, String beklenenHata)
+[xUnit.net 00:00:00.54]            at InvokeStub_StorageModelsTests.DosyaYuklemeIstegi_ExitFields_ValidationFailed(Object, Span`1)
+[xUnit.net 00:00:00.54]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:00.55]       Expected sonuc.ErrorMessages {"Validasyon hatası: Object reference not set to an instance of an object."} to have an item matching x.Contains("Dosya adı").
+[xUnit.net 00:00:00.55]       Stack Trace:
+[xUnit.net 00:00:00.55]            at FluentAssertions.Execution.XUnit2TestFramework.Throw(String message)
+[xUnit.net 00:00:00.55]            at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+[xUnit.net 00:00:00.55]            at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+[xUnit.net 00:00:00.55]            at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+[xUnit.net 00:00:00.55]            at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+[xUnit.net 00:00:00.55]            at FluentAssertions.Execution.AssertionScope.FailWith(String message, Object[] args)
+[xUnit.net 00:00:00.55]            at FluentAssertions.Collections.GenericCollectionAssertions`3.Contain(Expression`1 predicate, String because, Object[] becauseArgs)
+[xUnit.net 00:00:00.55]         /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/Services/FileValidationServiceTests.cs(156,0): at Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri.ValidateAsync_GeçersizDosyaAdi_HataVermeliMeli(String dosyaAdi)
+[xUnit.net 00:00:00.55]         --- End of stack trace from previous location ---
+[xUnit.net 00:00:00.55]       System.InvalidOperationException : Unable to resolve service for type 'Microsoft.Extensions.Logging.ILogger`1[Enterprise.Shared.Storage.Services.ResimIslemeServisi]' while attempting to activate 'Enterprise.Shared.Storage.Services.ResimIslemeServisi'.
+[xUnit.net 00:00:00.55]       Stack Trace:
+[xUnit.net 00:00:00.55]            at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateArgumentCallSites(ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain callSiteChain, ParameterInfo[] parameters, Boolean throwIfCallSiteNotFound)
+[xUnit.net 00:00:00.55]            at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain callSiteChain)
+[xUnit.net 00:00:00.55]            at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.TryCreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+[xUnit.net 00:00:00.55]            at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.TryCreateExact(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+[xUnit.net 00:00:00.55]            at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateCallSite(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+[xUnit.net 00:00:00.55]            at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.GetCallSite(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+[xUnit.net 00:00:00.55]            at Microsoft.Extensions.DependencyInjection.ServiceProvider.CreateServiceAccessor(ServiceIdentifier serviceIdentifier)
+[xUnit.net 00:00:00.55]            at System.Collections.Concurrent.ConcurrentDictionary`2.GetOrAdd(TKey key, Func`2 valueFactory)
+[xUnit.net 00:00:00.55]            at Microsoft.Extensions.DependencyInjection.ServiceProvider.GetService(ServiceIdentifier serviceIdentifier, ServiceProviderEngineScope serviceProviderEngineScope)
+[xUnit.net 00:00:00.55]            at Microsoft.Extensions.DependencyInjection.ServiceProvider.GetService(Type serviceType)
+[xUnit.net 00:00:00.55]            at Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetService[T](IServiceProvider provider)
+[xUnit.net 00:00:00.55]         /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/Extensions/ServiceCollectionExtensionsTests.cs(137,0): at Enterprise.Shared.Storage.Tests.Extensions.ServiceCollectionExtensionsTests.AddImageProcessing_KonfigurasyonAction_ResimServisiEklenmeli()
+[xUnit.net 00:00:00.55]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+[xUnit.net 00:00:00.55]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+[xUnit.net 00:00:00.55]       System.InvalidOperationException : Unable to resolve service for type 'Microsoft.Extensions.Logging.ILogger`1[Enterprise.Shared.Storage.Services.MockVirusTarayiciServisi]' while attempting to activate 'Enterprise.Shared.Storage.Services.MockVirusTarayiciServisi'.
+[xUnit.net 00:00:00.55]       Stack Trace:
+[xUnit.net 00:00:00.55]            at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateArgumentCallSites(ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain callSiteChain, ParameterInfo[] parameters, Boolean throwIfCallSiteNotFound)
+[xUnit.net 00:00:00.55]            at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain callSiteChain)
+[xUnit.net 00:00:00.55]            at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.TryCreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+[xUnit.net 00:00:00.55]            at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.TryCreateExact(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+[xUnit.net 00:00:00.55]            at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateCallSite(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+[xUnit.net 00:00:00.55]            at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.GetCallSite(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+[xUnit.net 00:00:00.55]            at Microsoft.Extensions.DependencyInjection.ServiceProvider.CreateServiceAccessor(ServiceIdentifier serviceIdentifier)
+[xUnit.net 00:00:00.55]            at System.Collections.Concurrent.ConcurrentDictionary`2.GetOrAdd(TKey key, Func`2 valueFactory)
+[xUnit.net 00:00:00.55]            at Microsoft.Extensions.DependencyInjection.ServiceProvider.GetService(ServiceIdentifier serviceIdentifier, ServiceProviderEngineScope serviceProviderEngineScope)
+[xUnit.net 00:00:00.55]            at Microsoft.Extensions.DependencyInjection.ServiceProvider.GetService(Type serviceType)
+[xUnit.net 00:00:00.55]            at Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetService[T](IServiceProvider provider)
+[xUnit.net 00:00:00.55]         /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/Extensions/ServiceCollectionExtensionsTests.cs(181,0): at Enterprise.Shared.Storage.Tests.Extensions.ServiceCollectionExtensionsTests.AddMockVirusScanner_MockServisEklenmeli()
+[xUnit.net 00:00:00.55]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+[xUnit.net 00:00:00.55]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+[xUnit.net 00:00:00.55]       Expected sonuc.IsValid to be False, but found True.
+[xUnit.net 00:00:00.55]       Stack Trace:
+[xUnit.net 00:00:00.55]            at FluentAssertions.Execution.XUnit2TestFramework.Throw(String message)
+[xUnit.net 00:00:00.55]            at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+[xUnit.net 00:00:00.55]            at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+[xUnit.net 00:00:00.55]            at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+[xUnit.net 00:00:00.55]            at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+[xUnit.net 00:00:00.55]            at FluentAssertions.Execution.AssertionScope.FailWith(String message, Object[] args)
+[xUnit.net 00:00:00.55]            at FluentAssertions.Primitives.BooleanAssertions`1.BeFalse(String because, Object[] becauseArgs)
+[xUnit.net 00:00:00.55]         /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/Services/FileValidationServiceTests.cs(187,0): at Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri.ValidateAsync_GecersizKarakterler_HataVermeliMeli(String dosyaAdi)
+[xUnit.net 00:00:00.55]         --- End of stack trace from previous location ---
+[xUnit.net 00:00:00.55]       Expected sonuc.IsValid to be False, but found True.
+[xUnit.net 00:00:00.55]       Stack Trace:
+[xUnit.net 00:00:00.55]            at FluentAssertions.Execution.XUnit2TestFramework.Throw(String message)
+[xUnit.net 00:00:00.55]            at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+[xUnit.net 00:00:00.55]            at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+[xUnit.net 00:00:00.55]            at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+[xUnit.net 00:00:00.55]            at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+[xUnit.net 00:00:00.55]            at FluentAssertions.Execution.AssertionScope.FailWith(String message, Object[] args)
+[xUnit.net 00:00:00.55]            at FluentAssertions.Primitives.BooleanAssertions`1.BeFalse(String because, Object[] becauseArgs)
+[xUnit.net 00:00:00.55]         /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/Services/FileValidationServiceTests.cs(187,0): at Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri.ValidateAsync_GecersizKarakterler_HataVermeliMeli(String dosyaAdi)
+[xUnit.net 00:00:00.55]         --- End of stack trace from previous location ---
+[xUnit.net 00:00:00.55]       Expected DepolamaAyarlari.ConfigSection to be "Storage" with a length of 7, but "StorageSettings" has a length of 15, differs near "Set" (index 7).
+[xUnit.net 00:00:00.55]       Stack Trace:
+[xUnit.net 00:00:00.55]            at FluentAssertions.Execution.XUnit2TestFramework.Throw(String message)
+[xUnit.net 00:00:00.55]            at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+[xUnit.net 00:00:00.55]            at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+[xUnit.net 00:00:00.55]            at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+[xUnit.net 00:00:00.55]            at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+[xUnit.net 00:00:00.55]            at FluentAssertions.Primitives.StringEqualityValidator.ValidateAgainstLengthDifferences()
+[xUnit.net 00:00:00.55]            at FluentAssertions.Primitives.StringValidator.Validate()
+[xUnit.net 00:00:00.55]            at FluentAssertions.Primitives.StringAssertions`1.Be(String expected, String because, Object[] becauseArgs)
+[xUnit.net 00:00:00.55]         /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/Models/StorageModelsTests.cs(20,0): at Enterprise.Shared.Storage.Tests.Models.StorageModelsTests.DepolamaAyarlari_ConfigSection_DogruSectionAdiniDondurmeli()
+[xUnit.net 00:00:00.55]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+[xUnit.net 00:00:00.55]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+[xUnit.net 00:00:00.55]       Expected sonuc.IsValid to be False, but found True.
+[xUnit.net 00:00:00.55]       Stack Trace:
+[xUnit.net 00:00:00.55]            at FluentAssertions.Execution.XUnit2TestFramework.Throw(String message)
+[xUnit.net 00:00:00.55]            at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+[xUnit.net 00:00:00.55]            at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+[xUnit.net 00:00:00.55]            at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+[xUnit.net 00:00:00.55]            at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+[xUnit.net 00:00:00.55]            at FluentAssertions.Execution.AssertionScope.FailWith(String message, Object[] args)
+[xUnit.net 00:00:00.55]            at FluentAssertions.Primitives.BooleanAssertions`1.BeFalse(String because, Object[] becauseArgs)
+[xUnit.net 00:00:00.55]         /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/Services/FileValidationServiceTests.cs(187,0): at Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri.ValidateAsync_GecersizKarakterler_HataVermeliMeli(String dosyaAdi)
+[xUnit.net 00:00:00.55]         --- End of stack trace from previous location ---
+[xUnit.net 00:00:00.55]       Expected connectionString to be "https://admin:password123@minio:9000" with a length of 36, but "http://minioadmin:minioadmin@localhost:9000" has a length of 43, differs near "://" (index 4).
+[xUnit.net 00:00:00.55]       Stack Trace:
+[xUnit.net 00:00:00.55]            at FluentAssertions.Execution.XUnit2TestFramework.Throw(String message)
+[xUnit.net 00:00:00.55]            at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+[xUnit.net 00:00:00.55]            at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+[xUnit.net 00:00:00.55]            at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+[xUnit.net 00:00:00.55]            at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+[xUnit.net 00:00:00.55]            at FluentAssertions.Primitives.StringEqualityValidator.ValidateAgainstLengthDifferences()
+[xUnit.net 00:00:00.55]            at FluentAssertions.Primitives.StringValidator.Validate()
+[xUnit.net 00:00:00.55]            at FluentAssertions.Primitives.StringAssertions`1.Be(String expected, String because, Object[] becauseArgs)
+[xUnit.net 00:00:00.55]         /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/Extensions/ServiceCollectionExtensionsTests.cs(265,0): at Enterprise.Shared.Storage.Tests.Extensions.ServiceCollectionExtensionsTests.GetMinIOConnectionString_GecerliAyarlar_ConnectionStringOlusturmali()
+[xUnit.net 00:00:00.55]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+[xUnit.net 00:00:00.55]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+[xUnit.net 00:00:00.55]       Expected ayarlar.MinIO.Endpoint to be "test:9000" with a length of 9, but "localhost:9000" has a length of 14, differs near "loc" (index 0).
+[xUnit.net 00:00:00.55]       Stack Trace:
+[xUnit.net 00:00:00.55]            at FluentAssertions.Execution.XUnit2TestFramework.Throw(String message)
+[xUnit.net 00:00:00.55]            at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+[xUnit.net 00:00:00.55]            at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+[xUnit.net 00:00:00.55]            at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+[xUnit.net 00:00:00.55]            at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+[xUnit.net 00:00:00.55]            at FluentAssertions.Primitives.StringEqualityValidator.ValidateAgainstLengthDifferences()
+[xUnit.net 00:00:00.55]            at FluentAssertions.Primitives.StringValidator.Validate()
+[xUnit.net 00:00:00.55]            at FluentAssertions.Primitives.StringAssertions`1.Be(String expected, String because, Object[] becauseArgs)
+[xUnit.net 00:00:00.55]         /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/Extensions/ServiceCollectionExtensionsTests.cs(213,0): at Enterprise.Shared.Storage.Tests.Extensions.ServiceCollectionExtensionsTests.GetStorageSettings_GecerliKonfigürasyon_AyarlariDondururMeli()
+[xUnit.net 00:00:00.55]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+[xUnit.net 00:00:00.55]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+[xUnit.net 00:00:00.55]       Expected secenekler.MaksimumGenislik to be 2000, but found 1920 (difference of -80).
+[xUnit.net 00:00:00.55]       Stack Trace:
+[xUnit.net 00:00:00.55]            at FluentAssertions.Execution.XUnit2TestFramework.Throw(String message)
+[xUnit.net 00:00:00.55]            at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+[xUnit.net 00:00:00.55]            at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+[xUnit.net 00:00:00.55]            at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+[xUnit.net 00:00:00.55]            at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+[xUnit.net 00:00:00.55]            at FluentAssertions.Execution.AssertionScope.FailWith(String message, Object[] args)
+[xUnit.net 00:00:00.55]            at FluentAssertions.Numeric.NumericAssertions`2.Be(T expected, String because, Object[] becauseArgs)
+[xUnit.net 00:00:00.55]         /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/Models/StorageModelsTests.cs(222,0): at Enterprise.Shared.Storage.Tests.Models.StorageModelsTests.ResimIslemeSecenekleri_DefaultValues_VarsayilanDegerereSahipOlmali()
+[xUnit.net 00:00:00.55]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+[xUnit.net 00:00:00.55]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+[xUnit.net 00:00:02.38]       SixLabors.Fonts.FontFamilyNotFoundException : The "Arial" font family could not be found in the following directories:
+[xUnit.net 00:00:02.38]        * /usr/local/share/fonts/
+[xUnit.net 00:00:02.38]        * /usr/share/fonts/
+[xUnit.net 00:00:02.38]       Stack Trace:
+[xUnit.net 00:00:02.38]            at SixLabors.Fonts.FontCollection.GetImpl(String name, CultureInfo culture)
+[xUnit.net 00:00:02.38]            at SixLabors.Fonts.FontCollection.Get(String name, CultureInfo culture)
+[xUnit.net 00:00:02.38]            at SixLabors.Fonts.SystemFontCollection.Get(String name, CultureInfo culture)
+[xUnit.net 00:00:02.38]            at SixLabors.Fonts.SystemFontCollection.Get(String name)
+[xUnit.net 00:00:02.38]            at SixLabors.Fonts.SystemFonts.CreateFont(String name, Single size)
+[xUnit.net 00:00:02.38]         /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage/Services/ImageProcessingService.cs(193,0): at Enterprise.Shared.Storage.Services.ResimIslemeServisi.&lt;&gt;c__DisplayClass11_1.&lt;WatermarkEkleAsync&gt;b__0(IImageProcessingContext x)
+[xUnit.net 00:00:02.38]            at SixLabors.ImageSharp.Processing.ProcessingExtensions.ProcessingVisitor.Visit[TPixel](Image`1 image)
+[xUnit.net 00:00:02.38]            at SixLabors.ImageSharp.Image`1.Accept(IImageVisitor visitor)
+[xUnit.net 00:00:02.38]            at SixLabors.ImageSharp.Advanced.AdvancedImageExtensions.AcceptVisitor(Image source, IImageVisitor visitor)
+[xUnit.net 00:00:02.38]            at SixLabors.ImageSharp.Processing.ProcessingExtensions.Mutate(Image source, Configuration configuration, Action`1 operation)
+[xUnit.net 00:00:02.38]            at SixLabors.ImageSharp.Processing.ProcessingExtensions.Mutate(Image source, Action`1 operation)
+[xUnit.net 00:00:02.38]         /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage/Services/ImageProcessingService.cs(193,0): at Enterprise.Shared.Storage.Services.ResimIslemeServisi.WatermarkEkleAsync(Stream resimStream, String watermarkMetni, CancellationToken cancellationToken)
+[xUnit.net 00:00:02.38]         /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/Services/ImageProcessingServiceTests.cs(140,0): at Enterprise.Shared.Storage.Tests.Services.ResimIslemeServisTestleri.WatermarkEkleAsync_GecerliResim_WatermarkEklenmisResimDondururMeli()
+[xUnit.net 00:00:02.38]         --- End of stack trace from previous location ---
+[xUnit.net 00:00:02.46]       Expected sonucResim.Metadata.DecodedImageFormat?.Name to be "WEBP", but "Webp" differs near "ebp" (index 1).
+[xUnit.net 00:00:02.46]       Stack Trace:
+[xUnit.net 00:00:02.46]            at FluentAssertions.Execution.XUnit2TestFramework.Throw(String message)
+[xUnit.net 00:00:02.46]            at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+[xUnit.net 00:00:02.46]            at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+[xUnit.net 00:00:02.46]            at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+[xUnit.net 00:00:02.46]            at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+[xUnit.net 00:00:02.46]            at FluentAssertions.Execution.AssertionScope.FailWith(String message, Object[] args)
+[xUnit.net 00:00:02.46]            at FluentAssertions.Primitives.StringEqualityValidator.ValidateAgainstMismatch()
+[xUnit.net 00:00:02.46]            at FluentAssertions.Primitives.StringValidator.Validate()
+[xUnit.net 00:00:02.46]            at FluentAssertions.Primitives.StringAssertions`1.Be(String expected, String because, Object[] becauseArgs)
+[xUnit.net 00:00:02.46]         /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/Services/ImageProcessingServiceTests.cs(127,0): at Enterprise.Shared.Storage.Tests.Services.ResimIslemeServisTestleri.ResimFormatiniDegistirAsync_JpegdenWebp_WebpDondururMeli()
+[xUnit.net 00:00:02.46]         --- End of stack trace from previous location ---
+[xUnit.net 00:00:02.54]   Finished:    Enterprise.Shared.Storage.Tests
+</StdOut>
+    </Output>
+    <RunInfos>
+      <RunInfo computerName="onur-TULPAR-T7-V20-5" outcome="Error" timestamp="2025-09-12T15:25:37.4066779+03:00">
+        <Text>[xUnit.net 00:00:00.54]     Enterprise.Shared.Storage.Tests.Services.ClamAVTarayiciServisTestleri.Constructor_NullOptions_ArgumentNullExceptionFirlatmali [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="onur-TULPAR-T7-V20-5" outcome="Error" timestamp="2025-09-12T15:25:37.4068892+03:00">
+        <Text>[xUnit.net 00:00:00.54]     Enterprise.Shared.Storage.Tests.Extensions.ServiceCollectionExtensionsTests.HasStorageSettings_KonfigürasyonVar_TrueDondurmeli [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="onur-TULPAR-T7-V20-5" outcome="Error" timestamp="2025-09-12T15:25:37.4073662+03:00">
+        <Text>[xUnit.net 00:00:00.54]     Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri.ValidateAsync_GeçersizDosyaAdi_HataVermeliMeli(dosyaAdi: "   ") [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="onur-TULPAR-T7-V20-5" outcome="Error" timestamp="2025-09-12T15:25:37.4074003+03:00">
+        <Text>[xUnit.net 00:00:00.54]     Enterprise.Shared.Storage.Tests.Models.StorageModelsTests.DosyaYuklemeIstegi_ExitFields_ValidationFailed(alanAdi: "test.jpg", beklenenHata: "İçerik türü gereklidir") [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="onur-TULPAR-T7-V20-5" outcome="Error" timestamp="2025-09-12T15:25:37.4074323+03:00">
+        <Text>[xUnit.net 00:00:00.54]     Enterprise.Shared.Storage.Tests.Models.StorageModelsTests.DosyaYuklemeIstegi_ExitFields_ValidationFailed(alanAdi: "", beklenenHata: "Dosya adı gereklidir") [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="onur-TULPAR-T7-V20-5" outcome="Error" timestamp="2025-09-12T15:25:37.4074601+03:00">
+        <Text>[xUnit.net 00:00:00.54]     Enterprise.Shared.Storage.Tests.Models.StorageModelsTests.DosyaYuklemeIstegi_ExitFields_ValidationFailed(alanAdi: null, beklenenHata: "Dosya stream'i gereklidir") [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="onur-TULPAR-T7-V20-5" outcome="Error" timestamp="2025-09-12T15:25:37.4076955+03:00">
+        <Text>[xUnit.net 00:00:00.55]     Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri.ValidateAsync_GeçersizDosyaAdi_HataVermeliMeli(dosyaAdi: null) [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="onur-TULPAR-T7-V20-5" outcome="Error" timestamp="2025-09-12T15:25:37.4077230+03:00">
+        <Text>[xUnit.net 00:00:00.55]     Enterprise.Shared.Storage.Tests.Extensions.ServiceCollectionExtensionsTests.AddImageProcessing_KonfigurasyonAction_ResimServisiEklenmeli [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="onur-TULPAR-T7-V20-5" outcome="Error" timestamp="2025-09-12T15:25:37.4079283+03:00">
+        <Text>[xUnit.net 00:00:00.55]     Enterprise.Shared.Storage.Tests.Extensions.ServiceCollectionExtensionsTests.AddMockVirusScanner_MockServisEklenmeli [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="onur-TULPAR-T7-V20-5" outcome="Error" timestamp="2025-09-12T15:25:37.4079607+03:00">
+        <Text>[xUnit.net 00:00:00.55]     Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri.ValidateAsync_GecersizKarakterler_HataVermeliMeli(dosyaAdi: "test?file.txt") [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="onur-TULPAR-T7-V20-5" outcome="Error" timestamp="2025-09-12T15:25:37.4079915+03:00">
+        <Text>[xUnit.net 00:00:00.55]     Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri.ValidateAsync_GecersizKarakterler_HataVermeliMeli(dosyaAdi: "test|file.txt") [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="onur-TULPAR-T7-V20-5" outcome="Error" timestamp="2025-09-12T15:25:37.4080143+03:00">
+        <Text>[xUnit.net 00:00:00.55]     Enterprise.Shared.Storage.Tests.Models.StorageModelsTests.DepolamaAyarlari_ConfigSection_DogruSectionAdiniDondurmeli [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="onur-TULPAR-T7-V20-5" outcome="Error" timestamp="2025-09-12T15:25:37.4082680+03:00">
+        <Text>[xUnit.net 00:00:00.55]     Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri.ValidateAsync_GecersizKarakterler_HataVermeliMeli(dosyaAdi: "test&lt;file&gt;.txt") [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="onur-TULPAR-T7-V20-5" outcome="Error" timestamp="2025-09-12T15:25:37.4082917+03:00">
+        <Text>[xUnit.net 00:00:00.55]     Enterprise.Shared.Storage.Tests.Extensions.ServiceCollectionExtensionsTests.GetMinIOConnectionString_GecerliAyarlar_ConnectionStringOlusturmali [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="onur-TULPAR-T7-V20-5" outcome="Error" timestamp="2025-09-12T15:25:37.4086041+03:00">
+        <Text>[xUnit.net 00:00:00.55]     Enterprise.Shared.Storage.Tests.Extensions.ServiceCollectionExtensionsTests.GetStorageSettings_GecerliKonfigürasyon_AyarlariDondururMeli [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="onur-TULPAR-T7-V20-5" outcome="Error" timestamp="2025-09-12T15:25:37.4087832+03:00">
+        <Text>[xUnit.net 00:00:00.55]     Enterprise.Shared.Storage.Tests.Models.StorageModelsTests.ResimIslemeSecenekleri_DefaultValues_VarsayilanDegerereSahipOlmali [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="onur-TULPAR-T7-V20-5" outcome="Error" timestamp="2025-09-12T15:25:39.2180540+03:00">
+        <Text>[xUnit.net 00:00:02.38]     Enterprise.Shared.Storage.Tests.Services.ResimIslemeServisTestleri.WatermarkEkleAsync_GecerliResim_WatermarkEklenmisResimDondururMeli [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="onur-TULPAR-T7-V20-5" outcome="Error" timestamp="2025-09-12T15:25:39.3021420+03:00">
+        <Text>[xUnit.net 00:00:02.46]     Enterprise.Shared.Storage.Tests.Services.ResimIslemeServisTestleri.ResimFormatiniDegistirAsync_JpegdenWebp_WebpDondururMeli [FAIL]</Text>
+      </RunInfo>
+    </RunInfos>
+  </ResultSummary>
+</TestRun>

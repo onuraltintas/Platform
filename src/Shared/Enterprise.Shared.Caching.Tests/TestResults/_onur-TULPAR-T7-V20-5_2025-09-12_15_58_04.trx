@@ -1,0 +1,1249 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="09c78d5c-5b60-455d-b723-6ebc1078bb68" name="@onur-TULPAR-T7-V20-5 2025-09-12 15:58:04" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2025-09-12T15:58:04.9484783+03:00" queuing="2025-09-12T15:58:04.9484784+03:00" start="2025-09-12T15:58:04.4679745+03:00" finish="2025-09-12T15:58:19.5059157+03:00" />
+  <TestSettings name="default" id="2beb863d-99a6-4483-8294-795e7378d7ae">
+    <Deployment runDeploymentRoot="_onur-TULPAR-T7-V20-5_2025-09-12_15_58_04" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="6d6ec28a-184b-4b37-b3a4-2a3d940f8025" testId="fcf210c0-e82a-5768-7cfc-8d1289f873d3" testName="Enterprise.Shared.Caching.Tests.Integration.CacheIntegrationTests.TtlOperations_ShouldWork" computerName="onur-TULPAR-T7-V20-5" duration="00:00:03.0040980" startTime="2025-09-12T15:58:16.9210587+03:00" endTime="2025-09-12T15:58:16.9210589+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="6d6ec28a-184b-4b37-b3a4-2a3d940f8025">
+      <Output>
+        <ErrorInfo>
+          <Message>Expected a value.</Message>
+          <StackTrace>   at FluentAssertions.Execution.XUnit2TestFramework.Throw(String message)
+   at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+   at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(String message)
+   at FluentAssertions.Primitives.NullableSimpleTimeSpanAssertions`1.HaveValue(String because, Object[] becauseArgs)
+   at FluentAssertions.Primitives.NullableSimpleTimeSpanAssertions`1.NotBeNull(String because, Object[] becauseArgs)
+   at Enterprise.Shared.Caching.Tests.Integration.CacheIntegrationTests.TtlOperations_ShouldWork() in /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/Integration/CacheIntegrationTests.cs:line 270
+--- End of stack trace from previous location ---</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="aed40ef5-136f-4dda-aa18-5ac231e1b6e1" testId="545aec44-69f1-ff31-bd20-d7fdf3923347" testName="Enterprise.Shared.Caching.Tests.Integration.CacheIntegrationTests.ConcurrentOperations_ShouldHandleCorrectly" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0117205" startTime="2025-09-12T15:58:17.4387260+03:00" endTime="2025-09-12T15:58:17.4387262+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="aed40ef5-136f-4dda-aa18-5ac231e1b6e1" />
+    <UnitTestResult executionId="fa8754ce-17c2-4434-9bc8-a43cd6503559" testId="c9c1da8c-3363-b2b7-7cac-5f5c6af2fa31" testName="Enterprise.Shared.Caching.Tests.Integration.CacheIntegrationTests.BulkOperations_ShouldWork" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0088560" startTime="2025-09-12T15:58:18.4627028+03:00" endTime="2025-09-12T15:58:18.4627030+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="fa8754ce-17c2-4434-9bc8-a43cd6503559" />
+    <UnitTestResult executionId="a85febd8-9c92-49b5-9885-eabe19f8408b" testId="c10da1da-76fd-e390-8ff9-8b66665a7554" testName="Enterprise.Shared.Caching.Tests.Models.CacheModelsTests.CacheMetrikleri_HitOrani_NoOperations_ShouldReturnZero" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0013642" startTime="2025-09-12T15:58:04.9171154+03:00" endTime="2025-09-12T15:58:04.9171154+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="a85febd8-9c92-49b5-9885-eabe19f8408b" />
+    <UnitTestResult executionId="05056845-b7a6-421d-b8be-89f01f979514" testId="bb444882-d690-894f-0871-fa7cd2474e93" testName="Enterprise.Shared.Caching.Tests.Services.DistributedCacheServiceTests.GetAsync_CacheMiss_ShouldReturnNullAndRecordMiss" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0029159" startTime="2025-09-12T15:58:05.0530964+03:00" endTime="2025-09-12T15:58:05.0530966+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="05056845-b7a6-421d-b8be-89f01f979514">
+      <Output>
+        <ErrorInfo>
+          <Message>System.NotSupportedException : Unsupported expression: x =&gt; x.GetStringAsync(fullKey, It.IsAny&lt;CancellationToken&gt;())&#xD;
+Extension methods (here: DistributedCacheExtensions.GetStringAsync) may not be used in setup / verification expressions.</Message>
+          <StackTrace>   at Moq.Guard.IsOverridable(MethodInfo method, Expression expression) in /_/src/Moq/Guard.cs:line 87
+   at Moq.MethodExpectation..ctor(LambdaExpression expression, MethodInfo method, IReadOnlyList`1 arguments, Boolean exactGenericTypeArguments, Boolean skipMatcherInitialization, Boolean allowNonOverridable) in /_/src/Moq/MethodExpectation.cs:line 87
+   at Moq.ExpressionExtensions.&lt;Split&gt;g__Split|5_0(Expression e, Expression&amp; r, MethodExpectation&amp; p, Boolean assignment, Boolean allowNonOverridableLastProperty) in /_/src/Moq/ExpressionExtensions.cs:line 235
+   at Moq.ExpressionExtensions.Split(LambdaExpression expression, Boolean allowNonOverridableLastProperty) in /_/src/Moq/ExpressionExtensions.cs:line 149
+   at Moq.Mock.SetupRecursive[TSetup](Mock mock, LambdaExpression expression, Func`4 setupLast, Boolean allowNonOverridableLastProperty) in /_/src/Moq/Mock.cs:line 645
+   at Moq.Mock.Setup(Mock mock, LambdaExpression expression, Condition condition) in /_/src/Moq/Mock.cs:line 500
+   at Moq.Mock`1.Setup[TResult](Expression`1 expression) in /_/src/Moq/Mock`1.cs:line 452
+   at Enterprise.Shared.Caching.Tests.Services.DistributedCacheServiceTests.GetAsync_CacheMiss_ShouldReturnNullAndRecordMiss() in /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/Services/DistributedCacheServiceTests.cs:line 123
+--- End of stack trace from previous location ---</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="549c8bdb-07e9-48a7-bfe1-993563bac3ae" testId="10a8614e-e47c-1bba-fd16-b97f58d9105b" testName="Enterprise.Shared.Caching.Tests.Services.DistributedCacheServiceTests.GetOrSetAsync_KeyExists_ShouldReturnExistingValue" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.1607797" startTime="2025-09-12T15:58:05.0305854+03:00" endTime="2025-09-12T15:58:05.0305854+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="549c8bdb-07e9-48a7-bfe1-993563bac3ae" />
+    <UnitTestResult executionId="8f6dc933-1876-4030-8f4f-be6e94f1bfe3" testId="0ad37fd3-b948-a1e9-c493-e5cff8e30ee3" testName="Enterprise.Shared.Caching.Tests.Models.CacheModelsTests.SerializerTuru_ShouldHaveValidValues(serializer: Json)" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0000130" startTime="2025-09-12T15:58:04.8917081+03:00" endTime="2025-09-12T15:58:04.8917081+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="8f6dc933-1876-4030-8f4f-be6e94f1bfe3" />
+    <UnitTestResult executionId="9f36c371-c87f-473e-a164-dd87032684f7" testId="532b203b-a92e-13bc-6a51-63b8cf1176ef" testName="Enterprise.Shared.Caching.Tests.Models.CacheModelsTests.CacheOperasyonSonucu_BasarisizSonuc_ShouldCreateFailureResult" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0020973" startTime="2025-09-12T15:58:04.9157047+03:00" endTime="2025-09-12T15:58:04.9157048+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="9f36c371-c87f-473e-a164-dd87032684f7" />
+    <UnitTestResult executionId="2bb0876a-b5c7-4f5b-92dc-25a8f793b390" testId="d566d0f9-ff3b-931c-5024-c9aba6161fb6" testName="Enterprise.Shared.Caching.Tests.Services.DistributedCacheServiceTests.BuildKey_ShouldAddPrefixCorrectly(input: &quot;&quot;, expected: &quot;test:&quot;)" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0002160" startTime="2025-09-12T15:58:05.0323932+03:00" endTime="2025-09-12T15:58:05.0323932+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="2bb0876a-b5c7-4f5b-92dc-25a8f793b390" />
+    <UnitTestResult executionId="9189b2cf-6873-4000-a184-7425108c5288" testId="fd1cbd1f-7162-8b67-6579-9383501f7064" testName="Enterprise.Shared.Caching.Tests.Models.CacheModelsTests.RedisBilgileri_ShouldInitializeWithDefaults" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0003552" startTime="2025-09-12T15:58:04.9175337+03:00" endTime="2025-09-12T15:58:04.9175337+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="9189b2cf-6873-4000-a184-7425108c5288" />
+    <UnitTestResult executionId="2cd9143e-f3e0-45dc-b0d3-3451d4cbb7f3" testId="0522c444-02dc-d6bf-e767-8c5b6292282c" testName="Enterprise.Shared.Caching.Tests.Extensions.ServiceCollectionExtensionsTests.AddMemoryCaching_ShouldRegisterMemoryCacheService" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0014210" startTime="2025-09-12T15:58:05.0948971+03:00" endTime="2025-09-12T15:58:05.0948972+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="2cd9143e-f3e0-45dc-b0d3-3451d4cbb7f3" />
+    <UnitTestResult executionId="c4e4e380-c580-4c53-92cb-85307f57289e" testId="cf8a2cfa-ea08-42e9-34c1-666b184b8416" testName="Enterprise.Shared.Caching.Tests.Models.CacheModelsTests.CacheAyarlari_L1CacheSize_ShouldValidateRange(size: 100, isValid: True)" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0000020" startTime="2025-09-12T15:58:04.9158508+03:00" endTime="2025-09-12T15:58:04.9158508+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="c4e4e380-c580-4c53-92cb-85307f57289e" />
+    <UnitTestResult executionId="4bf60cdb-453f-4266-8d14-22c746b3048b" testId="31f05d3e-75fb-186d-7afa-a44b2e83af01" testName="Enterprise.Shared.Caching.Tests.Models.CacheModelsTests.CacheAyarlari_DefaultValues_ShouldBeSet" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0006612" startTime="2025-09-12T15:58:04.9157319+03:00" endTime="2025-09-12T15:58:04.9157319+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="4bf60cdb-453f-4266-8d14-22c746b3048b" />
+    <UnitTestResult executionId="7f8c7f77-0775-4633-ac59-7b4f91f1555f" testId="9985344d-f865-6cf5-7e4a-233bb9c96387" testName="Enterprise.Shared.Caching.Tests.Extensions.ServiceCollectionExtensionsTests.AddSharedCaching_WithCustomOptions_ShouldOverrideDefaults" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0009076" startTime="2025-09-12T15:58:05.0930166+03:00" endTime="2025-09-12T15:58:05.0930167+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="7f8c7f77-0775-4633-ac59-7b4f91f1555f" />
+    <UnitTestResult executionId="b4d0ae7c-c142-4197-825f-8a5f7afd6c91" testId="3e8ab0b2-db09-ef6a-eb15-4a37cbdb2aca" testName="Enterprise.Shared.Caching.Tests.Services.CacheMetricsServiceTests.ResetMetricsAsync_ShouldResetAllCounters" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.1446101" startTime="2025-09-12T15:58:05.0289386+03:00" endTime="2025-09-12T15:58:05.0289387+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="b4d0ae7c-c142-4197-825f-8a5f7afd6c91">
+      <Output>
+        <ErrorInfo>
+          <Message>System.NullReferenceException : Object reference not set to an instance of an object.</Message>
+          <StackTrace>   at Enterprise.Shared.Caching.Services.CacheMetricsService.GetMetricsAsync(String keyPattern, CancellationToken cancellationToken) in /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching/Services/CacheMetricsService.cs:line 133
+   at Enterprise.Shared.Caching.Tests.Services.CacheMetricsServiceTests.ResetMetricsAsync_ShouldResetAllCounters() in /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/Services/CacheMetricsServiceTests.cs:line 134
+--- End of stack trace from previous location ---</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="a933f36c-b97e-425c-9768-c965487cdf08" testId="6f9296e0-efb3-059e-5b18-649a6518258a" testName="Enterprise.Shared.Caching.Tests.Models.CacheModelsTests.CacheAyarlari_L1CacheSize_ShouldValidateRange(size: 1, isValid: True)" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0000079" startTime="2025-09-12T15:58:04.9157941+03:00" endTime="2025-09-12T15:58:04.9157941+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="a933f36c-b97e-425c-9768-c965487cdf08" />
+    <UnitTestResult executionId="b5d4aa21-1789-4dad-8981-83f947bbb45d" testId="2ae94252-9b3c-78fe-a1cb-9c59e43981ff" testName="Enterprise.Shared.Caching.Tests.Services.DistributedCacheServiceTests.GetAsync_L2CacheHit_ShouldReturnValueAndRecordL2Hit" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0019535" startTime="2025-09-12T15:58:05.1233140+03:00" endTime="2025-09-12T15:58:05.1233142+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="b5d4aa21-1789-4dad-8981-83f947bbb45d">
+      <Output>
+        <ErrorInfo>
+          <Message>System.NotSupportedException : Unsupported expression: x =&gt; x.GetStringAsync(fullKey, It.IsAny&lt;CancellationToken&gt;())&#xD;
+Extension methods (here: DistributedCacheExtensions.GetStringAsync) may not be used in setup / verification expressions.</Message>
+          <StackTrace>   at Moq.Guard.IsOverridable(MethodInfo method, Expression expression) in /_/src/Moq/Guard.cs:line 87
+   at Moq.MethodExpectation..ctor(LambdaExpression expression, MethodInfo method, IReadOnlyList`1 arguments, Boolean exactGenericTypeArguments, Boolean skipMatcherInitialization, Boolean allowNonOverridable) in /_/src/Moq/MethodExpectation.cs:line 87
+   at Moq.ExpressionExtensions.&lt;Split&gt;g__Split|5_0(Expression e, Expression&amp; r, MethodExpectation&amp; p, Boolean assignment, Boolean allowNonOverridableLastProperty) in /_/src/Moq/ExpressionExtensions.cs:line 235
+   at Moq.ExpressionExtensions.Split(LambdaExpression expression, Boolean allowNonOverridableLastProperty) in /_/src/Moq/ExpressionExtensions.cs:line 149
+   at Moq.Mock.SetupRecursive[TSetup](Mock mock, LambdaExpression expression, Func`4 setupLast, Boolean allowNonOverridableLastProperty) in /_/src/Moq/Mock.cs:line 645
+   at Moq.Mock.Setup(Mock mock, LambdaExpression expression, Condition condition) in /_/src/Moq/Mock.cs:line 500
+   at Moq.Mock`1.Setup[TResult](Expression`1 expression) in /_/src/Moq/Mock`1.cs:line 452
+   at Enterprise.Shared.Caching.Tests.Services.DistributedCacheServiceTests.GetAsync_L2CacheHit_ShouldReturnValueAndRecordL2Hit() in /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/Services/DistributedCacheServiceTests.cs:line 98
+--- End of stack trace from previous location ---</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="f580edfb-5331-403b-8964-98d23a7e7b79" testId="57969ac9-02e5-72e8-df0b-94590be6b172" testName="Enterprise.Shared.Caching.Tests.Models.CacheModelsTests.CacheMetrikleri_HitOrani_ShouldCalculateCorrectly" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0011228" startTime="2025-09-12T15:58:04.8917447+03:00" endTime="2025-09-12T15:58:04.8917447+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="f580edfb-5331-403b-8964-98d23a7e7b79" />
+    <UnitTestResult executionId="656ce3e8-855e-4305-bfb1-70f99198506f" testId="0130c184-6ee1-24ee-8803-d8b0114b3005" testName="Enterprise.Shared.Caching.Tests.Extensions.ServiceCollectionExtensionsTests.AddSharedCaching_ShouldRegisterHealthChecks" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0013691" startTime="2025-09-12T15:58:05.1041814+03:00" endTime="2025-09-12T15:58:05.1041815+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="656ce3e8-855e-4305-bfb1-70f99198506f" />
+    <UnitTestResult executionId="04ab05c8-7886-4f1d-ac1c-5e9b1017fa77" testId="03c7908f-ae36-3f61-0867-1482d88249d0" testName="Enterprise.Shared.Caching.Tests.Models.CacheModelsTests.CacheAyarlari_ConnectionPoolSize_ShouldValidateRange(poolSize: 101, isValid: False)" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0000027" startTime="2025-09-12T15:58:04.9170948+03:00" endTime="2025-09-12T15:58:04.9170949+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="04ab05c8-7886-4f1d-ac1c-5e9b1017fa77" />
+    <UnitTestResult executionId="d2abd77f-bbd5-49c5-928b-81f6bc1d1acd" testId="2825eb94-001d-4321-5f95-f8f002812342" testName="Enterprise.Shared.Caching.Tests.Services.CacheMetricsServiceTests.RecordHit_L2Hit_ShouldIncrementL2HitCount" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0010681" startTime="2025-09-12T15:58:05.1066260+03:00" endTime="2025-09-12T15:58:05.1066261+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="d2abd77f-bbd5-49c5-928b-81f6bc1d1acd">
+      <Output>
+        <ErrorInfo>
+          <Message>System.AggregateException : One or more errors occurred. (Object reference not set to an instance of an object.)
+---- System.NullReferenceException : Object reference not set to an instance of an object.</Message>
+          <StackTrace>   at System.Threading.Tasks.Task`1.GetResultCore(Boolean waitCompletionNotification)
+   at Enterprise.Shared.Caching.Tests.Services.CacheMetricsServiceTests.RecordHit_L2Hit_ShouldIncrementL2HitCount() in /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/Services/CacheMetricsServiceTests.cs:line 51
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+----- Inner Stack Trace -----
+   at Enterprise.Shared.Caching.Services.CacheMetricsService.GetMetricsAsync(String keyPattern, CancellationToken cancellationToken) in /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching/Services/CacheMetricsService.cs:line 133</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="ed5659c4-339a-4f5e-ab11-ed4907359315" testId="ee8e7bd0-16da-59b6-9196-6be8c817f5d8" testName="Enterprise.Shared.Caching.Tests.Extensions.ServiceCollectionExtensionsTests.AddSharedCaching_ShouldRegisterAllRequiredServices" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.1894282" startTime="2025-09-12T15:58:05.0592497+03:00" endTime="2025-09-12T15:58:05.0592497+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="ed5659c4-339a-4f5e-ab11-ed4907359315" />
+    <UnitTestResult executionId="c16b2359-fd14-41d2-a886-2f702fb0d6d9" testId="d4196a96-f2af-3de0-44f3-4d3a27a3cb66" testName="Enterprise.Shared.Caching.Tests.Interceptors.CacheInterceptorTests.Intercept_WithoutCacheableAttribute_ShouldProceedWithoutCaching" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0025661" startTime="2025-09-12T15:58:05.1295523+03:00" endTime="2025-09-12T15:58:05.1295524+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="c16b2359-fd14-41d2-a886-2f702fb0d6d9" />
+    <UnitTestResult executionId="a648e130-18ba-48a1-afd3-9c7e5985603c" testId="c6742520-371b-ae78-700d-404099632b7d" testName="Enterprise.Shared.Caching.Tests.Integration.CacheIntegrationTests.RefreshAsync_ShouldExtendTtl" computerName="onur-TULPAR-T7-V20-5" duration="00:00:01.0086574" startTime="2025-09-12T15:58:13.3731942+03:00" endTime="2025-09-12T15:58:13.3731944+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="a648e130-18ba-48a1-afd3-9c7e5985603c">
+      <Output>
+        <ErrorInfo>
+          <Message>Expected refreshed to be True, but found False.</Message>
+          <StackTrace>   at FluentAssertions.Execution.XUnit2TestFramework.Throw(String message)
+   at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+   at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(String message, Object[] args)
+   at FluentAssertions.Primitives.BooleanAssertions`1.BeTrue(String because, Object[] becauseArgs)
+   at Enterprise.Shared.Caching.Tests.Integration.CacheIntegrationTests.RefreshAsync_ShouldExtendTtl() in /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/Integration/CacheIntegrationTests.cs:line 293
+--- End of stack trace from previous location ---</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="bf037fb7-09e9-48f5-b74b-eb4d76aacdef" testId="b9343e90-34cb-8e53-97c9-cc6fbd2940a9" testName="Enterprise.Shared.Caching.Tests.Services.CacheMetricsServiceTests.RecordError_ShouldIncrementErrorCount" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0009646" startTime="2025-09-12T15:58:05.1092207+03:00" endTime="2025-09-12T15:58:05.1092208+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="bf037fb7-09e9-48f5-b74b-eb4d76aacdef">
+      <Output>
+        <ErrorInfo>
+          <Message>System.AggregateException : One or more errors occurred. (Object reference not set to an instance of an object.)
+---- System.NullReferenceException : Object reference not set to an instance of an object.</Message>
+          <StackTrace>   at System.Threading.Tasks.Task`1.GetResultCore(Boolean waitCompletionNotification)
+   at Enterprise.Shared.Caching.Tests.Services.CacheMetricsServiceTests.RecordError_ShouldIncrementErrorCount() in /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/Services/CacheMetricsServiceTests.cs:line 79
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+----- Inner Stack Trace -----
+   at Enterprise.Shared.Caching.Services.CacheMetricsService.GetMetricsAsync(String keyPattern, CancellationToken cancellationToken) in /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching/Services/CacheMetricsService.cs:line 133</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="7627359b-46b0-4799-a400-11d4cc55bcef" testId="5edc1d0e-4399-b3ac-e7dd-0168d444ca3e" testName="Enterprise.Shared.Caching.Tests.Integration.CacheIntegrationTests.GetOrSetAsync_ShouldWorkCorrectly" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0177860" startTime="2025-09-12T15:58:11.8523683+03:00" endTime="2025-09-12T15:58:11.8523685+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="7627359b-46b0-4799-a400-11d4cc55bcef" />
+    <UnitTestResult executionId="003f6fb5-95d1-426f-9e88-a415d625f6e1" testId="3345cfbe-6d0b-316f-bf8d-1a279fddfaba" testName="Enterprise.Shared.Caching.Tests.Services.CacheMetricsServiceTests.RecordOperationTime_ShouldTrackOperationTimes" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0010612" startTime="2025-09-12T15:58:05.1040381+03:00" endTime="2025-09-12T15:58:05.1040382+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="003f6fb5-95d1-426f-9e88-a415d625f6e1">
+      <Output>
+        <ErrorInfo>
+          <Message>System.AggregateException : One or more errors occurred. (Object reference not set to an instance of an object.)
+---- System.NullReferenceException : Object reference not set to an instance of an object.</Message>
+          <StackTrace>   at System.Threading.Tasks.Task`1.GetResultCore(Boolean waitCompletionNotification)
+   at Enterprise.Shared.Caching.Tests.Services.CacheMetricsServiceTests.RecordOperationTime_ShouldTrackOperationTimes() in /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/Services/CacheMetricsServiceTests.cs:line 98
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+----- Inner Stack Trace -----
+   at Enterprise.Shared.Caching.Services.CacheMetricsService.GetMetricsAsync(String keyPattern, CancellationToken cancellationToken) in /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching/Services/CacheMetricsService.cs:line 133</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="c7079e3a-f3c0-404c-8957-21be83a603fc" testId="c1111e90-ccdb-adda-39eb-6ed6f54fe098" testName="Enterprise.Shared.Caching.Tests.Models.CacheModelsTests.HealthCheckAyarlari_DefaultValues_ShouldBeSet" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0002172" startTime="2025-09-12T15:58:04.9171416+03:00" endTime="2025-09-12T15:58:04.9171417+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="c7079e3a-f3c0-404c-8957-21be83a603fc" />
+    <UnitTestResult executionId="6712b846-9006-48f5-9349-8c069fd50913" testId="0e9ae34b-1f19-4691-11fc-385c1b2699ea" testName="Enterprise.Shared.Caching.Tests.Services.DistributedCacheServiceTests.ExistsAsync_KeyNotExists_ShouldReturnFalse" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0020299" startTime="2025-09-12T15:58:05.0488498+03:00" endTime="2025-09-12T15:58:05.0488499+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="6712b846-9006-48f5-9349-8c069fd50913" />
+    <UnitTestResult executionId="4cd47021-0911-4c4a-b80e-d1f839cf4058" testId="07fb2a99-6867-5873-d2f6-f3abda2ae0a8" testName="Enterprise.Shared.Caching.Tests.Models.CacheModelsTests.CacheAyarlari_ConnectionPoolSize_ShouldValidateRange(poolSize: 1, isValid: True)" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0001761" startTime="2025-09-12T15:58:04.9170360+03:00" endTime="2025-09-12T15:58:04.9170360+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="4cd47021-0911-4c4a-b80e-d1f839cf4058" />
+    <UnitTestResult executionId="74708d79-7279-4fd3-8742-b58899c5130c" testId="635dd5db-57b7-fac9-6a79-c2f989340cf1" testName="Enterprise.Shared.Caching.Tests.Services.DistributedCacheServiceTests.RemoveAsync_ShouldRemoveFromBothCaches" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0034224" startTime="2025-09-12T15:58:05.0557201+03:00" endTime="2025-09-12T15:58:05.0557203+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="74708d79-7279-4fd3-8742-b58899c5130c" />
+    <UnitTestResult executionId="93484cbb-c17b-46f4-bb39-3aca9bc7b077" testId="23101269-4cd2-d432-e3dc-a4e88f5208b0" testName="Enterprise.Shared.Caching.Tests.Services.DistributedCacheServiceTests.BuildKey_ShouldAddPrefixCorrectly(input: &quot;user:123&quot;, expected: &quot;test:user:123&quot;)" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0004115" startTime="2025-09-12T15:58:05.0321414+03:00" endTime="2025-09-12T15:58:05.0321416+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="93484cbb-c17b-46f4-bb39-3aca9bc7b077" />
+    <UnitTestResult executionId="356cf43c-dc5a-46b1-9dfd-0a3317f110e6" testId="48d4b7b6-3941-3122-d637-0bdb46b53c57" testName="Enterprise.Shared.Caching.Tests.Models.CacheModelsTests.CacheBilgisi_ShouldInitializeWithDefaults" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0013478" startTime="2025-09-12T15:58:04.9171614+03:00" endTime="2025-09-12T15:58:04.9171614+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="356cf43c-dc5a-46b1-9dfd-0a3317f110e6" />
+    <UnitTestResult executionId="82590046-ebd9-487e-a256-685e47559d37" testId="64d56895-a26f-119d-00e1-0a173ffb90c6" testName="Enterprise.Shared.Caching.Tests.Services.CacheMetricsServiceTests.HitOrani_NoOperations_ShouldReturnZero" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0008798" startTime="2025-09-12T15:58:05.1103262+03:00" endTime="2025-09-12T15:58:05.1103264+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="82590046-ebd9-487e-a256-685e47559d37">
+      <Output>
+        <ErrorInfo>
+          <Message>System.AggregateException : One or more errors occurred. (Object reference not set to an instance of an object.)
+---- System.NullReferenceException : Object reference not set to an instance of an object.</Message>
+          <StackTrace>   at System.Threading.Tasks.Task`1.GetResultCore(Boolean waitCompletionNotification)
+   at Enterprise.Shared.Caching.Tests.Services.CacheMetricsServiceTests.HitOrani_NoOperations_ShouldReturnZero() in /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/Services/CacheMetricsServiceTests.cs:line 121
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+----- Inner Stack Trace -----
+   at Enterprise.Shared.Caching.Services.CacheMetricsService.GetMetricsAsync(String keyPattern, CancellationToken cancellationToken) in /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching/Services/CacheMetricsService.cs:line 133</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="4397edc1-286f-4576-a572-97a47a421b97" testId="e7f7c620-8b60-1dbf-1aee-c70b168a98d0" testName="Enterprise.Shared.Caching.Tests.Models.CacheModelsTests.CacheAyarlari_L1CacheSize_ShouldValidateRange(size: 1024, isValid: True)" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0026760" startTime="2025-09-12T15:58:04.9157601+03:00" endTime="2025-09-12T15:58:04.9157601+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="4397edc1-286f-4576-a572-97a47a421b97" />
+    <UnitTestResult executionId="e929a5fc-3aa6-4866-887a-324b473091f3" testId="c7f753bb-24b0-15aa-8945-c6760db3de81" testName="Enterprise.Shared.Caching.Tests.Interceptors.CacheInterceptorTests.Intercept_WithCustomKeyTemplate_ShouldUseCustomKey" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.1498391" startTime="2025-09-12T15:58:05.0285961+03:00" endTime="2025-09-12T15:58:05.0285962+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="e929a5fc-3aa6-4866-887a-324b473091f3">
+      <Output>
+        <ErrorInfo>
+          <Message>Moq.MockException : 
+Expected invocation on the mock once, but was 0 times: x =&gt; x.GetAsync&lt;string&gt;(It.Is&lt;string&gt;(k =&gt; k.Contains("user:user123")), It.IsAny&lt;CancellationToken&gt;())
+
+Performed invocations:
+
+   Mock&lt;ICacheService:1&gt; (x):
+
+      ICacheService.GetAsync&lt;object&gt;("cache:user:user123", CancellationToken)
+      ICacheService.SetAsync&lt;object&gt;("cache:user:user123", "User data for user123", 01:00:00, CancellationToken)
+</Message>
+          <StackTrace>   at Moq.Mock.Verify(Mock mock, LambdaExpression expression, Times times, String failMessage) in /_/src/Moq/Mock.cs:line 332
+   at Moq.Mock`1.Verify[TResult](Expression`1 expression, Func`1 times) in /_/src/Moq/Mock`1.cs:line 840
+   at Enterprise.Shared.Caching.Tests.Interceptors.CacheInterceptorTests.Intercept_WithCustomKeyTemplate_ShouldUseCustomKey() in /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/Interceptors/CacheInterceptorTests.cs:line 148
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="d895df75-08c4-4794-9d79-006040e6e0ec" testId="1887455d-77ef-404d-4c46-9e51bcc7f79f" testName="Enterprise.Shared.Caching.Tests.Extensions.ServiceCollectionExtensionsTests.AddSharedCaching_ShouldRegisterSameInstanceForInterfaceAliases" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0023084" startTime="2025-09-12T15:58:05.0972406+03:00" endTime="2025-09-12T15:58:05.0972407+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="d895df75-08c4-4794-9d79-006040e6e0ec" />
+    <UnitTestResult executionId="3df39722-eb53-4155-bc77-36fc790e4065" testId="5c67f885-35a6-fc1d-3bd7-ef75927a301d" testName="Enterprise.Shared.Caching.Tests.Services.DistributedCacheServiceTests.BuildKey_ShouldAddPrefixCorrectly(input: &quot;product:*&quot;, expected: &quot;test:product:*&quot;)" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0010315" startTime="2025-09-12T15:58:05.0316769+03:00" endTime="2025-09-12T15:58:05.0316771+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="3df39722-eb53-4155-bc77-36fc790e4065" />
+    <UnitTestResult executionId="6261b9a6-3b0c-43b7-b036-7139330754f5" testId="1aafacb8-7b06-f6b2-fd45-e3740f593178" testName="Enterprise.Shared.Caching.Tests.Integration.CacheIntegrationTests.MultiLevelCaching_ShouldWorkCorrectly" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0933257" startTime="2025-09-12T15:58:10.8726777+03:00" endTime="2025-09-12T15:58:10.8726780+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="6261b9a6-3b0c-43b7-b036-7139330754f5">
+      <Output>
+        <ErrorInfo>
+          <Message>Expected result1.Basarili to be False, but found True.</Message>
+          <StackTrace>   at FluentAssertions.Execution.XUnit2TestFramework.Throw(String message)
+   at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+   at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(String message, Object[] args)
+   at FluentAssertions.Primitives.BooleanAssertions`1.BeFalse(String because, Object[] becauseArgs)
+   at Enterprise.Shared.Caching.Tests.Integration.CacheIntegrationTests.MultiLevelCaching_ShouldWorkCorrectly() in /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/Integration/CacheIntegrationTests.cs:line 136
+--- End of stack trace from previous location ---</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="e8d45366-bedd-49b6-b1ee-48916d7357b8" testId="6ca44d26-725e-2cac-62dd-b1dcfe1577d1" testName="Enterprise.Shared.Caching.Tests.Models.CacheModelsTests.CacheOperasyonSonucu_BasariliSonuc_ShouldCreateSuccessResult" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0003579" startTime="2025-09-12T15:58:04.9175134+03:00" endTime="2025-09-12T15:58:04.9175134+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="e8d45366-bedd-49b6-b1ee-48916d7357b8" />
+    <UnitTestResult executionId="9b9ada3f-e13c-473d-8465-7f630f91659d" testId="d60876af-362a-ff4c-a752-33df99b3c1dd" testName="Enterprise.Shared.Caching.Tests.Interceptors.CacheInterceptorTests.BuildCacheKey_WithDefaultTemplate_ShouldGenerateCorrectKey(input: &quot;test2&quot;, expectedKey: &quot;cache:TestService.CacheableSyncMethod(test2)&quot;)" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0031503" startTime="2025-09-12T15:58:05.1247614+03:00" endTime="2025-09-12T15:58:05.1247615+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="9b9ada3f-e13c-473d-8465-7f630f91659d">
+      <Output>
+        <ErrorInfo>
+          <Message>Moq.MockException : 
+Expected invocation on the mock once, but was 0 times: x =&gt; x.GetAsync&lt;string&gt;(It.IsAny&lt;string&gt;(), It.IsAny&lt;CancellationToken&gt;())
+
+Performed invocations:
+
+   Mock&lt;ICacheService:6&gt; (x):
+
+      ICacheService.GetAsync&lt;object&gt;("cache:TestService.CacheableSyncMethod(test2)", CancellationToken)
+      ICacheService.SetAsync&lt;object&gt;("cache:TestService.CacheableSyncMethod(test2)", "test2-sync-processed", 00:15:00, CancellationToken)
+</Message>
+          <StackTrace>   at Moq.Mock.Verify(Mock mock, LambdaExpression expression, Times times, String failMessage) in /_/src/Moq/Mock.cs:line 332
+   at Moq.Mock`1.Verify[TResult](Expression`1 expression, Func`1 times) in /_/src/Moq/Mock`1.cs:line 840
+   at Enterprise.Shared.Caching.Tests.Interceptors.CacheInterceptorTests.BuildCacheKey_WithDefaultTemplate_ShouldGenerateCorrectKey(String input, String expectedKey) in /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/Interceptors/CacheInterceptorTests.cs:line 168
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="02d00fb0-0cfe-43c5-9226-75b27b2a19a7" testId="f53fb3e9-715f-2f38-a152-624b41fc1bc6" testName="Enterprise.Shared.Caching.Tests.Services.DistributedCacheServiceTests.GetOrSetAsync_KeyNotExists_ShouldCallFactoryAndCacheResult" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0022307" startTime="2025-09-12T15:58:05.0590111+03:00" endTime="2025-09-12T15:58:05.0590112+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="02d00fb0-0cfe-43c5-9226-75b27b2a19a7">
+      <Output>
+        <ErrorInfo>
+          <Message>System.NotSupportedException : Unsupported expression: x =&gt; x.GetStringAsync(fullKey, It.IsAny&lt;CancellationToken&gt;())&#xD;
+Extension methods (here: DistributedCacheExtensions.GetStringAsync) may not be used in setup / verification expressions.</Message>
+          <StackTrace>   at Moq.Guard.IsOverridable(MethodInfo method, Expression expression) in /_/src/Moq/Guard.cs:line 87
+   at Moq.MethodExpectation..ctor(LambdaExpression expression, MethodInfo method, IReadOnlyList`1 arguments, Boolean exactGenericTypeArguments, Boolean skipMatcherInitialization, Boolean allowNonOverridable) in /_/src/Moq/MethodExpectation.cs:line 87
+   at Moq.ExpressionExtensions.&lt;Split&gt;g__Split|5_0(Expression e, Expression&amp; r, MethodExpectation&amp; p, Boolean assignment, Boolean allowNonOverridableLastProperty) in /_/src/Moq/ExpressionExtensions.cs:line 235
+   at Moq.ExpressionExtensions.Split(LambdaExpression expression, Boolean allowNonOverridableLastProperty) in /_/src/Moq/ExpressionExtensions.cs:line 149
+   at Moq.Mock.SetupRecursive[TSetup](Mock mock, LambdaExpression expression, Func`4 setupLast, Boolean allowNonOverridableLastProperty) in /_/src/Moq/Mock.cs:line 645
+   at Moq.Mock.Setup(Mock mock, LambdaExpression expression, Condition condition) in /_/src/Moq/Mock.cs:line 500
+   at Moq.Mock`1.Setup[TResult](Expression`1 expression) in /_/src/Moq/Mock`1.cs:line 452
+   at Enterprise.Shared.Caching.Tests.Services.DistributedCacheServiceTests.GetOrSetAsync_KeyNotExists_ShouldCallFactoryAndCacheResult() in /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/Services/DistributedCacheServiceTests.cs:line 203
+--- End of stack trace from previous location ---</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="e739a5af-f723-4c13-b097-af6a53477381" testId="7aa93850-5cc5-0bed-a21d-fa29d3accda2" testName="Enterprise.Shared.Caching.Tests.Models.CacheModelsTests.SerializerTuru_ShouldHaveValidValues(serializer: ProtoBuf)" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0101473" startTime="2025-09-12T15:58:04.8880509+03:00" endTime="2025-09-12T15:58:04.8880884+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="e739a5af-f723-4c13-b097-af6a53477381" />
+    <UnitTestResult executionId="6cf315bc-2cd5-425e-b289-dc5dbeeaa4cf" testId="f6011145-fabd-94b7-fd4c-f5c4d61c7664" testName="Enterprise.Shared.Caching.Tests.Services.CacheMetricsServiceTests.RecordOperationTime_SameOperationType_ShouldCalculateAverage" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0066503" startTime="2025-09-12T15:58:05.0298996+03:00" endTime="2025-09-12T15:58:05.0298998+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="6cf315bc-2cd5-425e-b289-dc5dbeeaa4cf">
+      <Output>
+        <ErrorInfo>
+          <Message>System.AggregateException : One or more errors occurred. (Object reference not set to an instance of an object.)
+---- System.NullReferenceException : Object reference not set to an instance of an object.</Message>
+          <StackTrace>   at System.Threading.Tasks.Task`1.GetResultCore(Boolean waitCompletionNotification)
+   at Enterprise.Shared.Caching.Tests.Services.CacheMetricsServiceTests.RecordOperationTime_SameOperationType_ShouldCalculateAverage() in /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/Services/CacheMetricsServiceTests.cs:line 181
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+----- Inner Stack Trace -----
+   at Enterprise.Shared.Caching.Services.CacheMetricsService.GetMetricsAsync(String keyPattern, CancellationToken cancellationToken) in /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching/Services/CacheMetricsService.cs:line 133</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="6126ccb3-3cdc-4623-9e2e-a2cfb32db233" testId="4e6b27ab-aaf6-8730-7400-a0c9e4e39fc4" testName="Enterprise.Shared.Caching.Tests.Models.CacheModelsTests.CacheAyarlari_L1CacheSize_ShouldValidateRange(size: 1025, isValid: False)" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0000065" startTime="2025-09-12T15:58:04.9158334+03:00" endTime="2025-09-12T15:58:04.9158335+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="6126ccb3-3cdc-4623-9e2e-a2cfb32db233" />
+    <UnitTestResult executionId="307aa119-307b-46dd-a97d-bb14eae526d2" testId="154218c2-5158-7a5c-ff97-4a94a0d313d5" testName="Enterprise.Shared.Caching.Tests.Integration.CacheIntegrationTests.HealthCheck_ShouldReportHealthy" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0088685" startTime="2025-09-12T15:58:11.3659711+03:00" endTime="2025-09-12T15:58:11.3659713+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="307aa119-307b-46dd-a97d-bb14eae526d2">
+      <Output>
+        <ErrorInfo>
+          <Message>Expected isHealthy to be True, but found False.</Message>
+          <StackTrace>   at FluentAssertions.Execution.XUnit2TestFramework.Throw(String message)
+   at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+   at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(String message, Object[] args)
+   at FluentAssertions.Primitives.BooleanAssertions`1.BeTrue(String because, Object[] becauseArgs)
+   at Enterprise.Shared.Caching.Tests.Integration.CacheIntegrationTests.HealthCheck_ShouldReportHealthy() in /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/Integration/CacheIntegrationTests.cs:line 224
+--- End of stack trace from previous location ---</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="04c40e7f-92a3-4f9f-9212-fd0038a4d07d" testId="98d7de9c-fd84-5064-887a-ad554adcfda9" testName="Enterprise.Shared.Caching.Tests.Models.CacheModelsTests.BulkCacheOperasyonSonucu_HitOrani_ShouldCalculateCorrectly" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0004959" startTime="2025-09-12T15:58:04.9174904+03:00" endTime="2025-09-12T15:58:04.9174904+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="04c40e7f-92a3-4f9f-9212-fd0038a4d07d" />
+    <UnitTestResult executionId="be70f9b0-636c-4db4-8200-e14c5fa43256" testId="9e3a3134-1106-7a09-1960-5677ad3da3b6" testName="Enterprise.Shared.Caching.Tests.Interceptors.CacheInterceptorTests.BuildCacheKey_WithDefaultTemplate_ShouldGenerateCorrectKey(input: &quot;test1&quot;, expectedKey: &quot;cache:TestService.CacheableSyncMethod(test1)&quot;)" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0026546" startTime="2025-09-12T15:58:05.1276010+03:00" endTime="2025-09-12T15:58:05.1276011+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="be70f9b0-636c-4db4-8200-e14c5fa43256">
+      <Output>
+        <ErrorInfo>
+          <Message>Moq.MockException : 
+Expected invocation on the mock once, but was 0 times: x =&gt; x.GetAsync&lt;string&gt;(It.IsAny&lt;string&gt;(), It.IsAny&lt;CancellationToken&gt;())
+
+Performed invocations:
+
+   Mock&lt;ICacheService:7&gt; (x):
+
+      ICacheService.GetAsync&lt;object&gt;("cache:TestService.CacheableSyncMethod(test1)", CancellationToken)
+      ICacheService.SetAsync&lt;object&gt;("cache:TestService.CacheableSyncMethod(test1)", "test1-sync-processed", 00:15:00, CancellationToken)
+</Message>
+          <StackTrace>   at Moq.Mock.Verify(Mock mock, LambdaExpression expression, Times times, String failMessage) in /_/src/Moq/Mock.cs:line 332
+   at Moq.Mock`1.Verify[TResult](Expression`1 expression, Func`1 times) in /_/src/Moq/Mock`1.cs:line 840
+   at Enterprise.Shared.Caching.Tests.Interceptors.CacheInterceptorTests.BuildCacheKey_WithDefaultTemplate_ShouldGenerateCorrectKey(String input, String expectedKey) in /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/Interceptors/CacheInterceptorTests.cs:line 168
+   at InvokeStub_CacheInterceptorTests.BuildCacheKey_WithDefaultTemplate_ShouldGenerateCorrectKey(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="852ff51c-80cc-4f68-8657-0f8c0bf1ccf1" testId="e51bb832-133b-33f1-d2c1-60621b78c667" testName="Enterprise.Shared.Caching.Tests.Services.DistributedCacheServiceTests.GetTtlAsync_ShouldReturnRemainingTtl" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0047764" startTime="2025-09-12T15:58:05.0467343+03:00" endTime="2025-09-12T15:58:05.0467344+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="852ff51c-80cc-4f68-8657-0f8c0bf1ccf1" />
+    <UnitTestResult executionId="924427af-da3c-452c-9c41-fbb936872197" testId="f52c441a-01f1-4282-2462-788020889c84" testName="Enterprise.Shared.Caching.Tests.Models.CacheModelsTests.RetryAyarlari_DefaultValues_ShouldBeSet" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0003281" startTime="2025-09-12T15:58:04.9169862+03:00" endTime="2025-09-12T15:58:04.9169863+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="924427af-da3c-452c-9c41-fbb936872197" />
+    <UnitTestResult executionId="bc6243ca-6a31-472c-9ade-13a02f2f1a00" testId="fd371166-e283-0ed1-6a5f-13f67393f394" testName="Enterprise.Shared.Caching.Tests.Models.CacheModelsTests.CacheAyarlari_ConnectionPoolSize_ShouldValidateRange(poolSize: 0, isValid: False)" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0000144" startTime="2025-09-12T15:58:04.9170619+03:00" endTime="2025-09-12T15:58:04.9170619+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="bc6243ca-6a31-472c-9ade-13a02f2f1a00" />
+    <UnitTestResult executionId="e78503f4-690e-437f-9e17-bdb7796162bf" testId="991d444b-0536-14cd-0e31-331901cd7d05" testName="Enterprise.Shared.Caching.Tests.Services.CacheMetricsServiceTests.GetMetricsAsync_WithoutRedis_ShouldReturnBasicMetrics" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0724836" startTime="2025-09-12T15:58:05.1034807+03:00" endTime="2025-09-12T15:58:05.1034808+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="e78503f4-690e-437f-9e17-bdb7796162bf">
+      <Output>
+        <ErrorInfo>
+          <Message>Expected metrics.Redis.Version to be "Unknown" with a length of 7, but "" has a length of 0, differs near "" (index 0).</Message>
+          <StackTrace>   at FluentAssertions.Execution.XUnit2TestFramework.Throw(String message)
+   at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+   at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Primitives.StringEqualityValidator.ValidateAgainstLengthDifferences()
+   at FluentAssertions.Primitives.StringValidator.Validate()
+   at FluentAssertions.Primitives.StringAssertions`1.Be(String expected, String because, Object[] becauseArgs)
+   at Enterprise.Shared.Caching.Tests.Services.CacheMetricsServiceTests.GetMetricsAsync_WithoutRedis_ShouldReturnBasicMetrics() in /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/Services/CacheMetricsServiceTests.cs:line 202
+--- End of stack trace from previous location ---</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="9c2d2fbd-68e6-42ed-8e46-3303757a687e" testId="d63a6030-f128-d7f8-5d07-35657f534e29" testName="Enterprise.Shared.Caching.Tests.Services.CacheMetricsServiceTests.RecordOperationTime_MultipleOperationTypes_ShouldTrackSeparately" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0011660" startTime="2025-09-12T15:58:05.1080559+03:00" endTime="2025-09-12T15:58:05.1080560+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="9c2d2fbd-68e6-42ed-8e46-3303757a687e">
+      <Output>
+        <ErrorInfo>
+          <Message>System.AggregateException : One or more errors occurred. (Object reference not set to an instance of an object.)
+---- System.NullReferenceException : Object reference not set to an instance of an object.</Message>
+          <StackTrace>   at System.Threading.Tasks.Task`1.GetResultCore(Boolean waitCompletionNotification)
+   at Enterprise.Shared.Caching.Tests.Services.CacheMetricsServiceTests.RecordOperationTime_MultipleOperationTypes_ShouldTrackSeparately() in /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/Services/CacheMetricsServiceTests.cs:line 164
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+----- Inner Stack Trace -----
+   at Enterprise.Shared.Caching.Services.CacheMetricsService.GetMetricsAsync(String keyPattern, CancellationToken cancellationToken) in /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching/Services/CacheMetricsService.cs:line 133</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="571d3723-7a84-496a-807b-8969d14ea9fa" testId="88f73910-6841-c6ea-b1aa-43a72ad77ea5" testName="Enterprise.Shared.Caching.Tests.Models.CacheModelsTests.CacheAyarlari_ConnectionPoolSize_ShouldValidateRange(poolSize: 100, isValid: True)" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0000026" startTime="2025-09-12T15:58:04.9170783+03:00" endTime="2025-09-12T15:58:04.9170783+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="571d3723-7a84-496a-807b-8969d14ea9fa" />
+    <UnitTestResult executionId="e00d1100-9011-4aff-aaf5-8d8379d93a9a" testId="ef3526fb-eefa-56d0-4016-2d59b2c4f726" testName="Enterprise.Shared.Caching.Tests.Extensions.ServiceCollectionExtensionsTests.AddCacheableService_ShouldCreateProxyWithInterceptor" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0268823" startTime="2025-09-12T15:58:05.0920554+03:00" endTime="2025-09-12T15:58:05.0920555+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="e00d1100-9011-4aff-aaf5-8d8379d93a9a" />
+    <UnitTestResult executionId="7379b312-0067-45b5-8fd6-ca354446b6b4" testId="041b018a-596c-8915-c3fd-f6c954282185" testName="Enterprise.Shared.Caching.Tests.Models.CacheModelsTests.CacheAyarlari_ConnectionPoolSize_ShouldValidateRange(poolSize: 50, isValid: True)" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0001808" startTime="2025-09-12T15:58:04.9170179+03:00" endTime="2025-09-12T15:58:04.9170179+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="7379b312-0067-45b5-8fd6-ca354446b6b4" />
+    <UnitTestResult executionId="d8689e55-8bc9-4e95-a920-3e0bb3494bb5" testId="317c09ad-d9d0-c104-5b1b-7b7c014eda00" testName="Enterprise.Shared.Caching.Tests.Models.CacheModelsTests.CircuitBreakerAyarlari_DefaultValues_ShouldBeSet" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0012030" startTime="2025-09-12T15:58:04.9155096+03:00" endTime="2025-09-12T15:58:04.9155096+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="d8689e55-8bc9-4e95-a920-3e0bb3494bb5" />
+    <UnitTestResult executionId="cbd7cf94-f315-45b1-bb24-c227d45635a6" testId="c1d4cb43-1124-7e36-390d-2b398a530414" testName="Enterprise.Shared.Caching.Tests.Integration.CacheIntegrationTests.Metrics_ShouldTrackOperations" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0074358" startTime="2025-09-12T15:58:19.4547681+03:00" endTime="2025-09-12T15:58:19.4547685+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="cbd7cf94-f315-45b1-bb24-c227d45635a6" />
+    <UnitTestResult executionId="ca5592d0-30a9-4c5a-8426-dc007f50573f" testId="17893a5b-d86c-dc89-310d-c4a3514c6ccc" testName="Enterprise.Shared.Caching.Tests.Services.DistributedCacheServiceTests.ExistsAsync_KeyExists_ShouldReturnTrue" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0055678" startTime="2025-09-12T15:58:05.0418781+03:00" endTime="2025-09-12T15:58:05.0418781+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="ca5592d0-30a9-4c5a-8426-dc007f50573f" />
+    <UnitTestResult executionId="d999fd90-7d48-4948-aa2e-01a15f571768" testId="aae9753e-06ff-0980-9900-7eb74e9805c6" testName="Enterprise.Shared.Caching.Tests.Services.CacheMetricsServiceTests.RecordHit_L1Hit_ShouldIncrementL1HitCount" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0011437" startTime="2025-09-12T15:58:05.1053267+03:00" endTime="2025-09-12T15:58:05.1053268+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="d999fd90-7d48-4948-aa2e-01a15f571768">
+      <Output>
+        <ErrorInfo>
+          <Message>System.AggregateException : One or more errors occurred. (Object reference not set to an instance of an object.)
+---- System.NullReferenceException : Object reference not set to an instance of an object.</Message>
+          <StackTrace>   at System.Threading.Tasks.Task`1.GetResultCore(Boolean waitCompletionNotification)
+   at Enterprise.Shared.Caching.Tests.Services.CacheMetricsServiceTests.RecordHit_L1Hit_ShouldIncrementL1HitCount() in /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/Services/CacheMetricsServiceTests.cs:line 36
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+----- Inner Stack Trace -----
+   at Enterprise.Shared.Caching.Services.CacheMetricsService.GetMetricsAsync(String keyPattern, CancellationToken cancellationToken) in /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching/Services/CacheMetricsService.cs:line 133</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="98e8c464-159c-475b-b2a8-8009270d9018" testId="8d4c56cb-482e-1100-d15f-faee770f5dd4" testName="Enterprise.Shared.Caching.Tests.Integration.CacheIntegrationTests.BasicCacheOperations_ShouldWork" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0045478" startTime="2025-09-12T15:58:17.9547647+03:00" endTime="2025-09-12T15:58:17.9547651+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="98e8c464-159c-475b-b2a8-8009270d9018" />
+    <UnitTestResult executionId="9cb13cf5-ff0e-431c-b0d2-9e8b666a7e41" testId="cf644077-933d-ba09-6b00-0f70dec5ad6e" testName="Enterprise.Shared.Caching.Tests.Interceptors.CacheInterceptorTests.Intercept_AsyncMethodWithCache_CacheMiss_ShouldExecuteAndCache" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0078795" startTime="2025-09-12T15:58:05.0374237+03:00" endTime="2025-09-12T15:58:05.0374245+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="9cb13cf5-ff0e-431c-b0d2-9e8b666a7e41">
+      <Output>
+        <ErrorInfo>
+          <Message>System.InvalidCastException : Unable to cast object of type 'AsyncStateMachineBox`1[System.Object,Enterprise.Shared.Caching.Interceptors.CacheInterceptor+&lt;HandleAsyncCacheable&gt;d__8]' to type 'System.Threading.Tasks.Task`1[System.String]'.</Message>
+          <StackTrace>   at Castle.Proxies.TestServiceProxy.CacheableAsyncMethod(String input)
+   at Enterprise.Shared.Caching.Tests.Interceptors.CacheInterceptorTests.Intercept_AsyncMethodWithCache_CacheMiss_ShouldExecuteAndCache() in /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/Interceptors/CacheInterceptorTests.cs:line 74
+--- End of stack trace from previous location ---</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="23188e9c-8f11-46de-9cf2-4a73caa423ba" testId="0cdfe81d-f2a3-74b8-3311-168dc67bf15c" testName="Enterprise.Shared.Caching.Tests.Models.CacheModelsTests.CacheAyarlari_L1CacheSize_ShouldValidateRange(size: 0, isValid: False)" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0000056" startTime="2025-09-12T15:58:04.9158109+03:00" endTime="2025-09-12T15:58:04.9158109+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="23188e9c-8f11-46de-9cf2-4a73caa423ba" />
+    <UnitTestResult executionId="c88b6795-d18c-4efd-9ddd-ab07c38d929f" testId="d9a10df5-af32-18ad-6e97-aa788a726001" testName="Enterprise.Shared.Caching.Tests.Services.DistributedCacheServiceTests.SetAsync_ShouldStoreInBothL1AndL2Cache" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0618469" startTime="2025-09-12T15:58:05.1209786+03:00" endTime="2025-09-12T15:58:05.1209786+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="c88b6795-d18c-4efd-9ddd-ab07c38d929f">
+      <Output>
+        <ErrorInfo>
+          <Message>System.NullReferenceException : Object reference not set to an instance of an object.</Message>
+          <StackTrace>   at Microsoft.Extensions.Caching.Memory.CacheEntryExtensions.SetOptions(ICacheEntry entry, MemoryCacheEntryOptions options)
+   at Microsoft.Extensions.Caching.Memory.CacheExtensions.Set[TItem](IMemoryCache cache, Object key, TItem value, MemoryCacheEntryOptions options)
+   at Enterprise.Shared.Caching.Services.DistributedCacheService.SetAsync[T](String key, T value, Nullable`1 expiry, CancellationToken cancellationToken) in /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching/Services/DistributedCacheService.cs:line 154
+   at Enterprise.Shared.Caching.Tests.Services.DistributedCacheServiceTests.SetAsync_ShouldStoreInBothL1AndL2Cache() in /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/Services/DistributedCacheServiceTests.cs:line 145
+--- End of stack trace from previous location ---</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="098efb69-b347-4387-aa8b-64c44c43dba6" testId="50c90ac5-72a2-133d-e4ef-f0c9a28376d4" testName="Enterprise.Shared.Caching.Tests.Interceptors.CacheInterceptorTests.Intercept_AsyncMethodWithCache_CacheHit_ShouldReturnCachedValue" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0035011" startTime="2025-09-12T15:58:05.1336912+03:00" endTime="2025-09-12T15:58:05.1336914+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="098efb69-b347-4387-aa8b-64c44c43dba6">
+      <Output>
+        <ErrorInfo>
+          <Message>System.InvalidCastException : Unable to cast object of type 'System.Threading.Tasks.Task`1[System.Object]' to type 'System.Threading.Tasks.Task`1[System.String]'.</Message>
+          <StackTrace>   at Castle.Proxies.TestServiceProxy.CacheableAsyncMethod(String input)
+   at Enterprise.Shared.Caching.Tests.Interceptors.CacheInterceptorTests.Intercept_AsyncMethodWithCache_CacheHit_ShouldReturnCachedValue() in /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/Interceptors/CacheInterceptorTests.cs:line 54
+--- End of stack trace from previous location ---</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="a277235d-5e7d-4c0a-9572-164eb56cccfd" testId="fa741b9c-43e0-0995-5a51-0bd0dd10566b" testName="Enterprise.Shared.Caching.Tests.Models.CacheModelsTests.SerializerTuru_ShouldHaveValidValues(serializer: MessagePack)" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0002367" startTime="2025-09-12T15:58:04.8914869+03:00" endTime="2025-09-12T15:58:04.8914870+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="a277235d-5e7d-4c0a-9572-164eb56cccfd" />
+    <UnitTestResult executionId="b6f436dd-53c0-48fd-b51e-8e1fa3b305d7" testId="dc1c4bbd-c80e-0e71-4c02-f8f514ad8ab8" testName="Enterprise.Shared.Caching.Tests.Integration.CacheIntegrationTests.PatternRemoval_ShouldWork" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0093015" startTime="2025-09-12T15:58:18.9641916+03:00" endTime="2025-09-12T15:58:18.9641919+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="b6f436dd-53c0-48fd-b51e-8e1fa3b305d7">
+      <Output>
+        <ErrorInfo>
+          <Message>Expected removedCount to be 2, but found 0 (difference of -2).</Message>
+          <StackTrace>   at FluentAssertions.Execution.XUnit2TestFramework.Throw(String message)
+   at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+   at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(String message, Object[] args)
+   at FluentAssertions.Numeric.NumericAssertions`2.Be(T expected, String because, Object[] becauseArgs)
+   at Enterprise.Shared.Caching.Tests.Integration.CacheIntegrationTests.PatternRemoval_ShouldWork() in /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/Integration/CacheIntegrationTests.cs:line 201
+--- End of stack trace from previous location ---</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="912d6d2d-bf0e-48d3-9aca-50f5e25a1d70" testId="27a558b5-5815-8db6-709b-49f327ae970e" testName="Enterprise.Shared.Caching.Tests.Extensions.ServiceCollectionExtensionsTests.AddSharedCaching_ShouldConfigureCacheSettings" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0004157" startTime="2025-09-12T15:58:05.0933784+03:00" endTime="2025-09-12T15:58:05.0933785+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="912d6d2d-bf0e-48d3-9aca-50f5e25a1d70" />
+    <UnitTestResult executionId="7e357971-8911-44f9-84f6-53f62efed44d" testId="a4ae2b31-f64f-8576-806a-d77beb9f776c" testName="Enterprise.Shared.Caching.Tests.Extensions.ServiceCollectionExtensionsTests.AddCacheableClass_ShouldCreateProxyClass" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0054648" startTime="2025-09-12T15:58:05.1035592+03:00" endTime="2025-09-12T15:58:05.1035592+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="7e357971-8911-44f9-84f6-53f62efed44d" />
+    <UnitTestResult executionId="81ff0bf7-adde-487c-ae8d-c041ebae4171" testId="62b40676-fa4d-2c46-54ec-43349be38f79" testName="Enterprise.Shared.Caching.Tests.Services.CacheMetricsServiceTests.RecordMiss_ShouldIncrementMissCount" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0009704" startTime="2025-09-12T15:58:05.1126951+03:00" endTime="2025-09-12T15:58:05.1126952+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="81ff0bf7-adde-487c-ae8d-c041ebae4171">
+      <Output>
+        <ErrorInfo>
+          <Message>System.AggregateException : One or more errors occurred. (Object reference not set to an instance of an object.)
+---- System.NullReferenceException : Object reference not set to an instance of an object.</Message>
+          <StackTrace>   at System.Threading.Tasks.Task`1.GetResultCore(Boolean waitCompletionNotification)
+   at Enterprise.Shared.Caching.Tests.Services.CacheMetricsServiceTests.RecordMiss_ShouldIncrementMissCount() in /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/Services/CacheMetricsServiceTests.cs:line 66
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+----- Inner Stack Trace -----
+   at Enterprise.Shared.Caching.Services.CacheMetricsService.GetMetricsAsync(String keyPattern, CancellationToken cancellationToken) in /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching/Services/CacheMetricsService.cs:line 133</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="6cd957f6-4f7d-446e-b39e-79082043ddb8" testId="d3b7b325-46c0-5c66-d0ee-39879a2ace81" testName="Enterprise.Shared.Caching.Tests.Services.CacheMetricsServiceTests.HitOrani_ShouldCalculateCorrectly" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0009660" startTime="2025-09-12T15:58:05.1115124+03:00" endTime="2025-09-12T15:58:05.1115125+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="6cd957f6-4f7d-446e-b39e-79082043ddb8">
+      <Output>
+        <ErrorInfo>
+          <Message>System.AggregateException : One or more errors occurred. (Object reference not set to an instance of an object.)
+---- System.NullReferenceException : Object reference not set to an instance of an object.</Message>
+          <StackTrace>   at System.Threading.Tasks.Task`1.GetResultCore(Boolean waitCompletionNotification)
+   at Enterprise.Shared.Caching.Tests.Services.CacheMetricsServiceTests.HitOrani_ShouldCalculateCorrectly() in /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/Services/CacheMetricsServiceTests.cs:line 113
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+----- Inner Stack Trace -----
+   at Enterprise.Shared.Caching.Services.CacheMetricsService.GetMetricsAsync(String keyPattern, CancellationToken cancellationToken) in /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching/Services/CacheMetricsService.cs:line 133</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="359c3b76-34d2-4b0d-8110-47f021922bb1" testId="25e09f94-0be7-244f-6685-871f61bbe7a3" testName="Enterprise.Shared.Caching.Tests.Extensions.ServiceCollectionExtensionsTests.AddSharedCaching_WithInvalidConfiguration_ShouldThrow" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0056341" startTime="2025-09-12T15:58:05.0650242+03:00" endTime="2025-09-12T15:58:05.0650246+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="359c3b76-34d2-4b0d-8110-47f021922bb1" />
+    <UnitTestResult executionId="b4336a04-88ab-4ed6-b5b4-e01889cce6d3" testId="56094f65-b553-1397-e6e9-16a6aacb8481" testName="Enterprise.Shared.Caching.Tests.Models.CacheModelsTests.CacheAyarlari_L1CacheSize_ShouldValidateRange(size: -1, isValid: False)" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0003048" startTime="2025-09-12T15:58:04.9157775+03:00" endTime="2025-09-12T15:58:04.9157775+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="b4336a04-88ab-4ed6-b5b4-e01889cce6d3" />
+    <UnitTestResult executionId="29756309-c7b3-4ee0-b66c-17a0a1df5a10" testId="191b8fae-bd77-4248-bfc4-582e521e3cfd" testName="Enterprise.Shared.Caching.Tests.Interceptors.CacheInterceptorTests.Intercept_SyncMethodWithCache_CacheMiss_ShouldExecuteAndCache" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0063570" startTime="2025-09-12T15:58:05.0292312+03:00" endTime="2025-09-12T15:58:05.0292313+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="29756309-c7b3-4ee0-b66c-17a0a1df5a10">
+      <Output>
+        <ErrorInfo>
+          <Message>Moq.MockException : 
+Expected invocation on the mock once, but was 0 times: x =&gt; x.SetAsync&lt;string&gt;(It.IsAny&lt;string&gt;(), It.IsAny&lt;string&gt;(), (TimeSpan?)It.IsAny&lt;TimeSpan&gt;(), It.IsAny&lt;CancellationToken&gt;())
+
+Performed invocations:
+
+   Mock&lt;ICacheService:2&gt; (x):
+
+      ICacheService.GetAsync&lt;object&gt;("cache:TestService.CacheableSyncMethod(test)", CancellationToken)
+      ICacheService.SetAsync&lt;object&gt;("cache:TestService.CacheableSyncMethod(test)", "test-sync-processed", 00:15:00, CancellationToken)
+</Message>
+          <StackTrace>   at Moq.Mock.Verify(Mock mock, LambdaExpression expression, Times times, String failMessage) in /_/src/Moq/Mock.cs:line 332
+   at Moq.Mock`1.Verify[TResult](Expression`1 expression, Func`1 times) in /_/src/Moq/Mock`1.cs:line 840
+   at Enterprise.Shared.Caching.Tests.Interceptors.CacheInterceptorTests.Intercept_SyncMethodWithCache_CacheMiss_ShouldExecuteAndCache() in /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/Interceptors/CacheInterceptorTests.cs:line 117
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="56d32fc7-ee69-4ae1-a354-69ad6f3e9917" testId="c5d89f86-aa3c-a521-6e76-69139e62b2e6" testName="Enterprise.Shared.Caching.Tests.Interceptors.CacheInterceptorTests.Intercept_SyncMethodWithCache_CacheHit_ShouldReturnCachedValue" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0648658" startTime="2025-09-12T15:58:05.1027895+03:00" endTime="2025-09-12T15:58:05.1027896+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="56d32fc7-ee69-4ae1-a354-69ad6f3e9917">
+      <Output>
+        <ErrorInfo>
+          <Message>Expected result to be "cached-sync-result" with a length of 18, but "test-sync-processed" has a length of 19, differs near "tes" (index 0).</Message>
+          <StackTrace>   at FluentAssertions.Execution.XUnit2TestFramework.Throw(String message)
+   at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+   at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Primitives.StringEqualityValidator.ValidateAgainstLengthDifferences()
+   at FluentAssertions.Primitives.StringValidator.Validate()
+   at FluentAssertions.Primitives.StringAssertions`1.Be(String expected, String because, Object[] becauseArgs)
+   at Enterprise.Shared.Caching.Tests.Interceptors.CacheInterceptorTests.Intercept_SyncMethodWithCache_CacheHit_ShouldReturnCachedValue() in /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/Interceptors/CacheInterceptorTests.cs:line 97
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="038096aa-3fe7-4283-8a6c-097c209c3719" testId="81d4a6e7-6574-2c94-993f-f6293a2fc7f1" testName="Enterprise.Shared.Caching.Tests.Interceptors.CacheInterceptorTests.Intercept_WithCacheInvalidateAttribute_ShouldInvalidateCache" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0152000" startTime="2025-09-12T15:58:05.1197520+03:00" endTime="2025-09-12T15:58:05.1197521+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="038096aa-3fe7-4283-8a6c-097c209c3719" />
+    <UnitTestResult executionId="90bca03e-8f22-4f7b-afea-1260b1cf4c4a" testId="03191ecc-e8f2-74f5-7d60-496affb94397" testName="Enterprise.Shared.Caching.Tests.Services.DistributedCacheServiceTests.GetAsync_L1CacheHit_ShouldReturnValueAndRecordL1Hit" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0037017" startTime="2025-09-12T15:58:05.0361880+03:00" endTime="2025-09-12T15:58:05.0361881+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="90bca03e-8f22-4f7b-afea-1260b1cf4c4a" />
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="Enterprise.Shared.Caching.Tests.Extensions.ServiceCollectionExtensionsTests.AddSharedCaching_WithInvalidConfiguration_ShouldThrow" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.caching.tests/bin/debug/net8.0/enterprise.shared.caching.tests.dll" id="25e09f94-0be7-244f-6685-871f61bbe7a3">
+      <Execution id="359c3b76-34d2-4b0d-8110-47f021922bb1" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/bin/Debug/net8.0/Enterprise.Shared.Caching.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Caching.Tests.Extensions.ServiceCollectionExtensionsTests" name="AddSharedCaching_WithInvalidConfiguration_ShouldThrow" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Caching.Tests.Interceptors.CacheInterceptorTests.BuildCacheKey_WithDefaultTemplate_ShouldGenerateCorrectKey(input: &quot;test1&quot;, expectedKey: &quot;cache:TestService.CacheableSyncMethod(test1)&quot;)" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.caching.tests/bin/debug/net8.0/enterprise.shared.caching.tests.dll" id="9e3a3134-1106-7a09-1960-5677ad3da3b6">
+      <Execution id="be70f9b0-636c-4db4-8200-e14c5fa43256" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/bin/Debug/net8.0/Enterprise.Shared.Caching.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Caching.Tests.Interceptors.CacheInterceptorTests" name="BuildCacheKey_WithDefaultTemplate_ShouldGenerateCorrectKey" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Caching.Tests.Services.CacheMetricsServiceTests.RecordOperationTime_SameOperationType_ShouldCalculateAverage" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.caching.tests/bin/debug/net8.0/enterprise.shared.caching.tests.dll" id="f6011145-fabd-94b7-fd4c-f5c4d61c7664">
+      <Execution id="6cf315bc-2cd5-425e-b289-dc5dbeeaa4cf" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/bin/Debug/net8.0/Enterprise.Shared.Caching.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Caching.Tests.Services.CacheMetricsServiceTests" name="RecordOperationTime_SameOperationType_ShouldCalculateAverage" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Caching.Tests.Extensions.ServiceCollectionExtensionsTests.AddCacheableService_ShouldCreateProxyWithInterceptor" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.caching.tests/bin/debug/net8.0/enterprise.shared.caching.tests.dll" id="ef3526fb-eefa-56d0-4016-2d59b2c4f726">
+      <Execution id="e00d1100-9011-4aff-aaf5-8d8379d93a9a" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/bin/Debug/net8.0/Enterprise.Shared.Caching.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Caching.Tests.Extensions.ServiceCollectionExtensionsTests" name="AddCacheableService_ShouldCreateProxyWithInterceptor" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Caching.Tests.Extensions.ServiceCollectionExtensionsTests.AddSharedCaching_ShouldRegisterAllRequiredServices" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.caching.tests/bin/debug/net8.0/enterprise.shared.caching.tests.dll" id="ee8e7bd0-16da-59b6-9196-6be8c817f5d8">
+      <Execution id="ed5659c4-339a-4f5e-ab11-ed4907359315" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/bin/Debug/net8.0/Enterprise.Shared.Caching.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Caching.Tests.Extensions.ServiceCollectionExtensionsTests" name="AddSharedCaching_ShouldRegisterAllRequiredServices" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Caching.Tests.Models.CacheModelsTests.CacheAyarlari_DefaultValues_ShouldBeSet" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.caching.tests/bin/debug/net8.0/enterprise.shared.caching.tests.dll" id="31f05d3e-75fb-186d-7afa-a44b2e83af01">
+      <Execution id="4bf60cdb-453f-4266-8d14-22c746b3048b" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/bin/Debug/net8.0/Enterprise.Shared.Caching.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Caching.Tests.Models.CacheModelsTests" name="CacheAyarlari_DefaultValues_ShouldBeSet" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Caching.Tests.Services.DistributedCacheServiceTests.ExistsAsync_KeyNotExists_ShouldReturnFalse" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.caching.tests/bin/debug/net8.0/enterprise.shared.caching.tests.dll" id="0e9ae34b-1f19-4691-11fc-385c1b2699ea">
+      <Execution id="6712b846-9006-48f5-9349-8c069fd50913" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/bin/Debug/net8.0/Enterprise.Shared.Caching.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Caching.Tests.Services.DistributedCacheServiceTests" name="ExistsAsync_KeyNotExists_ShouldReturnFalse" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Caching.Tests.Models.CacheModelsTests.CacheAyarlari_L1CacheSize_ShouldValidateRange(size: 100, isValid: True)" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.caching.tests/bin/debug/net8.0/enterprise.shared.caching.tests.dll" id="cf8a2cfa-ea08-42e9-34c1-666b184b8416">
+      <Execution id="c4e4e380-c580-4c53-92cb-85307f57289e" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/bin/Debug/net8.0/Enterprise.Shared.Caching.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Caching.Tests.Models.CacheModelsTests" name="CacheAyarlari_L1CacheSize_ShouldValidateRange" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Caching.Tests.Services.CacheMetricsServiceTests.RecordOperationTime_MultipleOperationTypes_ShouldTrackSeparately" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.caching.tests/bin/debug/net8.0/enterprise.shared.caching.tests.dll" id="d63a6030-f128-d7f8-5d07-35657f534e29">
+      <Execution id="9c2d2fbd-68e6-42ed-8e46-3303757a687e" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/bin/Debug/net8.0/Enterprise.Shared.Caching.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Caching.Tests.Services.CacheMetricsServiceTests" name="RecordOperationTime_MultipleOperationTypes_ShouldTrackSeparately" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Caching.Tests.Services.CacheMetricsServiceTests.RecordMiss_ShouldIncrementMissCount" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.caching.tests/bin/debug/net8.0/enterprise.shared.caching.tests.dll" id="62b40676-fa4d-2c46-54ec-43349be38f79">
+      <Execution id="81ff0bf7-adde-487c-ae8d-c041ebae4171" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/bin/Debug/net8.0/Enterprise.Shared.Caching.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Caching.Tests.Services.CacheMetricsServiceTests" name="RecordMiss_ShouldIncrementMissCount" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Caching.Tests.Services.DistributedCacheServiceTests.BuildKey_ShouldAddPrefixCorrectly(input: &quot;&quot;, expected: &quot;test:&quot;)" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.caching.tests/bin/debug/net8.0/enterprise.shared.caching.tests.dll" id="d566d0f9-ff3b-931c-5024-c9aba6161fb6">
+      <Execution id="2bb0876a-b5c7-4f5b-92dc-25a8f793b390" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/bin/Debug/net8.0/Enterprise.Shared.Caching.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Caching.Tests.Services.DistributedCacheServiceTests" name="BuildKey_ShouldAddPrefixCorrectly" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Caching.Tests.Interceptors.CacheInterceptorTests.BuildCacheKey_WithDefaultTemplate_ShouldGenerateCorrectKey(input: &quot;test2&quot;, expectedKey: &quot;cache:TestService.CacheableSyncMethod(test2)&quot;)" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.caching.tests/bin/debug/net8.0/enterprise.shared.caching.tests.dll" id="d60876af-362a-ff4c-a752-33df99b3c1dd">
+      <Execution id="9b9ada3f-e13c-473d-8465-7f630f91659d" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/bin/Debug/net8.0/Enterprise.Shared.Caching.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Caching.Tests.Interceptors.CacheInterceptorTests" name="BuildCacheKey_WithDefaultTemplate_ShouldGenerateCorrectKey" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Caching.Tests.Services.DistributedCacheServiceTests.GetTtlAsync_ShouldReturnRemainingTtl" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.caching.tests/bin/debug/net8.0/enterprise.shared.caching.tests.dll" id="e51bb832-133b-33f1-d2c1-60621b78c667">
+      <Execution id="852ff51c-80cc-4f68-8657-0f8c0bf1ccf1" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/bin/Debug/net8.0/Enterprise.Shared.Caching.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Caching.Tests.Services.DistributedCacheServiceTests" name="GetTtlAsync_ShouldReturnRemainingTtl" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Caching.Tests.Services.DistributedCacheServiceTests.ExistsAsync_KeyExists_ShouldReturnTrue" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.caching.tests/bin/debug/net8.0/enterprise.shared.caching.tests.dll" id="17893a5b-d86c-dc89-310d-c4a3514c6ccc">
+      <Execution id="ca5592d0-30a9-4c5a-8426-dc007f50573f" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/bin/Debug/net8.0/Enterprise.Shared.Caching.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Caching.Tests.Services.DistributedCacheServiceTests" name="ExistsAsync_KeyExists_ShouldReturnTrue" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Caching.Tests.Services.CacheMetricsServiceTests.RecordHit_L1Hit_ShouldIncrementL1HitCount" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.caching.tests/bin/debug/net8.0/enterprise.shared.caching.tests.dll" id="aae9753e-06ff-0980-9900-7eb74e9805c6">
+      <Execution id="d999fd90-7d48-4948-aa2e-01a15f571768" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/bin/Debug/net8.0/Enterprise.Shared.Caching.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Caching.Tests.Services.CacheMetricsServiceTests" name="RecordHit_L1Hit_ShouldIncrementL1HitCount" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Caching.Tests.Models.CacheModelsTests.CacheAyarlari_L1CacheSize_ShouldValidateRange(size: 1024, isValid: True)" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.caching.tests/bin/debug/net8.0/enterprise.shared.caching.tests.dll" id="e7f7c620-8b60-1dbf-1aee-c70b168a98d0">
+      <Execution id="4397edc1-286f-4576-a572-97a47a421b97" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/bin/Debug/net8.0/Enterprise.Shared.Caching.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Caching.Tests.Models.CacheModelsTests" name="CacheAyarlari_L1CacheSize_ShouldValidateRange" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Caching.Tests.Services.DistributedCacheServiceTests.SetAsync_ShouldStoreInBothL1AndL2Cache" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.caching.tests/bin/debug/net8.0/enterprise.shared.caching.tests.dll" id="d9a10df5-af32-18ad-6e97-aa788a726001">
+      <Execution id="c88b6795-d18c-4efd-9ddd-ab07c38d929f" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/bin/Debug/net8.0/Enterprise.Shared.Caching.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Caching.Tests.Services.DistributedCacheServiceTests" name="SetAsync_ShouldStoreInBothL1AndL2Cache" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Caching.Tests.Interceptors.CacheInterceptorTests.Intercept_WithCustomKeyTemplate_ShouldUseCustomKey" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.caching.tests/bin/debug/net8.0/enterprise.shared.caching.tests.dll" id="c7f753bb-24b0-15aa-8945-c6760db3de81">
+      <Execution id="e929a5fc-3aa6-4866-887a-324b473091f3" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/bin/Debug/net8.0/Enterprise.Shared.Caching.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Caching.Tests.Interceptors.CacheInterceptorTests" name="Intercept_WithCustomKeyTemplate_ShouldUseCustomKey" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Caching.Tests.Models.CacheModelsTests.SerializerTuru_ShouldHaveValidValues(serializer: ProtoBuf)" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.caching.tests/bin/debug/net8.0/enterprise.shared.caching.tests.dll" id="7aa93850-5cc5-0bed-a21d-fa29d3accda2">
+      <Execution id="e739a5af-f723-4c13-b097-af6a53477381" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/bin/Debug/net8.0/Enterprise.Shared.Caching.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Caching.Tests.Models.CacheModelsTests" name="SerializerTuru_ShouldHaveValidValues" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Caching.Tests.Models.CacheModelsTests.CacheAyarlari_L1CacheSize_ShouldValidateRange(size: -1, isValid: False)" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.caching.tests/bin/debug/net8.0/enterprise.shared.caching.tests.dll" id="56094f65-b553-1397-e6e9-16a6aacb8481">
+      <Execution id="b4336a04-88ab-4ed6-b5b4-e01889cce6d3" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/bin/Debug/net8.0/Enterprise.Shared.Caching.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Caching.Tests.Models.CacheModelsTests" name="CacheAyarlari_L1CacheSize_ShouldValidateRange" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Caching.Tests.Interceptors.CacheInterceptorTests.Intercept_WithoutCacheableAttribute_ShouldProceedWithoutCaching" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.caching.tests/bin/debug/net8.0/enterprise.shared.caching.tests.dll" id="d4196a96-f2af-3de0-44f3-4d3a27a3cb66">
+      <Execution id="c16b2359-fd14-41d2-a886-2f702fb0d6d9" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/bin/Debug/net8.0/Enterprise.Shared.Caching.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Caching.Tests.Interceptors.CacheInterceptorTests" name="Intercept_WithoutCacheableAttribute_ShouldProceedWithoutCaching" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Caching.Tests.Extensions.ServiceCollectionExtensionsTests.AddCacheableClass_ShouldCreateProxyClass" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.caching.tests/bin/debug/net8.0/enterprise.shared.caching.tests.dll" id="a4ae2b31-f64f-8576-806a-d77beb9f776c">
+      <Execution id="7e357971-8911-44f9-84f6-53f62efed44d" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/bin/Debug/net8.0/Enterprise.Shared.Caching.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Caching.Tests.Extensions.ServiceCollectionExtensionsTests" name="AddCacheableClass_ShouldCreateProxyClass" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Caching.Tests.Models.CacheModelsTests.SerializerTuru_ShouldHaveValidValues(serializer: MessagePack)" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.caching.tests/bin/debug/net8.0/enterprise.shared.caching.tests.dll" id="fa741b9c-43e0-0995-5a51-0bd0dd10566b">
+      <Execution id="a277235d-5e7d-4c0a-9572-164eb56cccfd" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/bin/Debug/net8.0/Enterprise.Shared.Caching.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Caching.Tests.Models.CacheModelsTests" name="SerializerTuru_ShouldHaveValidValues" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Caching.Tests.Services.DistributedCacheServiceTests.GetAsync_CacheMiss_ShouldReturnNullAndRecordMiss" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.caching.tests/bin/debug/net8.0/enterprise.shared.caching.tests.dll" id="bb444882-d690-894f-0871-fa7cd2474e93">
+      <Execution id="05056845-b7a6-421d-b8be-89f01f979514" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/bin/Debug/net8.0/Enterprise.Shared.Caching.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Caching.Tests.Services.DistributedCacheServiceTests" name="GetAsync_CacheMiss_ShouldReturnNullAndRecordMiss" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Caching.Tests.Interceptors.CacheInterceptorTests.Intercept_AsyncMethodWithCache_CacheHit_ShouldReturnCachedValue" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.caching.tests/bin/debug/net8.0/enterprise.shared.caching.tests.dll" id="50c90ac5-72a2-133d-e4ef-f0c9a28376d4">
+      <Execution id="098efb69-b347-4387-aa8b-64c44c43dba6" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/bin/Debug/net8.0/Enterprise.Shared.Caching.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Caching.Tests.Interceptors.CacheInterceptorTests" name="Intercept_AsyncMethodWithCache_CacheHit_ShouldReturnCachedValue" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Caching.Tests.Services.DistributedCacheServiceTests.RemoveAsync_ShouldRemoveFromBothCaches" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.caching.tests/bin/debug/net8.0/enterprise.shared.caching.tests.dll" id="635dd5db-57b7-fac9-6a79-c2f989340cf1">
+      <Execution id="74708d79-7279-4fd3-8742-b58899c5130c" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/bin/Debug/net8.0/Enterprise.Shared.Caching.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Caching.Tests.Services.DistributedCacheServiceTests" name="RemoveAsync_ShouldRemoveFromBothCaches" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Caching.Tests.Models.CacheModelsTests.RetryAyarlari_DefaultValues_ShouldBeSet" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.caching.tests/bin/debug/net8.0/enterprise.shared.caching.tests.dll" id="f52c441a-01f1-4282-2462-788020889c84">
+      <Execution id="924427af-da3c-452c-9c41-fbb936872197" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/bin/Debug/net8.0/Enterprise.Shared.Caching.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Caching.Tests.Models.CacheModelsTests" name="RetryAyarlari_DefaultValues_ShouldBeSet" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Caching.Tests.Services.CacheMetricsServiceTests.GetMetricsAsync_WithoutRedis_ShouldReturnBasicMetrics" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.caching.tests/bin/debug/net8.0/enterprise.shared.caching.tests.dll" id="991d444b-0536-14cd-0e31-331901cd7d05">
+      <Execution id="e78503f4-690e-437f-9e17-bdb7796162bf" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/bin/Debug/net8.0/Enterprise.Shared.Caching.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Caching.Tests.Services.CacheMetricsServiceTests" name="GetMetricsAsync_WithoutRedis_ShouldReturnBasicMetrics" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Caching.Tests.Models.CacheModelsTests.CacheAyarlari_ConnectionPoolSize_ShouldValidateRange(poolSize: 0, isValid: False)" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.caching.tests/bin/debug/net8.0/enterprise.shared.caching.tests.dll" id="fd371166-e283-0ed1-6a5f-13f67393f394">
+      <Execution id="bc6243ca-6a31-472c-9ade-13a02f2f1a00" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/bin/Debug/net8.0/Enterprise.Shared.Caching.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Caching.Tests.Models.CacheModelsTests" name="CacheAyarlari_ConnectionPoolSize_ShouldValidateRange" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Caching.Tests.Models.CacheModelsTests.CacheAyarlari_ConnectionPoolSize_ShouldValidateRange(poolSize: 50, isValid: True)" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.caching.tests/bin/debug/net8.0/enterprise.shared.caching.tests.dll" id="041b018a-596c-8915-c3fd-f6c954282185">
+      <Execution id="7379b312-0067-45b5-8fd6-ca354446b6b4" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/bin/Debug/net8.0/Enterprise.Shared.Caching.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Caching.Tests.Models.CacheModelsTests" name="CacheAyarlari_ConnectionPoolSize_ShouldValidateRange" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Caching.Tests.Models.CacheModelsTests.CacheOperasyonSonucu_BasariliSonuc_ShouldCreateSuccessResult" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.caching.tests/bin/debug/net8.0/enterprise.shared.caching.tests.dll" id="6ca44d26-725e-2cac-62dd-b1dcfe1577d1">
+      <Execution id="e8d45366-bedd-49b6-b1ee-48916d7357b8" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/bin/Debug/net8.0/Enterprise.Shared.Caching.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Caching.Tests.Models.CacheModelsTests" name="CacheOperasyonSonucu_BasariliSonuc_ShouldCreateSuccessResult" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Caching.Tests.Integration.CacheIntegrationTests.TtlOperations_ShouldWork" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.caching.tests/bin/debug/net8.0/enterprise.shared.caching.tests.dll" id="fcf210c0-e82a-5768-7cfc-8d1289f873d3">
+      <Execution id="6d6ec28a-184b-4b37-b3a4-2a3d940f8025" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/bin/Debug/net8.0/Enterprise.Shared.Caching.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Caching.Tests.Integration.CacheIntegrationTests" name="TtlOperations_ShouldWork" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Caching.Tests.Models.CacheModelsTests.CacheAyarlari_ConnectionPoolSize_ShouldValidateRange(poolSize: 101, isValid: False)" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.caching.tests/bin/debug/net8.0/enterprise.shared.caching.tests.dll" id="03c7908f-ae36-3f61-0867-1482d88249d0">
+      <Execution id="04ab05c8-7886-4f1d-ac1c-5e9b1017fa77" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/bin/Debug/net8.0/Enterprise.Shared.Caching.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Caching.Tests.Models.CacheModelsTests" name="CacheAyarlari_ConnectionPoolSize_ShouldValidateRange" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Caching.Tests.Services.DistributedCacheServiceTests.GetAsync_L1CacheHit_ShouldReturnValueAndRecordL1Hit" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.caching.tests/bin/debug/net8.0/enterprise.shared.caching.tests.dll" id="03191ecc-e8f2-74f5-7d60-496affb94397">
+      <Execution id="90bca03e-8f22-4f7b-afea-1260b1cf4c4a" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/bin/Debug/net8.0/Enterprise.Shared.Caching.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Caching.Tests.Services.DistributedCacheServiceTests" name="GetAsync_L1CacheHit_ShouldReturnValueAndRecordL1Hit" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Caching.Tests.Extensions.ServiceCollectionExtensionsTests.AddMemoryCaching_ShouldRegisterMemoryCacheService" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.caching.tests/bin/debug/net8.0/enterprise.shared.caching.tests.dll" id="0522c444-02dc-d6bf-e767-8c5b6292282c">
+      <Execution id="2cd9143e-f3e0-45dc-b0d3-3451d4cbb7f3" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/bin/Debug/net8.0/Enterprise.Shared.Caching.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Caching.Tests.Extensions.ServiceCollectionExtensionsTests" name="AddMemoryCaching_ShouldRegisterMemoryCacheService" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Caching.Tests.Models.CacheModelsTests.CacheAyarlari_L1CacheSize_ShouldValidateRange(size: 1025, isValid: False)" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.caching.tests/bin/debug/net8.0/enterprise.shared.caching.tests.dll" id="4e6b27ab-aaf6-8730-7400-a0c9e4e39fc4">
+      <Execution id="6126ccb3-3cdc-4623-9e2e-a2cfb32db233" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/bin/Debug/net8.0/Enterprise.Shared.Caching.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Caching.Tests.Models.CacheModelsTests" name="CacheAyarlari_L1CacheSize_ShouldValidateRange" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Caching.Tests.Models.CacheModelsTests.BulkCacheOperasyonSonucu_HitOrani_ShouldCalculateCorrectly" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.caching.tests/bin/debug/net8.0/enterprise.shared.caching.tests.dll" id="98d7de9c-fd84-5064-887a-ad554adcfda9">
+      <Execution id="04c40e7f-92a3-4f9f-9212-fd0038a4d07d" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/bin/Debug/net8.0/Enterprise.Shared.Caching.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Caching.Tests.Models.CacheModelsTests" name="BulkCacheOperasyonSonucu_HitOrani_ShouldCalculateCorrectly" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Caching.Tests.Integration.CacheIntegrationTests.MultiLevelCaching_ShouldWorkCorrectly" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.caching.tests/bin/debug/net8.0/enterprise.shared.caching.tests.dll" id="1aafacb8-7b06-f6b2-fd45-e3740f593178">
+      <Execution id="6261b9a6-3b0c-43b7-b036-7139330754f5" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/bin/Debug/net8.0/Enterprise.Shared.Caching.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Caching.Tests.Integration.CacheIntegrationTests" name="MultiLevelCaching_ShouldWorkCorrectly" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Caching.Tests.Services.DistributedCacheServiceTests.GetAsync_L2CacheHit_ShouldReturnValueAndRecordL2Hit" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.caching.tests/bin/debug/net8.0/enterprise.shared.caching.tests.dll" id="2ae94252-9b3c-78fe-a1cb-9c59e43981ff">
+      <Execution id="b5d4aa21-1789-4dad-8981-83f947bbb45d" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/bin/Debug/net8.0/Enterprise.Shared.Caching.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Caching.Tests.Services.DistributedCacheServiceTests" name="GetAsync_L2CacheHit_ShouldReturnValueAndRecordL2Hit" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Caching.Tests.Interceptors.CacheInterceptorTests.Intercept_AsyncMethodWithCache_CacheMiss_ShouldExecuteAndCache" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.caching.tests/bin/debug/net8.0/enterprise.shared.caching.tests.dll" id="cf644077-933d-ba09-6b00-0f70dec5ad6e">
+      <Execution id="9cb13cf5-ff0e-431c-b0d2-9e8b666a7e41" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/bin/Debug/net8.0/Enterprise.Shared.Caching.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Caching.Tests.Interceptors.CacheInterceptorTests" name="Intercept_AsyncMethodWithCache_CacheMiss_ShouldExecuteAndCache" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Caching.Tests.Models.CacheModelsTests.CacheAyarlari_ConnectionPoolSize_ShouldValidateRange(poolSize: 1, isValid: True)" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.caching.tests/bin/debug/net8.0/enterprise.shared.caching.tests.dll" id="07fb2a99-6867-5873-d2f6-f3abda2ae0a8">
+      <Execution id="4cd47021-0911-4c4a-b80e-d1f839cf4058" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/bin/Debug/net8.0/Enterprise.Shared.Caching.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Caching.Tests.Models.CacheModelsTests" name="CacheAyarlari_ConnectionPoolSize_ShouldValidateRange" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Caching.Tests.Models.CacheModelsTests.CacheAyarlari_L1CacheSize_ShouldValidateRange(size: 1, isValid: True)" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.caching.tests/bin/debug/net8.0/enterprise.shared.caching.tests.dll" id="6f9296e0-efb3-059e-5b18-649a6518258a">
+      <Execution id="a933f36c-b97e-425c-9768-c965487cdf08" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/bin/Debug/net8.0/Enterprise.Shared.Caching.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Caching.Tests.Models.CacheModelsTests" name="CacheAyarlari_L1CacheSize_ShouldValidateRange" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Caching.Tests.Extensions.ServiceCollectionExtensionsTests.AddSharedCaching_ShouldRegisterHealthChecks" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.caching.tests/bin/debug/net8.0/enterprise.shared.caching.tests.dll" id="0130c184-6ee1-24ee-8803-d8b0114b3005">
+      <Execution id="656ce3e8-855e-4305-bfb1-70f99198506f" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/bin/Debug/net8.0/Enterprise.Shared.Caching.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Caching.Tests.Extensions.ServiceCollectionExtensionsTests" name="AddSharedCaching_ShouldRegisterHealthChecks" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Caching.Tests.Integration.CacheIntegrationTests.ConcurrentOperations_ShouldHandleCorrectly" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.caching.tests/bin/debug/net8.0/enterprise.shared.caching.tests.dll" id="545aec44-69f1-ff31-bd20-d7fdf3923347">
+      <Execution id="aed40ef5-136f-4dda-aa18-5ac231e1b6e1" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/bin/Debug/net8.0/Enterprise.Shared.Caching.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Caching.Tests.Integration.CacheIntegrationTests" name="ConcurrentOperations_ShouldHandleCorrectly" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Caching.Tests.Services.CacheMetricsServiceTests.HitOrani_NoOperations_ShouldReturnZero" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.caching.tests/bin/debug/net8.0/enterprise.shared.caching.tests.dll" id="64d56895-a26f-119d-00e1-0a173ffb90c6">
+      <Execution id="82590046-ebd9-487e-a256-685e47559d37" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/bin/Debug/net8.0/Enterprise.Shared.Caching.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Caching.Tests.Services.CacheMetricsServiceTests" name="HitOrani_NoOperations_ShouldReturnZero" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Caching.Tests.Integration.CacheIntegrationTests.RefreshAsync_ShouldExtendTtl" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.caching.tests/bin/debug/net8.0/enterprise.shared.caching.tests.dll" id="c6742520-371b-ae78-700d-404099632b7d">
+      <Execution id="a648e130-18ba-48a1-afd3-9c7e5985603c" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/bin/Debug/net8.0/Enterprise.Shared.Caching.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Caching.Tests.Integration.CacheIntegrationTests" name="RefreshAsync_ShouldExtendTtl" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Caching.Tests.Services.DistributedCacheServiceTests.GetOrSetAsync_KeyNotExists_ShouldCallFactoryAndCacheResult" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.caching.tests/bin/debug/net8.0/enterprise.shared.caching.tests.dll" id="f53fb3e9-715f-2f38-a152-624b41fc1bc6">
+      <Execution id="02d00fb0-0cfe-43c5-9226-75b27b2a19a7" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/bin/Debug/net8.0/Enterprise.Shared.Caching.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Caching.Tests.Services.DistributedCacheServiceTests" name="GetOrSetAsync_KeyNotExists_ShouldCallFactoryAndCacheResult" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Caching.Tests.Integration.CacheIntegrationTests.Metrics_ShouldTrackOperations" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.caching.tests/bin/debug/net8.0/enterprise.shared.caching.tests.dll" id="c1d4cb43-1124-7e36-390d-2b398a530414">
+      <Execution id="cbd7cf94-f315-45b1-bb24-c227d45635a6" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/bin/Debug/net8.0/Enterprise.Shared.Caching.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Caching.Tests.Integration.CacheIntegrationTests" name="Metrics_ShouldTrackOperations" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Caching.Tests.Services.DistributedCacheServiceTests.BuildKey_ShouldAddPrefixCorrectly(input: &quot;product:*&quot;, expected: &quot;test:product:*&quot;)" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.caching.tests/bin/debug/net8.0/enterprise.shared.caching.tests.dll" id="5c67f885-35a6-fc1d-3bd7-ef75927a301d">
+      <Execution id="3df39722-eb53-4155-bc77-36fc790e4065" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/bin/Debug/net8.0/Enterprise.Shared.Caching.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Caching.Tests.Services.DistributedCacheServiceTests" name="BuildKey_ShouldAddPrefixCorrectly" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Caching.Tests.Models.CacheModelsTests.SerializerTuru_ShouldHaveValidValues(serializer: Json)" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.caching.tests/bin/debug/net8.0/enterprise.shared.caching.tests.dll" id="0ad37fd3-b948-a1e9-c493-e5cff8e30ee3">
+      <Execution id="8f6dc933-1876-4030-8f4f-be6e94f1bfe3" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/bin/Debug/net8.0/Enterprise.Shared.Caching.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Caching.Tests.Models.CacheModelsTests" name="SerializerTuru_ShouldHaveValidValues" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Caching.Tests.Interceptors.CacheInterceptorTests.Intercept_WithCacheInvalidateAttribute_ShouldInvalidateCache" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.caching.tests/bin/debug/net8.0/enterprise.shared.caching.tests.dll" id="81d4a6e7-6574-2c94-993f-f6293a2fc7f1">
+      <Execution id="038096aa-3fe7-4283-8a6c-097c209c3719" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/bin/Debug/net8.0/Enterprise.Shared.Caching.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Caching.Tests.Interceptors.CacheInterceptorTests" name="Intercept_WithCacheInvalidateAttribute_ShouldInvalidateCache" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Caching.Tests.Services.CacheMetricsServiceTests.HitOrani_ShouldCalculateCorrectly" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.caching.tests/bin/debug/net8.0/enterprise.shared.caching.tests.dll" id="d3b7b325-46c0-5c66-d0ee-39879a2ace81">
+      <Execution id="6cd957f6-4f7d-446e-b39e-79082043ddb8" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/bin/Debug/net8.0/Enterprise.Shared.Caching.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Caching.Tests.Services.CacheMetricsServiceTests" name="HitOrani_ShouldCalculateCorrectly" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Caching.Tests.Models.CacheModelsTests.RedisBilgileri_ShouldInitializeWithDefaults" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.caching.tests/bin/debug/net8.0/enterprise.shared.caching.tests.dll" id="fd1cbd1f-7162-8b67-6579-9383501f7064">
+      <Execution id="9189b2cf-6873-4000-a184-7425108c5288" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/bin/Debug/net8.0/Enterprise.Shared.Caching.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Caching.Tests.Models.CacheModelsTests" name="RedisBilgileri_ShouldInitializeWithDefaults" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Caching.Tests.Services.DistributedCacheServiceTests.BuildKey_ShouldAddPrefixCorrectly(input: &quot;user:123&quot;, expected: &quot;test:user:123&quot;)" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.caching.tests/bin/debug/net8.0/enterprise.shared.caching.tests.dll" id="23101269-4cd2-d432-e3dc-a4e88f5208b0">
+      <Execution id="93484cbb-c17b-46f4-bb39-3aca9bc7b077" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/bin/Debug/net8.0/Enterprise.Shared.Caching.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Caching.Tests.Services.DistributedCacheServiceTests" name="BuildKey_ShouldAddPrefixCorrectly" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Caching.Tests.Integration.CacheIntegrationTests.BulkOperations_ShouldWork" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.caching.tests/bin/debug/net8.0/enterprise.shared.caching.tests.dll" id="c9c1da8c-3363-b2b7-7cac-5f5c6af2fa31">
+      <Execution id="fa8754ce-17c2-4434-9bc8-a43cd6503559" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/bin/Debug/net8.0/Enterprise.Shared.Caching.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Caching.Tests.Integration.CacheIntegrationTests" name="BulkOperations_ShouldWork" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Caching.Tests.Models.CacheModelsTests.CacheBilgisi_ShouldInitializeWithDefaults" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.caching.tests/bin/debug/net8.0/enterprise.shared.caching.tests.dll" id="48d4b7b6-3941-3122-d637-0bdb46b53c57">
+      <Execution id="356cf43c-dc5a-46b1-9dfd-0a3317f110e6" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/bin/Debug/net8.0/Enterprise.Shared.Caching.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Caching.Tests.Models.CacheModelsTests" name="CacheBilgisi_ShouldInitializeWithDefaults" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Caching.Tests.Extensions.ServiceCollectionExtensionsTests.AddSharedCaching_ShouldConfigureCacheSettings" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.caching.tests/bin/debug/net8.0/enterprise.shared.caching.tests.dll" id="27a558b5-5815-8db6-709b-49f327ae970e">
+      <Execution id="912d6d2d-bf0e-48d3-9aca-50f5e25a1d70" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/bin/Debug/net8.0/Enterprise.Shared.Caching.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Caching.Tests.Extensions.ServiceCollectionExtensionsTests" name="AddSharedCaching_ShouldConfigureCacheSettings" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Caching.Tests.Interceptors.CacheInterceptorTests.Intercept_SyncMethodWithCache_CacheHit_ShouldReturnCachedValue" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.caching.tests/bin/debug/net8.0/enterprise.shared.caching.tests.dll" id="c5d89f86-aa3c-a521-6e76-69139e62b2e6">
+      <Execution id="56d32fc7-ee69-4ae1-a354-69ad6f3e9917" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/bin/Debug/net8.0/Enterprise.Shared.Caching.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Caching.Tests.Interceptors.CacheInterceptorTests" name="Intercept_SyncMethodWithCache_CacheHit_ShouldReturnCachedValue" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Caching.Tests.Interceptors.CacheInterceptorTests.Intercept_SyncMethodWithCache_CacheMiss_ShouldExecuteAndCache" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.caching.tests/bin/debug/net8.0/enterprise.shared.caching.tests.dll" id="191b8fae-bd77-4248-bfc4-582e521e3cfd">
+      <Execution id="29756309-c7b3-4ee0-b66c-17a0a1df5a10" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/bin/Debug/net8.0/Enterprise.Shared.Caching.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Caching.Tests.Interceptors.CacheInterceptorTests" name="Intercept_SyncMethodWithCache_CacheMiss_ShouldExecuteAndCache" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Caching.Tests.Models.CacheModelsTests.CacheMetrikleri_HitOrani_ShouldCalculateCorrectly" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.caching.tests/bin/debug/net8.0/enterprise.shared.caching.tests.dll" id="57969ac9-02e5-72e8-df0b-94590be6b172">
+      <Execution id="f580edfb-5331-403b-8964-98d23a7e7b79" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/bin/Debug/net8.0/Enterprise.Shared.Caching.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Caching.Tests.Models.CacheModelsTests" name="CacheMetrikleri_HitOrani_ShouldCalculateCorrectly" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Caching.Tests.Services.DistributedCacheServiceTests.GetOrSetAsync_KeyExists_ShouldReturnExistingValue" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.caching.tests/bin/debug/net8.0/enterprise.shared.caching.tests.dll" id="10a8614e-e47c-1bba-fd16-b97f58d9105b">
+      <Execution id="549c8bdb-07e9-48a7-bfe1-993563bac3ae" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/bin/Debug/net8.0/Enterprise.Shared.Caching.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Caching.Tests.Services.DistributedCacheServiceTests" name="GetOrSetAsync_KeyExists_ShouldReturnExistingValue" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Caching.Tests.Integration.CacheIntegrationTests.GetOrSetAsync_ShouldWorkCorrectly" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.caching.tests/bin/debug/net8.0/enterprise.shared.caching.tests.dll" id="5edc1d0e-4399-b3ac-e7dd-0168d444ca3e">
+      <Execution id="7627359b-46b0-4799-a400-11d4cc55bcef" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/bin/Debug/net8.0/Enterprise.Shared.Caching.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Caching.Tests.Integration.CacheIntegrationTests" name="GetOrSetAsync_ShouldWorkCorrectly" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Caching.Tests.Services.CacheMetricsServiceTests.ResetMetricsAsync_ShouldResetAllCounters" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.caching.tests/bin/debug/net8.0/enterprise.shared.caching.tests.dll" id="3e8ab0b2-db09-ef6a-eb15-4a37cbdb2aca">
+      <Execution id="b4d0ae7c-c142-4197-825f-8a5f7afd6c91" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/bin/Debug/net8.0/Enterprise.Shared.Caching.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Caching.Tests.Services.CacheMetricsServiceTests" name="ResetMetricsAsync_ShouldResetAllCounters" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Caching.Tests.Services.CacheMetricsServiceTests.RecordHit_L2Hit_ShouldIncrementL2HitCount" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.caching.tests/bin/debug/net8.0/enterprise.shared.caching.tests.dll" id="2825eb94-001d-4321-5f95-f8f002812342">
+      <Execution id="d2abd77f-bbd5-49c5-928b-81f6bc1d1acd" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/bin/Debug/net8.0/Enterprise.Shared.Caching.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Caching.Tests.Services.CacheMetricsServiceTests" name="RecordHit_L2Hit_ShouldIncrementL2HitCount" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Caching.Tests.Extensions.ServiceCollectionExtensionsTests.AddSharedCaching_WithCustomOptions_ShouldOverrideDefaults" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.caching.tests/bin/debug/net8.0/enterprise.shared.caching.tests.dll" id="9985344d-f865-6cf5-7e4a-233bb9c96387">
+      <Execution id="7f8c7f77-0775-4633-ac59-7b4f91f1555f" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/bin/Debug/net8.0/Enterprise.Shared.Caching.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Caching.Tests.Extensions.ServiceCollectionExtensionsTests" name="AddSharedCaching_WithCustomOptions_ShouldOverrideDefaults" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Caching.Tests.Models.CacheModelsTests.CacheAyarlari_ConnectionPoolSize_ShouldValidateRange(poolSize: 100, isValid: True)" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.caching.tests/bin/debug/net8.0/enterprise.shared.caching.tests.dll" id="88f73910-6841-c6ea-b1aa-43a72ad77ea5">
+      <Execution id="571d3723-7a84-496a-807b-8969d14ea9fa" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/bin/Debug/net8.0/Enterprise.Shared.Caching.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Caching.Tests.Models.CacheModelsTests" name="CacheAyarlari_ConnectionPoolSize_ShouldValidateRange" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Caching.Tests.Extensions.ServiceCollectionExtensionsTests.AddSharedCaching_ShouldRegisterSameInstanceForInterfaceAliases" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.caching.tests/bin/debug/net8.0/enterprise.shared.caching.tests.dll" id="1887455d-77ef-404d-4c46-9e51bcc7f79f">
+      <Execution id="d895df75-08c4-4794-9d79-006040e6e0ec" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/bin/Debug/net8.0/Enterprise.Shared.Caching.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Caching.Tests.Extensions.ServiceCollectionExtensionsTests" name="AddSharedCaching_ShouldRegisterSameInstanceForInterfaceAliases" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Caching.Tests.Services.CacheMetricsServiceTests.RecordError_ShouldIncrementErrorCount" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.caching.tests/bin/debug/net8.0/enterprise.shared.caching.tests.dll" id="b9343e90-34cb-8e53-97c9-cc6fbd2940a9">
+      <Execution id="bf037fb7-09e9-48f5-b74b-eb4d76aacdef" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/bin/Debug/net8.0/Enterprise.Shared.Caching.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Caching.Tests.Services.CacheMetricsServiceTests" name="RecordError_ShouldIncrementErrorCount" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Caching.Tests.Integration.CacheIntegrationTests.HealthCheck_ShouldReportHealthy" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.caching.tests/bin/debug/net8.0/enterprise.shared.caching.tests.dll" id="154218c2-5158-7a5c-ff97-4a94a0d313d5">
+      <Execution id="307aa119-307b-46dd-a97d-bb14eae526d2" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/bin/Debug/net8.0/Enterprise.Shared.Caching.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Caching.Tests.Integration.CacheIntegrationTests" name="HealthCheck_ShouldReportHealthy" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Caching.Tests.Models.CacheModelsTests.CircuitBreakerAyarlari_DefaultValues_ShouldBeSet" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.caching.tests/bin/debug/net8.0/enterprise.shared.caching.tests.dll" id="317c09ad-d9d0-c104-5b1b-7b7c014eda00">
+      <Execution id="d8689e55-8bc9-4e95-a920-3e0bb3494bb5" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/bin/Debug/net8.0/Enterprise.Shared.Caching.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Caching.Tests.Models.CacheModelsTests" name="CircuitBreakerAyarlari_DefaultValues_ShouldBeSet" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Caching.Tests.Models.CacheModelsTests.CacheOperasyonSonucu_BasarisizSonuc_ShouldCreateFailureResult" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.caching.tests/bin/debug/net8.0/enterprise.shared.caching.tests.dll" id="532b203b-a92e-13bc-6a51-63b8cf1176ef">
+      <Execution id="9f36c371-c87f-473e-a164-dd87032684f7" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/bin/Debug/net8.0/Enterprise.Shared.Caching.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Caching.Tests.Models.CacheModelsTests" name="CacheOperasyonSonucu_BasarisizSonuc_ShouldCreateFailureResult" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Caching.Tests.Services.CacheMetricsServiceTests.RecordOperationTime_ShouldTrackOperationTimes" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.caching.tests/bin/debug/net8.0/enterprise.shared.caching.tests.dll" id="3345cfbe-6d0b-316f-bf8d-1a279fddfaba">
+      <Execution id="003f6fb5-95d1-426f-9e88-a415d625f6e1" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/bin/Debug/net8.0/Enterprise.Shared.Caching.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Caching.Tests.Services.CacheMetricsServiceTests" name="RecordOperationTime_ShouldTrackOperationTimes" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Caching.Tests.Models.CacheModelsTests.HealthCheckAyarlari_DefaultValues_ShouldBeSet" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.caching.tests/bin/debug/net8.0/enterprise.shared.caching.tests.dll" id="c1111e90-ccdb-adda-39eb-6ed6f54fe098">
+      <Execution id="c7079e3a-f3c0-404c-8957-21be83a603fc" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/bin/Debug/net8.0/Enterprise.Shared.Caching.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Caching.Tests.Models.CacheModelsTests" name="HealthCheckAyarlari_DefaultValues_ShouldBeSet" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Caching.Tests.Integration.CacheIntegrationTests.BasicCacheOperations_ShouldWork" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.caching.tests/bin/debug/net8.0/enterprise.shared.caching.tests.dll" id="8d4c56cb-482e-1100-d15f-faee770f5dd4">
+      <Execution id="98e8c464-159c-475b-b2a8-8009270d9018" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/bin/Debug/net8.0/Enterprise.Shared.Caching.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Caching.Tests.Integration.CacheIntegrationTests" name="BasicCacheOperations_ShouldWork" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Caching.Tests.Models.CacheModelsTests.CacheAyarlari_L1CacheSize_ShouldValidateRange(size: 0, isValid: False)" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.caching.tests/bin/debug/net8.0/enterprise.shared.caching.tests.dll" id="0cdfe81d-f2a3-74b8-3311-168dc67bf15c">
+      <Execution id="23188e9c-8f11-46de-9cf2-4a73caa423ba" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/bin/Debug/net8.0/Enterprise.Shared.Caching.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Caching.Tests.Models.CacheModelsTests" name="CacheAyarlari_L1CacheSize_ShouldValidateRange" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Caching.Tests.Models.CacheModelsTests.CacheMetrikleri_HitOrani_NoOperations_ShouldReturnZero" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.caching.tests/bin/debug/net8.0/enterprise.shared.caching.tests.dll" id="c10da1da-76fd-e390-8ff9-8b66665a7554">
+      <Execution id="a85febd8-9c92-49b5-9885-eabe19f8408b" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/bin/Debug/net8.0/Enterprise.Shared.Caching.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Caching.Tests.Models.CacheModelsTests" name="CacheMetrikleri_HitOrani_NoOperations_ShouldReturnZero" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Caching.Tests.Integration.CacheIntegrationTests.PatternRemoval_ShouldWork" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.caching.tests/bin/debug/net8.0/enterprise.shared.caching.tests.dll" id="dc1c4bbd-c80e-0e71-4c02-f8f514ad8ab8">
+      <Execution id="b6f436dd-53c0-48fd-b51e-8e1fa3b305d7" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/bin/Debug/net8.0/Enterprise.Shared.Caching.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Caching.Tests.Integration.CacheIntegrationTests" name="PatternRemoval_ShouldWork" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="fcf210c0-e82a-5768-7cfc-8d1289f873d3" executionId="6d6ec28a-184b-4b37-b3a4-2a3d940f8025" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="545aec44-69f1-ff31-bd20-d7fdf3923347" executionId="aed40ef5-136f-4dda-aa18-5ac231e1b6e1" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="c9c1da8c-3363-b2b7-7cac-5f5c6af2fa31" executionId="fa8754ce-17c2-4434-9bc8-a43cd6503559" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="c10da1da-76fd-e390-8ff9-8b66665a7554" executionId="a85febd8-9c92-49b5-9885-eabe19f8408b" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="bb444882-d690-894f-0871-fa7cd2474e93" executionId="05056845-b7a6-421d-b8be-89f01f979514" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="10a8614e-e47c-1bba-fd16-b97f58d9105b" executionId="549c8bdb-07e9-48a7-bfe1-993563bac3ae" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="0ad37fd3-b948-a1e9-c493-e5cff8e30ee3" executionId="8f6dc933-1876-4030-8f4f-be6e94f1bfe3" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="532b203b-a92e-13bc-6a51-63b8cf1176ef" executionId="9f36c371-c87f-473e-a164-dd87032684f7" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="d566d0f9-ff3b-931c-5024-c9aba6161fb6" executionId="2bb0876a-b5c7-4f5b-92dc-25a8f793b390" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="fd1cbd1f-7162-8b67-6579-9383501f7064" executionId="9189b2cf-6873-4000-a184-7425108c5288" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="0522c444-02dc-d6bf-e767-8c5b6292282c" executionId="2cd9143e-f3e0-45dc-b0d3-3451d4cbb7f3" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="cf8a2cfa-ea08-42e9-34c1-666b184b8416" executionId="c4e4e380-c580-4c53-92cb-85307f57289e" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="31f05d3e-75fb-186d-7afa-a44b2e83af01" executionId="4bf60cdb-453f-4266-8d14-22c746b3048b" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="9985344d-f865-6cf5-7e4a-233bb9c96387" executionId="7f8c7f77-0775-4633-ac59-7b4f91f1555f" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="3e8ab0b2-db09-ef6a-eb15-4a37cbdb2aca" executionId="b4d0ae7c-c142-4197-825f-8a5f7afd6c91" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="6f9296e0-efb3-059e-5b18-649a6518258a" executionId="a933f36c-b97e-425c-9768-c965487cdf08" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="2ae94252-9b3c-78fe-a1cb-9c59e43981ff" executionId="b5d4aa21-1789-4dad-8981-83f947bbb45d" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="57969ac9-02e5-72e8-df0b-94590be6b172" executionId="f580edfb-5331-403b-8964-98d23a7e7b79" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="0130c184-6ee1-24ee-8803-d8b0114b3005" executionId="656ce3e8-855e-4305-bfb1-70f99198506f" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="03c7908f-ae36-3f61-0867-1482d88249d0" executionId="04ab05c8-7886-4f1d-ac1c-5e9b1017fa77" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="2825eb94-001d-4321-5f95-f8f002812342" executionId="d2abd77f-bbd5-49c5-928b-81f6bc1d1acd" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="ee8e7bd0-16da-59b6-9196-6be8c817f5d8" executionId="ed5659c4-339a-4f5e-ab11-ed4907359315" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="d4196a96-f2af-3de0-44f3-4d3a27a3cb66" executionId="c16b2359-fd14-41d2-a886-2f702fb0d6d9" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="c6742520-371b-ae78-700d-404099632b7d" executionId="a648e130-18ba-48a1-afd3-9c7e5985603c" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="b9343e90-34cb-8e53-97c9-cc6fbd2940a9" executionId="bf037fb7-09e9-48f5-b74b-eb4d76aacdef" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="5edc1d0e-4399-b3ac-e7dd-0168d444ca3e" executionId="7627359b-46b0-4799-a400-11d4cc55bcef" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="3345cfbe-6d0b-316f-bf8d-1a279fddfaba" executionId="003f6fb5-95d1-426f-9e88-a415d625f6e1" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="c1111e90-ccdb-adda-39eb-6ed6f54fe098" executionId="c7079e3a-f3c0-404c-8957-21be83a603fc" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="0e9ae34b-1f19-4691-11fc-385c1b2699ea" executionId="6712b846-9006-48f5-9349-8c069fd50913" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="07fb2a99-6867-5873-d2f6-f3abda2ae0a8" executionId="4cd47021-0911-4c4a-b80e-d1f839cf4058" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="635dd5db-57b7-fac9-6a79-c2f989340cf1" executionId="74708d79-7279-4fd3-8742-b58899c5130c" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="23101269-4cd2-d432-e3dc-a4e88f5208b0" executionId="93484cbb-c17b-46f4-bb39-3aca9bc7b077" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="48d4b7b6-3941-3122-d637-0bdb46b53c57" executionId="356cf43c-dc5a-46b1-9dfd-0a3317f110e6" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="64d56895-a26f-119d-00e1-0a173ffb90c6" executionId="82590046-ebd9-487e-a256-685e47559d37" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="e7f7c620-8b60-1dbf-1aee-c70b168a98d0" executionId="4397edc1-286f-4576-a572-97a47a421b97" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="c7f753bb-24b0-15aa-8945-c6760db3de81" executionId="e929a5fc-3aa6-4866-887a-324b473091f3" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="1887455d-77ef-404d-4c46-9e51bcc7f79f" executionId="d895df75-08c4-4794-9d79-006040e6e0ec" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="5c67f885-35a6-fc1d-3bd7-ef75927a301d" executionId="3df39722-eb53-4155-bc77-36fc790e4065" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="1aafacb8-7b06-f6b2-fd45-e3740f593178" executionId="6261b9a6-3b0c-43b7-b036-7139330754f5" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="6ca44d26-725e-2cac-62dd-b1dcfe1577d1" executionId="e8d45366-bedd-49b6-b1ee-48916d7357b8" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="d60876af-362a-ff4c-a752-33df99b3c1dd" executionId="9b9ada3f-e13c-473d-8465-7f630f91659d" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="f53fb3e9-715f-2f38-a152-624b41fc1bc6" executionId="02d00fb0-0cfe-43c5-9226-75b27b2a19a7" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="7aa93850-5cc5-0bed-a21d-fa29d3accda2" executionId="e739a5af-f723-4c13-b097-af6a53477381" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="f6011145-fabd-94b7-fd4c-f5c4d61c7664" executionId="6cf315bc-2cd5-425e-b289-dc5dbeeaa4cf" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="4e6b27ab-aaf6-8730-7400-a0c9e4e39fc4" executionId="6126ccb3-3cdc-4623-9e2e-a2cfb32db233" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="154218c2-5158-7a5c-ff97-4a94a0d313d5" executionId="307aa119-307b-46dd-a97d-bb14eae526d2" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="98d7de9c-fd84-5064-887a-ad554adcfda9" executionId="04c40e7f-92a3-4f9f-9212-fd0038a4d07d" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="9e3a3134-1106-7a09-1960-5677ad3da3b6" executionId="be70f9b0-636c-4db4-8200-e14c5fa43256" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="e51bb832-133b-33f1-d2c1-60621b78c667" executionId="852ff51c-80cc-4f68-8657-0f8c0bf1ccf1" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="f52c441a-01f1-4282-2462-788020889c84" executionId="924427af-da3c-452c-9c41-fbb936872197" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="fd371166-e283-0ed1-6a5f-13f67393f394" executionId="bc6243ca-6a31-472c-9ade-13a02f2f1a00" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="991d444b-0536-14cd-0e31-331901cd7d05" executionId="e78503f4-690e-437f-9e17-bdb7796162bf" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="d63a6030-f128-d7f8-5d07-35657f534e29" executionId="9c2d2fbd-68e6-42ed-8e46-3303757a687e" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="88f73910-6841-c6ea-b1aa-43a72ad77ea5" executionId="571d3723-7a84-496a-807b-8969d14ea9fa" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="ef3526fb-eefa-56d0-4016-2d59b2c4f726" executionId="e00d1100-9011-4aff-aaf5-8d8379d93a9a" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="041b018a-596c-8915-c3fd-f6c954282185" executionId="7379b312-0067-45b5-8fd6-ca354446b6b4" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="317c09ad-d9d0-c104-5b1b-7b7c014eda00" executionId="d8689e55-8bc9-4e95-a920-3e0bb3494bb5" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="c1d4cb43-1124-7e36-390d-2b398a530414" executionId="cbd7cf94-f315-45b1-bb24-c227d45635a6" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="17893a5b-d86c-dc89-310d-c4a3514c6ccc" executionId="ca5592d0-30a9-4c5a-8426-dc007f50573f" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="aae9753e-06ff-0980-9900-7eb74e9805c6" executionId="d999fd90-7d48-4948-aa2e-01a15f571768" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="8d4c56cb-482e-1100-d15f-faee770f5dd4" executionId="98e8c464-159c-475b-b2a8-8009270d9018" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="cf644077-933d-ba09-6b00-0f70dec5ad6e" executionId="9cb13cf5-ff0e-431c-b0d2-9e8b666a7e41" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="0cdfe81d-f2a3-74b8-3311-168dc67bf15c" executionId="23188e9c-8f11-46de-9cf2-4a73caa423ba" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="d9a10df5-af32-18ad-6e97-aa788a726001" executionId="c88b6795-d18c-4efd-9ddd-ab07c38d929f" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="50c90ac5-72a2-133d-e4ef-f0c9a28376d4" executionId="098efb69-b347-4387-aa8b-64c44c43dba6" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="fa741b9c-43e0-0995-5a51-0bd0dd10566b" executionId="a277235d-5e7d-4c0a-9572-164eb56cccfd" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="dc1c4bbd-c80e-0e71-4c02-f8f514ad8ab8" executionId="b6f436dd-53c0-48fd-b51e-8e1fa3b305d7" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="27a558b5-5815-8db6-709b-49f327ae970e" executionId="912d6d2d-bf0e-48d3-9aca-50f5e25a1d70" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="a4ae2b31-f64f-8576-806a-d77beb9f776c" executionId="7e357971-8911-44f9-84f6-53f62efed44d" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="62b40676-fa4d-2c46-54ec-43349be38f79" executionId="81ff0bf7-adde-487c-ae8d-c041ebae4171" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="d3b7b325-46c0-5c66-d0ee-39879a2ace81" executionId="6cd957f6-4f7d-446e-b39e-79082043ddb8" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="25e09f94-0be7-244f-6685-871f61bbe7a3" executionId="359c3b76-34d2-4b0d-8110-47f021922bb1" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="56094f65-b553-1397-e6e9-16a6aacb8481" executionId="b4336a04-88ab-4ed6-b5b4-e01889cce6d3" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="191b8fae-bd77-4248-bfc4-582e521e3cfd" executionId="29756309-c7b3-4ee0-b66c-17a0a1df5a10" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="c5d89f86-aa3c-a521-6e76-69139e62b2e6" executionId="56d32fc7-ee69-4ae1-a354-69ad6f3e9917" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="81d4a6e7-6574-2c94-993f-f6293a2fc7f1" executionId="038096aa-3fe7-4283-8a6c-097c209c3719" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="03191ecc-e8f2-74f5-7d60-496affb94397" executionId="90bca03e-8f22-4f7b-afea-1260b1cf4c4a" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Failed">
+    <Counters total="77" executed="77" passed="50" failed="27" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.5.3.1+6b60a9e56a (64-bit .NET 8.0.19)
+[xUnit.net 00:00:00.06]   Discovering: Enterprise.Shared.Caching.Tests
+[xUnit.net 00:00:00.10]   Discovered:  Enterprise.Shared.Caching.Tests
+[xUnit.net 00:00:00.10]   Starting:    Enterprise.Shared.Caching.Tests
+[xUnit.net 00:00:00.29]       Moq.MockException : 
+[xUnit.net 00:00:00.29]       Expected invocation on the mock once, but was 0 times: x =&gt; x.GetAsync&lt;string&gt;(It.Is&lt;string&gt;(k =&gt; k.Contains("user:user123")), It.IsAny&lt;CancellationToken&gt;())
+[xUnit.net 00:00:00.29]       
+[xUnit.net 00:00:00.29]       Performed invocations:
+[xUnit.net 00:00:00.29]       
+[xUnit.net 00:00:00.29]          Mock&lt;ICacheService:1&gt; (x):
+[xUnit.net 00:00:00.29]       
+[xUnit.net 00:00:00.29]             ICacheService.GetAsync&lt;object&gt;("cache:user:user123", CancellationToken)
+[xUnit.net 00:00:00.29]             ICacheService.SetAsync&lt;object&gt;("cache:user:user123", "User data for user123", 01:00:00, CancellationToken)
+[xUnit.net 00:00:00.29]       
+[xUnit.net 00:00:00.29]       Stack Trace:
+[xUnit.net 00:00:00.29]         /_/src/Moq/Mock.cs(332,0): at Moq.Mock.Verify(Mock mock, LambdaExpression expression, Times times, String failMessage)
+[xUnit.net 00:00:00.29]         /_/src/Moq/Mock`1.cs(840,0): at Moq.Mock`1.Verify[TResult](Expression`1 expression, Func`1 times)
+[xUnit.net 00:00:00.29]         /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/Interceptors/CacheInterceptorTests.cs(148,0): at Enterprise.Shared.Caching.Tests.Interceptors.CacheInterceptorTests.Intercept_WithCustomKeyTemplate_ShouldUseCustomKey()
+[xUnit.net 00:00:00.29]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+[xUnit.net 00:00:00.29]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+[xUnit.net 00:00:00.30]       System.NullReferenceException : Object reference not set to an instance of an object.
+[xUnit.net 00:00:00.30]       Stack Trace:
+[xUnit.net 00:00:00.30]         /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching/Services/CacheMetricsService.cs(133,0): at Enterprise.Shared.Caching.Services.CacheMetricsService.GetMetricsAsync(String keyPattern, CancellationToken cancellationToken)
+[xUnit.net 00:00:00.30]         /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/Services/CacheMetricsServiceTests.cs(134,0): at Enterprise.Shared.Caching.Tests.Services.CacheMetricsServiceTests.ResetMetricsAsync_ShouldResetAllCounters()
+[xUnit.net 00:00:00.30]         --- End of stack trace from previous location ---
+[xUnit.net 00:00:00.30]       Moq.MockException : 
+[xUnit.net 00:00:00.30]       Expected invocation on the mock once, but was 0 times: x =&gt; x.SetAsync&lt;string&gt;(It.IsAny&lt;string&gt;(), It.IsAny&lt;string&gt;(), (TimeSpan?)It.IsAny&lt;TimeSpan&gt;(), It.IsAny&lt;CancellationToken&gt;())
+[xUnit.net 00:00:00.30]       
+[xUnit.net 00:00:00.30]       Performed invocations:
+[xUnit.net 00:00:00.30]       
+[xUnit.net 00:00:00.30]          Mock&lt;ICacheService:2&gt; (x):
+[xUnit.net 00:00:00.30]       
+[xUnit.net 00:00:00.30]             ICacheService.GetAsync&lt;object&gt;("cache:TestService.CacheableSyncMethod(test)", CancellationToken)
+[xUnit.net 00:00:00.30]             ICacheService.SetAsync&lt;object&gt;("cache:TestService.CacheableSyncMethod(test)", "test-sync-processed", 00:15:00, CancellationToken)
+[xUnit.net 00:00:00.30]       
+[xUnit.net 00:00:00.30]       Stack Trace:
+[xUnit.net 00:00:00.30]         /_/src/Moq/Mock.cs(332,0): at Moq.Mock.Verify(Mock mock, LambdaExpression expression, Times times, String failMessage)
+[xUnit.net 00:00:00.30]         /_/src/Moq/Mock`1.cs(840,0): at Moq.Mock`1.Verify[TResult](Expression`1 expression, Func`1 times)
+[xUnit.net 00:00:00.30]         /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/Interceptors/CacheInterceptorTests.cs(117,0): at Enterprise.Shared.Caching.Tests.Interceptors.CacheInterceptorTests.Intercept_SyncMethodWithCache_CacheMiss_ShouldExecuteAndCache()
+[xUnit.net 00:00:00.30]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+[xUnit.net 00:00:00.30]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+[xUnit.net 00:00:00.30]       System.AggregateException : One or more errors occurred. (Object reference not set to an instance of an object.)
+[xUnit.net 00:00:00.30]       ---- System.NullReferenceException : Object reference not set to an instance of an object.
+[xUnit.net 00:00:00.30]       Stack Trace:
+[xUnit.net 00:00:00.30]            at System.Threading.Tasks.Task`1.GetResultCore(Boolean waitCompletionNotification)
+[xUnit.net 00:00:00.30]         /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/Services/CacheMetricsServiceTests.cs(181,0): at Enterprise.Shared.Caching.Tests.Services.CacheMetricsServiceTests.RecordOperationTime_SameOperationType_ShouldCalculateAverage()
+[xUnit.net 00:00:00.30]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+[xUnit.net 00:00:00.30]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+[xUnit.net 00:00:00.30]         ----- Inner Stack Trace -----
+[xUnit.net 00:00:00.30]         /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching/Services/CacheMetricsService.cs(133,0): at Enterprise.Shared.Caching.Services.CacheMetricsService.GetMetricsAsync(String keyPattern, CancellationToken cancellationToken)
+[xUnit.net 00:00:00.30]       System.InvalidCastException : Unable to cast object of type 'AsyncStateMachineBox`1[System.Object,Enterprise.Shared.Caching.Interceptors.CacheInterceptor+&lt;HandleAsyncCacheable&gt;d__8]' to type 'System.Threading.Tasks.Task`1[System.String]'.
+[xUnit.net 00:00:00.30]       Stack Trace:
+[xUnit.net 00:00:00.30]            at Castle.Proxies.TestServiceProxy.CacheableAsyncMethod(String input)
+[xUnit.net 00:00:00.30]         /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/Interceptors/CacheInterceptorTests.cs(74,0): at Enterprise.Shared.Caching.Tests.Interceptors.CacheInterceptorTests.Intercept_AsyncMethodWithCache_CacheMiss_ShouldExecuteAndCache()
+[xUnit.net 00:00:00.30]         --- End of stack trace from previous location ---
+[xUnit.net 00:00:00.32]       System.NotSupportedException : Unsupported expression: x =&gt; x.GetStringAsync(fullKey, It.IsAny&lt;CancellationToken&gt;())&#xD;
+[xUnit.net 00:00:00.32]       Extension methods (here: DistributedCacheExtensions.GetStringAsync) may not be used in setup / verification expressions.
+[xUnit.net 00:00:00.32]       Stack Trace:
+[xUnit.net 00:00:00.32]         /_/src/Moq/Guard.cs(87,0): at Moq.Guard.IsOverridable(MethodInfo method, Expression expression)
+[xUnit.net 00:00:00.32]         /_/src/Moq/MethodExpectation.cs(87,0): at Moq.MethodExpectation..ctor(LambdaExpression expression, MethodInfo method, IReadOnlyList`1 arguments, Boolean exactGenericTypeArguments, Boolean skipMatcherInitialization, Boolean allowNonOverridable)
+[xUnit.net 00:00:00.32]         /_/src/Moq/ExpressionExtensions.cs(235,0): at Moq.ExpressionExtensions.&lt;Split&gt;g__Split|5_0(Expression e, Expression&amp; r, MethodExpectation&amp; p, Boolean assignment, Boolean allowNonOverridableLastProperty)
+[xUnit.net 00:00:00.32]         /_/src/Moq/ExpressionExtensions.cs(149,0): at Moq.ExpressionExtensions.Split(LambdaExpression expression, Boolean allowNonOverridableLastProperty)
+[xUnit.net 00:00:00.32]         /_/src/Moq/Mock.cs(645,0): at Moq.Mock.SetupRecursive[TSetup](Mock mock, LambdaExpression expression, Func`4 setupLast, Boolean allowNonOverridableLastProperty)
+[xUnit.net 00:00:00.32]         /_/src/Moq/Mock.cs(500,0): at Moq.Mock.Setup(Mock mock, LambdaExpression expression, Condition condition)
+[xUnit.net 00:00:00.32]         /_/src/Moq/Mock`1.cs(452,0): at Moq.Mock`1.Setup[TResult](Expression`1 expression)
+[xUnit.net 00:00:00.32]         /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/Services/DistributedCacheServiceTests.cs(123,0): at Enterprise.Shared.Caching.Tests.Services.DistributedCacheServiceTests.GetAsync_CacheMiss_ShouldReturnNullAndRecordMiss()
+[xUnit.net 00:00:00.32]         --- End of stack trace from previous location ---
+[xUnit.net 00:00:00.32]       System.NotSupportedException : Unsupported expression: x =&gt; x.GetStringAsync(fullKey, It.IsAny&lt;CancellationToken&gt;())&#xD;
+[xUnit.net 00:00:00.32]       Extension methods (here: DistributedCacheExtensions.GetStringAsync) may not be used in setup / verification expressions.
+[xUnit.net 00:00:00.32]       Stack Trace:
+[xUnit.net 00:00:00.32]         /_/src/Moq/Guard.cs(87,0): at Moq.Guard.IsOverridable(MethodInfo method, Expression expression)
+[xUnit.net 00:00:00.32]         /_/src/Moq/MethodExpectation.cs(87,0): at Moq.MethodExpectation..ctor(LambdaExpression expression, MethodInfo method, IReadOnlyList`1 arguments, Boolean exactGenericTypeArguments, Boolean skipMatcherInitialization, Boolean allowNonOverridable)
+[xUnit.net 00:00:00.32]         /_/src/Moq/ExpressionExtensions.cs(235,0): at Moq.ExpressionExtensions.&lt;Split&gt;g__Split|5_0(Expression e, Expression&amp; r, MethodExpectation&amp; p, Boolean assignment, Boolean allowNonOverridableLastProperty)
+[xUnit.net 00:00:00.32]         /_/src/Moq/ExpressionExtensions.cs(149,0): at Moq.ExpressionExtensions.Split(LambdaExpression expression, Boolean allowNonOverridableLastProperty)
+[xUnit.net 00:00:00.32]         /_/src/Moq/Mock.cs(645,0): at Moq.Mock.SetupRecursive[TSetup](Mock mock, LambdaExpression expression, Func`4 setupLast, Boolean allowNonOverridableLastProperty)
+[xUnit.net 00:00:00.33]         /_/src/Moq/Mock.cs(500,0): at Moq.Mock.Setup(Mock mock, LambdaExpression expression, Condition condition)
+[xUnit.net 00:00:00.33]         /_/src/Moq/Mock`1.cs(452,0): at Moq.Mock`1.Setup[TResult](Expression`1 expression)
+[xUnit.net 00:00:00.33]         /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/Services/DistributedCacheServiceTests.cs(203,0): at Enterprise.Shared.Caching.Tests.Services.DistributedCacheServiceTests.GetOrSetAsync_KeyNotExists_ShouldCallFactoryAndCacheResult()
+[xUnit.net 00:00:00.33]         --- End of stack trace from previous location ---
+[xUnit.net 00:00:00.37]       Expected result to be "cached-sync-result" with a length of 18, but "test-sync-processed" has a length of 19, differs near "tes" (index 0).
+[xUnit.net 00:00:00.37]       Stack Trace:
+[xUnit.net 00:00:00.37]            at FluentAssertions.Execution.XUnit2TestFramework.Throw(String message)
+[xUnit.net 00:00:00.37]            at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+[xUnit.net 00:00:00.37]            at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+[xUnit.net 00:00:00.37]            at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+[xUnit.net 00:00:00.37]            at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+[xUnit.net 00:00:00.37]            at FluentAssertions.Primitives.StringEqualityValidator.ValidateAgainstLengthDifferences()
+[xUnit.net 00:00:00.37]            at FluentAssertions.Primitives.StringValidator.Validate()
+[xUnit.net 00:00:00.37]            at FluentAssertions.Primitives.StringAssertions`1.Be(String expected, String because, Object[] becauseArgs)
+[xUnit.net 00:00:00.37]         /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/Interceptors/CacheInterceptorTests.cs(97,0): at Enterprise.Shared.Caching.Tests.Interceptors.CacheInterceptorTests.Intercept_SyncMethodWithCache_CacheHit_ShouldReturnCachedValue()
+[xUnit.net 00:00:00.37]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+[xUnit.net 00:00:00.37]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+[xUnit.net 00:00:00.37]       Expected metrics.Redis.Version to be "Unknown" with a length of 7, but "" has a length of 0, differs near "" (index 0).
+[xUnit.net 00:00:00.37]       Stack Trace:
+[xUnit.net 00:00:00.37]            at FluentAssertions.Execution.XUnit2TestFramework.Throw(String message)
+[xUnit.net 00:00:00.37]            at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+[xUnit.net 00:00:00.37]            at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+[xUnit.net 00:00:00.37]            at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+[xUnit.net 00:00:00.37]            at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+[xUnit.net 00:00:00.37]            at FluentAssertions.Primitives.StringEqualityValidator.ValidateAgainstLengthDifferences()
+[xUnit.net 00:00:00.37]            at FluentAssertions.Primitives.StringValidator.Validate()
+[xUnit.net 00:00:00.37]            at FluentAssertions.Primitives.StringAssertions`1.Be(String expected, String because, Object[] becauseArgs)
+[xUnit.net 00:00:00.37]         /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/Services/CacheMetricsServiceTests.cs(202,0): at Enterprise.Shared.Caching.Tests.Services.CacheMetricsServiceTests.GetMetricsAsync_WithoutRedis_ShouldReturnBasicMetrics()
+[xUnit.net 00:00:00.37]         --- End of stack trace from previous location ---
+[xUnit.net 00:00:00.37]       System.AggregateException : One or more errors occurred. (Object reference not set to an instance of an object.)
+[xUnit.net 00:00:00.37]       ---- System.NullReferenceException : Object reference not set to an instance of an object.
+[xUnit.net 00:00:00.37]       Stack Trace:
+[xUnit.net 00:00:00.37]            at System.Threading.Tasks.Task`1.GetResultCore(Boolean waitCompletionNotification)
+[xUnit.net 00:00:00.37]         /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/Services/CacheMetricsServiceTests.cs(98,0): at Enterprise.Shared.Caching.Tests.Services.CacheMetricsServiceTests.RecordOperationTime_ShouldTrackOperationTimes()
+[xUnit.net 00:00:00.37]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+[xUnit.net 00:00:00.37]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+[xUnit.net 00:00:00.37]         ----- Inner Stack Trace -----
+[xUnit.net 00:00:00.37]         /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching/Services/CacheMetricsService.cs(133,0): at Enterprise.Shared.Caching.Services.CacheMetricsService.GetMetricsAsync(String keyPattern, CancellationToken cancellationToken)
+[xUnit.net 00:00:00.37]       System.AggregateException : One or more errors occurred. (Object reference not set to an instance of an object.)
+[xUnit.net 00:00:00.37]       ---- System.NullReferenceException : Object reference not set to an instance of an object.
+[xUnit.net 00:00:00.37]       Stack Trace:
+[xUnit.net 00:00:00.37]            at System.Threading.Tasks.Task`1.GetResultCore(Boolean waitCompletionNotification)
+[xUnit.net 00:00:00.37]         /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/Services/CacheMetricsServiceTests.cs(36,0): at Enterprise.Shared.Caching.Tests.Services.CacheMetricsServiceTests.RecordHit_L1Hit_ShouldIncrementL1HitCount()
+[xUnit.net 00:00:00.37]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+[xUnit.net 00:00:00.37]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+[xUnit.net 00:00:00.37]         ----- Inner Stack Trace -----
+[xUnit.net 00:00:00.37]         /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching/Services/CacheMetricsService.cs(133,0): at Enterprise.Shared.Caching.Services.CacheMetricsService.GetMetricsAsync(String keyPattern, CancellationToken cancellationToken)
+[xUnit.net 00:00:00.37]       System.AggregateException : One or more errors occurred. (Object reference not set to an instance of an object.)
+[xUnit.net 00:00:00.37]       ---- System.NullReferenceException : Object reference not set to an instance of an object.
+[xUnit.net 00:00:00.37]       Stack Trace:
+[xUnit.net 00:00:00.37]            at System.Threading.Tasks.Task`1.GetResultCore(Boolean waitCompletionNotification)
+[xUnit.net 00:00:00.37]         /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/Services/CacheMetricsServiceTests.cs(51,0): at Enterprise.Shared.Caching.Tests.Services.CacheMetricsServiceTests.RecordHit_L2Hit_ShouldIncrementL2HitCount()
+[xUnit.net 00:00:00.37]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+[xUnit.net 00:00:00.37]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+[xUnit.net 00:00:00.37]         ----- Inner Stack Trace -----
+[xUnit.net 00:00:00.37]         /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching/Services/CacheMetricsService.cs(133,0): at Enterprise.Shared.Caching.Services.CacheMetricsService.GetMetricsAsync(String keyPattern, CancellationToken cancellationToken)
+[xUnit.net 00:00:00.37]       System.AggregateException : One or more errors occurred. (Object reference not set to an instance of an object.)
+[xUnit.net 00:00:00.37]       ---- System.NullReferenceException : Object reference not set to an instance of an object.
+[xUnit.net 00:00:00.37]       Stack Trace:
+[xUnit.net 00:00:00.37]            at System.Threading.Tasks.Task`1.GetResultCore(Boolean waitCompletionNotification)
+[xUnit.net 00:00:00.37]         /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/Services/CacheMetricsServiceTests.cs(164,0): at Enterprise.Shared.Caching.Tests.Services.CacheMetricsServiceTests.RecordOperationTime_MultipleOperationTypes_ShouldTrackSeparately()
+[xUnit.net 00:00:00.37]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+[xUnit.net 00:00:00.37]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+[xUnit.net 00:00:00.37]         ----- Inner Stack Trace -----
+[xUnit.net 00:00:00.37]         /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching/Services/CacheMetricsService.cs(133,0): at Enterprise.Shared.Caching.Services.CacheMetricsService.GetMetricsAsync(String keyPattern, CancellationToken cancellationToken)
+[xUnit.net 00:00:00.38]       System.AggregateException : One or more errors occurred. (Object reference not set to an instance of an object.)
+[xUnit.net 00:00:00.38]       ---- System.NullReferenceException : Object reference not set to an instance of an object.
+[xUnit.net 00:00:00.38]       Stack Trace:
+[xUnit.net 00:00:00.38]            at System.Threading.Tasks.Task`1.GetResultCore(Boolean waitCompletionNotification)
+[xUnit.net 00:00:00.38]         /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/Services/CacheMetricsServiceTests.cs(79,0): at Enterprise.Shared.Caching.Tests.Services.CacheMetricsServiceTests.RecordError_ShouldIncrementErrorCount()
+[xUnit.net 00:00:00.38]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+[xUnit.net 00:00:00.38]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+[xUnit.net 00:00:00.38]         ----- Inner Stack Trace -----
+[xUnit.net 00:00:00.38]         /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching/Services/CacheMetricsService.cs(133,0): at Enterprise.Shared.Caching.Services.CacheMetricsService.GetMetricsAsync(String keyPattern, CancellationToken cancellationToken)
+[xUnit.net 00:00:00.38]       System.AggregateException : One or more errors occurred. (Object reference not set to an instance of an object.)
+[xUnit.net 00:00:00.38]       ---- System.NullReferenceException : Object reference not set to an instance of an object.
+[xUnit.net 00:00:00.38]       Stack Trace:
+[xUnit.net 00:00:00.38]            at System.Threading.Tasks.Task`1.GetResultCore(Boolean waitCompletionNotification)
+[xUnit.net 00:00:00.38]         /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/Services/CacheMetricsServiceTests.cs(121,0): at Enterprise.Shared.Caching.Tests.Services.CacheMetricsServiceTests.HitOrani_NoOperations_ShouldReturnZero()
+[xUnit.net 00:00:00.38]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+[xUnit.net 00:00:00.38]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+[xUnit.net 00:00:00.38]         ----- Inner Stack Trace -----
+[xUnit.net 00:00:00.38]         /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching/Services/CacheMetricsService.cs(133,0): at Enterprise.Shared.Caching.Services.CacheMetricsService.GetMetricsAsync(String keyPattern, CancellationToken cancellationToken)
+[xUnit.net 00:00:00.38]       System.AggregateException : One or more errors occurred. (Object reference not set to an instance of an object.)
+[xUnit.net 00:00:00.38]       ---- System.NullReferenceException : Object reference not set to an instance of an object.
+[xUnit.net 00:00:00.38]       Stack Trace:
+[xUnit.net 00:00:00.38]            at System.Threading.Tasks.Task`1.GetResultCore(Boolean waitCompletionNotification)
+[xUnit.net 00:00:00.38]         /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/Services/CacheMetricsServiceTests.cs(113,0): at Enterprise.Shared.Caching.Tests.Services.CacheMetricsServiceTests.HitOrani_ShouldCalculateCorrectly()
+[xUnit.net 00:00:00.38]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+[xUnit.net 00:00:00.38]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+[xUnit.net 00:00:00.38]         ----- Inner Stack Trace -----
+[xUnit.net 00:00:00.38]         /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching/Services/CacheMetricsService.cs(133,0): at Enterprise.Shared.Caching.Services.CacheMetricsService.GetMetricsAsync(String keyPattern, CancellationToken cancellationToken)
+[xUnit.net 00:00:00.38]       System.AggregateException : One or more errors occurred. (Object reference not set to an instance of an object.)
+[xUnit.net 00:00:00.38]       ---- System.NullReferenceException : Object reference not set to an instance of an object.
+[xUnit.net 00:00:00.38]       Stack Trace:
+[xUnit.net 00:00:00.38]            at System.Threading.Tasks.Task`1.GetResultCore(Boolean waitCompletionNotification)
+[xUnit.net 00:00:00.38]         /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/Services/CacheMetricsServiceTests.cs(66,0): at Enterprise.Shared.Caching.Tests.Services.CacheMetricsServiceTests.RecordMiss_ShouldIncrementMissCount()
+[xUnit.net 00:00:00.38]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+[xUnit.net 00:00:00.38]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+[xUnit.net 00:00:00.38]         ----- Inner Stack Trace -----
+[xUnit.net 00:00:00.38]         /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching/Services/CacheMetricsService.cs(133,0): at Enterprise.Shared.Caching.Services.CacheMetricsService.GetMetricsAsync(String keyPattern, CancellationToken cancellationToken)
+[xUnit.net 00:00:00.39]       System.NullReferenceException : Object reference not set to an instance of an object.
+[xUnit.net 00:00:00.39]       Stack Trace:
+[xUnit.net 00:00:00.39]            at Microsoft.Extensions.Caching.Memory.CacheEntryExtensions.SetOptions(ICacheEntry entry, MemoryCacheEntryOptions options)
+[xUnit.net 00:00:00.39]            at Microsoft.Extensions.Caching.Memory.CacheExtensions.Set[TItem](IMemoryCache cache, Object key, TItem value, MemoryCacheEntryOptions options)
+[xUnit.net 00:00:00.39]         /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching/Services/DistributedCacheService.cs(154,0): at Enterprise.Shared.Caching.Services.DistributedCacheService.SetAsync[T](String key, T value, Nullable`1 expiry, CancellationToken cancellationToken)
+[xUnit.net 00:00:00.39]         /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/Services/DistributedCacheServiceTests.cs(145,0): at Enterprise.Shared.Caching.Tests.Services.DistributedCacheServiceTests.SetAsync_ShouldStoreInBothL1AndL2Cache()
+[xUnit.net 00:00:00.39]         --- End of stack trace from previous location ---
+[xUnit.net 00:00:00.39]       System.NotSupportedException : Unsupported expression: x =&gt; x.GetStringAsync(fullKey, It.IsAny&lt;CancellationToken&gt;())&#xD;
+[xUnit.net 00:00:00.39]       Extension methods (here: DistributedCacheExtensions.GetStringAsync) may not be used in setup / verification expressions.
+[xUnit.net 00:00:00.39]       Stack Trace:
+[xUnit.net 00:00:00.39]         /_/src/Moq/Guard.cs(87,0): at Moq.Guard.IsOverridable(MethodInfo method, Expression expression)
+[xUnit.net 00:00:00.39]         /_/src/Moq/MethodExpectation.cs(87,0): at Moq.MethodExpectation..ctor(LambdaExpression expression, MethodInfo method, IReadOnlyList`1 arguments, Boolean exactGenericTypeArguments, Boolean skipMatcherInitialization, Boolean allowNonOverridable)
+[xUnit.net 00:00:00.39]         /_/src/Moq/ExpressionExtensions.cs(235,0): at Moq.ExpressionExtensions.&lt;Split&gt;g__Split|5_0(Expression e, Expression&amp; r, MethodExpectation&amp; p, Boolean assignment, Boolean allowNonOverridableLastProperty)
+[xUnit.net 00:00:00.39]         /_/src/Moq/ExpressionExtensions.cs(149,0): at Moq.ExpressionExtensions.Split(LambdaExpression expression, Boolean allowNonOverridableLastProperty)
+[xUnit.net 00:00:00.39]         /_/src/Moq/Mock.cs(645,0): at Moq.Mock.SetupRecursive[TSetup](Mock mock, LambdaExpression expression, Func`4 setupLast, Boolean allowNonOverridableLastProperty)
+[xUnit.net 00:00:00.39]         /_/src/Moq/Mock.cs(500,0): at Moq.Mock.Setup(Mock mock, LambdaExpression expression, Condition condition)
+[xUnit.net 00:00:00.39]         /_/src/Moq/Mock`1.cs(452,0): at Moq.Mock`1.Setup[TResult](Expression`1 expression)
+[xUnit.net 00:00:00.39]         /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/Services/DistributedCacheServiceTests.cs(98,0): at Enterprise.Shared.Caching.Tests.Services.DistributedCacheServiceTests.GetAsync_L2CacheHit_ShouldReturnValueAndRecordL2Hit()
+[xUnit.net 00:00:00.39]         --- End of stack trace from previous location ---
+[xUnit.net 00:00:00.39]       Moq.MockException : 
+[xUnit.net 00:00:00.39]       Expected invocation on the mock once, but was 0 times: x =&gt; x.GetAsync&lt;string&gt;(It.IsAny&lt;string&gt;(), It.IsAny&lt;CancellationToken&gt;())
+[xUnit.net 00:00:00.39]       
+[xUnit.net 00:00:00.39]       Performed invocations:
+[xUnit.net 00:00:00.39]       
+[xUnit.net 00:00:00.39]          Mock&lt;ICacheService:6&gt; (x):
+[xUnit.net 00:00:00.39]       
+[xUnit.net 00:00:00.39]             ICacheService.GetAsync&lt;object&gt;("cache:TestService.CacheableSyncMethod(test2)", CancellationToken)
+[xUnit.net 00:00:00.39]             ICacheService.SetAsync&lt;object&gt;("cache:TestService.CacheableSyncMethod(test2)", "test2-sync-processed", 00:15:00, CancellationToken)
+[xUnit.net 00:00:00.39]       
+[xUnit.net 00:00:00.39]       Stack Trace:
+[xUnit.net 00:00:00.39]         /_/src/Moq/Mock.cs(332,0): at Moq.Mock.Verify(Mock mock, LambdaExpression expression, Times times, String failMessage)
+[xUnit.net 00:00:00.39]         /_/src/Moq/Mock`1.cs(840,0): at Moq.Mock`1.Verify[TResult](Expression`1 expression, Func`1 times)
+[xUnit.net 00:00:00.39]         /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/Interceptors/CacheInterceptorTests.cs(168,0): at Enterprise.Shared.Caching.Tests.Interceptors.CacheInterceptorTests.BuildCacheKey_WithDefaultTemplate_ShouldGenerateCorrectKey(String input, String expectedKey)
+[xUnit.net 00:00:00.39]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+[xUnit.net 00:00:00.39]            at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+[xUnit.net 00:00:00.39]       Moq.MockException : 
+[xUnit.net 00:00:00.39]       Expected invocation on the mock once, but was 0 times: x =&gt; x.GetAsync&lt;string&gt;(It.IsAny&lt;string&gt;(), It.IsAny&lt;CancellationToken&gt;())
+[xUnit.net 00:00:00.39]       
+[xUnit.net 00:00:00.39]       Performed invocations:
+[xUnit.net 00:00:00.39]       
+[xUnit.net 00:00:00.39]          Mock&lt;ICacheService:7&gt; (x):
+[xUnit.net 00:00:00.39]       
+[xUnit.net 00:00:00.39]             ICacheService.GetAsync&lt;object&gt;("cache:TestService.CacheableSyncMethod(test1)", CancellationToken)
+[xUnit.net 00:00:00.39]             ICacheService.SetAsync&lt;object&gt;("cache:TestService.CacheableSyncMethod(test1)", "test1-sync-processed", 00:15:00, CancellationToken)
+[xUnit.net 00:00:00.39]       
+[xUnit.net 00:00:00.39]       Stack Trace:
+[xUnit.net 00:00:00.39]         /_/src/Moq/Mock.cs(332,0): at Moq.Mock.Verify(Mock mock, LambdaExpression expression, Times times, String failMessage)
+[xUnit.net 00:00:00.39]         /_/src/Moq/Mock`1.cs(840,0): at Moq.Mock`1.Verify[TResult](Expression`1 expression, Func`1 times)
+[xUnit.net 00:00:00.39]         /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/Interceptors/CacheInterceptorTests.cs(168,0): at Enterprise.Shared.Caching.Tests.Interceptors.CacheInterceptorTests.BuildCacheKey_WithDefaultTemplate_ShouldGenerateCorrectKey(String input, String expectedKey)
+[xUnit.net 00:00:00.39]            at InvokeStub_CacheInterceptorTests.BuildCacheKey_WithDefaultTemplate_ShouldGenerateCorrectKey(Object, Span`1)
+[xUnit.net 00:00:00.39]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:00.40]       System.InvalidCastException : Unable to cast object of type 'System.Threading.Tasks.Task`1[System.Object]' to type 'System.Threading.Tasks.Task`1[System.String]'.
+[xUnit.net 00:00:00.40]       Stack Trace:
+[xUnit.net 00:00:00.40]            at Castle.Proxies.TestServiceProxy.CacheableAsyncMethod(String input)
+[xUnit.net 00:00:00.40]         /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/Interceptors/CacheInterceptorTests.cs(54,0): at Enterprise.Shared.Caching.Tests.Interceptors.CacheInterceptorTests.Intercept_AsyncMethodWithCache_CacheHit_ShouldReturnCachedValue()
+[xUnit.net 00:00:00.40]         --- End of stack trace from previous location ---
+[xUnit.net 00:00:06.14]       Expected result1.Basarili to be False, but found True.
+[xUnit.net 00:00:06.14]       Stack Trace:
+[xUnit.net 00:00:06.14]            at FluentAssertions.Execution.XUnit2TestFramework.Throw(String message)
+[xUnit.net 00:00:06.14]            at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+[xUnit.net 00:00:06.14]            at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+[xUnit.net 00:00:06.14]            at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+[xUnit.net 00:00:06.14]            at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+[xUnit.net 00:00:06.14]            at FluentAssertions.Execution.AssertionScope.FailWith(String message, Object[] args)
+[xUnit.net 00:00:06.14]            at FluentAssertions.Primitives.BooleanAssertions`1.BeFalse(String because, Object[] becauseArgs)
+[xUnit.net 00:00:06.14]         /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/Integration/CacheIntegrationTests.cs(136,0): at Enterprise.Shared.Caching.Tests.Integration.CacheIntegrationTests.MultiLevelCaching_ShouldWorkCorrectly()
+[xUnit.net 00:00:06.14]         --- End of stack trace from previous location ---
+[xUnit.net 00:00:06.63]       Expected isHealthy to be True, but found False.
+[xUnit.net 00:00:06.63]       Stack Trace:
+[xUnit.net 00:00:06.63]            at FluentAssertions.Execution.XUnit2TestFramework.Throw(String message)
+[xUnit.net 00:00:06.63]            at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+[xUnit.net 00:00:06.63]            at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+[xUnit.net 00:00:06.63]            at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+[xUnit.net 00:00:06.63]            at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+[xUnit.net 00:00:06.63]            at FluentAssertions.Execution.AssertionScope.FailWith(String message, Object[] args)
+[xUnit.net 00:00:06.63]            at FluentAssertions.Primitives.BooleanAssertions`1.BeTrue(String because, Object[] becauseArgs)
+[xUnit.net 00:00:06.63]         /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/Integration/CacheIntegrationTests.cs(224,0): at Enterprise.Shared.Caching.Tests.Integration.CacheIntegrationTests.HealthCheck_ShouldReportHealthy()
+[xUnit.net 00:00:06.63]         --- End of stack trace from previous location ---
+[xUnit.net 00:00:08.64]       Expected refreshed to be True, but found False.
+[xUnit.net 00:00:08.64]       Stack Trace:
+[xUnit.net 00:00:08.64]            at FluentAssertions.Execution.XUnit2TestFramework.Throw(String message)
+[xUnit.net 00:00:08.64]            at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+[xUnit.net 00:00:08.64]            at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+[xUnit.net 00:00:08.64]            at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+[xUnit.net 00:00:08.64]            at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+[xUnit.net 00:00:08.64]            at FluentAssertions.Execution.AssertionScope.FailWith(String message, Object[] args)
+[xUnit.net 00:00:08.64]            at FluentAssertions.Primitives.BooleanAssertions`1.BeTrue(String because, Object[] becauseArgs)
+[xUnit.net 00:00:08.64]         /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/Integration/CacheIntegrationTests.cs(293,0): at Enterprise.Shared.Caching.Tests.Integration.CacheIntegrationTests.RefreshAsync_ShouldExtendTtl()
+[xUnit.net 00:00:08.64]         --- End of stack trace from previous location ---
+[xUnit.net 00:00:12.19]       Expected a value.
+[xUnit.net 00:00:12.19]       Stack Trace:
+[xUnit.net 00:00:12.19]            at FluentAssertions.Execution.XUnit2TestFramework.Throw(String message)
+[xUnit.net 00:00:12.19]            at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+[xUnit.net 00:00:12.19]            at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+[xUnit.net 00:00:12.19]            at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+[xUnit.net 00:00:12.19]            at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+[xUnit.net 00:00:12.19]            at FluentAssertions.Execution.AssertionScope.FailWith(String message)
+[xUnit.net 00:00:12.19]            at FluentAssertions.Primitives.NullableSimpleTimeSpanAssertions`1.HaveValue(String because, Object[] becauseArgs)
+[xUnit.net 00:00:12.19]            at FluentAssertions.Primitives.NullableSimpleTimeSpanAssertions`1.NotBeNull(String because, Object[] becauseArgs)
+[xUnit.net 00:00:12.19]         /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/Integration/CacheIntegrationTests.cs(270,0): at Enterprise.Shared.Caching.Tests.Integration.CacheIntegrationTests.TtlOperations_ShouldWork()
+[xUnit.net 00:00:12.19]         --- End of stack trace from previous location ---
+[xUnit.net 00:00:14.23]       Expected removedCount to be 2, but found 0 (difference of -2).
+[xUnit.net 00:00:14.23]       Stack Trace:
+[xUnit.net 00:00:14.23]            at FluentAssertions.Execution.XUnit2TestFramework.Throw(String message)
+[xUnit.net 00:00:14.23]            at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+[xUnit.net 00:00:14.23]            at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+[xUnit.net 00:00:14.23]            at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+[xUnit.net 00:00:14.23]            at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+[xUnit.net 00:00:14.23]            at FluentAssertions.Execution.AssertionScope.FailWith(String message, Object[] args)
+[xUnit.net 00:00:14.23]            at FluentAssertions.Numeric.NumericAssertions`2.Be(T expected, String because, Object[] becauseArgs)
+[xUnit.net 00:00:14.23]         /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Caching.Tests/Integration/CacheIntegrationTests.cs(201,0): at Enterprise.Shared.Caching.Tests.Integration.CacheIntegrationTests.PatternRemoval_ShouldWork()
+[xUnit.net 00:00:14.23]         --- End of stack trace from previous location ---
+[xUnit.net 00:00:14.72]   Finished:    Enterprise.Shared.Caching.Tests
+</StdOut>
+    </Output>
+    <RunInfos>
+      <RunInfo computerName="onur-TULPAR-T7-V20-5" outcome="Error" timestamp="2025-09-12T15:58:05.0269822+03:00">
+        <Text>[xUnit.net 00:00:00.29]     Enterprise.Shared.Caching.Tests.Interceptors.CacheInterceptorTests.Intercept_WithCustomKeyTemplate_ShouldUseCustomKey [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="onur-TULPAR-T7-V20-5" outcome="Error" timestamp="2025-09-12T15:58:05.0289046+03:00">
+        <Text>[xUnit.net 00:00:00.29]     Enterprise.Shared.Caching.Tests.Services.CacheMetricsServiceTests.ResetMetricsAsync_ShouldResetAllCounters [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="onur-TULPAR-T7-V20-5" outcome="Error" timestamp="2025-09-12T15:58:05.0290663+03:00">
+        <Text>[xUnit.net 00:00:00.30]     Enterprise.Shared.Caching.Tests.Interceptors.CacheInterceptorTests.Intercept_SyncMethodWithCache_CacheMiss_ShouldExecuteAndCache [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="onur-TULPAR-T7-V20-5" outcome="Error" timestamp="2025-09-12T15:58:05.0294141+03:00">
+        <Text>[xUnit.net 00:00:00.30]     Enterprise.Shared.Caching.Tests.Services.CacheMetricsServiceTests.RecordOperationTime_SameOperationType_ShouldCalculateAverage [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="onur-TULPAR-T7-V20-5" outcome="Error" timestamp="2025-09-12T15:58:05.0374644+03:00">
+        <Text>[xUnit.net 00:00:00.30]     Enterprise.Shared.Caching.Tests.Interceptors.CacheInterceptorTests.Intercept_AsyncMethodWithCache_CacheMiss_ShouldExecuteAndCache [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="onur-TULPAR-T7-V20-5" outcome="Error" timestamp="2025-09-12T15:58:05.0525930+03:00">
+        <Text>[xUnit.net 00:00:00.32]     Enterprise.Shared.Caching.Tests.Services.DistributedCacheServiceTests.GetAsync_CacheMiss_ShouldReturnNullAndRecordMiss [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="onur-TULPAR-T7-V20-5" outcome="Error" timestamp="2025-09-12T15:58:05.0587566+03:00">
+        <Text>[xUnit.net 00:00:00.32]     Enterprise.Shared.Caching.Tests.Services.DistributedCacheServiceTests.GetOrSetAsync_KeyNotExists_ShouldCallFactoryAndCacheResult [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="onur-TULPAR-T7-V20-5" outcome="Error" timestamp="2025-09-12T15:58:05.1025057+03:00">
+        <Text>[xUnit.net 00:00:00.37]     Enterprise.Shared.Caching.Tests.Interceptors.CacheInterceptorTests.Intercept_SyncMethodWithCache_CacheHit_ShouldReturnCachedValue [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="onur-TULPAR-T7-V20-5" outcome="Error" timestamp="2025-09-12T15:58:05.1035451+03:00">
+        <Text>[xUnit.net 00:00:00.37]     Enterprise.Shared.Caching.Tests.Services.CacheMetricsServiceTests.GetMetricsAsync_WithoutRedis_ShouldReturnBasicMetrics [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="onur-TULPAR-T7-V20-5" outcome="Error" timestamp="2025-09-12T15:58:05.1042698+03:00">
+        <Text>[xUnit.net 00:00:00.37]     Enterprise.Shared.Caching.Tests.Services.CacheMetricsServiceTests.RecordOperationTime_ShouldTrackOperationTimes [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="onur-TULPAR-T7-V20-5" outcome="Error" timestamp="2025-09-12T15:58:05.1050855+03:00">
+        <Text>[xUnit.net 00:00:00.37]     Enterprise.Shared.Caching.Tests.Services.CacheMetricsServiceTests.RecordHit_L1Hit_ShouldIncrementL1HitCount [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="onur-TULPAR-T7-V20-5" outcome="Error" timestamp="2025-09-12T15:58:05.1087440+03:00">
+        <Text>[xUnit.net 00:00:00.37]     Enterprise.Shared.Caching.Tests.Services.CacheMetricsServiceTests.RecordHit_L2Hit_ShouldIncrementL2HitCount [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="onur-TULPAR-T7-V20-5" outcome="Error" timestamp="2025-09-12T15:58:05.1088572+03:00">
+        <Text>[xUnit.net 00:00:00.37]     Enterprise.Shared.Caching.Tests.Services.CacheMetricsServiceTests.RecordOperationTime_MultipleOperationTypes_ShouldTrackSeparately [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="onur-TULPAR-T7-V20-5" outcome="Error" timestamp="2025-09-12T15:58:05.1089578+03:00">
+        <Text>[xUnit.net 00:00:00.37]     Enterprise.Shared.Caching.Tests.Services.CacheMetricsServiceTests.RecordError_ShouldIncrementErrorCount [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="onur-TULPAR-T7-V20-5" outcome="Error" timestamp="2025-09-12T15:58:05.1101295+03:00">
+        <Text>[xUnit.net 00:00:00.38]     Enterprise.Shared.Caching.Tests.Services.CacheMetricsServiceTests.HitOrani_NoOperations_ShouldReturnZero [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="onur-TULPAR-T7-V20-5" outcome="Error" timestamp="2025-09-12T15:58:05.1112553+03:00">
+        <Text>[xUnit.net 00:00:00.38]     Enterprise.Shared.Caching.Tests.Services.CacheMetricsServiceTests.HitOrani_ShouldCalculateCorrectly [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="onur-TULPAR-T7-V20-5" outcome="Error" timestamp="2025-09-12T15:58:05.1124922+03:00">
+        <Text>[xUnit.net 00:00:00.38]     Enterprise.Shared.Caching.Tests.Services.CacheMetricsServiceTests.RecordMiss_ShouldIncrementMissCount [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="onur-TULPAR-T7-V20-5" outcome="Error" timestamp="2025-09-12T15:58:05.1209229+03:00">
+        <Text>[xUnit.net 00:00:00.39]     Enterprise.Shared.Caching.Tests.Services.DistributedCacheServiceTests.SetAsync_ShouldStoreInBothL1AndL2Cache [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="onur-TULPAR-T7-V20-5" outcome="Error" timestamp="2025-09-12T15:58:05.1247873+03:00">
+        <Text>[xUnit.net 00:00:00.39]     Enterprise.Shared.Caching.Tests.Services.DistributedCacheServiceTests.GetAsync_L2CacheHit_ShouldReturnValueAndRecordL2Hit [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="onur-TULPAR-T7-V20-5" outcome="Error" timestamp="2025-09-12T15:58:05.1249197+03:00">
+        <Text>[xUnit.net 00:00:00.39]     Enterprise.Shared.Caching.Tests.Interceptors.CacheInterceptorTests.BuildCacheKey_WithDefaultTemplate_ShouldGenerateCorrectKey(input: "test2", expectedKey: "cache:TestService.CacheableSyncMethod(test2)") [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="onur-TULPAR-T7-V20-5" outcome="Error" timestamp="2025-09-12T15:58:05.1271257+03:00">
+        <Text>[xUnit.net 00:00:00.39]     Enterprise.Shared.Caching.Tests.Interceptors.CacheInterceptorTests.BuildCacheKey_WithDefaultTemplate_ShouldGenerateCorrectKey(input: "test1", expectedKey: "cache:TestService.CacheableSyncMethod(test1)") [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="onur-TULPAR-T7-V20-5" outcome="Error" timestamp="2025-09-12T15:58:05.1337088+03:00">
+        <Text>[xUnit.net 00:00:00.40]     Enterprise.Shared.Caching.Tests.Interceptors.CacheInterceptorTests.Intercept_AsyncMethodWithCache_CacheHit_ShouldReturnCachedValue [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="onur-TULPAR-T7-V20-5" outcome="Error" timestamp="2025-09-12T15:58:10.8723480+03:00">
+        <Text>[xUnit.net 00:00:06.14]     Enterprise.Shared.Caching.Tests.Integration.CacheIntegrationTests.MultiLevelCaching_ShouldWorkCorrectly [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="onur-TULPAR-T7-V20-5" outcome="Error" timestamp="2025-09-12T15:58:11.3657134+03:00">
+        <Text>[xUnit.net 00:00:06.63]     Enterprise.Shared.Caching.Tests.Integration.CacheIntegrationTests.HealthCheck_ShouldReportHealthy [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="onur-TULPAR-T7-V20-5" outcome="Error" timestamp="2025-09-12T15:58:13.3728689+03:00">
+        <Text>[xUnit.net 00:00:08.64]     Enterprise.Shared.Caching.Tests.Integration.CacheIntegrationTests.RefreshAsync_ShouldExtendTtl [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="onur-TULPAR-T7-V20-5" outcome="Error" timestamp="2025-09-12T15:58:16.9208791+03:00">
+        <Text>[xUnit.net 00:00:12.19]     Enterprise.Shared.Caching.Tests.Integration.CacheIntegrationTests.TtlOperations_ShouldWork [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="onur-TULPAR-T7-V20-5" outcome="Error" timestamp="2025-09-12T15:58:18.9642885+03:00">
+        <Text>[xUnit.net 00:00:14.23]     Enterprise.Shared.Caching.Tests.Integration.CacheIntegrationTests.PatternRemoval_ShouldWork [FAIL]</Text>
+      </RunInfo>
+    </RunInfos>
+  </ResultSummary>
+</TestRun>

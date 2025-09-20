@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Enterprise Shared Libraries -->
+    <ProjectReference Include="..\..\Shared\Enterprise.Shared.Common\Enterprise.Shared.Common.csproj" />
+    <ProjectReference Include="..\..\Shared\Enterprise.Shared.Security\Enterprise.Shared.Security.csproj" />
+    <ProjectReference Include="..\..\Shared\Enterprise.Shared.Configuration\Enterprise.Shared.Configuration.csproj" />
+  </ItemGroup>
+
+</Project>

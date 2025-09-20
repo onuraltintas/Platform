@@ -1,0 +1,32 @@
+services:
+  gateway:
+    env_file:
+      - ./config/env/shared.env
+      - ./config/env/dev.env
+      - ./config/env/secrets.env
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+
+  identity:
+    env_file:
+      - ./config/env/shared.env
+      - ./config/env/dev.env
+      - ./config/env/secrets.env
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+
+  user:
+    env_file:
+      - ./config/env/shared.env
+      - ./config/env/dev.env
+      - ./config/env/secrets.env
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+
+  speedreading:
+    env_file:
+      - ./config/env/shared.env
+      - ./config/env/dev.env
+      - ./config/env/secrets.env
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development

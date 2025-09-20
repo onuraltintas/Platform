@@ -1,0 +1,534 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="762afe4f-f68d-443b-8db5-5ccbfce2e94a" name="@onur-TULPAR-T7-V20-5 2025-09-12 08:21:36" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2025-09-12T08:21:36.7651375+03:00" queuing="2025-09-12T08:21:36.7651375+03:00" start="2025-09-12T08:21:36.2708033+03:00" finish="2025-09-12T08:21:36.8297363+03:00" />
+  <TestSettings name="default" id="6d93b967-d3cf-4b3b-8396-692c05490398">
+    <Deployment runDeploymentRoot="_onur-TULPAR-T7-V20-5_2025-09-12_08_21_36" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="e431cfcc-bb9f-4444-adbd-0e6803ece970" testId="def99c85-08e3-422b-c8ab-ed53d14d0bf1" testName="Enterprise.Shared.Auditing.Tests.HealthChecks.AuditHealthCheckSimpleTests.CheckHealthAsync_WhenUnexpectedException_ReturnsUnhealthy" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0008209" startTime="2025-09-12T08:21:36.7711209+03:00" endTime="2025-09-12T08:21:36.7711209+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="e431cfcc-bb9f-4444-adbd-0e6803ece970" />
+    <UnitTestResult executionId="fd76d8e1-d2fb-481c-b406-8125938a9b04" testId="c6bd68e9-3cb1-b950-c502-9eb69f74f48d" testName="Enterprise.Shared.Auditing.Tests.Models.AuditEventSimpleTests.WithMetadata_AddsMetadataToProperties" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0579865" startTime="2025-09-12T08:21:36.7667134+03:00" endTime="2025-09-12T08:21:36.7667134+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="fd76d8e1-d2fb-481c-b406-8125938a9b04">
+      <Output>
+        <ErrorInfo>
+          <Message>Expected auditEvent.Properties {empty} to contain keys {"key1", "key2", "key3"}, but could not find {"key1", "key2", "key3"}.</Message>
+          <StackTrace>   at FluentAssertions.Execution.XUnit2TestFramework.Throw(String message)
+   at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+   at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(String message, Object[] args)
+   at FluentAssertions.Collections.GenericDictionaryAssertions`4.ContainKeys(IEnumerable`1 expected, String because, Object[] becauseArgs)
+   at Enterprise.Shared.Auditing.Tests.Models.AuditEventSimpleTests.WithMetadata_AddsMetadataToProperties() in /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Auditing.Tests/Models/AuditEventSimpleTests.cs:line 71
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="0dd904d9-b685-4e3c-bc5e-5553d29dd88d" testId="8bf22aa1-796e-8e16-f5e8-c167a2a3fded" testName="Enterprise.Shared.Auditing.Tests.Models.AuditEventSimpleTests.Constructor_SetsDefaultValues" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0127218" startTime="2025-09-12T08:21:36.7090657+03:00" endTime="2025-09-12T08:21:36.7090658+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="0dd904d9-b685-4e3c-bc5e-5553d29dd88d" />
+    <UnitTestResult executionId="f4491582-1992-4df3-95e2-747283012381" testId="0e34243f-ad7c-0dbf-b995-d8e7774fa91f" testName="Enterprise.Shared.Auditing.Tests.Services.AuditServiceSimpleTests.LogEventAsync_WithValidEvent_StoresEventSuccessfully" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0011054" startTime="2025-09-12T08:21:36.7824101+03:00" endTime="2025-09-12T08:21:36.7824101+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="f4491582-1992-4df3-95e2-747283012381">
+      <Output>
+        <ErrorInfo>
+          <Message>Expected result.IsSuccess to be True, but found False.</Message>
+          <StackTrace>   at FluentAssertions.Execution.XUnit2TestFramework.Throw(String message)
+   at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+   at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(String message, Object[] args)
+   at FluentAssertions.Primitives.BooleanAssertions`1.BeTrue(String because, Object[] becauseArgs)
+   at Enterprise.Shared.Auditing.Tests.Services.AuditServiceSimpleTests.LogEventAsync_WithValidEvent_StoresEventSuccessfully() in /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Auditing.Tests/Services/AuditServiceSimpleTests.cs:line 36
+--- End of stack trace from previous location ---</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="54ef64f6-56fa-42ba-bbb2-4bdedb0320d9" testId="aa030906-38fd-2092-cec0-448b25aaf208" testName="Enterprise.Shared.Auditing.Tests.Services.InMemoryAuditStoreSimpleTests.HealthCheckAsync_WithHealthyStore_ReturnsSuccess" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0005790" startTime="2025-09-12T08:21:36.7409773+03:00" endTime="2025-09-12T08:21:36.7409773+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="54ef64f6-56fa-42ba-bbb2-4bdedb0320d9" />
+    <UnitTestResult executionId="eb1a0842-b7d3-4d8c-837f-86d1c1c91f57" testId="3d836c61-9ce9-2045-0f15-ec0c88f9e269" testName="Enterprise.Shared.Auditing.Tests.Models.SecurityAuditEventSimpleTests.WithRisk_SetsRiskProperties" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0002249" startTime="2025-09-12T08:21:36.7667622+03:00" endTime="2025-09-12T08:21:36.7667622+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="eb1a0842-b7d3-4d8c-837f-86d1c1c91f57" />
+    <UnitTestResult executionId="8488698c-d13e-4216-addc-192d7be9b0e5" testId="92d348cb-a0cf-de03-a4ca-0c3074026d8c" testName="Enterprise.Shared.Auditing.Tests.Services.AuditServiceSimpleTests.SearchEventsAsync_WithValidCriteria_ReturnsResults" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0034266" startTime="2025-09-12T08:21:36.7757997+03:00" endTime="2025-09-12T08:21:36.7757997+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="8488698c-d13e-4216-addc-192d7be9b0e5" />
+    <UnitTestResult executionId="92e52397-07cf-4bf0-ad6b-722414a7dfd2" testId="a009cc9d-c191-1c67-5b7a-4c0069e2c174" testName="Enterprise.Shared.Auditing.Tests.Models.SecurityAuditEventSimpleTests.WithRisk_SetIsAlertBasedOnThreshold(riskScore: 75, expectedAlert: True)" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0003327" startTime="2025-09-12T08:21:36.7355548+03:00" endTime="2025-09-12T08:21:36.7355550+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="92e52397-07cf-4bf0-ad6b-722414a7dfd2" />
+    <UnitTestResult executionId="7ae6c671-a633-4283-976c-1aba2451c37e" testId="b938de1e-62e3-b21a-e545-a501f8c2033d" testName="Enterprise.Shared.Auditing.Tests.Services.AuditServiceSimpleTests.LogEventAsync_WhenDisabled_ReturnsSuccessWithoutStoring" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0049852" startTime="2025-09-12T08:21:36.7812016+03:00" endTime="2025-09-12T08:21:36.7812017+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="7ae6c671-a633-4283-976c-1aba2451c37e">
+      <Output>
+        <ErrorInfo>
+          <Message>Expected result.IsSuccess to be True, but found False.</Message>
+          <StackTrace>   at FluentAssertions.Execution.XUnit2TestFramework.Throw(String message)
+   at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+   at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(String message, Object[] args)
+   at FluentAssertions.Primitives.BooleanAssertions`1.BeTrue(String because, Object[] becauseArgs)
+   at Enterprise.Shared.Auditing.Tests.Services.AuditServiceSimpleTests.LogEventAsync_WhenDisabled_ReturnsSuccessWithoutStoring() in /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Auditing.Tests/Services/AuditServiceSimpleTests.cs:line 58
+--- End of stack trace from previous location ---</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="f106764d-14f2-4a9c-8fa4-61fff18f3007" testId="7d7f23f0-16aa-a751-4837-a88f5f9da51b" testName="Enterprise.Shared.Auditing.Tests.Models.ValidationResultTests.Failure_WithMessage_ReturnsFailedResult" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0005363" startTime="2025-09-12T08:21:36.7358027+03:00" endTime="2025-09-12T08:21:36.7358027+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="f106764d-14f2-4a9c-8fa4-61fff18f3007" />
+    <UnitTestResult executionId="1561c543-67bf-4d81-aeb7-27a6f23be550" testId="e3fa2a54-b952-607d-b737-34af95ccaf48" testName="Enterprise.Shared.Auditing.Tests.Services.AuditServiceSimpleTests.GetEventAsync_WithEmptyId_ReturnsNull" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0007290" startTime="2025-09-12T08:21:36.7848593+03:00" endTime="2025-09-12T08:21:36.7848593+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="1561c543-67bf-4d81-aeb7-27a6f23be550" />
+    <UnitTestResult executionId="bbf4ddc2-5c90-4410-841c-cb1bd56711b7" testId="b021b8bf-94f8-8cd0-effc-fc080e5da295" testName="Enterprise.Shared.Auditing.Tests.Models.SecurityAuditEventSimpleTests.Create_WithDifferentEventTypes_SetsCorrectType(eventType: Authentication)" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0001514" startTime="2025-09-12T08:21:36.7402499+03:00" endTime="2025-09-12T08:21:36.7402500+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="bbf4ddc2-5c90-4410-841c-cb1bd56711b7" />
+    <UnitTestResult executionId="962f7895-3aab-42af-9400-1c11b571c387" testId="68dbc2c6-398b-ae19-ce9f-587c69a19e83" testName="Enterprise.Shared.Auditing.Tests.Models.SecurityAuditEventSimpleTests.WithRisk_SetIsAlertBasedOnThreshold(riskScore: 0, expectedAlert: False)" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0000026" startTime="2025-09-12T08:21:36.7357683+03:00" endTime="2025-09-12T08:21:36.7357683+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="962f7895-3aab-42af-9400-1c11b571c387" />
+    <UnitTestResult executionId="46b9a588-e060-471d-8ad2-408fd895eaee" testId="a071813a-706a-d60a-ea8a-0bdeea9e61b9" testName="Enterprise.Shared.Auditing.Tests.Models.AuditEventSimpleTests.WithHttpContext_SetsHttpContextProperties" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0003685" startTime="2025-09-12T08:21:36.7671224+03:00" endTime="2025-09-12T08:21:36.7671224+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="46b9a588-e060-471d-8ad2-408fd895eaee" />
+    <UnitTestResult executionId="fc92cb07-e385-4938-8ab0-849970c20103" testId="1d5f6378-83c3-6752-8284-32db5309f530" testName="Enterprise.Shared.Auditing.Tests.HealthChecks.AuditHealthCheckSimpleTests.CheckHealthAsync_WhenStoreHealthCheckFails_ReturnsDegraded" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0005687" startTime="2025-09-12T08:21:36.7717774+03:00" endTime="2025-09-12T08:21:36.7717775+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="fc92cb07-e385-4938-8ab0-849970c20103" />
+    <UnitTestResult executionId="6ed33403-5896-412e-837b-8c327060fdba" testId="7bb366b8-2eed-e56f-7ac0-0511636cb3bf" testName="Enterprise.Shared.Auditing.Tests.Models.SecurityAuditEventSimpleTests.FactoryMethod_CreateSuccessfulLogin_SetsCorrectProperties" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0003865" startTime="2025-09-12T08:21:36.7670841+03:00" endTime="2025-09-12T08:21:36.7670841+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="6ed33403-5896-412e-837b-8c327060fdba" />
+    <UnitTestResult executionId="5b67d245-4867-4864-a62b-7e1d24f80384" testId="881ba049-d412-4ac7-98d1-1211340ae562" testName="Enterprise.Shared.Auditing.Tests.Models.SecurityAuditEventSimpleTests.FactoryMethod_CreateFailedLogin_SetsCorrectProperties" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0012879" startTime="2025-09-12T08:21:36.7406538+03:00" endTime="2025-09-12T08:21:36.7406538+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="5b67d245-4867-4864-a62b-7e1d24f80384" />
+    <UnitTestResult executionId="bb9e0060-dabf-426d-9c8b-773463c02afe" testId="ffde4746-c342-1c7f-7179-4122004fc211" testName="Enterprise.Shared.Auditing.Tests.Models.ValidationResultTests.Success_ReturnsSuccessfulResult" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0002497" startTime="2025-09-12T08:21:36.7368231+03:00" endTime="2025-09-12T08:21:36.7368232+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="bb9e0060-dabf-426d-9c8b-773463c02afe" />
+    <UnitTestResult executionId="a1e8bc03-938c-41ff-b5aa-665099984822" testId="043fd654-a5c8-49d0-ec81-8b8cf9c3ee25" testName="Enterprise.Shared.Auditing.Tests.Models.AuditEventSimpleTests.WithUser_SetsUserProperties" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0005427" startTime="2025-09-12T08:21:36.7369069+03:00" endTime="2025-09-12T08:21:36.7369069+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="a1e8bc03-938c-41ff-b5aa-665099984822" />
+    <UnitTestResult executionId="b87b3f2e-8879-474e-942c-d02c68336ec9" testId="9d0e2bef-0ef6-d425-e0bf-71aa22d99fe1" testName="Enterprise.Shared.Auditing.Tests.Models.AuditEventSimpleTests.WithCorrelation_SetsCorrelationId" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0005206" startTime="2025-09-12T08:21:36.7357895+03:00" endTime="2025-09-12T08:21:36.7357895+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="b87b3f2e-8879-474e-942c-d02c68336ec9" />
+    <UnitTestResult executionId="c56d69f5-9ded-4ee8-9de5-604cdd7f0a19" testId="006fc6bf-8ac2-2338-8302-7b760e5b8337" testName="Enterprise.Shared.Auditing.Tests.Services.InMemoryAuditStoreSimpleTests.GetEventAsync_WithExistingId_ReturnsEvent" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0123108" startTime="2025-09-12T08:21:36.7062629+03:00" endTime="2025-09-12T08:21:36.7062896+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="c56d69f5-9ded-4ee8-9de5-604cdd7f0a19" />
+    <UnitTestResult executionId="b7a09298-6888-4855-8a6d-d17c237b3906" testId="cdf250c9-d02a-15b3-16df-7a2e6fd05961" testName="Enterprise.Shared.Auditing.Tests.Models.SecurityAuditEventSimpleTests.WithRisk_SetIsAlertBasedOnThreshold(riskScore: 74, expectedAlert: False)" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0000209" startTime="2025-09-12T08:21:36.7357280+03:00" endTime="2025-09-12T08:21:36.7357280+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="b7a09298-6888-4855-8a6d-d17c237b3906" />
+    <UnitTestResult executionId="587d2d75-988d-4857-928e-fcaadadab7a7" testId="41efe741-07be-f6b0-1a5c-1369ee711c86" testName="Enterprise.Shared.Auditing.Tests.Services.InMemoryAuditStoreSimpleTests.GetEventAsync_WithNonExistingId_ReturnsNull" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0003794" startTime="2025-09-12T08:21:36.7412790+03:00" endTime="2025-09-12T08:21:36.7412790+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="587d2d75-988d-4857-928e-fcaadadab7a7" />
+    <UnitTestResult executionId="ad6b5cb9-b5e1-4592-86af-2694401c6a72" testId="b78da184-ca29-0bea-87df-7b04a8f0e1c6" testName="Enterprise.Shared.Auditing.Tests.Services.InMemoryAuditStoreSimpleTests.QueryEventsAsync_WithNoFilters_ReturnsAllEvents" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0093240" startTime="2025-09-12T08:21:36.7406818+03:00" endTime="2025-09-12T08:21:36.7406818+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="ad6b5cb9-b5e1-4592-86af-2694401c6a72" />
+    <UnitTestResult executionId="abbd13aa-17f5-408d-9f8d-8500f5d96900" testId="8754c9d7-ca62-f970-014d-3e6f754734a1" testName="Enterprise.Shared.Auditing.Tests.HealthChecks.AuditHealthCheckSimpleTests.CheckHealthAsync_WhenAuditingDisabled_ReturnsHealthy" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0687123" startTime="2025-09-12T08:21:36.7587498+03:00" endTime="2025-09-12T08:21:36.7587499+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="abbd13aa-17f5-408d-9f8d-8500f5d96900" />
+    <UnitTestResult executionId="aea811ea-cd05-43c4-95b8-5d1d5fcb3c6b" testId="746957b1-64b5-6f49-8865-77ec9c46b43c" testName="Enterprise.Shared.Auditing.Tests.HealthChecks.AuditHealthCheckSimpleTests.CheckHealthAsync_WhenServiceTestFails_ReturnsUnhealthy" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0006267" startTime="2025-09-12T08:21:36.7725677+03:00" endTime="2025-09-12T08:21:36.7725677+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="aea811ea-cd05-43c4-95b8-5d1d5fcb3c6b" />
+    <UnitTestResult executionId="41eb3ca2-6841-4fad-a9d7-165845214715" testId="e3770ee4-7ecc-87a5-1fdc-ddaa3d786639" testName="Enterprise.Shared.Auditing.Tests.Services.AuditServiceSimpleTests.LogEventAsync_WithNullEvent_ReturnsFailure" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0052758" startTime="2025-09-12T08:21:36.7722623+03:00" endTime="2025-09-12T08:21:36.7722623+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="41eb3ca2-6841-4fad-a9d7-165845214715" />
+    <UnitTestResult executionId="c42e5465-1a76-4b6a-a1f0-7936bc4fe568" testId="04ac4824-f947-b72d-c120-990f4c114093" testName="Enterprise.Shared.Auditing.Tests.Services.InMemoryAuditStoreSimpleTests.StoreEventAsync_WithValidEvent_StoresSuccessfully" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0003609" startTime="2025-09-12T08:21:36.7410004+03:00" endTime="2025-09-12T08:21:36.7410004+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="c42e5465-1a76-4b6a-a1f0-7936bc4fe568" />
+    <UnitTestResult executionId="ea5589f0-1c49-4f82-8625-5a92264c9549" testId="da64ea37-950e-b681-e202-8667d4c254e6" testName="Enterprise.Shared.Auditing.Tests.Models.SecurityAuditEventSimpleTests.Create_WithDifferentEventTypes_SetsCorrectType(eventType: Authorization)" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0000060" startTime="2025-09-12T08:21:36.7406110+03:00" endTime="2025-09-12T08:21:36.7406111+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="ea5589f0-1c49-4f82-8625-5a92264c9549" />
+    <UnitTestResult executionId="d186164c-d64f-479d-b7a2-0441b6485dc3" testId="e7962a26-5982-7407-dcdd-3926ff592102" testName="Enterprise.Shared.Auditing.Tests.Models.SecurityAuditEventSimpleTests.Create_WithValidParameters_ReturnsConfiguredEvent" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0007649" startTime="2025-09-12T08:21:36.7368534+03:00" endTime="2025-09-12T08:21:36.7368535+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="d186164c-d64f-479d-b7a2-0441b6485dc3" />
+    <UnitTestResult executionId="51dd0338-dbc9-4e46-a3c4-141954629c99" testId="e6c67581-99e2-2748-be5d-5095fb00506b" testName="Enterprise.Shared.Auditing.Tests.Models.SecurityAuditEventSimpleTests.WithAuthentication_SetsAuthenticationProperties" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0009855" startTime="2025-09-12T08:21:36.7401064+03:00" endTime="2025-09-12T08:21:36.7401064+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="51dd0338-dbc9-4e46-a3c4-141954629c99">
+      <Output>
+        <ErrorInfo>
+          <Message>System.Collections.Generic.KeyNotFoundException : The given key 'AuthenticationProvider' was not present in the dictionary.</Message>
+          <StackTrace>   at System.Collections.Generic.Dictionary`2.get_Item(TKey key)
+   at Enterprise.Shared.Auditing.Tests.Models.SecurityAuditEventSimpleTests.WithAuthentication_SetsAuthenticationProperties() in /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Auditing.Tests/Models/SecurityAuditEventSimpleTests.cs:line 43
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="719b5c6b-473c-445d-9e43-1556d3eb3dce" testId="8e6bc6cd-d29d-35b7-4089-eb83d7de14eb" testName="Enterprise.Shared.Auditing.Tests.Models.SecurityAuditEventSimpleTests.Constructor_SetsSecurityDefaults" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0501614" startTime="2025-09-12T08:21:36.7661879+03:00" endTime="2025-09-12T08:21:36.7661880+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="719b5c6b-473c-445d-9e43-1556d3eb3dce">
+      <Output>
+        <ErrorInfo>
+          <Message>Expected securityEvent.Category to be AuditEventCategory.Security {value: 1}, but found AuditEventCategory.Application {value: 0}.</Message>
+          <StackTrace>   at FluentAssertions.Execution.XUnit2TestFramework.Throw(String message)
+   at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+   at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(String message, Object[] args)
+   at FluentAssertions.Primitives.EnumAssertions`2.Be(TEnum expected, String because, Object[] becauseArgs)
+   at Enterprise.Shared.Auditing.Tests.Models.SecurityAuditEventSimpleTests.Constructor_SetsSecurityDefaults() in /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Auditing.Tests/Models/SecurityAuditEventSimpleTests.cs:line 10
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="c0fa1bce-ff61-4c45-a515-aad32e40e1fd" testId="fe81ca39-7ff9-c8f7-327e-f838b849bf45" testName="Enterprise.Shared.Auditing.Tests.Models.SecurityAuditEventSimpleTests.WithRisk_SetIsAlertBasedOnThreshold(riskScore: 100, expectedAlert: True)" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0100541" startTime="2025-09-12T08:21:36.7087940+03:00" endTime="2025-09-12T08:21:36.7087941+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="c0fa1bce-ff61-4c45-a515-aad32e40e1fd" />
+    <UnitTestResult executionId="7a306ed4-d156-4037-aec0-961aa74d5530" testId="b449cdab-37ae-8856-bdf2-36135e89288f" testName="Enterprise.Shared.Auditing.Tests.Models.SecurityAuditEventSimpleTests.Create_WithDifferentEventTypes_SetsCorrectType(eventType: DataAccess)" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0001101" startTime="2025-09-12T08:21:36.7402316+03:00" endTime="2025-09-12T08:21:36.7402317+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="7a306ed4-d156-4037-aec0-961aa74d5530" />
+    <UnitTestResult executionId="ea792c67-3944-4236-8a41-2a45f7d59332" testId="e2a3558c-55a8-e942-5627-563abe02b662" testName="Enterprise.Shared.Auditing.Tests.Services.InMemoryAuditStoreSimpleTests.QueryEventsAsync_WithSorting_ReturnsSortedResults" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0009712" startTime="2025-09-12T08:21:36.7412522+03:00" endTime="2025-09-12T08:21:36.7412522+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="ea792c67-3944-4236-8a41-2a45f7d59332" />
+    <UnitTestResult executionId="398f03a2-c1af-448b-b623-6e7dc8dc7418" testId="04d143ea-cb2a-c7bf-b067-c9eec5e8a4a5" testName="Enterprise.Shared.Auditing.Tests.Models.AuditEventSimpleTests.Properties_CanBeModifiedDirectly" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0007683" startTime="2025-09-12T08:21:36.7671016+03:00" endTime="2025-09-12T08:21:36.7671016+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="398f03a2-c1af-448b-b623-6e7dc8dc7418" />
+    <UnitTestResult executionId="009ce118-0a56-49f8-a71d-882fc0843816" testId="78fde34a-4e5d-bc8e-4f05-2d0347e68bd3" testName="Enterprise.Shared.Auditing.Tests.Services.InMemoryAuditStoreSimpleTests.StoreEventAsync_WithNullEvent_ReturnsFailure" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0006169" startTime="2025-09-12T08:21:36.7412276+03:00" endTime="2025-09-12T08:21:36.7412277+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="009ce118-0a56-49f8-a71d-882fc0843816" />
+    <UnitTestResult executionId="3ad8005e-e6af-423a-8f0a-85b8a32aee4f" testId="97bd0b96-0566-4935-2820-9c3ae961b451" testName="Enterprise.Shared.Auditing.Tests.Models.SecurityAuditEventSimpleTests.Create_WithDifferentEventTypes_SetsCorrectType(eventType: AccountManagement)" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0000029" startTime="2025-09-12T08:21:36.7406327+03:00" endTime="2025-09-12T08:21:36.7406327+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="3ad8005e-e6af-423a-8f0a-85b8a32aee4f" />
+    <UnitTestResult executionId="f2ef56b2-3857-435e-a109-72a2be5a46ff" testId="eab7bf6d-6a6d-aabd-f35c-888b996d6f4a" testName="Enterprise.Shared.Auditing.Tests.Models.ValidationResultTests.Constructor_WithFailure_SetsCorrectValues" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0001845" startTime="2025-09-12T08:21:36.7368742+03:00" endTime="2025-09-12T08:21:36.7368742+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="f2ef56b2-3857-435e-a109-72a2be5a46ff" />
+    <UnitTestResult executionId="884d02a9-c15a-4f40-bfc6-7b044566fe58" testId="c46c55dd-cf3f-ba1f-b6d7-c83499745af9" testName="Enterprise.Shared.Auditing.Tests.Models.SecurityAuditEventSimpleTests.WithAuthorization_SetsAuthorizationProperties" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0003076" startTime="2025-09-12T08:21:36.7409150+03:00" endTime="2025-09-12T08:21:36.7409151+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="884d02a9-c15a-4f40-bfc6-7b044566fe58">
+      <Output>
+        <ErrorInfo>
+          <Message>System.Collections.Generic.KeyNotFoundException : The given key 'Permission' was not present in the dictionary.</Message>
+          <StackTrace>   at System.Collections.Generic.Dictionary`2.get_Item(TKey key)
+   at Enterprise.Shared.Auditing.Tests.Models.SecurityAuditEventSimpleTests.WithAuthorization_SetsAuthorizationProperties() in /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Auditing.Tests/Models/SecurityAuditEventSimpleTests.cs:line 55
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="ec1eb561-4b2b-40b9-98c1-9977cd4147d0" testId="892ce8c2-c3bb-2266-a377-84d97bf791ef" testName="Enterprise.Shared.Auditing.Tests.Models.ValidationResultTests.Constructor_WithSuccess_SetsCorrectValues" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0100461" startTime="2025-09-12T08:21:36.7090559+03:00" endTime="2025-09-12T08:21:36.7090559+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="ec1eb561-4b2b-40b9-98c1-9977cd4147d0" />
+    <UnitTestResult executionId="5aab4e04-3528-49d7-910d-ccd016d92c78" testId="ef1efab7-f0a5-54cc-3e1d-b90e55d8fb25" testName="Enterprise.Shared.Auditing.Tests.HealthChecks.AuditHealthCheckSimpleTests.CheckHealthAsync_WhenAllHealthy_ReturnsHealthy" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0113497" startTime="2025-09-12T08:21:36.7705669+03:00" endTime="2025-09-12T08:21:36.7705670+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="5aab4e04-3528-49d7-910d-ccd016d92c78">
+      <Output>
+        <ErrorInfo>
+          <Message>Expected result.Status to be HealthStatus.Healthy {value: 2}, but found HealthStatus.Degraded {value: 1}.</Message>
+          <StackTrace>   at FluentAssertions.Execution.XUnit2TestFramework.Throw(String message)
+   at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+   at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(String message, Object[] args)
+   at FluentAssertions.Primitives.EnumAssertions`2.Be(TEnum expected, String because, Object[] becauseArgs)
+   at Enterprise.Shared.Auditing.Tests.HealthChecks.AuditHealthCheckSimpleTests.CheckHealthAsync_WhenAllHealthy_ReturnsHealthy() in /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Auditing.Tests/HealthChecks/AuditHealthCheckSimpleTests.cs:line 76
+--- End of stack trace from previous location ---</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="bda940ac-e684-4fe7-a5ce-a41cb2b5fba4" testId="63219dba-37d6-9cab-ed0c-a714bdc3b3fb" testName="Enterprise.Shared.Auditing.Tests.Services.InMemoryAuditStoreSimpleTests.GetEventCountAsync_WithDateRange_ReturnsCorrectCount" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0012876" startTime="2025-09-12T08:21:36.7409529+03:00" endTime="2025-09-12T08:21:36.7409529+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="bda940ac-e684-4fe7-a5ce-a41cb2b5fba4" />
+    <UnitTestResult executionId="ef4aac7c-07a7-47e8-a1d9-67cdb00ef31f" testId="6447034d-edb1-678f-b099-672ed12a7605" testName="Enterprise.Shared.Auditing.Tests.Services.AuditServiceSimpleTests.GetEventAsync_WithValidId_ReturnsEvent" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0770503" startTime="2025-09-12T08:21:36.7671368+03:00" endTime="2025-09-12T08:21:36.7671368+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="ef4aac7c-07a7-47e8-a1d9-67cdb00ef31f" />
+    <UnitTestResult executionId="d2163eb9-6b30-4234-8291-9760c8183fb8" testId="4ebd8889-f49a-6c66-dc50-e03f8e1f8b45" testName="Enterprise.Shared.Auditing.Tests.Services.AuditServiceSimpleTests.LogSecurityEventAsync_WithValidEvent_StoresEventSuccessfully" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0017293" startTime="2025-09-12T08:21:36.7842789+03:00" endTime="2025-09-12T08:21:36.7842789+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="d2163eb9-6b30-4234-8291-9760c8183fb8">
+      <Output>
+        <ErrorInfo>
+          <Message>Expected result.IsSuccess to be True, but found False.</Message>
+          <StackTrace>   at FluentAssertions.Execution.XUnit2TestFramework.Throw(String message)
+   at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+   at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(String message, Object[] args)
+   at FluentAssertions.Primitives.BooleanAssertions`1.BeTrue(String because, Object[] becauseArgs)
+   at Enterprise.Shared.Auditing.Tests.Services.AuditServiceSimpleTests.LogSecurityEventAsync_WithValidEvent_StoresEventSuccessfully() in /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Auditing.Tests/Services/AuditServiceSimpleTests.cs:line 109
+--- End of stack trace from previous location ---</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="2be0b654-ace0-4c80-aef0-87f2c3803900" testId="8bb21605-680d-c45d-24b1-29b3d4fd8dd5" testName="Enterprise.Shared.Auditing.Tests.Models.AuditEventSimpleTests.Create_WithValidParameters_ReturnsConfiguredEvent" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0003903" startTime="2025-09-12T08:21:36.7368841+03:00" endTime="2025-09-12T08:21:36.7368841+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="2be0b654-ace0-4c80-aef0-87f2c3803900" />
+    <UnitTestResult executionId="31ff6533-92fb-45a0-9442-04a6dc085a9e" testId="eacbafcc-c655-16f6-d3f0-bd3df89de6f4" testName="Enterprise.Shared.Auditing.Tests.Models.AuditEventSimpleTests.Create_WithDefaultResult_SetsSuccessResult" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0001820" startTime="2025-09-12T08:21:36.7358341+03:00" endTime="2025-09-12T08:21:36.7358341+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="31ff6533-92fb-45a0-9442-04a6dc085a9e" />
+    <UnitTestResult executionId="9946d8c9-8271-475c-97b9-c8b6d00a4c7e" testId="55dbbe83-9ad7-9ff5-141e-e8b63a99705f" testName="Enterprise.Shared.Auditing.Tests.Models.SecurityAuditEventSimpleTests.WithRisk_SetIsAlertBasedOnThreshold(riskScore: 50, expectedAlert: False)" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0000031" startTime="2025-09-12T08:21:36.7357485+03:00" endTime="2025-09-12T08:21:36.7357485+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="9946d8c9-8271-475c-97b9-c8b6d00a4c7e" />
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="Enterprise.Shared.Auditing.Tests.Services.InMemoryAuditStoreSimpleTests.GetEventAsync_WithExistingId_ReturnsEvent" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.auditing.tests/bin/debug/net8.0/enterprise.shared.auditing.tests.dll" id="006fc6bf-8ac2-2338-8302-7b760e5b8337">
+      <Execution id="c56d69f5-9ded-4ee8-9de5-604cdd7f0a19" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Auditing.Tests/bin/Debug/net8.0/Enterprise.Shared.Auditing.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Auditing.Tests.Services.InMemoryAuditStoreSimpleTests" name="GetEventAsync_WithExistingId_ReturnsEvent" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Auditing.Tests.Services.InMemoryAuditStoreSimpleTests.QueryEventsAsync_WithSorting_ReturnsSortedResults" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.auditing.tests/bin/debug/net8.0/enterprise.shared.auditing.tests.dll" id="e2a3558c-55a8-e942-5627-563abe02b662">
+      <Execution id="ea792c67-3944-4236-8a41-2a45f7d59332" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Auditing.Tests/bin/Debug/net8.0/Enterprise.Shared.Auditing.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Auditing.Tests.Services.InMemoryAuditStoreSimpleTests" name="QueryEventsAsync_WithSorting_ReturnsSortedResults" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Auditing.Tests.Models.ValidationResultTests.Failure_WithMessage_ReturnsFailedResult" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.auditing.tests/bin/debug/net8.0/enterprise.shared.auditing.tests.dll" id="7d7f23f0-16aa-a751-4837-a88f5f9da51b">
+      <Execution id="f106764d-14f2-4a9c-8fa4-61fff18f3007" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Auditing.Tests/bin/Debug/net8.0/Enterprise.Shared.Auditing.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Auditing.Tests.Models.ValidationResultTests" name="Failure_WithMessage_ReturnsFailedResult" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Auditing.Tests.Models.SecurityAuditEventSimpleTests.WithRisk_SetIsAlertBasedOnThreshold(riskScore: 50, expectedAlert: False)" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.auditing.tests/bin/debug/net8.0/enterprise.shared.auditing.tests.dll" id="55dbbe83-9ad7-9ff5-141e-e8b63a99705f">
+      <Execution id="9946d8c9-8271-475c-97b9-c8b6d00a4c7e" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Auditing.Tests/bin/Debug/net8.0/Enterprise.Shared.Auditing.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Auditing.Tests.Models.SecurityAuditEventSimpleTests" name="WithRisk_SetIsAlertBasedOnThreshold" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Auditing.Tests.Models.SecurityAuditEventSimpleTests.WithRisk_SetIsAlertBasedOnThreshold(riskScore: 100, expectedAlert: True)" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.auditing.tests/bin/debug/net8.0/enterprise.shared.auditing.tests.dll" id="fe81ca39-7ff9-c8f7-327e-f838b849bf45">
+      <Execution id="c0fa1bce-ff61-4c45-a515-aad32e40e1fd" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Auditing.Tests/bin/Debug/net8.0/Enterprise.Shared.Auditing.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Auditing.Tests.Models.SecurityAuditEventSimpleTests" name="WithRisk_SetIsAlertBasedOnThreshold" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Auditing.Tests.Models.SecurityAuditEventSimpleTests.Create_WithDifferentEventTypes_SetsCorrectType(eventType: Authentication)" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.auditing.tests/bin/debug/net8.0/enterprise.shared.auditing.tests.dll" id="b021b8bf-94f8-8cd0-effc-fc080e5da295">
+      <Execution id="bbf4ddc2-5c90-4410-841c-cb1bd56711b7" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Auditing.Tests/bin/Debug/net8.0/Enterprise.Shared.Auditing.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Auditing.Tests.Models.SecurityAuditEventSimpleTests" name="Create_WithDifferentEventTypes_SetsCorrectType" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Auditing.Tests.HealthChecks.AuditHealthCheckSimpleTests.CheckHealthAsync_WhenServiceTestFails_ReturnsUnhealthy" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.auditing.tests/bin/debug/net8.0/enterprise.shared.auditing.tests.dll" id="746957b1-64b5-6f49-8865-77ec9c46b43c">
+      <Execution id="aea811ea-cd05-43c4-95b8-5d1d5fcb3c6b" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Auditing.Tests/bin/Debug/net8.0/Enterprise.Shared.Auditing.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Auditing.Tests.HealthChecks.AuditHealthCheckSimpleTests" name="CheckHealthAsync_WhenServiceTestFails_ReturnsUnhealthy" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Auditing.Tests.Services.AuditServiceSimpleTests.SearchEventsAsync_WithValidCriteria_ReturnsResults" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.auditing.tests/bin/debug/net8.0/enterprise.shared.auditing.tests.dll" id="92d348cb-a0cf-de03-a4ca-0c3074026d8c">
+      <Execution id="8488698c-d13e-4216-addc-192d7be9b0e5" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Auditing.Tests/bin/Debug/net8.0/Enterprise.Shared.Auditing.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Auditing.Tests.Services.AuditServiceSimpleTests" name="SearchEventsAsync_WithValidCriteria_ReturnsResults" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Auditing.Tests.Models.AuditEventSimpleTests.WithCorrelation_SetsCorrelationId" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.auditing.tests/bin/debug/net8.0/enterprise.shared.auditing.tests.dll" id="9d0e2bef-0ef6-d425-e0bf-71aa22d99fe1">
+      <Execution id="b87b3f2e-8879-474e-942c-d02c68336ec9" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Auditing.Tests/bin/Debug/net8.0/Enterprise.Shared.Auditing.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Auditing.Tests.Models.AuditEventSimpleTests" name="WithCorrelation_SetsCorrelationId" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Auditing.Tests.Models.SecurityAuditEventSimpleTests.WithRisk_SetIsAlertBasedOnThreshold(riskScore: 0, expectedAlert: False)" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.auditing.tests/bin/debug/net8.0/enterprise.shared.auditing.tests.dll" id="68dbc2c6-398b-ae19-ce9f-587c69a19e83">
+      <Execution id="962f7895-3aab-42af-9400-1c11b571c387" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Auditing.Tests/bin/Debug/net8.0/Enterprise.Shared.Auditing.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Auditing.Tests.Models.SecurityAuditEventSimpleTests" name="WithRisk_SetIsAlertBasedOnThreshold" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Auditing.Tests.Services.InMemoryAuditStoreSimpleTests.HealthCheckAsync_WithHealthyStore_ReturnsSuccess" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.auditing.tests/bin/debug/net8.0/enterprise.shared.auditing.tests.dll" id="aa030906-38fd-2092-cec0-448b25aaf208">
+      <Execution id="54ef64f6-56fa-42ba-bbb2-4bdedb0320d9" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Auditing.Tests/bin/Debug/net8.0/Enterprise.Shared.Auditing.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Auditing.Tests.Services.InMemoryAuditStoreSimpleTests" name="HealthCheckAsync_WithHealthyStore_ReturnsSuccess" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Auditing.Tests.Models.SecurityAuditEventSimpleTests.FactoryMethod_CreateSuccessfulLogin_SetsCorrectProperties" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.auditing.tests/bin/debug/net8.0/enterprise.shared.auditing.tests.dll" id="7bb366b8-2eed-e56f-7ac0-0511636cb3bf">
+      <Execution id="6ed33403-5896-412e-837b-8c327060fdba" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Auditing.Tests/bin/Debug/net8.0/Enterprise.Shared.Auditing.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Auditing.Tests.Models.SecurityAuditEventSimpleTests" name="FactoryMethod_CreateSuccessfulLogin_SetsCorrectProperties" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Auditing.Tests.Models.SecurityAuditEventSimpleTests.WithAuthorization_SetsAuthorizationProperties" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.auditing.tests/bin/debug/net8.0/enterprise.shared.auditing.tests.dll" id="c46c55dd-cf3f-ba1f-b6d7-c83499745af9">
+      <Execution id="884d02a9-c15a-4f40-bfc6-7b044566fe58" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Auditing.Tests/bin/Debug/net8.0/Enterprise.Shared.Auditing.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Auditing.Tests.Models.SecurityAuditEventSimpleTests" name="WithAuthorization_SetsAuthorizationProperties" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Auditing.Tests.HealthChecks.AuditHealthCheckSimpleTests.CheckHealthAsync_WhenAuditingDisabled_ReturnsHealthy" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.auditing.tests/bin/debug/net8.0/enterprise.shared.auditing.tests.dll" id="8754c9d7-ca62-f970-014d-3e6f754734a1">
+      <Execution id="abbd13aa-17f5-408d-9f8d-8500f5d96900" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Auditing.Tests/bin/Debug/net8.0/Enterprise.Shared.Auditing.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Auditing.Tests.HealthChecks.AuditHealthCheckSimpleTests" name="CheckHealthAsync_WhenAuditingDisabled_ReturnsHealthy" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Auditing.Tests.Models.AuditEventSimpleTests.Create_WithValidParameters_ReturnsConfiguredEvent" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.auditing.tests/bin/debug/net8.0/enterprise.shared.auditing.tests.dll" id="8bb21605-680d-c45d-24b1-29b3d4fd8dd5">
+      <Execution id="2be0b654-ace0-4c80-aef0-87f2c3803900" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Auditing.Tests/bin/Debug/net8.0/Enterprise.Shared.Auditing.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Auditing.Tests.Models.AuditEventSimpleTests" name="Create_WithValidParameters_ReturnsConfiguredEvent" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Auditing.Tests.Models.AuditEventSimpleTests.WithUser_SetsUserProperties" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.auditing.tests/bin/debug/net8.0/enterprise.shared.auditing.tests.dll" id="043fd654-a5c8-49d0-ec81-8b8cf9c3ee25">
+      <Execution id="a1e8bc03-938c-41ff-b5aa-665099984822" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Auditing.Tests/bin/Debug/net8.0/Enterprise.Shared.Auditing.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Auditing.Tests.Models.AuditEventSimpleTests" name="WithUser_SetsUserProperties" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Auditing.Tests.Models.ValidationResultTests.Constructor_WithSuccess_SetsCorrectValues" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.auditing.tests/bin/debug/net8.0/enterprise.shared.auditing.tests.dll" id="892ce8c2-c3bb-2266-a377-84d97bf791ef">
+      <Execution id="ec1eb561-4b2b-40b9-98c1-9977cd4147d0" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Auditing.Tests/bin/Debug/net8.0/Enterprise.Shared.Auditing.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Auditing.Tests.Models.ValidationResultTests" name="Constructor_WithSuccess_SetsCorrectValues" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Auditing.Tests.Services.AuditServiceSimpleTests.GetEventAsync_WithValidId_ReturnsEvent" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.auditing.tests/bin/debug/net8.0/enterprise.shared.auditing.tests.dll" id="6447034d-edb1-678f-b099-672ed12a7605">
+      <Execution id="ef4aac7c-07a7-47e8-a1d9-67cdb00ef31f" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Auditing.Tests/bin/Debug/net8.0/Enterprise.Shared.Auditing.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Auditing.Tests.Services.AuditServiceSimpleTests" name="GetEventAsync_WithValidId_ReturnsEvent" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Auditing.Tests.Models.ValidationResultTests.Constructor_WithFailure_SetsCorrectValues" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.auditing.tests/bin/debug/net8.0/enterprise.shared.auditing.tests.dll" id="eab7bf6d-6a6d-aabd-f35c-888b996d6f4a">
+      <Execution id="f2ef56b2-3857-435e-a109-72a2be5a46ff" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Auditing.Tests/bin/Debug/net8.0/Enterprise.Shared.Auditing.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Auditing.Tests.Models.ValidationResultTests" name="Constructor_WithFailure_SetsCorrectValues" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Auditing.Tests.Services.AuditServiceSimpleTests.GetEventAsync_WithEmptyId_ReturnsNull" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.auditing.tests/bin/debug/net8.0/enterprise.shared.auditing.tests.dll" id="e3fa2a54-b952-607d-b737-34af95ccaf48">
+      <Execution id="1561c543-67bf-4d81-aeb7-27a6f23be550" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Auditing.Tests/bin/Debug/net8.0/Enterprise.Shared.Auditing.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Auditing.Tests.Services.AuditServiceSimpleTests" name="GetEventAsync_WithEmptyId_ReturnsNull" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Auditing.Tests.Models.SecurityAuditEventSimpleTests.WithRisk_SetsRiskProperties" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.auditing.tests/bin/debug/net8.0/enterprise.shared.auditing.tests.dll" id="3d836c61-9ce9-2045-0f15-ec0c88f9e269">
+      <Execution id="eb1a0842-b7d3-4d8c-837f-86d1c1c91f57" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Auditing.Tests/bin/Debug/net8.0/Enterprise.Shared.Auditing.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Auditing.Tests.Models.SecurityAuditEventSimpleTests" name="WithRisk_SetsRiskProperties" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Auditing.Tests.Services.AuditServiceSimpleTests.LogSecurityEventAsync_WithValidEvent_StoresEventSuccessfully" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.auditing.tests/bin/debug/net8.0/enterprise.shared.auditing.tests.dll" id="4ebd8889-f49a-6c66-dc50-e03f8e1f8b45">
+      <Execution id="d2163eb9-6b30-4234-8291-9760c8183fb8" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Auditing.Tests/bin/Debug/net8.0/Enterprise.Shared.Auditing.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Auditing.Tests.Services.AuditServiceSimpleTests" name="LogSecurityEventAsync_WithValidEvent_StoresEventSuccessfully" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Auditing.Tests.Models.AuditEventSimpleTests.WithHttpContext_SetsHttpContextProperties" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.auditing.tests/bin/debug/net8.0/enterprise.shared.auditing.tests.dll" id="a071813a-706a-d60a-ea8a-0bdeea9e61b9">
+      <Execution id="46b9a588-e060-471d-8ad2-408fd895eaee" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Auditing.Tests/bin/Debug/net8.0/Enterprise.Shared.Auditing.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Auditing.Tests.Models.AuditEventSimpleTests" name="WithHttpContext_SetsHttpContextProperties" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Auditing.Tests.Models.SecurityAuditEventSimpleTests.Create_WithDifferentEventTypes_SetsCorrectType(eventType: Authorization)" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.auditing.tests/bin/debug/net8.0/enterprise.shared.auditing.tests.dll" id="da64ea37-950e-b681-e202-8667d4c254e6">
+      <Execution id="ea5589f0-1c49-4f82-8625-5a92264c9549" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Auditing.Tests/bin/Debug/net8.0/Enterprise.Shared.Auditing.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Auditing.Tests.Models.SecurityAuditEventSimpleTests" name="Create_WithDifferentEventTypes_SetsCorrectType" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Auditing.Tests.Models.AuditEventSimpleTests.Properties_CanBeModifiedDirectly" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.auditing.tests/bin/debug/net8.0/enterprise.shared.auditing.tests.dll" id="04d143ea-cb2a-c7bf-b067-c9eec5e8a4a5">
+      <Execution id="398f03a2-c1af-448b-b623-6e7dc8dc7418" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Auditing.Tests/bin/Debug/net8.0/Enterprise.Shared.Auditing.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Auditing.Tests.Models.AuditEventSimpleTests" name="Properties_CanBeModifiedDirectly" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Auditing.Tests.Services.AuditServiceSimpleTests.LogEventAsync_WithNullEvent_ReturnsFailure" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.auditing.tests/bin/debug/net8.0/enterprise.shared.auditing.tests.dll" id="e3770ee4-7ecc-87a5-1fdc-ddaa3d786639">
+      <Execution id="41eb3ca2-6841-4fad-a9d7-165845214715" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Auditing.Tests/bin/Debug/net8.0/Enterprise.Shared.Auditing.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Auditing.Tests.Services.AuditServiceSimpleTests" name="LogEventAsync_WithNullEvent_ReturnsFailure" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Auditing.Tests.Models.ValidationResultTests.Success_ReturnsSuccessfulResult" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.auditing.tests/bin/debug/net8.0/enterprise.shared.auditing.tests.dll" id="ffde4746-c342-1c7f-7179-4122004fc211">
+      <Execution id="bb9e0060-dabf-426d-9c8b-773463c02afe" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Auditing.Tests/bin/Debug/net8.0/Enterprise.Shared.Auditing.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Auditing.Tests.Models.ValidationResultTests" name="Success_ReturnsSuccessfulResult" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Auditing.Tests.Services.InMemoryAuditStoreSimpleTests.StoreEventAsync_WithValidEvent_StoresSuccessfully" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.auditing.tests/bin/debug/net8.0/enterprise.shared.auditing.tests.dll" id="04ac4824-f947-b72d-c120-990f4c114093">
+      <Execution id="c42e5465-1a76-4b6a-a1f0-7936bc4fe568" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Auditing.Tests/bin/Debug/net8.0/Enterprise.Shared.Auditing.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Auditing.Tests.Services.InMemoryAuditStoreSimpleTests" name="StoreEventAsync_WithValidEvent_StoresSuccessfully" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Auditing.Tests.Services.AuditServiceSimpleTests.LogEventAsync_WhenDisabled_ReturnsSuccessWithoutStoring" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.auditing.tests/bin/debug/net8.0/enterprise.shared.auditing.tests.dll" id="b938de1e-62e3-b21a-e545-a501f8c2033d">
+      <Execution id="7ae6c671-a633-4283-976c-1aba2451c37e" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Auditing.Tests/bin/Debug/net8.0/Enterprise.Shared.Auditing.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Auditing.Tests.Services.AuditServiceSimpleTests" name="LogEventAsync_WhenDisabled_ReturnsSuccessWithoutStoring" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Auditing.Tests.Models.SecurityAuditEventSimpleTests.Create_WithDifferentEventTypes_SetsCorrectType(eventType: AccountManagement)" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.auditing.tests/bin/debug/net8.0/enterprise.shared.auditing.tests.dll" id="97bd0b96-0566-4935-2820-9c3ae961b451">
+      <Execution id="3ad8005e-e6af-423a-8f0a-85b8a32aee4f" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Auditing.Tests/bin/Debug/net8.0/Enterprise.Shared.Auditing.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Auditing.Tests.Models.SecurityAuditEventSimpleTests" name="Create_WithDifferentEventTypes_SetsCorrectType" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Auditing.Tests.Models.SecurityAuditEventSimpleTests.WithRisk_SetIsAlertBasedOnThreshold(riskScore: 75, expectedAlert: True)" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.auditing.tests/bin/debug/net8.0/enterprise.shared.auditing.tests.dll" id="a009cc9d-c191-1c67-5b7a-4c0069e2c174">
+      <Execution id="92e52397-07cf-4bf0-ad6b-722414a7dfd2" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Auditing.Tests/bin/Debug/net8.0/Enterprise.Shared.Auditing.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Auditing.Tests.Models.SecurityAuditEventSimpleTests" name="WithRisk_SetIsAlertBasedOnThreshold" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Auditing.Tests.HealthChecks.AuditHealthCheckSimpleTests.CheckHealthAsync_WhenUnexpectedException_ReturnsUnhealthy" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.auditing.tests/bin/debug/net8.0/enterprise.shared.auditing.tests.dll" id="def99c85-08e3-422b-c8ab-ed53d14d0bf1">
+      <Execution id="e431cfcc-bb9f-4444-adbd-0e6803ece970" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Auditing.Tests/bin/Debug/net8.0/Enterprise.Shared.Auditing.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Auditing.Tests.HealthChecks.AuditHealthCheckSimpleTests" name="CheckHealthAsync_WhenUnexpectedException_ReturnsUnhealthy" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Auditing.Tests.Models.AuditEventSimpleTests.Create_WithDefaultResult_SetsSuccessResult" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.auditing.tests/bin/debug/net8.0/enterprise.shared.auditing.tests.dll" id="eacbafcc-c655-16f6-d3f0-bd3df89de6f4">
+      <Execution id="31ff6533-92fb-45a0-9442-04a6dc085a9e" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Auditing.Tests/bin/Debug/net8.0/Enterprise.Shared.Auditing.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Auditing.Tests.Models.AuditEventSimpleTests" name="Create_WithDefaultResult_SetsSuccessResult" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Auditing.Tests.Services.InMemoryAuditStoreSimpleTests.QueryEventsAsync_WithNoFilters_ReturnsAllEvents" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.auditing.tests/bin/debug/net8.0/enterprise.shared.auditing.tests.dll" id="b78da184-ca29-0bea-87df-7b04a8f0e1c6">
+      <Execution id="ad6b5cb9-b5e1-4592-86af-2694401c6a72" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Auditing.Tests/bin/Debug/net8.0/Enterprise.Shared.Auditing.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Auditing.Tests.Services.InMemoryAuditStoreSimpleTests" name="QueryEventsAsync_WithNoFilters_ReturnsAllEvents" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Auditing.Tests.Models.SecurityAuditEventSimpleTests.Create_WithDifferentEventTypes_SetsCorrectType(eventType: DataAccess)" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.auditing.tests/bin/debug/net8.0/enterprise.shared.auditing.tests.dll" id="b449cdab-37ae-8856-bdf2-36135e89288f">
+      <Execution id="7a306ed4-d156-4037-aec0-961aa74d5530" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Auditing.Tests/bin/Debug/net8.0/Enterprise.Shared.Auditing.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Auditing.Tests.Models.SecurityAuditEventSimpleTests" name="Create_WithDifferentEventTypes_SetsCorrectType" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Auditing.Tests.Models.SecurityAuditEventSimpleTests.WithRisk_SetIsAlertBasedOnThreshold(riskScore: 74, expectedAlert: False)" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.auditing.tests/bin/debug/net8.0/enterprise.shared.auditing.tests.dll" id="cdf250c9-d02a-15b3-16df-7a2e6fd05961">
+      <Execution id="b7a09298-6888-4855-8a6d-d17c237b3906" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Auditing.Tests/bin/Debug/net8.0/Enterprise.Shared.Auditing.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Auditing.Tests.Models.SecurityAuditEventSimpleTests" name="WithRisk_SetIsAlertBasedOnThreshold" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Auditing.Tests.HealthChecks.AuditHealthCheckSimpleTests.CheckHealthAsync_WhenStoreHealthCheckFails_ReturnsDegraded" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.auditing.tests/bin/debug/net8.0/enterprise.shared.auditing.tests.dll" id="1d5f6378-83c3-6752-8284-32db5309f530">
+      <Execution id="fc92cb07-e385-4938-8ab0-849970c20103" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Auditing.Tests/bin/Debug/net8.0/Enterprise.Shared.Auditing.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Auditing.Tests.HealthChecks.AuditHealthCheckSimpleTests" name="CheckHealthAsync_WhenStoreHealthCheckFails_ReturnsDegraded" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Auditing.Tests.Models.SecurityAuditEventSimpleTests.FactoryMethod_CreateFailedLogin_SetsCorrectProperties" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.auditing.tests/bin/debug/net8.0/enterprise.shared.auditing.tests.dll" id="881ba049-d412-4ac7-98d1-1211340ae562">
+      <Execution id="5b67d245-4867-4864-a62b-7e1d24f80384" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Auditing.Tests/bin/Debug/net8.0/Enterprise.Shared.Auditing.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Auditing.Tests.Models.SecurityAuditEventSimpleTests" name="FactoryMethod_CreateFailedLogin_SetsCorrectProperties" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Auditing.Tests.HealthChecks.AuditHealthCheckSimpleTests.CheckHealthAsync_WhenAllHealthy_ReturnsHealthy" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.auditing.tests/bin/debug/net8.0/enterprise.shared.auditing.tests.dll" id="ef1efab7-f0a5-54cc-3e1d-b90e55d8fb25">
+      <Execution id="5aab4e04-3528-49d7-910d-ccd016d92c78" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Auditing.Tests/bin/Debug/net8.0/Enterprise.Shared.Auditing.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Auditing.Tests.HealthChecks.AuditHealthCheckSimpleTests" name="CheckHealthAsync_WhenAllHealthy_ReturnsHealthy" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Auditing.Tests.Services.AuditServiceSimpleTests.LogEventAsync_WithValidEvent_StoresEventSuccessfully" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.auditing.tests/bin/debug/net8.0/enterprise.shared.auditing.tests.dll" id="0e34243f-ad7c-0dbf-b995-d8e7774fa91f">
+      <Execution id="f4491582-1992-4df3-95e2-747283012381" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Auditing.Tests/bin/Debug/net8.0/Enterprise.Shared.Auditing.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Auditing.Tests.Services.AuditServiceSimpleTests" name="LogEventAsync_WithValidEvent_StoresEventSuccessfully" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Auditing.Tests.Models.AuditEventSimpleTests.WithMetadata_AddsMetadataToProperties" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.auditing.tests/bin/debug/net8.0/enterprise.shared.auditing.tests.dll" id="c6bd68e9-3cb1-b950-c502-9eb69f74f48d">
+      <Execution id="fd76d8e1-d2fb-481c-b406-8125938a9b04" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Auditing.Tests/bin/Debug/net8.0/Enterprise.Shared.Auditing.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Auditing.Tests.Models.AuditEventSimpleTests" name="WithMetadata_AddsMetadataToProperties" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Auditing.Tests.Services.InMemoryAuditStoreSimpleTests.StoreEventAsync_WithNullEvent_ReturnsFailure" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.auditing.tests/bin/debug/net8.0/enterprise.shared.auditing.tests.dll" id="78fde34a-4e5d-bc8e-4f05-2d0347e68bd3">
+      <Execution id="009ce118-0a56-49f8-a71d-882fc0843816" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Auditing.Tests/bin/Debug/net8.0/Enterprise.Shared.Auditing.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Auditing.Tests.Services.InMemoryAuditStoreSimpleTests" name="StoreEventAsync_WithNullEvent_ReturnsFailure" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Auditing.Tests.Models.AuditEventSimpleTests.Constructor_SetsDefaultValues" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.auditing.tests/bin/debug/net8.0/enterprise.shared.auditing.tests.dll" id="8bf22aa1-796e-8e16-f5e8-c167a2a3fded">
+      <Execution id="0dd904d9-b685-4e3c-bc5e-5553d29dd88d" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Auditing.Tests/bin/Debug/net8.0/Enterprise.Shared.Auditing.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Auditing.Tests.Models.AuditEventSimpleTests" name="Constructor_SetsDefaultValues" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Auditing.Tests.Models.SecurityAuditEventSimpleTests.WithAuthentication_SetsAuthenticationProperties" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.auditing.tests/bin/debug/net8.0/enterprise.shared.auditing.tests.dll" id="e6c67581-99e2-2748-be5d-5095fb00506b">
+      <Execution id="51dd0338-dbc9-4e46-a3c4-141954629c99" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Auditing.Tests/bin/Debug/net8.0/Enterprise.Shared.Auditing.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Auditing.Tests.Models.SecurityAuditEventSimpleTests" name="WithAuthentication_SetsAuthenticationProperties" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Auditing.Tests.Services.InMemoryAuditStoreSimpleTests.GetEventCountAsync_WithDateRange_ReturnsCorrectCount" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.auditing.tests/bin/debug/net8.0/enterprise.shared.auditing.tests.dll" id="63219dba-37d6-9cab-ed0c-a714bdc3b3fb">
+      <Execution id="bda940ac-e684-4fe7-a5ce-a41cb2b5fba4" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Auditing.Tests/bin/Debug/net8.0/Enterprise.Shared.Auditing.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Auditing.Tests.Services.InMemoryAuditStoreSimpleTests" name="GetEventCountAsync_WithDateRange_ReturnsCorrectCount" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Auditing.Tests.Services.InMemoryAuditStoreSimpleTests.GetEventAsync_WithNonExistingId_ReturnsNull" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.auditing.tests/bin/debug/net8.0/enterprise.shared.auditing.tests.dll" id="41efe741-07be-f6b0-1a5c-1369ee711c86">
+      <Execution id="587d2d75-988d-4857-928e-fcaadadab7a7" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Auditing.Tests/bin/Debug/net8.0/Enterprise.Shared.Auditing.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Auditing.Tests.Services.InMemoryAuditStoreSimpleTests" name="GetEventAsync_WithNonExistingId_ReturnsNull" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Auditing.Tests.Models.SecurityAuditEventSimpleTests.Constructor_SetsSecurityDefaults" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.auditing.tests/bin/debug/net8.0/enterprise.shared.auditing.tests.dll" id="8e6bc6cd-d29d-35b7-4089-eb83d7de14eb">
+      <Execution id="719b5c6b-473c-445d-9e43-1556d3eb3dce" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Auditing.Tests/bin/Debug/net8.0/Enterprise.Shared.Auditing.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Auditing.Tests.Models.SecurityAuditEventSimpleTests" name="Constructor_SetsSecurityDefaults" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Auditing.Tests.Models.SecurityAuditEventSimpleTests.Create_WithValidParameters_ReturnsConfiguredEvent" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.auditing.tests/bin/debug/net8.0/enterprise.shared.auditing.tests.dll" id="e7962a26-5982-7407-dcdd-3926ff592102">
+      <Execution id="d186164c-d64f-479d-b7a2-0441b6485dc3" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Auditing.Tests/bin/Debug/net8.0/Enterprise.Shared.Auditing.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Auditing.Tests.Models.SecurityAuditEventSimpleTests" name="Create_WithValidParameters_ReturnsConfiguredEvent" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="def99c85-08e3-422b-c8ab-ed53d14d0bf1" executionId="e431cfcc-bb9f-4444-adbd-0e6803ece970" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="c6bd68e9-3cb1-b950-c502-9eb69f74f48d" executionId="fd76d8e1-d2fb-481c-b406-8125938a9b04" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="8bf22aa1-796e-8e16-f5e8-c167a2a3fded" executionId="0dd904d9-b685-4e3c-bc5e-5553d29dd88d" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="0e34243f-ad7c-0dbf-b995-d8e7774fa91f" executionId="f4491582-1992-4df3-95e2-747283012381" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="aa030906-38fd-2092-cec0-448b25aaf208" executionId="54ef64f6-56fa-42ba-bbb2-4bdedb0320d9" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="3d836c61-9ce9-2045-0f15-ec0c88f9e269" executionId="eb1a0842-b7d3-4d8c-837f-86d1c1c91f57" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="92d348cb-a0cf-de03-a4ca-0c3074026d8c" executionId="8488698c-d13e-4216-addc-192d7be9b0e5" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="a009cc9d-c191-1c67-5b7a-4c0069e2c174" executionId="92e52397-07cf-4bf0-ad6b-722414a7dfd2" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="b938de1e-62e3-b21a-e545-a501f8c2033d" executionId="7ae6c671-a633-4283-976c-1aba2451c37e" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="7d7f23f0-16aa-a751-4837-a88f5f9da51b" executionId="f106764d-14f2-4a9c-8fa4-61fff18f3007" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="e3fa2a54-b952-607d-b737-34af95ccaf48" executionId="1561c543-67bf-4d81-aeb7-27a6f23be550" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="b021b8bf-94f8-8cd0-effc-fc080e5da295" executionId="bbf4ddc2-5c90-4410-841c-cb1bd56711b7" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="68dbc2c6-398b-ae19-ce9f-587c69a19e83" executionId="962f7895-3aab-42af-9400-1c11b571c387" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="a071813a-706a-d60a-ea8a-0bdeea9e61b9" executionId="46b9a588-e060-471d-8ad2-408fd895eaee" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="1d5f6378-83c3-6752-8284-32db5309f530" executionId="fc92cb07-e385-4938-8ab0-849970c20103" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="7bb366b8-2eed-e56f-7ac0-0511636cb3bf" executionId="6ed33403-5896-412e-837b-8c327060fdba" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="881ba049-d412-4ac7-98d1-1211340ae562" executionId="5b67d245-4867-4864-a62b-7e1d24f80384" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="ffde4746-c342-1c7f-7179-4122004fc211" executionId="bb9e0060-dabf-426d-9c8b-773463c02afe" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="043fd654-a5c8-49d0-ec81-8b8cf9c3ee25" executionId="a1e8bc03-938c-41ff-b5aa-665099984822" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="9d0e2bef-0ef6-d425-e0bf-71aa22d99fe1" executionId="b87b3f2e-8879-474e-942c-d02c68336ec9" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="006fc6bf-8ac2-2338-8302-7b760e5b8337" executionId="c56d69f5-9ded-4ee8-9de5-604cdd7f0a19" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="cdf250c9-d02a-15b3-16df-7a2e6fd05961" executionId="b7a09298-6888-4855-8a6d-d17c237b3906" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="41efe741-07be-f6b0-1a5c-1369ee711c86" executionId="587d2d75-988d-4857-928e-fcaadadab7a7" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="b78da184-ca29-0bea-87df-7b04a8f0e1c6" executionId="ad6b5cb9-b5e1-4592-86af-2694401c6a72" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="8754c9d7-ca62-f970-014d-3e6f754734a1" executionId="abbd13aa-17f5-408d-9f8d-8500f5d96900" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="746957b1-64b5-6f49-8865-77ec9c46b43c" executionId="aea811ea-cd05-43c4-95b8-5d1d5fcb3c6b" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="e3770ee4-7ecc-87a5-1fdc-ddaa3d786639" executionId="41eb3ca2-6841-4fad-a9d7-165845214715" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="04ac4824-f947-b72d-c120-990f4c114093" executionId="c42e5465-1a76-4b6a-a1f0-7936bc4fe568" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="da64ea37-950e-b681-e202-8667d4c254e6" executionId="ea5589f0-1c49-4f82-8625-5a92264c9549" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="e7962a26-5982-7407-dcdd-3926ff592102" executionId="d186164c-d64f-479d-b7a2-0441b6485dc3" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="e6c67581-99e2-2748-be5d-5095fb00506b" executionId="51dd0338-dbc9-4e46-a3c4-141954629c99" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="8e6bc6cd-d29d-35b7-4089-eb83d7de14eb" executionId="719b5c6b-473c-445d-9e43-1556d3eb3dce" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="fe81ca39-7ff9-c8f7-327e-f838b849bf45" executionId="c0fa1bce-ff61-4c45-a515-aad32e40e1fd" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="b449cdab-37ae-8856-bdf2-36135e89288f" executionId="7a306ed4-d156-4037-aec0-961aa74d5530" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="e2a3558c-55a8-e942-5627-563abe02b662" executionId="ea792c67-3944-4236-8a41-2a45f7d59332" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="04d143ea-cb2a-c7bf-b067-c9eec5e8a4a5" executionId="398f03a2-c1af-448b-b623-6e7dc8dc7418" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="78fde34a-4e5d-bc8e-4f05-2d0347e68bd3" executionId="009ce118-0a56-49f8-a71d-882fc0843816" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="97bd0b96-0566-4935-2820-9c3ae961b451" executionId="3ad8005e-e6af-423a-8f0a-85b8a32aee4f" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="eab7bf6d-6a6d-aabd-f35c-888b996d6f4a" executionId="f2ef56b2-3857-435e-a109-72a2be5a46ff" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="c46c55dd-cf3f-ba1f-b6d7-c83499745af9" executionId="884d02a9-c15a-4f40-bfc6-7b044566fe58" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="892ce8c2-c3bb-2266-a377-84d97bf791ef" executionId="ec1eb561-4b2b-40b9-98c1-9977cd4147d0" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="ef1efab7-f0a5-54cc-3e1d-b90e55d8fb25" executionId="5aab4e04-3528-49d7-910d-ccd016d92c78" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="63219dba-37d6-9cab-ed0c-a714bdc3b3fb" executionId="bda940ac-e684-4fe7-a5ce-a41cb2b5fba4" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="6447034d-edb1-678f-b099-672ed12a7605" executionId="ef4aac7c-07a7-47e8-a1d9-67cdb00ef31f" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="4ebd8889-f49a-6c66-dc50-e03f8e1f8b45" executionId="d2163eb9-6b30-4234-8291-9760c8183fb8" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="8bb21605-680d-c45d-24b1-29b3d4fd8dd5" executionId="2be0b654-ace0-4c80-aef0-87f2c3803900" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="eacbafcc-c655-16f6-d3f0-bd3df89de6f4" executionId="31ff6533-92fb-45a0-9442-04a6dc085a9e" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="55dbbe83-9ad7-9ff5-141e-e8b63a99705f" executionId="9946d8c9-8271-475c-97b9-c8b6d00a4c7e" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Failed">
+    <Counters total="48" executed="48" passed="40" failed="8" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.5.3.1+6b60a9e56a (64-bit .NET 8.0.19)
+[xUnit.net 00:00:00.05]   Discovering: Enterprise.Shared.Auditing.Tests
+[xUnit.net 00:00:00.09]   Discovered:  Enterprise.Shared.Auditing.Tests
+[xUnit.net 00:00:00.09]   Starting:    Enterprise.Shared.Auditing.Tests
+[xUnit.net 00:00:00.18]       System.Collections.Generic.KeyNotFoundException : The given key 'AuthenticationProvider' was not present in the dictionary.
+[xUnit.net 00:00:00.18]       Stack Trace:
+[xUnit.net 00:00:00.18]            at System.Collections.Generic.Dictionary`2.get_Item(TKey key)
+[xUnit.net 00:00:00.18]         /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Auditing.Tests/Models/SecurityAuditEventSimpleTests.cs(43,0): at Enterprise.Shared.Auditing.Tests.Models.SecurityAuditEventSimpleTests.WithAuthentication_SetsAuthenticationProperties()
+[xUnit.net 00:00:00.18]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+[xUnit.net 00:00:00.18]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+[xUnit.net 00:00:00.18]       System.Collections.Generic.KeyNotFoundException : The given key 'Permission' was not present in the dictionary.
+[xUnit.net 00:00:00.18]       Stack Trace:
+[xUnit.net 00:00:00.18]            at System.Collections.Generic.Dictionary`2.get_Item(TKey key)
+[xUnit.net 00:00:00.18]         /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Auditing.Tests/Models/SecurityAuditEventSimpleTests.cs(55,0): at Enterprise.Shared.Auditing.Tests.Models.SecurityAuditEventSimpleTests.WithAuthorization_SetsAuthorizationProperties()
+[xUnit.net 00:00:00.18]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+[xUnit.net 00:00:00.18]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+[xUnit.net 00:00:00.20]       Expected securityEvent.Category to be AuditEventCategory.Security {value: 1}, but found AuditEventCategory.Application {value: 0}.
+[xUnit.net 00:00:00.20]       Stack Trace:
+[xUnit.net 00:00:00.20]            at FluentAssertions.Execution.XUnit2TestFramework.Throw(String message)
+[xUnit.net 00:00:00.20]            at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+[xUnit.net 00:00:00.20]            at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+[xUnit.net 00:00:00.20]            at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+[xUnit.net 00:00:00.20]            at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+[xUnit.net 00:00:00.20]            at FluentAssertions.Execution.AssertionScope.FailWith(String message, Object[] args)
+[xUnit.net 00:00:00.20]            at FluentAssertions.Primitives.EnumAssertions`2.Be(TEnum expected, String because, Object[] becauseArgs)
+[xUnit.net 00:00:00.20]         /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Auditing.Tests/Models/SecurityAuditEventSimpleTests.cs(10,0): at Enterprise.Shared.Auditing.Tests.Models.SecurityAuditEventSimpleTests.Constructor_SetsSecurityDefaults()
+[xUnit.net 00:00:00.20]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+[xUnit.net 00:00:00.20]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+[xUnit.net 00:00:00.20]       Expected auditEvent.Properties {empty} to contain keys {"key1", "key2", "key3"}, but could not find {"key1", "key2", "key3"}.
+[xUnit.net 00:00:00.20]       Stack Trace:
+[xUnit.net 00:00:00.20]            at FluentAssertions.Execution.XUnit2TestFramework.Throw(String message)
+[xUnit.net 00:00:00.20]            at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+[xUnit.net 00:00:00.20]            at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+[xUnit.net 00:00:00.20]            at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+[xUnit.net 00:00:00.20]            at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+[xUnit.net 00:00:00.20]            at FluentAssertions.Execution.AssertionScope.FailWith(String message, Object[] args)
+[xUnit.net 00:00:00.20]            at FluentAssertions.Collections.GenericDictionaryAssertions`4.ContainKeys(IEnumerable`1 expected, String because, Object[] becauseArgs)
+[xUnit.net 00:00:00.20]         /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Auditing.Tests/Models/AuditEventSimpleTests.cs(71,0): at Enterprise.Shared.Auditing.Tests.Models.AuditEventSimpleTests.WithMetadata_AddsMetadataToProperties()
+[xUnit.net 00:00:00.20]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+[xUnit.net 00:00:00.20]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+[xUnit.net 00:00:00.21]       Expected result.Status to be HealthStatus.Healthy {value: 2}, but found HealthStatus.Degraded {value: 1}.
+[xUnit.net 00:00:00.21]       Stack Trace:
+[xUnit.net 00:00:00.21]            at FluentAssertions.Execution.XUnit2TestFramework.Throw(String message)
+[xUnit.net 00:00:00.21]            at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+[xUnit.net 00:00:00.21]            at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+[xUnit.net 00:00:00.21]            at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+[xUnit.net 00:00:00.21]            at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+[xUnit.net 00:00:00.21]            at FluentAssertions.Execution.AssertionScope.FailWith(String message, Object[] args)
+[xUnit.net 00:00:00.21]            at FluentAssertions.Primitives.EnumAssertions`2.Be(TEnum expected, String because, Object[] becauseArgs)
+[xUnit.net 00:00:00.21]         /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Auditing.Tests/HealthChecks/AuditHealthCheckSimpleTests.cs(76,0): at Enterprise.Shared.Auditing.Tests.HealthChecks.AuditHealthCheckSimpleTests.CheckHealthAsync_WhenAllHealthy_ReturnsHealthy()
+[xUnit.net 00:00:00.21]         --- End of stack trace from previous location ---
+[xUnit.net 00:00:00.22]       Expected result.IsSuccess to be True, but found False.
+[xUnit.net 00:00:00.22]       Stack Trace:
+[xUnit.net 00:00:00.22]            at FluentAssertions.Execution.XUnit2TestFramework.Throw(String message)
+[xUnit.net 00:00:00.22]            at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+[xUnit.net 00:00:00.22]            at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+[xUnit.net 00:00:00.22]            at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+[xUnit.net 00:00:00.22]            at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+[xUnit.net 00:00:00.22]            at FluentAssertions.Execution.AssertionScope.FailWith(String message, Object[] args)
+[xUnit.net 00:00:00.22]            at FluentAssertions.Primitives.BooleanAssertions`1.BeTrue(String because, Object[] becauseArgs)
+[xUnit.net 00:00:00.22]         /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Auditing.Tests/Services/AuditServiceSimpleTests.cs(58,0): at Enterprise.Shared.Auditing.Tests.Services.AuditServiceSimpleTests.LogEventAsync_WhenDisabled_ReturnsSuccessWithoutStoring()
+[xUnit.net 00:00:00.22]         --- End of stack trace from previous location ---
+[xUnit.net 00:00:00.22]       Expected result.IsSuccess to be True, but found False.
+[xUnit.net 00:00:00.22]       Stack Trace:
+[xUnit.net 00:00:00.22]            at FluentAssertions.Execution.XUnit2TestFramework.Throw(String message)
+[xUnit.net 00:00:00.22]            at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+[xUnit.net 00:00:00.22]            at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+[xUnit.net 00:00:00.22]            at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+[xUnit.net 00:00:00.22]            at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+[xUnit.net 00:00:00.22]            at FluentAssertions.Execution.AssertionScope.FailWith(String message, Object[] args)
+[xUnit.net 00:00:00.22]            at FluentAssertions.Primitives.BooleanAssertions`1.BeTrue(String because, Object[] becauseArgs)
+[xUnit.net 00:00:00.22]         /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Auditing.Tests/Services/AuditServiceSimpleTests.cs(36,0): at Enterprise.Shared.Auditing.Tests.Services.AuditServiceSimpleTests.LogEventAsync_WithValidEvent_StoresEventSuccessfully()
+[xUnit.net 00:00:00.22]         --- End of stack trace from previous location ---
+[xUnit.net 00:00:00.22]       Expected result.IsSuccess to be True, but found False.
+[xUnit.net 00:00:00.22]       Stack Trace:
+[xUnit.net 00:00:00.22]            at FluentAssertions.Execution.XUnit2TestFramework.Throw(String message)
+[xUnit.net 00:00:00.22]            at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+[xUnit.net 00:00:00.22]            at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+[xUnit.net 00:00:00.22]            at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+[xUnit.net 00:00:00.22]            at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+[xUnit.net 00:00:00.22]            at FluentAssertions.Execution.AssertionScope.FailWith(String message, Object[] args)
+[xUnit.net 00:00:00.22]            at FluentAssertions.Primitives.BooleanAssertions`1.BeTrue(String because, Object[] becauseArgs)
+[xUnit.net 00:00:00.22]         /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Auditing.Tests/Services/AuditServiceSimpleTests.cs(109,0): at Enterprise.Shared.Auditing.Tests.Services.AuditServiceSimpleTests.LogSecurityEventAsync_WithValidEvent_StoresEventSuccessfully()
+[xUnit.net 00:00:00.22]         --- End of stack trace from previous location ---
+[xUnit.net 00:00:00.22]   Finished:    Enterprise.Shared.Auditing.Tests
+</StdOut>
+    </Output>
+    <RunInfos>
+      <RunInfo computerName="onur-TULPAR-T7-V20-5" outcome="Error" timestamp="2025-09-12T08:21:36.7722855+03:00">
+        <Text>[xUnit.net 00:00:00.18]     Enterprise.Shared.Auditing.Tests.Models.SecurityAuditEventSimpleTests.WithAuthentication_SetsAuthenticationProperties [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="onur-TULPAR-T7-V20-5" outcome="Error" timestamp="2025-09-12T08:21:36.7728842+03:00">
+        <Text>[xUnit.net 00:00:00.18]     Enterprise.Shared.Auditing.Tests.Models.SecurityAuditEventSimpleTests.WithAuthorization_SetsAuthorizationProperties [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="onur-TULPAR-T7-V20-5" outcome="Error" timestamp="2025-09-12T08:21:36.7730645+03:00">
+        <Text>[xUnit.net 00:00:00.20]     Enterprise.Shared.Auditing.Tests.Models.SecurityAuditEventSimpleTests.Constructor_SetsSecurityDefaults [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="onur-TULPAR-T7-V20-5" outcome="Error" timestamp="2025-09-12T08:21:36.7730893+03:00">
+        <Text>[xUnit.net 00:00:00.20]     Enterprise.Shared.Auditing.Tests.Models.AuditEventSimpleTests.WithMetadata_AddsMetadataToProperties [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="onur-TULPAR-T7-V20-5" outcome="Error" timestamp="2025-09-12T08:21:36.7732559+03:00">
+        <Text>[xUnit.net 00:00:00.21]     Enterprise.Shared.Auditing.Tests.HealthChecks.AuditHealthCheckSimpleTests.CheckHealthAsync_WhenAllHealthy_ReturnsHealthy [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="onur-TULPAR-T7-V20-5" outcome="Error" timestamp="2025-09-12T08:21:36.7812351+03:00">
+        <Text>[xUnit.net 00:00:00.22]     Enterprise.Shared.Auditing.Tests.Services.AuditServiceSimpleTests.LogEventAsync_WhenDisabled_ReturnsSuccessWithoutStoring [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="onur-TULPAR-T7-V20-5" outcome="Error" timestamp="2025-09-12T08:21:36.7823316+03:00">
+        <Text>[xUnit.net 00:00:00.22]     Enterprise.Shared.Auditing.Tests.Services.AuditServiceSimpleTests.LogEventAsync_WithValidEvent_StoresEventSuccessfully [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="onur-TULPAR-T7-V20-5" outcome="Error" timestamp="2025-09-12T08:21:36.7843174+03:00">
+        <Text>[xUnit.net 00:00:00.22]     Enterprise.Shared.Auditing.Tests.Services.AuditServiceSimpleTests.LogSecurityEventAsync_WithValidEvent_StoresEventSuccessfully [FAIL]</Text>
+      </RunInfo>
+    </RunInfos>
+  </ResultSummary>
+</TestRun>

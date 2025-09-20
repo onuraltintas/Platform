@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <LangVersion>12.0</LangVersion>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageId>Enterprise.Shared.ErrorHandling</PackageId>
+    <PackageVersion>1.0.0</PackageVersion>
+    <Authors>Enterprise Platform Team</Authors>
+    <Description>Comprehensive error handling and exception management library for Enterprise platform</Description>
+    <PackageTags>enterprise;error-handling;exceptions;middleware;polly</PackageTags>
+    <NoWarn>CS1591</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" />
+    <PackageReference Include="Hellang.Middleware.ProblemDetails" />
+    <PackageReference Include="Polly" />
+    <PackageReference Include="Polly.Extensions.Http" />
+    <PackageReference Include="FluentValidation" />
+    <PackageReference Include="Serilog" />
+    <PackageReference Include="Microsoft.Extensions.Localization" />
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" />
+    
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../Enterprise.Shared.Common/Enterprise.Shared.Common.csproj" />
+    <ProjectReference Include="../Enterprise.Shared.Logging/Enterprise.Shared.Logging.csproj" />
+  </ItemGroup>
+
+</Project>

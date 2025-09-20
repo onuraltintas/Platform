@@ -1,0 +1,17 @@
+global using System;
+global using System.Collections.Generic;
+global using System.Linq;
+global using System.Threading.Tasks;
+global using System.Security.Claims;
+global using NUnit.Framework;
+global using FluentAssertions;
+global using Moq;
+global using Microsoft.Extensions.Logging;
+global using Microsoft.Extensions.Options;
+global using Microsoft.Extensions.Caching.Memory;
+global using Microsoft.Extensions.DependencyInjection;
+global using Microsoft.Extensions.Configuration;
+global using Enterprise.Shared.Security.Interfaces;
+global using Enterprise.Shared.Security.Services;
+global using Enterprise.Shared.Security.Models;
+global using Enterprise.Shared.Common.Exceptions;

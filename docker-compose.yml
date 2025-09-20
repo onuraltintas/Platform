@@ -1,0 +1,204 @@
+services:
+  # PostgreSQL Database (lightweight alternative)
+  postgres:
+    image: postgres:15-alpine
+    container_name: platform-postgres
+    environment:
+      POSTGRES_DB: PlatformDB
+      POSTGRES_USER: platform_user
+      POSTGRES_PASSWORD: VForVan_40!
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - platform-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U platform_user -d PlatformDB"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    container_name: platform-redis
+    command: sh -c 'redis-server --requirepass "$$REDIS_PASSWORD" --maxmemory 512mb --maxmemory-policy allkeys-lru --timeout 300 --tcp-keepalive 60'
+    env_file:
+      - ./config/env/shared.env
+      - ./config/env/secrets.env
+      - ./config/env/dev.env
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - platform-network
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+        reservations:
+          memory: 256M
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli -a \"$$REDIS_PASSWORD\" ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # RabbitMQ Message Broker
+  rabbitmq:
+    image: rabbitmq:3.12-management-alpine
+    container_name: platform-rabbitmq
+    env_file:
+      - ./config/env/shared.env
+      - ./config/env/secrets.env
+      - ./config/env/dev.env
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    networks:
+      - platform-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # API Gateway
+  gateway:
+    build:
+      context: .
+      dockerfile: src/Gateway/Gateway.API/Dockerfile
+    container_name: platform-gateway
+    ports:
+      - "5001:80"
+      - "5443:443"
+    environment:
+      - ASPNETCORE_URLS=http://+:80
+    env_file:
+      - ./config/env/shared.env
+      - ./config/env/secrets.env
+      - ./config/env/dev.env
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      identity:
+        condition: service_healthy
+    networks:
+      - platform-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Identity Service
+  identity:
+    build:
+      context: .
+      dockerfile: src/Services/Identity/Identity.API/Dockerfile
+    container_name: platform-identity
+    environment:
+      - ASPNETCORE_URLS=http://+:80
+    env_file:
+      - ./config/env/shared.env
+      - ./config/env/secrets.env
+      - ./config/env/dev.env
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - platform-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # User Service
+  user:
+    build:
+      context: .
+      dockerfile: src/Services/User/User.API/Dockerfile
+    container_name: platform-user
+    environment:
+      - ASPNETCORE_URLS=http://+:80
+    env_file:
+      - ./config/env/shared.env
+      - ./config/env/secrets.env
+      - ./config/env/dev.env
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    networks:
+      - platform-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Speed Reading Service
+  speedreading:
+    build:
+      context: .
+      dockerfile: src/Services/speed-reading/SpeedReading.API/Dockerfile
+    container_name: platform-speedreading
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      - APPLY_DATABASE_MIGRATIONS=true
+    env_file:
+      - ./config/env/shared.env
+      - ./config/env/secrets.env
+      - ./config/env/dev.env
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+      identity:
+        condition: service_started
+    networks:
+      - platform-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+  rabbitmq_data:
+    driver: local
+
+networks:
+  platform-network:
+    driver: bridge
+    name: platform-network

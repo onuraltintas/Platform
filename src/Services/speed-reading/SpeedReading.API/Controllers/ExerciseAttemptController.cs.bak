@@ -1,0 +1,508 @@
+using Microsoft.AspNetCore.Mvc;
+using SpeedReading.API.Models;
+using SpeedReading.Application.Services;
+using SpeedReading.Domain.Repositories;
+using SpeedReading.Domain.Entities;
+using SpeedReading.Domain.Enums;
+using System.ComponentModel.DataAnnotations;
+
+namespace SpeedReading.API.Controllers;
+
+/// <summary>
+/// Controller for managing exercise attempts and tracking
+/// </summary>
+[ApiController]
+[Route("api/[controller]")]
+[Produces("application/json")]
+[ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
+[ProducesResponseType(typeof(ApiResponse), StatusCodes.Status500InternalServerError)]
+public class ExerciseAttemptController : ControllerBase
+{
+    private readonly IExerciseAttemptRepository _attemptRepository;
+    private readonly IExerciseRepository _exerciseRepository;
+    private readonly ExerciseAttemptTrackingService _trackingService;
+    private readonly ExerciseScoreCalculatorService _scoreCalculatorService;
+    private readonly ILogger<ExerciseAttemptController> _logger;
+
+    /// <summary>
+    /// Initializes a new instance of the ExerciseAttemptController
+    /// </summary>
+    public ExerciseAttemptController(
+        IExerciseAttemptRepository attemptRepository,
+        IExerciseRepository exerciseRepository,
+        ExerciseAttemptTrackingService trackingService,
+        ExerciseScoreCalculatorService scoreCalculatorService,
+        ILogger<ExerciseAttemptController> logger)
+    {
+        _attemptRepository = attemptRepository;
+        _exerciseRepository = exerciseRepository;
+        _trackingService = trackingService;
+        _scoreCalculatorService = scoreCalculatorService;
+        _logger = logger;
+    }
+
+    /// <summary>
+    /// Starts a new exercise attempt
+    /// </summary>
+    /// <param name="request">Attempt start request</param>
+    /// <returns>Started attempt details</returns>
+    [HttpPost("start")]
+    [ProducesResponseType(typeof(ApiResponse<ExerciseAttemptResponse>), StatusCodes.Status201Created)]
+    public async Task<ActionResult<ApiResponse<ExerciseAttemptResponse>>> StartAttempt(
+        [FromBody] StartExerciseAttemptRequest request)
+    {
+        try
+        {
+            var exercise = await _exerciseRepository.GetByIdWithQuestionsAsync(request.ExerciseId);
+            if (exercise == null)
+            {
+                return NotFound(ApiResponse<ExerciseAttemptResponse>.Fail("Exercise not found"));
+            }
+
+            if (exercise.Status != ExerciseStatus.Active)
+            {
+                return BadRequest(ApiResponse<ExerciseAttemptResponse>.Fail(
+                    "Cannot start inactive exercise"));
+            }
+
+            // Check if user can start this exercise
+            var canStart = await _trackingService.CanUserAttemptExerciseAsync(request.ExerciseId, request.UserId);
+            if (!canStart.CanAttempt)
+            {
+                return BadRequest(ApiResponse<ExerciseAttemptResponse>.Fail(
+                    canStart.Reason ?? "User cannot start this exercise"));
+            }
+
+            var result = await _trackingService.StartAttemptAsync(request.ExerciseId, request.UserId);
+
+            if (!result.IsSuccess)
+            {
+                return BadRequest(ApiResponse<ExerciseAttemptResponse>.Fail(result.ErrorMessage ?? "Failed to start attempt"));
+            }
+
+            var response = await MapToAttemptResponse(result.AttemptInfo!);
+
+            _logger.LogInformation("Started exercise attempt {AttemptId} for user {UserId} on exercise {ExerciseId}",
+                result.AttemptInfo!.AttemptId, request.UserId, request.ExerciseId);
+
+            return CreatedAtAction(
+                nameof(GetAttempt),
+                new { id = result.AttemptInfo.AttemptId },
+                ApiResponse<ExerciseAttemptResponse>.Ok(response));
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error starting exercise attempt");
+            return StatusCode(500, ApiResponse<ExerciseAttemptResponse>.Fail(
+                "An error occurred while starting the attempt"));
+        }
+    }
+
+    /// <summary>
+    /// Gets an exercise attempt by ID
+    /// </summary>
+    /// <param name="id">Attempt ID</param>
+    /// <param name="includeAnswers">Whether to include answers in response</param>
+    /// <returns>Attempt details</returns>
+    [HttpGet("{id:guid}")]
+    [ProducesResponseType(typeof(ApiResponse<ExerciseAttemptResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<ApiResponse<ExerciseAttemptResponse>>> GetAttempt(
+        [FromRoute] Guid id,
+        [FromQuery] bool includeAnswers = false)
+    {
+        try
+        {
+            var attempt = await _attemptRepository.GetByIdFullAsync(id);
+            if (attempt == null)
+            {
+                return NotFound(ApiResponse.Fail("Exercise attempt not found"));
+            }
+
+            var response = await MapToAttemptResponse(attempt, includeAnswers);
+            return Ok(ApiResponse<ExerciseAttemptResponse>.Ok(response));
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error retrieving exercise attempt {Id}", id);
+            return StatusCode(500, ApiResponse<ExerciseAttemptResponse>.Fail(
+                "An error occurred while retrieving the attempt"));
+        }
+    }
+
+    /// <summary>
+    /// Answers a question in an exercise attempt
+    /// </summary>
+    /// <param name="id">Attempt ID</param>
+    /// <param name="request">Answer request</param>
+    /// <returns>Updated attempt</returns>
+    [HttpPost("{id:guid}/answer")]
+    [ProducesResponseType(typeof(ApiResponse<ExerciseAttemptResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<ApiResponse<ExerciseAttemptResponse>>> AnswerQuestion(
+        [FromRoute] Guid id,
+        [FromBody] AnswerQuestionRequest request)
+    {
+        try
+        {
+            var attempt = await _attemptRepository.GetByIdAsync(id);
+            if (attempt == null)
+            {
+                return NotFound(ApiResponse.Fail("Exercise attempt not found"));
+            }
+
+            if (attempt.Status != AttemptStatus.InProgress)
+            {
+                return BadRequest(ApiResponse<ExerciseAttemptResponse>.Fail(
+                    "Cannot answer questions in completed attempt"));
+            }
+
+            var result = await _trackingService.SubmitAnswerAsync(id, request.QuestionId, request.Answer);
+
+            if (!result.IsSuccess)
+            {
+                return BadRequest(ApiResponse<ExerciseAttemptResponse>.Fail(
+                    result.ErrorMessage ?? "Failed to submit answer"));
+            }
+
+            var response = await MapToAttemptResponse(result.AttemptInfo!);
+
+            _logger.LogInformation("User answered question {QuestionId} in attempt {AttemptId}",
+                request.QuestionId, id);
+
+            return Ok(ApiResponse<ExerciseAttemptResponse>.Ok(response));
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error answering question in attempt {Id}", id);
+            return StatusCode(500, ApiResponse<ExerciseAttemptResponse>.Fail(
+                "An error occurred while submitting the answer"));
+        }
+    }
+
+    /// <summary>
+    /// Completes an exercise attempt
+    /// </summary>
+    /// <param name="id">Attempt ID</param>
+    /// <param name="request">Completion request</param>
+    /// <returns>Completed attempt with results</returns>
+    [HttpPost("{id:guid}/complete")]
+    [ProducesResponseType(typeof(ApiResponse<ExerciseAttemptResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<ApiResponse<ExerciseAttemptResponse>>> CompleteAttempt(
+        [FromRoute] Guid id,
+        [FromBody] CompleteExerciseAttemptRequest request)
+    {
+        try
+        {
+            var attempt = await _attemptRepository.GetByIdAsync(id);
+            if (attempt == null)
+            {
+                return NotFound(ApiResponse.Fail("Exercise attempt not found"));
+            }
+
+            if (attempt.Status != AttemptStatus.InProgress)
+            {
+                return BadRequest(ApiResponse<ExerciseAttemptResponse>.Fail(
+                    "Cannot complete already finished attempt"));
+            }
+
+            // Submit any final answers
+            if (request.Answers?.Any() == true)
+            {
+                foreach (var answer in request.Answers)
+                {
+                    await _trackingService.SubmitAnswerAsync(id, answer.QuestionId, answer.Answer);
+                }
+            }
+
+            var result = await _trackingService.CompleteAttemptAsync(id);
+
+            if (!result.IsSuccess)
+            {
+                return BadRequest(ApiResponse<ExerciseAttemptResponse>.Fail(
+                    result.ErrorMessage ?? "Failed to complete attempt"));
+            }
+
+            var response = await MapToAttemptResponse(result.AttemptInfo!, true);
+
+            _logger.LogInformation("Completed exercise attempt {AttemptId} with score {Score}%",
+                id, result.AttemptInfo!.ScorePercentage);
+
+            return Ok(ApiResponse<ExerciseAttemptResponse>.Ok(response));
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error completing exercise attempt {Id}", id);
+            return StatusCode(500, ApiResponse<ExerciseAttemptResponse>.Fail(
+                "An error occurred while completing the attempt"));
+        }
+    }
+
+    /// <summary>
+    /// Abandons an exercise attempt
+    /// </summary>
+    /// <param name="id">Attempt ID</param>
+    /// <returns>Abandoned attempt</returns>
+    [HttpPost("{id:guid}/abandon")]
+    [ProducesResponseType(typeof(ApiResponse<ExerciseAttemptResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<ApiResponse<ExerciseAttemptResponse>>> AbandonAttempt([FromRoute] Guid id)
+    {
+        try
+        {
+            var attempt = await _attemptRepository.GetByIdAsync(id);
+            if (attempt == null)
+            {
+                return NotFound(ApiResponse.Fail("Exercise attempt not found"));
+            }
+
+            if (attempt.Status != AttemptStatus.InProgress)
+            {
+                return BadRequest(ApiResponse<ExerciseAttemptResponse>.Fail(
+                    "Cannot abandon non-active attempt"));
+            }
+
+            attempt.Abandon();
+            await _attemptRepository.UpdateAsync(attempt);
+
+            var response = await MapToAttemptResponse(attempt);
+
+            _logger.LogInformation("Abandoned exercise attempt {AttemptId}", id);
+
+            return Ok(ApiResponse<ExerciseAttemptResponse>.Ok(response));
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error abandoning exercise attempt {Id}", id);
+            return StatusCode(500, ApiResponse<ExerciseAttemptResponse>.Fail(
+                "An error occurred while abandoning the attempt"));
+        }
+    }
+
+    /// <summary>
+    /// Gets user's exercise attempts with filtering and pagination
+    /// </summary>
+    /// <param name="userId">User ID</param>
+    /// <param name="request">Filter parameters</param>
+    /// <returns>Paginated list of attempts</returns>
+    [HttpGet("user/{userId:guid}")]
+    [ProducesResponseType(typeof(PagedApiResponse<ExerciseAttemptSummaryDto>), StatusCodes.Status200OK)]
+    public async Task<ActionResult<PagedApiResponse<ExerciseAttemptSummaryDto>>> GetUserAttempts(
+        [FromRoute] Guid userId,
+        [FromQuery] GetUserAttemptsRequest request)
+    {
+        try
+        {
+            var criteria = new AttemptSearchCriteria
+            {
+                UserId = userId,
+                ExerciseId = request.ExerciseId,
+                Status = request.Status,
+                StartedAfter = request.StartDate,
+                StartedBefore = request.EndDate,
+                IsPassed = request.OnlyPassed,
+                Skip = (request.Page - 1) * request.PageSize,
+                Take = request.PageSize,
+                OrderBy = request.SortBy,
+                OrderDescending = request.SortDirection.ToLower() == "desc"
+            };
+            
+            var attempts = await _attemptRepository.SearchAsync(criteria);
+            var totalCount = await _attemptRepository.CountByUserAsync(userId);
+
+            var response = attempts.Select(attempt => new ExerciseAttemptSummaryDto
+            {
+                Id = attempt.Id,
+                ExerciseId = attempt.ExerciseId,
+                ExerciseTitle = "Exercise Title", // Would need to load from repository
+                ExerciseType = ExerciseType.ReadingComprehension, // Would need to load from repository
+                Status = attempt.Status,
+                StartedAt = attempt.StartedAt,
+                CompletedAt = attempt.CompletedAt,
+                ScorePercentage = attempt.ScorePercentage,
+                IsPassed = attempt.IsPassed,
+                TimeSpent = attempt.TimeSpent
+            }).ToList();
+
+            return Ok(PagedApiResponse<ExerciseAttemptSummaryDto>.Ok(
+                response, request.Page, request.PageSize, totalCount));
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error retrieving user attempts for user {UserId}", userId);
+            return StatusCode(500, PagedApiResponse<ExerciseAttemptSummaryDto>.Fail(
+                "An error occurred while retrieving attempts"));
+        }
+    }
+
+    /// <summary>
+    /// Gets attempt statistics for an exercise
+    /// </summary>
+    /// <param name="exerciseId">Exercise ID</param>
+    /// <returns>Exercise attempt statistics</returns>
+    [HttpGet("exercise/{exerciseId:guid}/statistics")]
+    [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status200OK)]
+    public async Task<ActionResult<ApiResponse<object>>> GetExerciseStatistics([FromRoute] Guid exerciseId)
+    {
+        try
+        {
+            var statistics = await _attemptRepository.GetExerciseStatisticsAsync(exerciseId);
+
+            var response = new
+            {
+                ExerciseId = exerciseId,
+                TotalAttempts = statistics?.Count() ?? 0,
+                CompletedAttempts = statistics?.Count(s => s.Status == AttemptStatus.Completed) ?? 0,
+                PassedAttempts = statistics?.Count(s => s.IsPassed) ?? 0,
+                AverageScore = statistics?.Where(s => s.Status == AttemptStatus.Completed)
+                    .Average(s => s.ScorePercentage) ?? 0,
+                SuccessRate = statistics?.Any() == true
+                    ? statistics.Count(s => s.IsPassed) / (double)statistics.Count() * 100
+                    : 0
+            };
+
+            return Ok(ApiResponse<object>.Ok(response));
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error retrieving exercise statistics for exercise {ExerciseId}", exerciseId);
+            return StatusCode(500, ApiResponse<object>.Fail(
+                "An error occurred while retrieving statistics"));
+        }
+    }
+
+    private async Task<ExerciseAttemptResponse> MapToAttemptResponse(ExerciseAttempt attempt, bool includeResults = false)
+    {
+        return await MapAttemptEntityToResponse(attempt, includeResults);
+    }
+
+    
+    private async Task<ExerciseAttemptResponse> MapToAttemptResponse(AttemptInfo attemptInfo)
+    {
+        // Get the full attempt entity for complete response
+        var attempt = await _attemptRepository.GetByIdAsync(attemptInfo.AttemptId);
+        if (attempt == null)
+        {
+            // Fallback to basic response from AttemptInfo
+            return MapAttemptInfoToResponse(attemptInfo);
+        }
+        return await MapAttemptEntityToResponse(attempt, false);
+    }
+
+    private ExerciseAttemptResponse MapAttemptInfoToResponse(AttemptInfo attemptInfo)
+    {
+        return new ExerciseAttemptResponse
+        {
+            Id = attemptInfo.AttemptId,
+            ExerciseId = attemptInfo.ExerciseId,
+            UserId = attemptInfo.UserId,
+            Status = attemptInfo.Status,
+            StartedAt = attemptInfo.StartedAt,
+            CompletedAt = attemptInfo.CompletedAt,
+            ExpiresAt = attemptInfo.ExpiresAt,
+            TotalScore = attemptInfo.TotalScore,
+            MaxPossibleScore = 0, // Would need to load from exercise
+            ScorePercentage = attemptInfo.ScorePercentage,
+            IsPassed = attemptInfo.IsPassed,
+            TimeSpent = attemptInfo.TimeSpent,
+            QuestionsAnswered = attemptInfo.QuestionsAnswered,
+            TotalQuestions = attemptInfo.TotalQuestions,
+            CompletionPercentage = attemptInfo.CompletionPercentage,
+            RemainingTime = attemptInfo.RemainingTime,
+            Exercise = new AttemptExerciseDto
+            {
+                Id = attemptInfo.ExerciseId,
+                Title = "Exercise Title", // Would need to load from repository
+                Type = ExerciseType.ReadingComprehension, // Would need to load from repository
+                TimeLimit = null,
+                PassingScore = 60,
+                TotalQuestions = attemptInfo.TotalQuestions,
+                MaxScore = 0
+            }
+        };
+    }
+
+    private async Task<ExerciseAttemptResponse> MapAttemptEntityToResponse(ExerciseAttempt attempt, bool includeResults = false)
+    {
+        var response = new ExerciseAttemptResponse
+        {
+            Id = attempt.Id,
+            ExerciseId = attempt.ExerciseId,
+            UserId = attempt.UserId,
+            Status = attempt.Status,
+            StartedAt = attempt.StartedAt,
+            CompletedAt = attempt.CompletedAt,
+            ExpiresAt = attempt.ExpiresAt,
+            TotalScore = attempt.TotalScore,
+            MaxPossibleScore = attempt.MaxPossibleScore,
+            ScorePercentage = attempt.ScorePercentage,
+            IsPassed = attempt.IsPassed,
+            TimeSpent = attempt.TimeSpent,
+            QuestionsAnswered = attempt.QuestionsAnswered,
+            TotalQuestions = attempt.TotalQuestions,
+            CompletionPercentage = attempt.GetCompletionPercentage(),
+            RemainingTime = attempt.GetRemainingTime(),
+            Notes = attempt.Notes,
+            Exercise = new AttemptExerciseDto
+            {
+                Id = attempt.ExerciseId,
+                Title = attempt.Exercise?.Title ?? "Exercise Title",
+                Type = attempt.Exercise?.Type ?? ExerciseType.ReadingComprehension,
+                TimeLimit = attempt.Exercise?.TimeLimit,
+                PassingScore = attempt.Exercise?.PassingScore ?? 60,
+                TotalQuestions = attempt.TotalQuestions,
+                MaxScore = attempt.MaxPossibleScore
+            }
+        };
+
+        if (includeResults && attempt.Status == AttemptStatus.Completed)
+        {
+            response.Answers = attempt.Answers.Select(a => 
+            {
+                var question = attempt.Exercise?.Questions?.FirstOrDefault(q => q.Id == a.QuestionId);
+                return new AttemptQuestionAnswerDto
+                {
+                    QuestionId = a.QuestionId,
+                    QuestionText = question?.Text ?? "Question Text",
+                    UserAnswer = a.UserAnswer,
+                    CorrectAnswer = GetCorrectAnswerText(question), 
+                    IsCorrect = a.IsCorrect,
+                    PointsEarned = a.PointsEarned,
+                    MaxPoints = question?.Points ?? 0,
+                    TimeSpent = a.TimeSpent,
+                    Explanation = null // Would need to be implemented in Question entity
+                };
+            }).ToList();
+
+            response.Result = new AttemptResultDto
+            {
+                PerformanceLevel = attempt.ScorePercentage switch
+                {
+                    >= 90 => "Mükemmel",
+                    >= 80 => "İyi",
+                    >= 70 => "Orta",
+                    >= 60 => "Geçer",
+                    _ => "Yetersiz"
+                },
+                Strengths = new List<string>(),
+                AreasForImprovement = new List<string>(),
+                Recommendations = new List<string>()
+            };
+        }
+
+        return response;
+    }
+
+    private string GetCorrectAnswerText(Question? question)
+    {
+        if (question?.Options == null || !question.Options.Any())
+            return "Correct Answer";
+
+        var correctOptions = question.Options.Where(o => o.IsCorrect).ToList();
+        if (!correctOptions.Any())
+            return "Correct Answer";
+
+        return string.Join(", ", correctOptions.Select(o => o.Text));
+    }
+}

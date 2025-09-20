@@ -1,0 +1,121 @@
+import { Routes } from '@angular/router';
+import { authGuard } from '../../core/auth/guards/auth.guard';
+import { permissionGuard } from '../../core/auth/guards/permission.guard';
+
+export const userManagementRoutes: Routes = [
+  {
+    path: '',
+    redirectTo: 'users',
+    pathMatch: 'full'
+  },
+  {
+    path: 'users',
+    loadComponent: () => import('./components/user-list/user-list.component').then(m => m.UserListComponent),
+    canActivate: [authGuard, permissionGuard],
+    data: {
+      permission: 'Users.Read',
+      breadcrumb: 'Kullanıcılar'
+    },
+    title: 'Kullanıcılar - PlatformV1'
+  },
+  {
+    path: 'users/create',
+    loadComponent: () => import('./components/user-create/user-create.component').then(m => m.UserCreateComponent),
+    canActivate: [authGuard, permissionGuard],
+    data: {
+      permission: 'Users.Create',
+      breadcrumb: 'Yeni Kullanıcı'
+    },
+    title: 'Yeni Kullanıcı - PlatformV1'
+  },
+  {
+    path: 'users/:id',
+    loadComponent: () => import('./components/user-detail/user-detail.component').then(m => m.UserDetailComponent),
+    canActivate: [authGuard, permissionGuard],
+    data: {
+      permission: 'Users.Read',
+      breadcrumb: 'Kullanıcı Detayı'
+    },
+    title: 'Kullanıcı Detayı - PlatformV1'
+  },
+  {
+    path: 'users/:id/edit',
+    loadComponent: () => import('./components/user-edit/user-edit.component').then(m => m.UserEditComponent),
+    canActivate: [authGuard, permissionGuard],
+    data: {
+      permission: 'Users.Update',
+      breadcrumb: 'Kullanıcı Düzenle'
+    },
+    title: 'Kullanıcı Düzenle - PlatformV1'
+  },
+  {
+    path: 'roles',
+    loadComponent: () => import('./components/role-list/role-list.component').then(m => m.RoleListComponent),
+    canActivate: [authGuard, permissionGuard],
+    data: {
+      permission: 'Roles.Read',
+      breadcrumb: 'Roller'
+    },
+    title: 'Roller - PlatformV1'
+  },
+  {
+    path: 'roles/create',
+    loadComponent: () => import('./components/role-create/role-create.component').then(m => m.RoleCreateComponent),
+    canActivate: [authGuard, permissionGuard],
+    data: {
+      permission: 'Roles.Create',
+      breadcrumb: 'Yeni Rol'
+    },
+    title: 'Yeni Rol - PlatformV1'
+  },
+  {
+    path: 'roles/:id/edit',
+    loadComponent: () => import('./components/role-edit/role-edit.component').then(m => m.RoleEditComponent),
+    canActivate: [authGuard, permissionGuard],
+    data: {
+      permission: 'Roles.Update',
+      breadcrumb: 'Rol Düzenle'
+    },
+    title: 'Rol Düzenle - PlatformV1'
+  },
+  {
+    path: 'permissions',
+    loadComponent: () => import('./components/permission-list/permission-list.component').then(m => m.PermissionListComponent),
+    canActivate: [authGuard, permissionGuard],
+    data: {
+      permission: 'Permissions.Read',
+      breadcrumb: 'İzinler'
+    },
+    title: 'İzinler - PlatformV1'
+  },
+  {
+    path: 'groups',
+    loadComponent: () => import('./components/group-list/group-list.component').then(m => m.GroupListComponent),
+    canActivate: [authGuard, permissionGuard],
+    data: {
+      permission: 'Groups.Read',
+      breadcrumb: 'Gruplar'
+    },
+    title: 'Gruplar - PlatformV1'
+  },
+  {
+    path: 'groups/create',
+    loadComponent: () => import('./components/group-create/group-create.component').then(m => m.GroupCreateComponent),
+    canActivate: [authGuard, permissionGuard],
+    data: {
+      permission: 'Groups.Create',
+      breadcrumb: 'Yeni Grup'
+    },
+    title: 'Yeni Grup - PlatformV1'
+  },
+  {
+    path: 'groups/:id/edit',
+    loadComponent: () => import('./components/group-edit/group-edit.component').then(m => m.GroupEditComponent),
+    canActivate: [authGuard, permissionGuard],
+    data: {
+      permission: 'Groups.Update',
+      breadcrumb: 'Grup Düzenle'
+    },
+    title: 'Grup Düzenle - PlatformV1'
+  }
+];

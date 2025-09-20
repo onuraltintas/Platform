@@ -1,0 +1,12 @@
+global using NUnit.Framework;
+global using FluentAssertions;
+global using Moq;
+global using Microsoft.Extensions.Configuration;
+global using Microsoft.Extensions.DependencyInjection;
+global using Microsoft.Extensions.Logging;
+global using Microsoft.Extensions.Options;
+global using Microsoft.Extensions.Caching.Memory;
+global using Enterprise.Shared.Configuration.Interfaces;
+global using Enterprise.Shared.Configuration.Services;
+global using Enterprise.Shared.Configuration.Models;
+global using Enterprise.Shared.Configuration.Extensions;

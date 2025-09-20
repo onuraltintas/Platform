@@ -1,0 +1,17 @@
+global using System;
+global using System.Collections.Generic;
+global using System.Linq;
+global using System.Text;
+global using System.Threading;
+global using System.Threading.Tasks;
+global using System.Security.Claims;
+global using System.Security.Cryptography;
+global using Microsoft.Extensions.DependencyInjection;
+global using Microsoft.Extensions.DependencyInjection.Extensions;
+global using Microsoft.Extensions.Logging;
+global using Microsoft.Extensions.Options;
+global using Microsoft.Extensions.Caching.Memory;
+global using Enterprise.Shared.Common.Enums;
+global using Enterprise.Shared.Common.Exceptions;
+global using Enterprise.Shared.Security.Interfaces;
+global using Enterprise.Shared.Security.Models;

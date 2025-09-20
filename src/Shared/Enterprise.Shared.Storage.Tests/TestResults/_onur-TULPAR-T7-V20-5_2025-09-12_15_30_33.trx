@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="29a2ebc1-2467-4627-9395-e79471fd2e71" name="@onur-TULPAR-T7-V20-5 2025-09-12 15:30:33" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2025-09-12T15:30:33.2959975+03:00" queuing="2025-09-12T15:30:33.2959975+03:00" start="2025-09-12T15:30:32.4099558+03:00" finish="2025-09-12T15:30:33.3026908+03:00" />
+  <TestSettings name="default" id="59f57fe1-1f4c-4920-995c-199205680caf">
+    <Deployment runDeploymentRoot="_onur-TULPAR-T7-V20-5_2025-09-12_15_30_33" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="22831d82-27bc-4158-b402-7ebc499209d5" testId="733d28bf-5c7c-b507-4fcc-10f98a754bb9" testName="Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri.ValidateAsync_GecersizKarakterler_HataVermeliMeli(dosyaAdi: &quot;test|file.txt&quot;)" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0015359" startTime="2025-09-12T15:30:33.2039305+03:00" endTime="2025-09-12T15:30:33.2039305+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="22831d82-27bc-4158-b402-7ebc499209d5">
+      <Output>
+        <ErrorInfo>
+          <Message>Expected sonuc.IsValid to be False, but found True.</Message>
+          <StackTrace>   at FluentAssertions.Execution.XUnit2TestFramework.Throw(String message)
+   at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+   at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(String message, Object[] args)
+   at FluentAssertions.Primitives.BooleanAssertions`1.BeFalse(String because, Object[] becauseArgs)
+   at Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri.ValidateAsync_GecersizKarakterler_HataVermeliMeli(String dosyaAdi) in /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/Services/FileValidationServiceTests.cs:line 187
+--- End of stack trace from previous location ---</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="7e701133-eaae-4d6e-b019-e27c5202b2dd" testId="e256f369-04ce-2b10-12bb-4a7231d718f0" testName="Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri.ValidateAsync_GecersizKarakterler_HataVermeliMeli(dosyaAdi: &quot;test&lt;file&gt;.txt&quot;)" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0004455" startTime="2025-09-12T15:30:33.2044647+03:00" endTime="2025-09-12T15:30:33.2044648+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="7e701133-eaae-4d6e-b019-e27c5202b2dd">
+      <Output>
+        <ErrorInfo>
+          <Message>Expected sonuc.IsValid to be False, but found True.</Message>
+          <StackTrace>   at FluentAssertions.Execution.XUnit2TestFramework.Throw(String message)
+   at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+   at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(String message, Object[] args)
+   at FluentAssertions.Primitives.BooleanAssertions`1.BeFalse(String because, Object[] becauseArgs)
+   at Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri.ValidateAsync_GecersizKarakterler_HataVermeliMeli(String dosyaAdi) in /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/Services/FileValidationServiceTests.cs:line 187
+--- End of stack trace from previous location ---</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="e2202d77-51ad-4cbd-beae-299be7ce4785" testId="f69d475d-04a3-9295-61fa-6ab20d8f5671" testName="Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri.ValidateAsync_GecersizKarakterler_HataVermeliMeli(dosyaAdi: &quot;test?file.txt&quot;)" computerName="onur-TULPAR-T7-V20-5" duration="00:00:00.0929407" startTime="2025-09-12T15:30:33.2012044+03:00" endTime="2025-09-12T15:30:33.2012190+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="e2202d77-51ad-4cbd-beae-299be7ce4785">
+      <Output>
+        <ErrorInfo>
+          <Message>Expected sonuc.IsValid to be False, but found True.</Message>
+          <StackTrace>   at FluentAssertions.Execution.XUnit2TestFramework.Throw(String message)
+   at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+   at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(String message, Object[] args)
+   at FluentAssertions.Primitives.BooleanAssertions`1.BeFalse(String because, Object[] becauseArgs)
+   at Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri.ValidateAsync_GecersizKarakterler_HataVermeliMeli(String dosyaAdi) in /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/Services/FileValidationServiceTests.cs:line 187
+--- End of stack trace from previous location ---</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri.ValidateAsync_GecersizKarakterler_HataVermeliMeli(dosyaAdi: &quot;test&lt;file&gt;.txt&quot;)" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="e256f369-04ce-2b10-12bb-4a7231d718f0">
+      <Execution id="7e701133-eaae-4d6e-b019-e27c5202b2dd" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri" name="ValidateAsync_GecersizKarakterler_HataVermeliMeli" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri.ValidateAsync_GecersizKarakterler_HataVermeliMeli(dosyaAdi: &quot;test|file.txt&quot;)" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="733d28bf-5c7c-b507-4fcc-10f98a754bb9">
+      <Execution id="22831d82-27bc-4158-b402-7ebc499209d5" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri" name="ValidateAsync_GecersizKarakterler_HataVermeliMeli" />
+    </UnitTest>
+    <UnitTest name="Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri.ValidateAsync_GecersizKarakterler_HataVermeliMeli(dosyaAdi: &quot;test?file.txt&quot;)" storage="/home/onur/desktop/platformv1/src/shared/enterprise.shared.storage.tests/bin/debug/net8.0/enterprise.shared.storage.tests.dll" id="f69d475d-04a3-9295-61fa-6ab20d8f5671">
+      <Execution id="e2202d77-51ad-4cbd-beae-299be7ce4785" />
+      <TestMethod codeBase="/home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/bin/Debug/net8.0/Enterprise.Shared.Storage.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri" name="ValidateAsync_GecersizKarakterler_HataVermeliMeli" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="733d28bf-5c7c-b507-4fcc-10f98a754bb9" executionId="22831d82-27bc-4158-b402-7ebc499209d5" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="e256f369-04ce-2b10-12bb-4a7231d718f0" executionId="7e701133-eaae-4d6e-b019-e27c5202b2dd" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="f69d475d-04a3-9295-61fa-6ab20d8f5671" executionId="e2202d77-51ad-4cbd-beae-299be7ce4785" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Failed">
+    <Counters total="3" executed="3" passed="0" failed="3" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.4.5+1caef2f33e (64-bit .NET 8.0.19)
+[xUnit.net 00:00:00.32]   Discovering: Enterprise.Shared.Storage.Tests
+[xUnit.net 00:00:00.36]   Discovered:  Enterprise.Shared.Storage.Tests
+[xUnit.net 00:00:00.36]   Starting:    Enterprise.Shared.Storage.Tests
+[xUnit.net 00:00:00.49]       Expected sonuc.IsValid to be False, but found True.
+[xUnit.net 00:00:00.49]       Stack Trace:
+[xUnit.net 00:00:00.49]            at FluentAssertions.Execution.XUnit2TestFramework.Throw(String message)
+[xUnit.net 00:00:00.49]            at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+[xUnit.net 00:00:00.49]            at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+[xUnit.net 00:00:00.49]            at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+[xUnit.net 00:00:00.49]            at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+[xUnit.net 00:00:00.49]            at FluentAssertions.Execution.AssertionScope.FailWith(String message, Object[] args)
+[xUnit.net 00:00:00.49]            at FluentAssertions.Primitives.BooleanAssertions`1.BeFalse(String because, Object[] becauseArgs)
+[xUnit.net 00:00:00.49]         /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/Services/FileValidationServiceTests.cs(187,0): at Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri.ValidateAsync_GecersizKarakterler_HataVermeliMeli(String dosyaAdi)
+[xUnit.net 00:00:00.49]         --- End of stack trace from previous location ---
+[xUnit.net 00:00:00.49]       Expected sonuc.IsValid to be False, but found True.
+[xUnit.net 00:00:00.49]       Stack Trace:
+[xUnit.net 00:00:00.49]            at FluentAssertions.Execution.XUnit2TestFramework.Throw(String message)
+[xUnit.net 00:00:00.49]            at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+[xUnit.net 00:00:00.49]            at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+[xUnit.net 00:00:00.49]            at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+[xUnit.net 00:00:00.49]            at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+[xUnit.net 00:00:00.49]            at FluentAssertions.Execution.AssertionScope.FailWith(String message, Object[] args)
+[xUnit.net 00:00:00.49]            at FluentAssertions.Primitives.BooleanAssertions`1.BeFalse(String because, Object[] becauseArgs)
+[xUnit.net 00:00:00.49]         /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/Services/FileValidationServiceTests.cs(187,0): at Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri.ValidateAsync_GecersizKarakterler_HataVermeliMeli(String dosyaAdi)
+[xUnit.net 00:00:00.49]         --- End of stack trace from previous location ---
+[xUnit.net 00:00:00.49]       Expected sonuc.IsValid to be False, but found True.
+[xUnit.net 00:00:00.49]       Stack Trace:
+[xUnit.net 00:00:00.49]            at FluentAssertions.Execution.XUnit2TestFramework.Throw(String message)
+[xUnit.net 00:00:00.49]            at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+[xUnit.net 00:00:00.49]            at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+[xUnit.net 00:00:00.49]            at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+[xUnit.net 00:00:00.49]            at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+[xUnit.net 00:00:00.49]            at FluentAssertions.Execution.AssertionScope.FailWith(String message, Object[] args)
+[xUnit.net 00:00:00.49]            at FluentAssertions.Primitives.BooleanAssertions`1.BeFalse(String because, Object[] becauseArgs)
+[xUnit.net 00:00:00.49]         /home/onur/Desktop/PlatformV1/src/Shared/Enterprise.Shared.Storage.Tests/Services/FileValidationServiceTests.cs(187,0): at Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri.ValidateAsync_GecersizKarakterler_HataVermeliMeli(String dosyaAdi)
+[xUnit.net 00:00:00.49]         --- End of stack trace from previous location ---
+[xUnit.net 00:00:00.49]   Finished:    Enterprise.Shared.Storage.Tests
+</StdOut>
+    </Output>
+    <RunInfos>
+      <RunInfo computerName="onur-TULPAR-T7-V20-5" outcome="Error" timestamp="2025-09-12T15:30:33.1999774+03:00">
+        <Text>[xUnit.net 00:00:00.49]     Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri.ValidateAsync_GecersizKarakterler_HataVermeliMeli(dosyaAdi: "test?file.txt") [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="onur-TULPAR-T7-V20-5" outcome="Error" timestamp="2025-09-12T15:30:33.2040479+03:00">
+        <Text>[xUnit.net 00:00:00.49]     Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri.ValidateAsync_GecersizKarakterler_HataVermeliMeli(dosyaAdi: "test|file.txt") [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="onur-TULPAR-T7-V20-5" outcome="Error" timestamp="2025-09-12T15:30:33.2043230+03:00">
+        <Text>[xUnit.net 00:00:00.49]     Enterprise.Shared.Storage.Tests.Services.DosyaValidasyonServisTestleri.ValidateAsync_GecersizKarakterler_HataVermeliMeli(dosyaAdi: "test&lt;file&gt;.txt") [FAIL]</Text>
+      </RunInfo>
+    </RunInfos>
+  </ResultSummary>
+</TestRun>

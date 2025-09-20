@@ -1,0 +1,522 @@
+using Microsoft.AspNetCore.Mvc;
+using SpeedReading.API.Models;
+using SpeedReading.Application.Interfaces;
+using SpeedReading.Domain.Entities;
+using SpeedReading.Domain.ValueObjects;
+using SpeedReading.Domain.Enums;
+using SpeedReading.Application.Services;
+using System.ComponentModel.DataAnnotations;
+
+namespace SpeedReading.API.Controllers;
+
+/// <summary>
+/// Controller for managing reading texts and text analysis
+/// </summary>
+[ApiController]
+[Route("api/[controller]")]
+[Produces("application/json")]
+[ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
+[ProducesResponseType(typeof(ApiResponse), StatusCodes.Status500InternalServerError)]
+public class ReadingTextController : ControllerBase
+{
+    private readonly IReadingTextRepository _textRepository;
+    private readonly ITextAnalysisService _textAnalysisService;
+    private readonly TurkishTextAnalyzer _turkishAnalyzer;
+    private readonly ILogger<ReadingTextController> _logger;
+
+    /// <summary>
+    /// Initializes a new instance of the ReadingTextController
+    /// </summary>
+    public ReadingTextController(
+        IReadingTextRepository textRepository,
+        ITextAnalysisService textAnalysisService,
+        TurkishTextAnalyzer turkishAnalyzer,
+        ILogger<ReadingTextController> logger)
+    {
+        _textRepository = textRepository;
+        _textAnalysisService = textAnalysisService;
+        _turkishAnalyzer = turkishAnalyzer;
+        _logger = logger;
+    }
+
+    /// <summary>
+    /// Creates a new reading text with automatic analysis
+    /// </summary>
+    /// <param name="request">Text creation request</param>
+    /// <returns>Created text information</returns>
+    [HttpPost]
+    [ProducesResponseType(typeof(ApiResponse<ReadingTextResponse>), StatusCodes.Status201Created)]
+    public async Task<ActionResult<ApiResponse<ReadingTextResponse>>> CreateText(
+        [FromBody] CreateReadingTextRequest request)
+    {
+        try
+        {
+            // Analyze the text first
+            var analysisResult = await _textAnalysisService.AnalyzeTextAsync(request.Content);
+
+            // Create text statistics
+            var statistics = TextStatistics.Calculate(request.Content);
+
+            // Create text metadata
+            var metadata = new TextMetadata(
+                analysisResult.Keywords.ToList(),
+                analysisResult.Summary,
+                await _turkishAnalyzer.AnalyzeTopicAsync(request.Content),
+                analysisResult.ReadabilityScore.ToString("F1"));
+
+            // Create the reading text
+            var readingText = new ReadingText(
+                request.Title,
+                request.Content,
+                request.Source ?? string.Empty,
+                request.TargetEducationLevel,
+                request.Category ?? string.Empty,
+                request.Language,
+                statistics,
+                metadata);
+
+            // Set tags
+            if (request.Tags?.Any() == true)
+            {
+                readingText.UpdateTags(request.Tags);
+            }
+
+            // Set publication status
+            if (!request.IsPublished)
+            {
+                readingText.Unpublish();
+            }
+
+            await _textRepository.CreateAsync(readingText);
+
+            var response = await MapToTextResponse(readingText);
+
+            _logger.LogInformation("Created reading text {Title} with ID {Id}", request.Title, readingText.Id);
+
+            return CreatedAtAction(
+                nameof(GetText),
+                new { id = readingText.Id },
+                ApiResponse<ReadingTextResponse>.Ok(response));
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error creating reading text {Title}", request.Title);
+            return StatusCode(500, ApiResponse.Fail("An error occurred while creating the text"));
+        }
+    }
+
+    /// <summary>
+    /// Gets a reading text by ID
+    /// </summary>
+    /// <param name="id">Text ID</param>
+    /// <returns>Reading text details</returns>
+    [HttpGet("{id:guid}")]
+    [ProducesResponseType(typeof(ApiResponse<ReadingTextResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<ApiResponse<ReadingTextResponse>>> GetText([FromRoute] Guid id)
+    {
+        try
+        {
+            var text = await _textRepository.GetByIdAsync(id);
+            if (text == null)
+            {
+                return NotFound(ApiResponse.Fail("Reading text not found"));
+            }
+
+            var response = await MapToTextResponse(text);
+            return Ok(ApiResponse<ReadingTextResponse>.Ok(response));
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error retrieving reading text {Id}", id);
+            return StatusCode(500, ApiResponse.Fail("An error occurred while retrieving the text"));
+        }
+    }
+
+    /// <summary>
+    /// Updates an existing reading text
+    /// </summary>
+    /// <param name="id">Text ID</param>
+    /// <param name="request">Text update request</param>
+    /// <returns>Updated text information</returns>
+    [HttpPut("{id:guid}")]
+    [ProducesResponseType(typeof(ApiResponse<ReadingTextResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<ApiResponse<ReadingTextResponse>>> UpdateText(
+        [FromRoute] Guid id,
+        [FromBody] UpdateReadingTextRequest request)
+    {
+        try
+        {
+            var text = await _textRepository.GetByIdAsync(id);
+            if (text == null)
+            {
+                return NotFound(ApiResponse.Fail("Reading text not found"));
+            }
+
+            bool contentChanged = false;
+
+            // Update fields if provided
+            if (!string.IsNullOrEmpty(request.Title))
+            {
+                text.UpdateTitle(request.Title);
+            }
+
+            if (!string.IsNullOrEmpty(request.Content))
+            {
+                text.UpdateContent(request.Content);
+                contentChanged = true;
+            }
+
+            if (request.Source != null)
+            {
+                text.UpdateSource(request.Source);
+            }
+
+            if (request.TargetEducationLevel.HasValue)
+            {
+                text.UpdateTargetEducationLevel(request.TargetEducationLevel.Value);
+            }
+
+            if (request.Category != null)
+            {
+                text.UpdateCategory(request.Category);
+            }
+
+            if (request.Tags != null)
+            {
+                text.UpdateTags(request.Tags);
+            }
+
+            if (request.IsPublished.HasValue)
+            {
+                if (request.IsPublished.Value)
+                    text.Publish();
+                else
+                    text.Unpublish();
+            }
+
+            // Re-analyze if content changed
+            if (contentChanged)
+            {
+                var analysisResult = await _textAnalysisService.AnalyzeTextAsync(text.Content);
+                var statistics = TextStatistics.Calculate(text.Content);
+                var metadata = new TextMetadata(
+                    analysisResult.Keywords.ToList(),
+                    analysisResult.Summary,
+                    await _turkishAnalyzer.AnalyzeTopicAsync(text.Content),
+                    analysisResult.ReadabilityScore.ToString("F1"));
+
+                text.UpdateStatistics(statistics);
+                text.UpdateMetadata(metadata);
+            }
+
+            await _textRepository.UpdateAsync(text);
+
+            var response = await MapToTextResponse(text);
+
+            _logger.LogInformation("Updated reading text {Id}", id);
+
+            return Ok(ApiResponse<ReadingTextResponse>.Ok(response));
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error updating reading text {Id}", id);
+            return StatusCode(500, ApiResponse.Fail("An error occurred while updating the text"));
+        }
+    }
+
+    /// <summary>
+    /// Deletes a reading text
+    /// </summary>
+    /// <param name="id">Text ID</param>
+    /// <returns>Deletion confirmation</returns>
+    [HttpDelete("{id:guid}")]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<ApiResponse>> DeleteText([FromRoute] Guid id)
+    {
+        try
+        {
+            var text = await _textRepository.GetByIdAsync(id);
+            if (text == null)
+            {
+                return NotFound(ApiResponse.Fail("Reading text not found"));
+            }
+
+            await _textRepository.DeleteAsync(id);
+
+            _logger.LogInformation("Deleted reading text {Id}", id);
+
+            return Ok(ApiResponse.Ok());
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error deleting reading text {Id}", id);
+            return StatusCode(500, ApiResponse.Fail("An error occurred while deleting the text"));
+        }
+    }
+
+    /// <summary>
+    /// Searches reading texts with filters and pagination
+    /// </summary>
+    /// <param name="request">Search parameters</param>
+    /// <returns>Paginated search results</returns>
+    [HttpGet]
+    [ProducesResponseType(typeof(PagedApiResponse<ReadingTextResponse>), StatusCodes.Status200OK)]
+    public async Task<ActionResult<PagedApiResponse<ReadingTextResponse>>> SearchTexts(
+        [FromQuery] SearchReadingTextsRequest request)
+    {
+        try
+        {
+            var searchResults = await _textRepository.SearchAsync(
+                request.Query,
+                request.EducationLevel,
+                request.Difficulty,
+                request.Category,
+                request.Tags,
+                request.Language,
+                request.OnlyPublished ?? true,
+                request.MinWordCount,
+                request.MaxWordCount,
+                request.Page,
+                request.PageSize,
+                request.SortBy,
+                request.SortDirection);
+
+            var response = new List<ReadingTextResponse>();
+            foreach (var text in searchResults.Items)
+            {
+                response.Add(await MapToTextResponse(text));
+            }
+
+            return Ok(PagedApiResponse<ReadingTextResponse>.Ok(
+                response, request.Page, request.PageSize, searchResults.TotalCount));
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error searching reading texts");
+            return StatusCode(500, PagedApiResponse<ReadingTextResponse>.Fail(
+                "An error occurred while searching texts"));
+        }
+    }
+
+    /// <summary>
+    /// Analyzes text content without saving it
+    /// </summary>
+    /// <param name="request">Text analysis request</param>
+    /// <returns>Text analysis results</returns>
+    [HttpPost("analyze")]
+    [ProducesResponseType(typeof(ApiResponse<TextAnalysisResponse>), StatusCodes.Status200OK)]
+    public async Task<ActionResult<ApiResponse<TextAnalysisResponse>>> AnalyzeText(
+        [FromBody] AnalyzeTextRequest request)
+    {
+        try
+        {
+            var analysisResult = await _textAnalysisService.AnalyzeTextAsync(request.Content);
+            var statistics = TextStatistics.Calculate(request.Content);
+
+            var response = new TextAnalysisResponse
+            {
+                Statistics = new TextStatisticsDto
+                {
+                    WordCount = statistics.WordCount,
+                    SentenceCount = statistics.SentenceCount,
+                    ParagraphCount = statistics.ParagraphCount,
+                    AverageWordsPerSentence = statistics.AverageWordsPerSentence,
+                    AverageSentenceLength = statistics.AverageSentenceLength,
+                    AverageWordLength = statistics.AverageWordLength,
+                    LexicalDiversity = statistics.LexicalDiversity,
+                    ReadabilityScore = analysisResult.ReadabilityScore,
+                    EstimatedReadingTimeMinutes = statistics.EstimatedReadingTime
+                },
+                Difficulty = analysisResult.Difficulty,
+                RecommendedEducationLevel = analysisResult.TargetEducationLevel,
+                Metadata = new TextMetadataDto
+                {
+                    Keywords = analysisResult.Keywords.ToList(),
+                    Summary = analysisResult.Summary,
+                    MainTopic = await _turkishAnalyzer.AnalyzeTopicAsync(request.Content),
+                    ReadingLevel = analysisResult.Difficulty.ToString(),
+                    ComplexWordsCount = analysisResult.ComplexWordCount,
+                    QualityScore = analysisResult.ReadabilityScore
+                },
+                ReadabilityRecommendations = GenerateReadabilityRecommendations(analysisResult)
+            };
+
+            return Ok(ApiResponse<TextAnalysisResponse>.Ok(response));
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error analyzing text content");
+            return StatusCode(500, ApiResponse.Fail("An error occurred while analyzing the text"));
+        }
+    }
+
+    /// <summary>
+    /// Gets recommended texts for a specific education level and difficulty
+    /// </summary>
+    /// <param name="educationLevel">Target education level</param>
+    /// <param name="difficulty">Text difficulty</param>
+    /// <param name="count">Number of recommendations</param>
+    /// <returns>List of recommended texts</returns>
+    [HttpGet("recommendations")]
+    [ProducesResponseType(typeof(ApiResponse<List<ReadingTextResponse>>), StatusCodes.Status200OK)]
+    public async Task<ActionResult<ApiResponse<List<ReadingTextResponse>>>> GetRecommendations(
+        [FromQuery] EducationCategory educationLevel,
+        [FromQuery] TextDifficulty? difficulty = null,
+        [FromQuery, Range(1, 50)] int count = 10)
+    {
+        try
+        {
+            var recommendations = await _textRepository.GetRecommendedTextsAsync(
+                educationLevel, difficulty, count);
+
+            var response = new List<ReadingTextResponse>();
+            foreach (var text in recommendations)
+            {
+                response.Add(await MapToTextResponse(text));
+            }
+
+            return Ok(ApiResponse<List<ReadingTextResponse>>.Ok(response));
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error getting text recommendations");
+            return StatusCode(500, ApiResponse.Fail("An error occurred while getting recommendations"));
+        }
+    }
+
+    /// <summary>
+    /// Publishes a reading text
+    /// </summary>
+    /// <param name="id">Text ID</param>
+    /// <returns>Updated text</returns>
+    [HttpPut("{id:guid}/publish")]
+    [ProducesResponseType(typeof(ApiResponse<ReadingTextResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<ApiResponse<ReadingTextResponse>>> PublishText([FromRoute] Guid id)
+    {
+        try
+        {
+            var text = await _textRepository.GetByIdAsync(id);
+            if (text == null)
+            {
+                return NotFound(ApiResponse.Fail("Reading text not found"));
+            }
+
+            text.Publish();
+            await _textRepository.UpdateAsync(text);
+
+            var response = await MapToTextResponse(text);
+
+            _logger.LogInformation("Published reading text {Id}", id);
+
+            return Ok(ApiResponse<ReadingTextResponse>.Ok(response));
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error publishing reading text {Id}", id);
+            return StatusCode(500, ApiResponse.Fail("An error occurred while publishing the text"));
+        }
+    }
+
+    /// <summary>
+    /// Unpublishes a reading text
+    /// </summary>
+    /// <param name="id">Text ID</param>
+    /// <returns>Updated text</returns>
+    [HttpPut("{id:guid}/unpublish")]
+    [ProducesResponseType(typeof(ApiResponse<ReadingTextResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<ApiResponse<ReadingTextResponse>>> UnpublishText([FromRoute] Guid id)
+    {
+        try
+        {
+            var text = await _textRepository.GetByIdAsync(id);
+            if (text == null)
+            {
+                return NotFound(ApiResponse.Fail("Reading text not found"));
+            }
+
+            text.Unpublish();
+            await _textRepository.UpdateAsync(text);
+
+            var response = await MapToTextResponse(text);
+
+            _logger.LogInformation("Unpublished reading text {Id}", id);
+
+            return Ok(ApiResponse<ReadingTextResponse>.Ok(response));
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error unpublishing reading text {Id}", id);
+            return StatusCode(500, ApiResponse.Fail("An error occurred while unpublishing the text"));
+        }
+    }
+
+    private async Task<ReadingTextResponse> MapToTextResponse(ReadingText text)
+    {
+        return new ReadingTextResponse
+        {
+            Id = text.Id,
+            Title = text.Title,
+            Content = text.Content,
+            Source = text.Source,
+            TargetEducationLevel = text.TargetEducationLevel,
+            Category = text.Category,
+            Tags = text.Tags.ToList(),
+            Language = text.Language,
+            IsPublished = text.IsPublished,
+            Difficulty = text.Difficulty,
+            CreatedAt = text.CreatedAt,
+            UpdatedAt = text.UpdatedAt,
+            Statistics = new TextStatisticsDto
+            {
+                WordCount = text.Statistics.WordCount,
+                SentenceCount = text.Statistics.SentenceCount,
+                ParagraphCount = text.Statistics.ParagraphCount,
+                AverageWordsPerSentence = text.Statistics.AverageWordsPerSentence,
+                AverageSentenceLength = text.Statistics.AverageSentenceLength,
+                AverageWordLength = text.Statistics.AverageWordLength,
+                LexicalDiversity = text.Statistics.LexicalDiversity,
+                ReadabilityScore = text.Statistics.ReadabilityScore,
+                EstimatedReadingTimeMinutes = text.Statistics.EstimatedReadingTime
+            },
+            Metadata = new TextMetadataDto
+            {
+                Keywords = text.Metadata.Keywords.ToList(),
+                Summary = text.Metadata.Summary,
+                MainTopic = text.Metadata.MainTopic,
+                ReadingLevel = text.Metadata.ReadingLevel,
+                ComplexWordsCount = 0, // Can be calculated if needed
+                QualityScore = text.Statistics.ReadabilityScore
+            }
+        };
+    }
+
+    private List<string> GenerateReadabilityRecommendations(Application.Interfaces.TextAnalysisResult analysis)
+    {
+        var recommendations = new List<string>();
+
+        if (analysis.ReadabilityScore < 30)
+        {
+            recommendations.Add("Metin çok zor. Daha kısa cümleler ve basit kelimeler kullanın.");
+        }
+        else if (analysis.ReadabilityScore < 50)
+        {
+            recommendations.Add("Metin orta zorlukta. Cümle uzunluğunu kontrol edin.");
+        }
+        else if (analysis.ReadabilityScore > 80)
+        {
+            recommendations.Add("Metin çok kolay. Daha karmaşık yapılar ekleyebilirsiniz.");
+        }
+
+        if (analysis.ComplexWordPercentage > 20)
+        {
+            recommendations.Add("Karmaşık kelime oranı yüksek. Daha basit alternatifler kullanın.");
+        }
+
+        return recommendations;
+    }
+}

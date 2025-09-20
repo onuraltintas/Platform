@@ -1,0 +1,384 @@
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+
+@Component({
+  selector: 'app-profile',
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule],
+  template: `
+    <div class="profile-container">
+      <!-- Header -->
+      <div class="row mb-4">
+        <div class="col-12">
+          <h1 class="h3 mb-1">Profil Ayarları</h1>
+          <p class="text-muted mb-0">Kişisel bilgilerinizi ve hesap ayarlarınızı yönetin</p>
+        </div>
+      </div>
+
+      <div class="row">
+        <!-- Profile Info Card -->
+        <div class="col-lg-4 mb-4">
+          <div class="card">
+            <div class="card-body text-center">
+              <div class="profile-avatar mb-3">
+                <div class="avatar-placeholder">
+                  <i class="fas fa-user fa-3x text-muted"></i>
+                </div>
+                <button class="btn btn-sm btn-outline-primary mt-2">
+                  <i class="fas fa-camera me-2"></i>
+                  Fotoğraf Değiştir
+                </button>
+              </div>
+
+              <h5 class="card-title">{{ userInfo.name }}</h5>
+              <p class="text-muted">{{ userInfo.email }}</p>
+
+              <div class="profile-stats">
+                <div class="row text-center">
+                  <div class="col-4">
+                    <div class="stat-item">
+                      <h6 class="stat-number">{{ userInfo.loginCount }}</h6>
+                      <small class="text-muted">Toplam Giriş</small>
+                    </div>
+                  </div>
+                  <div class="col-4">
+                    <div class="stat-item">
+                      <h6 class="stat-number">{{ userInfo.lastLoginDays }}</h6>
+                      <small class="text-muted">Gün Önce</small>
+                    </div>
+                  </div>
+                  <div class="col-4">
+                    <div class="stat-item">
+                      <h6 class="stat-number">{{ userInfo.activeGroups }}</h6>
+                      <small class="text-muted">Aktif Grup</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Actions -->
+          <div class="card mt-3">
+            <div class="card-header">
+              <h6 class="card-title mb-0">Hızlı İşlemler</h6>
+            </div>
+            <div class="card-body">
+              <div class="d-grid gap-2">
+                <button class="btn btn-outline-primary btn-sm">
+                  <i class="fas fa-key me-2"></i>
+                  Şifre Değiştir
+                </button>
+                <button class="btn btn-outline-info btn-sm">
+                  <i class="fas fa-download me-2"></i>
+                  Verileri İndir
+                </button>
+                <button class="btn btn-outline-warning btn-sm">
+                  <i class="fas fa-shield-alt me-2"></i>
+                  2FA Ayarları
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Profile Form -->
+        <div class="col-lg-8">
+          <div class="card">
+            <div class="card-header">
+              <h5 class="card-title mb-0">
+                <i class="fas fa-user-edit me-2"></i>
+                Kişisel Bilgiler
+              </h5>
+            </div>
+            <div class="card-body">
+              <form [formGroup]="profileForm" (ngSubmit)="onSave()">
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label for="firstName" class="form-label">Ad *</label>
+                    <input
+                      type="text"
+                      id="firstName"
+                      class="form-control"
+                      formControlName="firstName"
+                      [class.is-invalid]="isFieldInvalid('firstName')"
+                    >
+                    <div *ngIf="isFieldInvalid('firstName')" class="invalid-feedback">
+                      Ad alanı zorunludur.
+                    </div>
+                  </div>
+
+                  <div class="col-md-6 mb-3">
+                    <label for="lastName" class="form-label">Soyad *</label>
+                    <input
+                      type="text"
+                      id="lastName"
+                      class="form-control"
+                      formControlName="lastName"
+                      [class.is-invalid]="isFieldInvalid('lastName')"
+                    >
+                    <div *ngIf="isFieldInvalid('lastName')" class="invalid-feedback">
+                      Soyad alanı zorunludur.
+                    </div>
+                  </div>
+
+                  <div class="col-md-6 mb-3">
+                    <label for="email" class="form-label">E-posta *</label>
+                    <input
+                      type="email"
+                      id="email"
+                      class="form-control"
+                      formControlName="email"
+                      [class.is-invalid]="isFieldInvalid('email')"
+                      readonly
+                    >
+                    <small class="form-text text-muted">E-posta adresi değiştirilemez</small>
+                  </div>
+
+                  <div class="col-md-6 mb-3">
+                    <label for="phoneNumber" class="form-label">Telefon</label>
+                    <input
+                      type="tel"
+                      id="phoneNumber"
+                      class="form-control"
+                      formControlName="phoneNumber"
+                      placeholder="+90 555 123 45 67"
+                    >
+                  </div>
+
+                  <div class="col-md-6 mb-3">
+                    <label for="department" class="form-label">Departman</label>
+                    <select id="department" class="form-select" formControlName="department">
+                      <option value="">Departman Seçin</option>
+                      <option value="it">Bilgi İşlem</option>
+                      <option value="hr">İnsan Kaynakları</option>
+                      <option value="finance">Finans</option>
+                      <option value="sales">Satış</option>
+                      <option value="marketing">Pazarlama</option>
+                    </select>
+                  </div>
+
+                  <div class="col-md-6 mb-3">
+                    <label for="position" class="form-label">Pozisyon</label>
+                    <input
+                      type="text"
+                      id="position"
+                      class="form-control"
+                      formControlName="position"
+                      placeholder="Ör. Yazılım Geliştirici"
+                    >
+                  </div>
+
+                  <div class="col-12 mb-3">
+                    <label for="bio" class="form-label">Hakkımda</label>
+                    <textarea
+                      id="bio"
+                      class="form-control"
+                      formControlName="bio"
+                      rows="3"
+                      placeholder="Kendiniz hakkında kısa bilgi..."
+                    ></textarea>
+                  </div>
+                </div>
+
+                <!-- Notification Preferences -->
+                <div class="card bg-light mb-3">
+                  <div class="card-body">
+                    <h6 class="card-title">
+                      <i class="fas fa-bell me-2"></i>
+                      Bildirim Tercihleri
+                    </h6>
+                    <div class="row">
+                      <div class="col-md-4 mb-2">
+                        <div class="form-check">
+                          <input
+                            type="checkbox"
+                            id="emailNotifications"
+                            class="form-check-input"
+                            formControlName="emailNotifications"
+                          >
+                          <label for="emailNotifications" class="form-check-label">
+                            E-posta Bildirimleri
+                          </label>
+                        </div>
+                      </div>
+                      <div class="col-md-4 mb-2">
+                        <div class="form-check">
+                          <input
+                            type="checkbox"
+                            id="smsNotifications"
+                            class="form-check-input"
+                            formControlName="smsNotifications"
+                          >
+                          <label for="smsNotifications" class="form-check-label">
+                            SMS Bildirimleri
+                          </label>
+                        </div>
+                      </div>
+                      <div class="col-md-4 mb-2">
+                        <div class="form-check">
+                          <input
+                            type="checkbox"
+                            id="pushNotifications"
+                            class="form-check-input"
+                            formControlName="pushNotifications"
+                          >
+                          <label for="pushNotifications" class="form-check-label">
+                            Push Bildirimleri
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="d-flex justify-content-end gap-2">
+                  <button type="button" class="btn btn-outline-secondary">
+                    <i class="fas fa-undo me-2"></i>
+                    Sıfırla
+                  </button>
+                  <button
+                    type="submit"
+                    class="btn btn-primary"
+                    [disabled]="profileForm.invalid || saving"
+                  >
+                    <span *ngIf="saving" class="spinner-border spinner-border-sm me-2"></span>
+                    <i *ngIf="!saving" class="fas fa-save me-2"></i>
+                    Kaydet
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `,
+  styles: [`
+    .profile-container {
+      padding: 1rem;
+    }
+
+    .avatar-placeholder {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: #f8f9fa;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto;
+      border: 3px solid #e9ecef;
+    }
+
+    .profile-stats {
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid #e9ecef;
+    }
+
+    .stat-item {
+      padding: 0.5rem 0;
+    }
+
+    .stat-number {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #495057;
+      margin-bottom: 0.25rem;
+    }
+
+    .card {
+      border: none;
+      box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+      transition: box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1);
+    }
+
+    .btn {
+      transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .form-control:focus {
+      border-color: #80bdff;
+      box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    }
+
+    .bg-light {
+      background-color: #f8f9fa !important;
+    }
+
+    @media (max-width: 768px) {
+      .profile-container {
+        padding: 0.5rem;
+      }
+
+      .d-flex.gap-2 {
+        flex-direction: column;
+      }
+
+      .d-flex.gap-2 .btn {
+        margin-bottom: 0.5rem;
+      }
+    }
+  `]
+})
+export class ProfileComponent {
+  private readonly fb = FormBuilder.prototype;
+
+  profileForm: FormGroup;
+  saving = false;
+
+  userInfo = {
+    name: 'John Doe',
+    email: 'john.doe@company.com',
+    loginCount: 156,
+    lastLoginDays: 2,
+    activeGroups: 3
+  };
+
+  constructor() {
+    this.profileForm = new FormBuilder().group({
+      firstName: ['John', [Validators.required, Validators.minLength(2)]],
+      lastName: ['Doe', [Validators.required, Validators.minLength(2)]],
+      email: ['john.doe@company.com', [Validators.required, Validators.email]],
+      phoneNumber: ['+90 555 123 45 67'],
+      department: ['it'],
+      position: ['Senior Software Developer'],
+      bio: ['Experienced software developer with expertise in full-stack development.'],
+      emailNotifications: [true],
+      smsNotifications: [false],
+      pushNotifications: [true]
+    });
+  }
+
+  isFieldInvalid(fieldName: string): boolean {
+    const field = this.profileForm.get(fieldName);
+    return !!(field && field.invalid && (field.dirty || field.touched));
+  }
+
+  onSave(): void {
+    if (this.profileForm.invalid) {
+      this.profileForm.markAllAsTouched();
+      return;
+    }
+
+    this.saving = true;
+
+    // Simulate API call
+    setTimeout(() => {
+      this.saving = false;
+      // Here you would typically call a service to save the profile
+      console.log('Profile saved:', this.profileForm.value);
+    }, 1500);
+  }
+}

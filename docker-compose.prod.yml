@@ -1,0 +1,32 @@
+services:
+  gateway:
+    env_file:
+      - ./config/env/shared.env
+      - ./config/env/prod.env
+      - ./config/env/secrets.env
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+
+  identity:
+    env_file:
+      - ./config/env/shared.env
+      - ./config/env/prod.env
+      - ./config/env/secrets.env
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+
+  user:
+    env_file:
+      - ./config/env/shared.env
+      - ./config/env/prod.env
+      - ./config/env/secrets.env
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+
+  speedreading:
+    env_file:
+      - ./config/env/shared.env
+      - ./config/env/prod.env
+      - ./config/env/secrets.env
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production

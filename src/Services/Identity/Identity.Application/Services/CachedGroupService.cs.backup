@@ -1,0 +1,458 @@
+using Identity.Core.DTOs;
+using Identity.Core.Entities;
+using Identity.Core.Interfaces;
+using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Logging;
+using System.Text.Json;
+using Enterprise.Shared.Common.Models;
+
+namespace Identity.Application.Services;
+
+public class CachedGroupService : IGroupService
+{
+    private readonly IGroupService _baseService;
+    private readonly IDistributedCache _cache;
+    private readonly ILogger<CachedGroupService> _logger;
+
+    // Cache key patterns
+    private const string GROUP_KEY_PREFIX = "group:";
+    private const string USER_GROUPS_KEY_PREFIX = "user_groups:";
+    private const string GROUP_MEMBERS_KEY_PREFIX = "group_members:";
+    private const string USER_ROLE_IN_GROUP_KEY_PREFIX = "user_role_group:";
+    private const string GROUP_PERMISSIONS_KEY_PREFIX = "group_permissions:";
+
+    // Cache expiration times
+    private static readonly TimeSpan DefaultCacheExpiry = TimeSpan.FromMinutes(15);
+    private static readonly TimeSpan ShortCacheExpiry = TimeSpan.FromMinutes(5);
+    private static readonly TimeSpan LongCacheExpiry = TimeSpan.FromHours(1);
+
+    public CachedGroupService(
+        IGroupService baseService,
+        IDistributedCache cache,
+        ILogger<CachedGroupService> logger)
+    {
+        _baseService = baseService;
+        _cache = cache;
+        _logger = logger;
+    }
+
+    public async Task<Result<GroupDto>> GetByIdAsync(Guid groupId, CancellationToken cancellationToken = default)
+    {
+        var cacheKey = $"{GROUP_KEY_PREFIX}{groupId}";
+
+        try
+        {
+            var cachedValue = await _cache.GetStringAsync(cacheKey, cancellationToken);
+            if (!string.IsNullOrEmpty(cachedValue))
+            {
+                var cachedGroup = JsonSerializer.Deserialize<GroupDto>(cachedValue);
+                if (cachedGroup != null)
+                {
+                    _logger.LogDebug("Group {GroupId} retrieved from cache", groupId);
+                    return Result<GroupDto>.Success(cachedGroup);
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogWarning(ex, "Failed to retrieve group {GroupId} from cache", groupId);
+        }
+
+        var result = await _baseService.GetByIdAsync(groupId, cancellationToken);
+        if (result.IsSuccess)
+        {
+            await CacheGroupAsync(cacheKey, result.Value, DefaultCacheExpiry, cancellationToken);
+        }
+
+        return result;
+    }
+
+    public async Task<Result<GroupDto>> GetByNameAsync(string name, CancellationToken cancellationToken = default)
+    {
+        var cacheKey = $"{GROUP_KEY_PREFIX}name:{name.ToLowerInvariant()}";
+
+        try
+        {
+            var cachedValue = await _cache.GetStringAsync(cacheKey, cancellationToken);
+            if (!string.IsNullOrEmpty(cachedValue))
+            {
+                var cachedGroup = JsonSerializer.Deserialize<GroupDto>(cachedValue);
+                if (cachedGroup != null)
+                {
+                    _logger.LogDebug("Group {GroupName} retrieved from cache", name);
+                    return Result<GroupDto>.Success(cachedGroup);
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogWarning(ex, "Failed to retrieve group {GroupName} from cache", name);
+        }
+
+        var result = await _baseService.GetByNameAsync(name, cancellationToken);
+        if (result.IsSuccess)
+        {
+            await CacheGroupAsync(cacheKey, result.Value, DefaultCacheExpiry, cancellationToken);
+        }
+
+        return result;
+    }
+
+    public async Task<Result<PagedResult<GroupDto>>> GetGroupsAsync(int page = 1, int pageSize = 10, string? search = null, GroupType? type = null, CancellationToken cancellationToken = default)
+    {
+        // For paginated and filtered results, we don't cache as the combinations are too many
+        // Instead, we rely on database optimization
+        return await _baseService.GetGroupsAsync(page, pageSize, search, type, cancellationToken);
+    }
+
+    public async Task<Result<GroupDto>> CreateAsync(CreateGroupRequest request, string createdBy, CancellationToken cancellationToken = default)
+    {
+        var result = await _baseService.CreateAsync(request, createdBy, cancellationToken);
+        if (result.IsSuccess)
+        {
+            // Cache the newly created group
+            var cacheKey = $"{GROUP_KEY_PREFIX}{result.Value.Id}";
+            await CacheGroupAsync(cacheKey, result.Value, DefaultCacheExpiry, cancellationToken);
+
+            // Invalidate user groups cache for the creator
+            await InvalidateUserGroupsCacheAsync(createdBy, cancellationToken);
+        }
+
+        return result;
+    }
+
+    public async Task<Result<GroupDto>> UpdateAsync(Guid groupId, UpdateGroupRequest request, string modifiedBy, CancellationToken cancellationToken = default)
+    {
+        var result = await _baseService.UpdateAsync(groupId, request, modifiedBy, cancellationToken);
+        if (result.IsSuccess)
+        {
+            // Update cache with new group data
+            var cacheKey = $"{GROUP_KEY_PREFIX}{groupId}";
+            await CacheGroupAsync(cacheKey, result.Value, DefaultCacheExpiry, cancellationToken);
+
+            // Invalidate related caches
+            await InvalidateGroupRelatedCachesAsync(groupId, cancellationToken);
+        }
+
+        return result;
+    }
+
+    public async Task<Result<bool>> DeleteAsync(Guid groupId, string deletedBy, CancellationToken cancellationToken = default)
+    {
+        var result = await _baseService.DeleteAsync(groupId, deletedBy, cancellationToken);
+        if (result.IsSuccess)
+        {
+            // Remove group from cache
+            var cacheKey = $"{GROUP_KEY_PREFIX}{groupId}";
+            await _cache.RemoveAsync(cacheKey, cancellationToken);
+
+            // Invalidate all related caches
+            await InvalidateGroupRelatedCachesAsync(groupId, cancellationToken);
+        }
+
+        return result;
+    }
+
+    public async Task<Result<bool>> AddUserToGroupAsync(Guid groupId, string userId, UserGroupRole role = UserGroupRole.Member, string? invitedBy = null, CancellationToken cancellationToken = default)
+    {
+        var result = await _baseService.AddUserToGroupAsync(groupId, userId, role, invitedBy, cancellationToken);
+        if (result.IsSuccess)
+        {
+            // Invalidate user-specific caches
+            await InvalidateUserGroupsCacheAsync(userId, cancellationToken);
+            await InvalidateUserRoleInGroupCacheAsync(userId, groupId, cancellationToken);
+            await InvalidateGroupMembersCacheAsync(groupId, cancellationToken);
+        }
+
+        return result;
+    }
+
+    public async Task<Result<bool>> RemoveUserFromGroupAsync(Guid groupId, string userId, CancellationToken cancellationToken = default)
+    {
+        var result = await _baseService.RemoveUserFromGroupAsync(groupId, userId, cancellationToken);
+        if (result.IsSuccess)
+        {
+            // Invalidate user-specific caches
+            await InvalidateUserGroupsCacheAsync(userId, cancellationToken);
+            await InvalidateUserRoleInGroupCacheAsync(userId, groupId, cancellationToken);
+            await InvalidateGroupMembersCacheAsync(groupId, cancellationToken);
+        }
+
+        return result;
+    }
+
+    public async Task<Result<bool>> IsUserInGroupAsync(string userId, Guid groupId, CancellationToken cancellationToken = default)
+    {
+        var cacheKey = $"{USER_ROLE_IN_GROUP_KEY_PREFIX}{userId}:{groupId}";
+
+        try
+        {
+            var cachedValue = await _cache.GetStringAsync(cacheKey, cancellationToken);
+            if (!string.IsNullOrEmpty(cachedValue))
+            {
+                var isMember = JsonSerializer.Deserialize<bool>(cachedValue);
+                _logger.LogDebug("User {UserId} membership in group {GroupId} retrieved from cache", userId, groupId);
+                return Result<bool>.Success(isMember);
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogWarning(ex, "Failed to retrieve user {UserId} membership from cache", userId);
+        }
+
+        var result = await _baseService.IsUserInGroupAsync(userId, groupId, cancellationToken);
+        if (result.IsSuccess)
+        {
+            var cacheValue = JsonSerializer.Serialize(result.Value);
+            var options = new DistributedCacheEntryOptions
+            {
+                AbsoluteExpirationRelativeToNow = ShortCacheExpiry
+            };
+            await _cache.SetStringAsync(cacheKey, cacheValue, options, cancellationToken);
+        }
+
+        return result;
+    }
+
+    public async Task<Result<UserGroupRole?>> GetUserRoleInGroupAsync(string userId, Guid groupId, CancellationToken cancellationToken = default)
+    {
+        var cacheKey = $"{USER_ROLE_IN_GROUP_KEY_PREFIX}{userId}:{groupId}:role";
+
+        try
+        {
+            var cachedValue = await _cache.GetStringAsync(cacheKey, cancellationToken);
+            if (!string.IsNullOrEmpty(cachedValue))
+            {
+                var role = JsonSerializer.Deserialize<UserGroupRole?>(cachedValue);
+                _logger.LogDebug("User {UserId} role in group {GroupId} retrieved from cache", userId, groupId);
+                return Result<UserGroupRole?>.Success(role);
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogWarning(ex, "Failed to retrieve user {UserId} role from cache", userId);
+        }
+
+        var result = await _baseService.GetUserRoleInGroupAsync(userId, groupId, cancellationToken);
+        if (result.IsSuccess)
+        {
+            var cacheValue = JsonSerializer.Serialize(result.Value);
+            var options = new DistributedCacheEntryOptions
+            {
+                AbsoluteExpirationRelativeToNow = ShortCacheExpiry
+            };
+            await _cache.SetStringAsync(cacheKey, cacheValue, options, cancellationToken);
+        }
+
+        return result;
+    }
+
+    public async Task<Result<bool>> UpdateUserRoleInGroupAsync(Guid groupId, string userId, UserGroupRole role, CancellationToken cancellationToken = default)
+    {
+        var result = await _baseService.UpdateUserRoleInGroupAsync(groupId, userId, role, cancellationToken);
+        if (result.IsSuccess)
+        {
+            // Invalidate role-specific caches
+            await InvalidateUserRoleInGroupCacheAsync(userId, groupId, cancellationToken);
+            await InvalidateGroupMembersCacheAsync(groupId, cancellationToken);
+        }
+
+        return result;
+    }
+
+    public async Task<Result<IEnumerable<GroupDto>>> GetUserGroupsAsync(string userId, CancellationToken cancellationToken = default)
+    {
+        var cacheKey = $"{USER_GROUPS_KEY_PREFIX}{userId}";
+
+        try
+        {
+            var cachedValue = await _cache.GetStringAsync(cacheKey, cancellationToken);
+            if (!string.IsNullOrEmpty(cachedValue))
+            {
+                var cachedGroups = JsonSerializer.Deserialize<IEnumerable<GroupDto>>(cachedValue);
+                if (cachedGroups != null)
+                {
+                    _logger.LogDebug("User {UserId} groups retrieved from cache", userId);
+                    return Result<IEnumerable<GroupDto>>.Success(cachedGroups);
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogWarning(ex, "Failed to retrieve user {UserId} groups from cache", userId);
+        }
+
+        var result = await _baseService.GetUserGroupsAsync(userId, cancellationToken);
+        if (result.IsSuccess)
+        {
+            var cacheValue = JsonSerializer.Serialize(result.Value);
+            var options = new DistributedCacheEntryOptions
+            {
+                AbsoluteExpirationRelativeToNow = DefaultCacheExpiry
+            };
+            await _cache.SetStringAsync(cacheKey, cacheValue, options, cancellationToken);
+        }
+
+        return result;
+    }
+
+    public async Task<Result<PagedResult<GroupMemberDto>>> GetGroupMembersAsync(Guid groupId, int page = 1, int pageSize = 10, CancellationToken cancellationToken = default)
+    {
+        var cacheKey = $"{GROUP_MEMBERS_KEY_PREFIX}{groupId}:page_{page}_size_{pageSize}";
+
+        try
+        {
+            var cachedValue = await _cache.GetStringAsync(cacheKey, cancellationToken);
+            if (!string.IsNullOrEmpty(cachedValue))
+            {
+                var cachedMembers = JsonSerializer.Deserialize<PagedResult<GroupMemberDto>>(cachedValue);
+                if (cachedMembers != null)
+                {
+                    _logger.LogDebug("Group {GroupId} members page {Page} retrieved from cache", groupId, page);
+                    return Result<PagedResult<GroupMemberDto>>.Success(cachedMembers);
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogWarning(ex, "Failed to retrieve group {GroupId} members from cache", groupId);
+        }
+
+        var result = await _baseService.GetGroupMembersAsync(groupId, page, pageSize, cancellationToken);
+        if (result.IsSuccess)
+        {
+            var cacheValue = JsonSerializer.Serialize(result.Value);
+            var options = new DistributedCacheEntryOptions
+            {
+                AbsoluteExpirationRelativeToNow = DefaultCacheExpiry
+            };
+            await _cache.SetStringAsync(cacheKey, cacheValue, options, cancellationToken);
+        }
+
+        return result;
+    }
+
+    public async Task<Result<bool>> CanUserAccessGroupAsync(string userId, Guid groupId, CancellationToken cancellationToken = default)
+    {
+        // Delegate to IsUserInGroupAsync which is already cached
+        return await IsUserInGroupAsync(userId, groupId);
+    }
+
+    public async Task<Result<string>> GenerateInvitationCodeAsync(Guid groupId, UserGroupRole role, DateTime? expiresAt = null, CancellationToken cancellationToken = default)
+    {
+        // Invitation codes are temporary and shouldn't be cached
+        return await _baseService.GenerateInvitationCodeAsync(groupId, role, expiresAt, cancellationToken);
+    }
+
+    public async Task<Result<GroupDto>> JoinByInvitationCodeAsync(string userId, string invitationCode, CancellationToken cancellationToken = default)
+    {
+        var result = await _baseService.JoinByInvitationCodeAsync(userId, invitationCode, cancellationToken);
+        if (result.IsSuccess)
+        {
+            // We don't know which group was joined, so invalidate all user groups cache
+            await InvalidateUserGroupsCacheAsync(userId, cancellationToken);
+        }
+
+        return result;
+    }
+
+    #region Private Helper Methods
+
+    private async Task CacheGroupAsync(string cacheKey, GroupDto group, TimeSpan expiry, CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            var cacheValue = JsonSerializer.Serialize(group);
+            var options = new DistributedCacheEntryOptions
+            {
+                AbsoluteExpirationRelativeToNow = expiry
+            };
+            await _cache.SetStringAsync(cacheKey, cacheValue, options, cancellationToken);
+            _logger.LogDebug("Group {GroupId} cached with key {CacheKey}", group.Id, cacheKey);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogWarning(ex, "Failed to cache group {GroupId}", group.Id);
+        }
+    }
+
+    private async Task InvalidateUserGroupsCacheAsync(string userId, CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            var cacheKey = $"{USER_GROUPS_KEY_PREFIX}{userId}";
+            await _cache.RemoveAsync(cacheKey, cancellationToken);
+            _logger.LogDebug("User {UserId} groups cache invalidated", userId);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogWarning(ex, "Failed to invalidate user {UserId} groups cache", userId);
+        }
+    }
+
+    private async Task InvalidateUserRoleInGroupCacheAsync(string userId, Guid groupId, CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            var membershipCacheKey = $"{USER_ROLE_IN_GROUP_KEY_PREFIX}{userId}:{groupId}";
+            var roleCacheKey = $"{USER_ROLE_IN_GROUP_KEY_PREFIX}{userId}:{groupId}:role";
+
+            await _cache.RemoveAsync(membershipCacheKey, cancellationToken);
+            await _cache.RemoveAsync(roleCacheKey, cancellationToken);
+
+            _logger.LogDebug("User {UserId} role cache in group {GroupId} invalidated", userId, groupId);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogWarning(ex, "Failed to invalidate user {UserId} role cache", userId);
+        }
+    }
+
+    private async Task InvalidateGroupMembersCacheAsync(Guid groupId, CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            // We would need to implement pattern-based cache invalidation for all pages
+            // For now, we'll use a simple approach - in production, consider using cache tags
+            var keysToInvalidate = new[]
+            {
+                $"{GROUP_MEMBERS_KEY_PREFIX}{groupId}:page_1_size_20",
+                $"{GROUP_MEMBERS_KEY_PREFIX}{groupId}:page_2_size_20",
+                $"{GROUP_MEMBERS_KEY_PREFIX}{groupId}:page_1_size_10",
+                $"{GROUP_MEMBERS_KEY_PREFIX}{groupId}:page_1_size_50"
+            };
+
+            foreach (var key in keysToInvalidate)
+            {
+                await _cache.RemoveAsync(key, cancellationToken);
+            }
+
+            _logger.LogDebug("Group {GroupId} members cache invalidated", groupId);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogWarning(ex, "Failed to invalidate group {GroupId} members cache", groupId);
+        }
+    }
+
+    private async Task InvalidateGroupRelatedCachesAsync(Guid groupId, CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            // Invalidate group cache
+            var groupCacheKey = $"{GROUP_KEY_PREFIX}{groupId}";
+            await _cache.RemoveAsync(groupCacheKey, cancellationToken);
+
+            // Invalidate group members cache
+            await InvalidateGroupMembersCacheAsync(groupId, cancellationToken);
+
+            _logger.LogDebug("Group {GroupId} related caches invalidated", groupId);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogWarning(ex, "Failed to invalidate group {GroupId} related caches", groupId);
+        }
+    }
+
+    #endregion
+}

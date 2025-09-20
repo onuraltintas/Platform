@@ -1,0 +1,73 @@
+# Docker ignore file
+# Exclude unnecessary files from Docker build context
+
+# Git
+.git/
+.gitignore
+
+# IDE
+.vs/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Build output
+**/bin/
+**/obj/
+**/out/
+
+# Node modules
+node_modules/
+npm-debug.log*
+
+# Test results
+TestResults/
+**/*.trx
+**/*.coverage
+**/*.coveragexml
+
+# Docker
+docker-compose.override.yml
+.dockerignore
+Dockerfile*
+
+# Environment files (will be mounted as volumes)
+.env*
+!.env.example
+
+# Logs
+logs/
+*.log
+
+# Temporary files
+tmp/
+temp/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# User secrets
+**/appsettings.local.json
+**/appsettings.secrets.json
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Package files
+*.nupkg
+*.snupkg
+
+# Backup files
+*.bak
+
+# JetBrains
+.idea/
