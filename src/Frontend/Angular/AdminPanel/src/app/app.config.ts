@@ -5,11 +5,13 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideToastr } from 'ngx-toastr';
 
 import { routes } from './app.routes';
-import { jwtInterceptor } from './core/auth/interceptors/jwt.interceptor';
+import { enhancedJwtInterceptor } from './core/auth/interceptors/enhanced-jwt.interceptor';
 import { errorInterceptor } from './core/api/interceptors/error.interceptor';
 import { loadingInterceptor } from './core/api/interceptors/loading.interceptor';
 import { groupInterceptor } from './core/api/interceptors/group.interceptor';
-import { LucideAngularModule, List, Grid3x3, ChevronUp, ChevronDown, ChevronLeft, ChevronRight, Download, FileSpreadsheet, FileText, Upload, Filter, Search, Inbox, MoreHorizontal, Eye, Edit, Trash, Users, UserCheck, Shield, Settings as SettingsIcon, BookOpen, User, Activity, Layers, Package as PackageIcon, BarChart3, Key, Server, RefreshCw, Star, Save, RotateCcw, Minimize2, Copy, CheckCircle } from 'lucide-angular';
+import { LucideAngularModule, List, Grid3x3, ChevronUp, ChevronDown, ChevronLeft, ChevronRight, Download, FileSpreadsheet, FileText, Upload, Filter, Search, Inbox, MoreHorizontal, Eye, Edit, Trash, Users, UserCheck, Shield, Settings as SettingsIcon, BookOpen, User, Activity, Layers, Package as PackageIcon, BarChart3, Key, Server, RefreshCw, Star, Save, RotateCcw, Minimize2, Copy, CheckCircle, Plus, AlertCircle } from 'lucide-angular';
+// import { OptimizationModule } from './core/optimization/optimization.module';
+// import { CacheModule } from './core/cache/cache.module';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -17,7 +19,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes, withComponentInputBinding()),
     provideHttpClient(
       withInterceptors([
-        jwtInterceptor,
+        enhancedJwtInterceptor,
         groupInterceptor,
         errorInterceptor,
         loadingInterceptor
@@ -59,8 +61,12 @@ export const appConfig: ApplicationConfig = {
       Save,
       RotateCcw,
       Minimize2,
-      Copy
+      Copy,
+      Plus,
+      AlertCircle
     })),
+    // Import cache module for token optimization
+    // importProvidersFrom(CacheModule),
     provideAnimations(),
     // Enhanced toastr configuration
     provideToastr({

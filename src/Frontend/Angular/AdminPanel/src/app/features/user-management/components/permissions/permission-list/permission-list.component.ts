@@ -215,6 +215,7 @@ import { PermissionDto, GetPermissionsRequest } from '../../../models';
 
     <!-- Confirmation Modal -->
     <app-confirmation-modal
+      [visible]="confirmConfig().show"
       [config]="confirmConfig()"
       (confirmed)="onConfirmAction()"
       (cancelled)="onCancelAction()"/>
@@ -266,6 +267,7 @@ export class PermissionListComponent implements OnInit {
     type: 'danger',
     action: null
   });
+
 
   // Table configuration
   tableColumns: TableColumn[] = [
@@ -337,21 +339,23 @@ export class PermissionListComponent implements OnInit {
     this.loadPermissions();
   }
 
-  async loadPermissions() {
-    try {
-      this.loading.set(true);
-      const request = this.currentFilter();
-      const response = await this.permissionService.getPermissions(request).toPromise();
+  loadPermissions() {
+    this.loading.set(true);
+    const request = this.currentFilter();
 
-      if (response) {
-        this.permissions.set(response.data ?? []);
-        this.totalPermissions.set(response.totalCount ?? response.pagination?.total ?? 0);
+    this.permissionService.getPermissions(request).subscribe({
+      next: (response) => {
+        if (response) {
+          this.permissions.set(response.data ?? []);
+          this.totalPermissions.set(response.totalCount ?? response.pagination?.total ?? 0);
+        }
+        this.loading.set(false);
+      },
+      error: (error) => {
+        console.error('Failed to load permissions:', error);
+        this.loading.set(false);
       }
-    } catch (error) {
-      console.error('Failed to load permissions:', error);
-    } finally {
-      this.loading.set(false);
-    }
+    });
   }
 
   onSearchChange(event: any) {
@@ -454,35 +458,42 @@ export class PermissionListComponent implements OnInit {
     });
   }
 
-  async performDeletePermission(permissionId: string) {
-    try {
-      await this.permissionService.deletePermission(permissionId).toPromise();
-      await this.loadPermissions();
-    } catch (error) {
-      console.error('Failed to delete permission:', error);
-    }
+  performDeletePermission(permissionId: string) {
+    this.permissionService.deletePermission(permissionId).subscribe({
+      next: () => {
+        this.loadPermissions();
+      },
+      error: (error) => {
+        console.error('Failed to delete permission:', error);
+      }
+    });
   }
 
-  async exportPermissions() {
-    try {
-      const filter = this.currentFilter();
-      await this.permissionService.exportPermissions(filter).toPromise();
-    } catch (error) {
-      console.error('Export failed:', error);
-    }
+  exportPermissions() {
+    const filter = this.currentFilter();
+    this.permissionService.exportPermissions(filter).subscribe({
+      next: () => {
+        console.log('Export successful');
+      },
+      error: (error) => {
+        console.error('Export failed:', error);
+      }
+    });
   }
 
-  async syncPermissions() {
-    try {
-      this.loading.set(true);
-      const result = await this.permissionService.syncPermissions().toPromise();
-      console.log('Sync result:', result);
-      await this.loadPermissions();
-    } catch (error) {
-      console.error('Sync failed:', error);
-    } finally {
-      this.loading.set(false);
-    }
+  syncPermissions() {
+    this.loading.set(true);
+    this.permissionService.syncPermissions().subscribe({
+      next: (result) => {
+        console.log('Sync result:', result);
+        this.loadPermissions();
+        this.loading.set(false);
+      },
+      error: (error) => {
+        console.error('Sync failed:', error);
+        this.loading.set(false);
+      }
+    });
   }
 
   onConfirmAction() {

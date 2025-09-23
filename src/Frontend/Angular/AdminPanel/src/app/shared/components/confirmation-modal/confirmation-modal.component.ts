@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, signal, computed, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, Output, EventEmitter, signal, computed, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { LucideAngularModule, AlertTriangle, Info, CheckCircle, XCircle, X } from 'lucide-angular';
@@ -37,9 +37,9 @@ export interface ConfirmationResult {
     FormsModule,
     LucideAngularModule
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.Default,
   template: `
-    @if (visible()) {
+    @if (visible) {
       <div class="modal fade show"
            [class.modal-blur]="config().backdrop !== false"
            style="display: block;"
@@ -181,8 +181,8 @@ export interface ConfirmationResult {
     }
   `]
 })
-export class ConfirmationModalComponent implements OnInit {
-  @Input() visible = signal(false);
+export class ConfirmationModalComponent implements OnDestroy {
+  @Input() visible: boolean = false;
   @Input() config = signal<ConfirmationConfig>({
     title: 'Onay',
     message: 'Bu işlemi gerçekleştirmek istediğinizden emin misiniz?'
@@ -217,23 +217,12 @@ export class ConfirmationModalComponent implements OnInit {
     return true;
   });
 
-  ngOnInit() {
-    if (this.config().inputValue) {
-      this.inputValue = this.config().inputValue || '';
-    }
-
-    // Handle keyboard events
-    if (this.config().keyboard !== false) {
-      document.addEventListener('keydown', this.onKeyDown.bind(this));
-    }
-  }
-
   ngOnDestroy() {
     document.removeEventListener('keydown', this.onKeyDown.bind(this));
   }
 
   onKeyDown(event: KeyboardEvent) {
-    if (!this.visible()) return;
+    if (!this.visible) return;
 
     if (event.key === 'Escape' && this.config().keyboard !== false) {
       this.onCancel();
@@ -261,7 +250,7 @@ export class ConfirmationModalComponent implements OnInit {
       inputValue: this.inputValue
     };
 
-    this.visible.set(false);
+    this.visible = false;
     this.cancel.emit();
     this.result.emit(result);
     this.resetState();
@@ -280,7 +269,7 @@ export class ConfirmationModalComponent implements OnInit {
 
     this.confirm.emit(result);
     this.result.emit(result);
-    this.visible.set(false);
+    this.visible = false;
     this.resetState();
   }
 
@@ -354,11 +343,16 @@ export class ConfirmationModalComponent implements OnInit {
   // Public methods for external control
   show(config: ConfirmationConfig): Promise<ConfirmationResult> {
     this.config.set({ ...config });
-    this.visible.set(true);
+    this.visible = true;
     this.resetState();
 
     if (config.inputValue) {
       this.inputValue = config.inputValue;
+    }
+
+    // Handle keyboard events
+    if (config.keyboard !== false) {
+      document.addEventListener('keydown', this.onKeyDown.bind(this));
     }
 
     return new Promise((resolve) => {
@@ -370,7 +364,7 @@ export class ConfirmationModalComponent implements OnInit {
   }
 
   hide() {
-    this.visible.set(false);
+    this.visible = false;
     this.resetState();
   }
 

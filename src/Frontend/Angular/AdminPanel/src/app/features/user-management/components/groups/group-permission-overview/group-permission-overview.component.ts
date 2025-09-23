@@ -1879,56 +1879,58 @@ export class GroupPermissionOverviewComponent implements OnInit {
   }
 
   // Data Loading Methods
-  async loadGroupAndPermissions(): Promise<void> {
+  loadGroupAndPermissions(): void {
     if (!this.groupId) return;
 
-    await Promise.all([
-      this.loadGroup(),
-      this.loadPermissions()
-    ]);
+    this.loadGroup();
+    this.loadPermissions();
   }
 
-  async loadGroup(): Promise<void> {
+  loadGroup(): void {
     if (!this.groupId) return;
 
-    try {
-      const response = await this.groupService.getGroup(this.groupId).toPromise();
-      if (response) {
-        this.group.set(response);
+    this.groupService.getGroup(this.groupId).subscribe({
+      next: (response) => {
+        if (response) {
+          this.group.set(response);
+        }
+      },
+      error: (error) => {
+        this.errorHandler.handleError(error);
       }
-    } catch (error) {
-      this.errorHandler.handleError(error);
-    }
+    });
   }
 
-  async loadPermissions(): Promise<void> {
+  loadPermissions(): void {
     if (!this.groupId) return;
 
-    try {
-      this.loading.set(true);
-      const response = await this.groupService.getGroupPermissions(this.groupId).toPromise();
-      if (response) {
-        const permissionsWithStatus: PermissionWithStatus[] = response.map(permission => ({
-          ...permission,
-          granted: true, // This would come from the actual permission assignment
-          inherited: false, // This would be calculated based on inheritance rules
-          modified: false,
-          originalState: true,
-          createdAt: new Date(),
-          roleCount: 0,
-          userCount: 0
-        }));
-        this.allPermissions.set(permissionsWithStatus);
+    this.loading.set(true);
+    this.groupService.getGroupPermissions(this.groupId).subscribe({
+      next: (response) => {
+        if (response) {
+          const permissionsWithStatus: PermissionWithStatus[] = response.map(permission => ({
+            ...permission,
+            granted: true, // This would come from the actual permission assignment
+            inherited: false, // This would be calculated based on inheritance rules
+            modified: false,
+            originalState: true,
+            createdAt: new Date(),
+            roleCount: 0,
+            userCount: 0
+          }));
+          this.allPermissions.set(permissionsWithStatus);
+        }
+        this.loading.set(false);
+      },
+      error: (error) => {
+        this.errorHandler.handleError(error);
+        this.loading.set(false);
       }
-    } catch (error) {
-      this.errorHandler.handleError(error);
-    } finally {
-      this.loading.set(false);
-    }
+    });
   }
 
-  async refreshData(): Promise<void> {
-    await this.loadGroupAndPermissions();
+  refreshData(): void {
+    this.loadGroupAndPermissions();
   }
 
   // Filter Methods
@@ -2079,33 +2081,35 @@ export class GroupPermissionOverviewComponent implements OnInit {
   }
 
   // Change Management Methods
-  async saveChanges(): Promise<void> {
+  saveChanges(): void {
     if (!this.groupId) return;
 
     const modifiedPermissions = this.allPermissions().filter(p => p.modified);
     if (modifiedPermissions.length === 0) return;
 
-    try {
-      this.saving.set(true);
+    this.saving.set(true);
 
-      const assignment: GroupPermissionAssignment = {
-        groupId: this.groupId,
-        permissionIds: modifiedPermissions.filter(p => p.granted).map(p => p.id),
-        operation: 'assign'
-      };
+    const assignment: GroupPermissionAssignment = {
+      groupId: this.groupId,
+      permissionIds: modifiedPermissions.filter(p => p.granted).map(p => p.id),
+      operation: 'assign'
+    };
 
-      await this.groupService.assignPermissionsToGroup(assignment).toPromise();
-      // Reset modification flags
-      this.allPermissions.update(permissions =>
-        permissions.map(p => ({ ...p, modified: false, originalState: p.granted }))
-      );
-      this.changeLogs.set([]);
-      await this.loadPermissions();
-    } catch (error) {
-      this.errorHandler.handleError(error);
-    } finally {
-      this.saving.set(false);
-    }
+    this.groupService.assignPermissionsToGroup(assignment).subscribe({
+      next: () => {
+        // Reset modification flags
+        this.allPermissions.update(permissions =>
+          permissions.map(p => ({ ...p, modified: false, originalState: p.granted }))
+        );
+        this.changeLogs.set([]);
+        this.loadPermissions();
+        this.saving.set(false);
+      },
+      error: (error) => {
+        this.errorHandler.handleError(error);
+        this.saving.set(false);
+      }
+    });
   }
 
   resetChanges(): void {
@@ -2143,14 +2147,10 @@ export class GroupPermissionOverviewComponent implements OnInit {
   }
 
   // Export Methods
-  async exportPermissions(format: 'excel' | 'csv' | 'pdf'): Promise<void> {
-    try {
-      const permissions = this.getFilteredPermissions();
-      console.log(`Exporting ${permissions.length} permissions in ${format} format`);
-      // TODO: Implementation for export
-    } catch (error) {
-      this.errorHandler.handleError(error);
-    }
+  exportPermissions(format: 'excel' | 'csv' | 'pdf'): void {
+    const permissions = this.getFilteredPermissions();
+    console.log(`Exporting ${permissions.length} permissions in ${format} format`);
+    // TODO: Implementation for export
   }
 
   // Utility Methods

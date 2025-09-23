@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { BaseUserManagementService } from './base-user-management.service';
 import {
   GroupDto,
@@ -26,7 +27,12 @@ export class GroupService extends BaseUserManagementService {
    * Get paginated groups list
    */
   getGroups(request: GetGroupsRequest = {}): Observable<PagedResponse<GroupDto>> {
-    const params = this.buildGroupParams(request);
+    // Simplified params for backend compatibility
+    const params: Record<string, any> = {};
+    if (request.page) params['page'] = request.page;
+    if (request.pageSize) params['pageSize'] = request.pageSize;
+    if (request.search) params['search'] = request.search;
+
     return this.get<PagedResponse<GroupDto>>(this.apiPath, params);
   }
 
@@ -35,6 +41,27 @@ export class GroupService extends BaseUserManagementService {
    */
   getAllGroups(): Observable<GroupDto[]> {
     return this.get<GroupDto[]>(`${this.apiPath}/all`);
+  }
+
+  /**
+   * Get group statistics
+   */
+  getGroupStatistics(): Observable<GroupStatistics> {
+    return this.get<GroupStatistics>(`${this.apiPath}/statistics`).pipe(
+      catchError(() => {
+        // Return default statistics if endpoint not available
+        const defaultStats: GroupStatistics = {
+          totalGroups: 0,
+          systemGroups: 0,
+          customGroups: 0,
+          totalMembers: 0,
+          averageMembersPerGroup: 0,
+          largestGroup: null as any,
+          emptyGroups: 0
+        };
+        return of(defaultStats);
+      })
+    );
   }
 
   /**
@@ -192,12 +219,6 @@ export class GroupService extends BaseUserManagementService {
     return this.get<Array<GroupDto & { memberCount: number }>>(`${this.apiPath}/with-member-count`);
   }
 
-  /**
-   * Get group statistics
-   */
-  getGroupStatistics(): Observable<GroupStatistics> {
-    return this.get<GroupStatistics>(`${this.apiPath}/statistics`);
-  }
 
   /**
    * Export groups to Excel

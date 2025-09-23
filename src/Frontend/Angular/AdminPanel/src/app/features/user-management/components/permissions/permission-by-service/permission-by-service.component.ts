@@ -563,24 +563,33 @@ export class PermissionByServiceComponent implements OnInit {
     this.loadData();
   }
 
-  private async loadData() {
+  private loadData() {
     this.loading.set(true);
 
-    try {
-      const [permissionsResponse, rolesResponse] = await Promise.all([
-        this.permissionService.getPermissionsWithUsage().toPromise(),
-        this.roleService.getRoles({ includePermissions: true }).toPromise()
-      ]);
+    const permissions$ = this.permissionService.getPermissionsWithUsage();
+    const roles$ = this.roleService.getRoles({ includePermissions: true });
 
-      this.permissions.set((permissionsResponse || []) as PermissionWithUsage[]);
-      this.roles.set(Array.isArray(rolesResponse) ? rolesResponse : rolesResponse?.data || []);
+    permissions$.subscribe({
+      next: (permissionsResponse) => {
+        this.permissions.set((permissionsResponse || []) as PermissionWithUsage[]);
 
-      this.buildServiceGroups();
-    } catch (error) {
-      console.error('Failed to load service data:', error);
-    } finally {
-      this.loading.set(false);
-    }
+        roles$.subscribe({
+          next: (rolesResponse) => {
+            this.roles.set(Array.isArray(rolesResponse) ? rolesResponse : rolesResponse?.data || []);
+            this.buildServiceGroups();
+            this.loading.set(false);
+          },
+          error: (error) => {
+            console.error('Failed to load roles data:', error);
+            this.loading.set(false);
+          }
+        });
+      },
+      error: (error) => {
+        console.error('Failed to load permissions data:', error);
+        this.loading.set(false);
+      }
+    });
   }
 
   private buildServiceGroups() {
@@ -782,24 +791,30 @@ export class PermissionByServiceComponent implements OnInit {
     this.filters.set({});
   }
 
-  async refreshUsageData() {
-    await this.loadData();
+  refreshUsageData() {
+    this.loadData();
   }
 
-  async exportServiceReport() {
-    try {
-      await this.permissionService.exportServiceReport(this.filters()).toPromise();
-    } catch (error) {
-      console.error('Export service report failed:', error);
-    }
+  exportServiceReport() {
+    this.permissionService.exportServiceReport(this.filters()).subscribe({
+      next: () => {
+        console.log('Service report export completed successfully');
+      },
+      error: (error) => {
+        console.error('Export service report failed:', error);
+      }
+    });
   }
 
-  async exportServicePermissions(serviceName: string) {
-    try {
-      await this.permissionService.exportServicePermissions(serviceName).toPromise();
-    } catch (error) {
-      console.error('Export service permissions failed:', error);
-    }
+  exportServicePermissions(serviceName: string) {
+    this.permissionService.exportServicePermissions(serviceName).subscribe({
+      next: () => {
+        console.log('Service permissions export completed successfully');
+      },
+      error: (error) => {
+        console.error('Export service permissions failed:', error);
+      }
+    });
   }
 
   viewServiceMatrix(serviceName: string) {
@@ -812,27 +827,36 @@ export class PermissionByServiceComponent implements OnInit {
     console.log('Analyzing service usage:', serviceName);
   }
 
-  private async performRiskAnalysis() {
-    try {
-      await this.permissionService.generateRiskAnalysis().toPromise();
-    } catch (error) {
-      console.error('Risk analysis failed:', error);
-    }
+  private performRiskAnalysis() {
+    this.permissionService.generateRiskAnalysis().subscribe({
+      next: () => {
+        console.log('Risk analysis completed successfully');
+      },
+      error: (error) => {
+        console.error('Risk analysis failed:', error);
+      }
+    });
   }
 
-  private async generateUsageReport() {
-    try {
-      await this.permissionService.generateUsageReport().toPromise();
-    } catch (error) {
-      console.error('Usage report generation failed:', error);
-    }
+  private generateUsageReport() {
+    this.permissionService.generateUsageReport().subscribe({
+      next: () => {
+        console.log('Usage report generated successfully');
+      },
+      error: (error) => {
+        console.error('Usage report generation failed:', error);
+      }
+    });
   }
 
-  private async exportAllServices() {
-    try {
-      await this.permissionService.exportAllServices().toPromise();
-    } catch (error) {
-      console.error('Export all services failed:', error);
-    }
+  private exportAllServices() {
+    this.permissionService.exportAllServices().subscribe({
+      next: () => {
+        console.log('All services export completed successfully');
+      },
+      error: (error) => {
+        console.error('Export all services failed:', error);
+      }
+    });
   }
 }

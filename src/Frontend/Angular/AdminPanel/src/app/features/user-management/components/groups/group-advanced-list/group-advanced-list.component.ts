@@ -1,5 +1,6 @@
-import { Component, OnInit, signal, computed, inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, OnDestroy, signal, computed, inject, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Subject, takeUntil } from 'rxjs';
 import { RouterModule, Router } from '@angular/router';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
@@ -1236,9 +1237,10 @@ interface StatCard {
     }
   `]
 })
-export class GroupAdvancedListComponent implements OnInit {
+export class GroupAdvancedListComponent implements OnInit, OnDestroy {
   // Dependency Injection
   private readonly groupService = inject(GroupService);
+  private readonly destroy$ = new Subject<void>();
   private readonly confirmationService = inject(ConfirmationService);
   private readonly errorHandler = inject(ErrorHandlerService);
   private readonly router = inject(Router);
@@ -1405,50 +1407,58 @@ export class GroupAdvancedListComponent implements OnInit {
     this.loadStatistics();
   }
 
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   // Data Loading Methods
-  async loadGroups(): Promise<void> {
-    try {
-      this.loading.set(true);
+  loadGroups(): void {
+    this.loading.set(true);
 
-      const request: GetGroupsRequest = {
-        page: this.currentPage(),
-        pageSize: this.pageSize(),
-        search: this.filters().search || undefined,
-        includeSystemGroups: this.filters().includeSystemGroups,
-        hasMembers: this.filters().hasMembers ?? undefined,
-        sortBy: this.filters().sortBy,
-        sortDirection: this.filters().sortDirection
-      };
+    const request: GetGroupsRequest = {
+      page: this.currentPage(),
+      pageSize: this.pageSize(),
+      search: this.filters().search || undefined
+    };
 
-      const response = await this.groupService.getGroups(request).toPromise();
-
-      if (response) {
-        this.groups.set(response.data ?? []);
-        this.totalCount.set(response.totalCount ?? response.pagination?.total ?? 0);
-      }
-    } catch (error) {
-      this.errorHandler.handleError(error);
-    } finally {
-      this.loading.set(false);
-    }
+    console.log('Loading groups with request:', request);
+    this.groupService.getGroups(request)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (response) => {
+          console.log('Groups API response:', response);
+          if (response) {
+            this.groups.set(response.data ?? []);
+            this.totalCount.set(response.totalCount ?? response.pagination?.total ?? 0);
+          }
+          this.loading.set(false);
+        },
+        error: (error) => {
+          this.errorHandler.handleError(error);
+          this.loading.set(false);
+        }
+      });
   }
 
-  async loadStatistics(): Promise<void> {
-    try {
-      const response = await this.groupService.getGroupStatistics().toPromise();
-      if (response) {
-        this.statistics.set(response);
-      }
-    } catch (error) {
-      console.error('Statistics loading failed:', error);
-    }
+  loadStatistics(): void {
+    this.groupService.getGroupStatistics()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (response) => {
+          if (response) {
+            this.statistics.set(response);
+          }
+        },
+        error: () => {
+          console.warn('Statistics endpoint not available, using default values');
+        }
+      });
   }
 
-  async refreshData(): Promise<void> {
-    await Promise.all([
-      this.loadGroups(),
-      this.loadStatistics()
-    ]);
+  refreshData(): void {
+    this.loadGroups();
+    this.loadStatistics();
   }
 
   // Filter Methods
@@ -1584,41 +1594,55 @@ export class GroupAdvancedListComponent implements OnInit {
     // Open modal programmatically
   }
 
-  async saveGroup(): Promise<void> {
+  saveGroup(): void {
     if (this.groupForm.invalid) return;
 
-    try {
-      this.saving.set(true);
-      const formValue = this.groupForm.value;
+    this.saving.set(true);
+    const formValue = this.groupForm.value;
 
-      const editing = this.editingGroup();
-      if (editing) {
-        const request: UpdateGroupRequest = {
-          name: formValue.name,
-          description: formValue.description
-        };
+    const editing = this.editingGroup();
+    if (editing) {
+      const request: UpdateGroupRequest = {
+        name: formValue.name,
+        description: formValue.description
+      };
 
-        const response = await this.groupService.updateGroup(editing.id, request).toPromise();
-        if (response) {
-          await this.loadGroups();
-          // Close modal
-        }
-      } else {
-        const request: CreateGroupRequest = {
-          name: formValue.name,
-          description: formValue.description
-        };
+      this.groupService.updateGroup(editing.id, request)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe({
+          next: (response) => {
+            if (response) {
+              this.loadGroups();
+              // Close modal
+            }
+            this.saving.set(false);
+          },
+          error: (error) => {
+            this.errorHandler.handleError(error);
+            this.saving.set(false);
+          }
+        });
+    } else {
+      const request: CreateGroupRequest = {
+        name: formValue.name,
+        description: formValue.description
+      };
 
-        const response = await this.groupService.createGroup(request).toPromise();
-        if (response) {
-          await this.loadGroups();
-          // Close modal
-        }
-      }
-    } catch (error) {
-      this.errorHandler.handleError(error);
-    } finally {
-      this.saving.set(false);
+      this.groupService.createGroup(request)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe({
+          next: (response) => {
+            if (response) {
+              this.loadGroups();
+              // Close modal
+            }
+            this.saving.set(false);
+          },
+          error: (error) => {
+            this.errorHandler.handleError(error);
+            this.saving.set(false);
+          }
+        });
     }
   }
 
@@ -1634,16 +1658,20 @@ export class GroupAdvancedListComponent implements OnInit {
     });
 
     if (confirmed) {
-      try {
-        await this.groupService.deleteGroup(group.id).toPromise();
-        await this.loadGroups();
-      } catch (error) {
-        this.errorHandler.handleError(error);
-      }
+      this.groupService.deleteGroup(group.id)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe({
+          next: () => {
+            this.loadGroups();
+          },
+          error: (error) => {
+            this.errorHandler.handleError(error);
+          }
+        });
     }
   }
 
-  async cloneGroup(group: GroupDto): Promise<void> {
+  cloneGroup(group: GroupDto): void {
     this.router.navigate(['/user-management/groups/clone', group.id]);
   }
 
@@ -1678,7 +1706,7 @@ export class GroupAdvancedListComponent implements OnInit {
           // Export functionality to be implemented
           break;
         case 'delete':
-          await this.bulkDeleteGroups(selectedIds);
+          this.bulkDeleteGroups(selectedIds);
           break;
         case 'addMembers':
           // Navigate to bulk member addition
@@ -1692,14 +1720,14 @@ export class GroupAdvancedListComponent implements OnInit {
     }
   }
 
-  private async bulkDeleteGroups(_groupIds: string[]): Promise<void> {
+  private bulkDeleteGroups(_groupIds: string[]): void {
     // Implementation for bulk delete
-    await this.loadGroups();
+    this.loadGroups();
     this.clearSelection();
   }
 
   // Export Methods
-  async exportGroups(_format: 'excel' | 'csv' | 'pdf'): Promise<void> {
+  exportGroups(_format: 'excel' | 'csv' | 'pdf'): void {
     try {
       // Export functionality to be implemented
     } catch (error) {

@@ -268,7 +268,7 @@ interface MatrixCell {
 
     <!-- Confirmation Modal -->
     <app-confirmation-modal
-      [visible]="showConfirmModal"
+      [visible]="showConfirmModal()"
       [config]="confirmConfig"
       (result)="onConfirmResult($event)"/>
   `,
@@ -569,24 +569,33 @@ export class PermissionMatrixComponent implements OnInit {
     this.expandedGroups.set(new Set(['Identity', 'User', 'Admin']));
   }
 
-  private async loadData() {
+  private loadData() {
     this.loading.set(true);
 
-    try {
-      const [rolesResponse, permissionsResponse] = await Promise.all([
-        this.roleService.getRoles({ includePermissions: true }).toPromise(),
-        this.permissionService.getPermissions().toPromise()
-      ]);
+    const roles$ = this.roleService.getRoles({ includePermissions: true });
+    const permissions$ = this.permissionService.getPermissions();
 
-      this.roles.set(rolesResponse?.data || []);
-      this.permissions.set(permissionsResponse?.data || []);
+    roles$.subscribe({
+      next: (rolesResponse) => {
+        this.roles.set(rolesResponse?.data || []);
 
-      this.buildMatrix();
-    } catch (error) {
-      console.error('Failed to load matrix data:', error);
-    } finally {
-      this.loading.set(false);
-    }
+        permissions$.subscribe({
+          next: (permissionsResponse) => {
+            this.permissions.set(permissionsResponse?.data || []);
+            this.buildMatrix();
+            this.loading.set(false);
+          },
+          error: (error) => {
+            console.error('Failed to load permissions data:', error);
+            this.loading.set(false);
+          }
+        });
+      },
+      error: (error) => {
+        console.error('Failed to load roles data:', error);
+        this.loading.set(false);
+      }
+    });
   }
 
   private buildMatrix() {
@@ -804,71 +813,81 @@ export class PermissionMatrixComponent implements OnInit {
     }
   }
 
-  private async performSave() {
-    try {
-      const modifiedCells = Array.from(this.matrix().values()).filter(cell => cell.modified);
+  private performSave() {
+    const modifiedCells = Array.from(this.matrix().values()).filter(cell => cell.modified);
 
-      // Group by role for batch updates
-      const roleUpdates = new Map<string, { granted: string[], revoked: string[] }>();
+    // Group by role for batch updates
+    const roleUpdates = new Map<string, { granted: string[], revoked: string[] }>();
 
-      modifiedCells.forEach(cell => {
-        if (!roleUpdates.has(cell.roleId)) {
-          roleUpdates.set(cell.roleId, { granted: [], revoked: [] });
-        }
+    modifiedCells.forEach(cell => {
+      if (!roleUpdates.has(cell.roleId)) {
+        roleUpdates.set(cell.roleId, { granted: [], revoked: [] });
+      }
 
-        const update = roleUpdates.get(cell.roleId)!;
-        if (cell.granted) {
-          update.granted.push(cell.permissionId);
-        } else {
-          update.revoked.push(cell.permissionId);
+      const update = roleUpdates.get(cell.roleId)!;
+      if (cell.granted) {
+        update.granted.push(cell.permissionId);
+      } else {
+        update.revoked.push(cell.permissionId);
+      }
+    });
+
+    // Send batch updates - convert to expected format
+    const updateRequests = Array.from(roleUpdates.entries());
+    let completedUpdates = 0;
+
+    if (updateRequests.length === 0) {
+      this.loadData();
+      return;
+    }
+
+    updateRequests.forEach(([roleId, updates]) => {
+      this.roleService.updateRolePermissions(roleId, {
+        addPermissions: updates.granted,
+        removePermissions: updates.revoked
+      }).subscribe({
+        next: () => {
+          completedUpdates++;
+          if (completedUpdates === updateRequests.length) {
+            // All updates completed, reload data
+            this.loadData();
+            console.log('Matrix changes saved successfully');
+          }
+        },
+        error: (error) => {
+          console.error('Failed to save matrix changes:', error);
         }
       });
-
-      // Send batch updates - convert to expected format
-      const updatePromises = Array.from(roleUpdates.entries()).map(([roleId, updates]) =>
-        this.roleService.updateRolePermissions(roleId, {
-          addPermissions: updates.granted,
-          removePermissions: updates.revoked
-        }).toPromise()
-      );
-
-      await Promise.all(updatePromises);
-
-      // Reload data to get fresh state
-      await this.loadData();
-
-      // Show success notification
-      console.log('Matrix changes saved successfully');
-
-    } catch (error) {
-      console.error('Failed to save matrix changes:', error);
-    }
+    });
   }
 
-  async exportMatrix() {
-    try {
-      const exportData = {
-        roles: this.filteredRoles().map(role => ({
-          id: role.id,
-          name: role.name,
-          isSystemRole: role.isSystemRole
-        })),
-        permissions: this.permissions().map(permission => ({
-          id: permission.id,
-          name: permission.name,
-          service: permission.service
-        })),
-        matrix: Array.from(this.matrix().values()).map(cell => ({
-          roleId: cell.roleId,
-          permissionId: cell.permissionId,
-          granted: cell.granted,
-          inherited: cell.inherited
-        }))
-      };
+  exportMatrix() {
+    const exportData = {
+      roles: this.filteredRoles().map(role => ({
+        id: role.id,
+        name: role.name,
+        isSystemRole: role.isSystemRole
+      })),
+      permissions: this.permissions().map(permission => ({
+        id: permission.id,
+        name: permission.name,
+        service: permission.service
+      })),
+      matrix: Array.from(this.matrix().values()).map(cell => ({
+        roleId: cell.roleId,
+        permissionId: cell.permissionId,
+        granted: cell.granted,
+        inherited: cell.inherited
+      }))
+    };
 
-      await this.permissionService.exportMatrix(exportData).toPromise();
-    } catch (error) {
-      console.error('Export failed:', error);
-    }
+    this.permissionService.exportMatrix(exportData).subscribe({
+      next: () => {
+        console.log('Matrix export completed successfully');
+      },
+      error: (error) => {
+        console.error('Export failed:', error);
+      }
+    });
   }
 }

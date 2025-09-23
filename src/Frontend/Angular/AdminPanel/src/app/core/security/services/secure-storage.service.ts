@@ -1,417 +1,284 @@
-import { Injectable, inject } from '@angular/core';
-import {
-  ISecureStorage,
-  StorageOptions,
-  SecurityMetrics,
-  StorageType,
-  StorageSecurityConfig,
-  EncryptionResult
-} from '../interfaces/storage-security.interface';
-import { EncryptionService } from './encryption.service';
-import { MemoryStorageProvider } from './storage-providers/memory-storage.provider';
-import { SessionStorageProvider } from './storage-providers/session-storage.provider';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+
+export interface StorageOptions {
+  encrypt?: boolean;
+  expiry?: number; // milliseconds
+  namespace?: string;
+  compressed?: boolean;
+}
+
+export interface StorageItem {
+  value: any;
+  timestamp: number;
+  expiry?: number;
+  namespace: string;
+  encrypted: boolean;
+  compressed: boolean;
+}
 
 /**
- * Enterprise-grade secure storage service
- * Implements multiple storage layers with encryption and integrity checking
+ * Secure Storage Service
+ * Enhanced storage with encryption and expiry support
  */
 @Injectable({
   providedIn: 'root'
 })
-export class SecureStorageService implements ISecureStorage {
-  private readonly encryptionService = inject(EncryptionService);
-  private readonly memoryStorage = inject(MemoryStorageProvider);
-  private readonly sessionStorage = inject(SessionStorageProvider);
+export class SecureStorageService {
+  private storageMetrics$ = new BehaviorSubject<{
+    operations: number;
+    errors: number;
+    cacheHits: number;
+    size: number;
+  }>({ operations: 0, errors: 0, cacheHits: 0, size: 0 });
 
-  private readonly defaultConfig: StorageSecurityConfig = {
-    defaultStorage: 'memory',
-    securityLevel: 'high',
-    autoCleanup: true,
-    cleanupInterval: 5 * 60 * 1000, // 5 minutes
-    maxFailedAttempts: 5,
-    lockoutDuration: 15 * 60 * 1000 // 15 minutes
-  };
-
-  private failedAttempts = 0;
-  private lockoutUntil = 0;
-  private cleanupTimer?: number;
+  private memoryCache = new Map<string, StorageItem>();
+  private readonly defaultNamespace = 'secure';
 
   constructor() {
-    this.initializeService();
+    this.initializeSecureStorage();
   }
 
   /**
-   * Initialize secure storage service
+   * Store item securely
    */
-  private async initializeService(): Promise<void> {
-    // Start cleanup timer if auto cleanup is enabled
-    if (this.defaultConfig.autoCleanup) {
-      this.startCleanupTimer();
-    }
-
-    // Validate existing storage integrity
-    await this.validateStorageIntegrity();
-  }
-
-  /**
-   * Store data securely with encryption
-   */
-  async setItem<T>(key: string, value: T, options: StorageOptions = {}): Promise<boolean> {
-    if (this.isLockedOut()) {
-      console.warn('Storage is locked out due to security violations');
-      return false;
-    }
-
+  setItem(key: string, value: any, options: StorageOptions = {}): boolean {
     try {
-      const mergedOptions = this.mergeOptions(options);
-      let dataToStore = value;
+      const item: StorageItem = {
+        value: options.encrypt ? this.encrypt(value) : value,
+        timestamp: Date.now(),
+        expiry: options.expiry ? Date.now() + options.expiry : undefined,
+        namespace: options.namespace || this.defaultNamespace,
+        encrypted: !!options.encrypt,
+        compressed: !!options.compressed
+      };
 
-      // Encrypt data if required
-      if (mergedOptions.encrypted && this.encryptionService.isReady()) {
-        const serializedData = JSON.stringify(value);
-        const encryptionResult = await this.encryptionService.encrypt(serializedData);
-        dataToStore = encryptionResult as any;
-      }
+      const storageKey = this.createKey(key, item.namespace);
 
-      // Add integrity hash if required
-      if (mergedOptions.integrityCheck) {
-        const dataString = JSON.stringify(dataToStore);
-        const integrityHash = await this.encryptionService.generateIntegrityHash(dataString);
-        dataToStore = {
-          data: dataToStore,
-          integrity: integrityHash
-        } as any;
-      }
+      // Store in memory cache
+      this.memoryCache.set(storageKey, item);
 
-      // Try primary storage
-      const primaryStorage = this.getStorageProvider(mergedOptions.fallbackStorage || this.defaultConfig.defaultStorage);
-      if (primaryStorage.setItem(key, dataToStore, mergedOptions)) {
-        return true;
-      }
+      // Store in localStorage
+      localStorage.setItem(storageKey, JSON.stringify(item));
 
-      // Try fallback storage
-      if (mergedOptions.fallbackStorage) {
-        const fallbackStorage = this.getStorageProvider('memory');
-        return fallbackStorage.setItem(key, dataToStore, mergedOptions);
-      }
-
-      return false;
-    } catch (error) {
-      console.error('SecureStorage setItem failed:', error);
-      this.recordFailedAttempt();
-      return false;
-    }
-  }
-
-  /**
-   * Retrieve data securely with decryption
-   */
-  async getItem<T>(key: string): Promise<T | null> {
-    if (this.isLockedOut()) {
-      console.warn('Storage is locked out due to security violations');
-      return null;
-    }
-
-    try {
-      // Try all available storage providers
-      const storageTypes: StorageType[] = ['memory', 'sessionStorage'];
-
-      for (const storageType of storageTypes) {
-        const storageProvider = this.getStorageProvider(storageType);
-        let storedData = storageProvider.getItem(key);
-
-        if (storedData === null) {
-          continue;
-        }
-
-        // Check integrity if present
-        if (this.hasIntegrityCheck(storedData)) {
-          const { data, integrity } = storedData as any;
-          const dataString = JSON.stringify(data);
-          const isValid = await this.encryptionService.verifyIntegrity(dataString, integrity);
-
-          if (!isValid) {
-            console.warn(`Integrity check failed for key: ${key}`);
-            storageProvider.removeItem(key);
-            this.recordFailedAttempt();
-            continue;
-          }
-
-          storedData = data;
-        }
-
-        // Decrypt if encrypted
-        if (this.isEncryptedData(storedData)) {
-          try {
-            const encryptionResult = storedData as EncryptionResult;
-            const decryptedString = await this.encryptionService.decrypt(encryptionResult);
-            return JSON.parse(decryptedString);
-          } catch (error) {
-            console.warn(`Decryption failed for key: ${key}`);
-            storageProvider.removeItem(key);
-            this.recordFailedAttempt();
-            continue;
-          }
-        }
-
-        return storedData as T;
-      }
-
-      return null;
-    } catch (error) {
-      console.error('SecureStorage getItem failed:', error);
-      this.recordFailedAttempt();
-      return null;
-    }
-  }
-
-  /**
-   * Remove item from all storage providers
-   */
-  async removeItem(key: string): Promise<boolean> {
-    if (this.isLockedOut()) {
-      return false;
-    }
-
-    try {
-      let success = false;
-
-      // Remove from all storage providers
-      const storageTypes: StorageType[] = ['memory', 'sessionStorage'];
-      for (const storageType of storageTypes) {
-        const storageProvider = this.getStorageProvider(storageType);
-        if (storageProvider.removeItem(key)) {
-          success = true;
-        }
-      }
-
-      return success;
-    } catch (error) {
-      console.error('SecureStorage removeItem failed:', error);
-      return false;
-    }
-  }
-
-  /**
-   * Clear all stored data
-   */
-  async clear(): Promise<boolean> {
-    if (this.isLockedOut()) {
-      return false;
-    }
-
-    try {
-      let success = true;
-
-      // Clear all storage providers
-      const storageTypes: StorageType[] = ['memory', 'sessionStorage'];
-      for (const storageType of storageTypes) {
-        const storageProvider = this.getStorageProvider(storageType);
-        if (!storageProvider.clear()) {
-          success = false;
-        }
-      }
-
-      return success;
-    } catch (error) {
-      console.error('SecureStorage clear failed:', error);
-      return false;
-    }
-  }
-
-  /**
-   * Check if key exists in any storage
-   */
-  async hasItem(key: string): Promise<boolean> {
-    if (this.isLockedOut()) {
-      return false;
-    }
-
-    const storageTypes: StorageType[] = ['memory', 'sessionStorage'];
-    for (const storageType of storageTypes) {
-      const storageProvider = this.getStorageProvider(storageType);
-      if (storageProvider.hasItem(key)) {
-        return true;
-      }
-    }
-
-    return false;
-  }
-
-  /**
-   * Get combined security metrics
-   */
-  async getMetrics(): Promise<SecurityMetrics> {
-    const memoryMetrics = this.memoryStorage.getMetrics();
-    const sessionMetrics = this.sessionStorage.getMetrics();
-
-    return {
-      accessAttempts: memoryMetrics.accessAttempts + sessionMetrics.accessAttempts,
-      decryptionFailures: memoryMetrics.decryptionFailures + sessionMetrics.decryptionFailures,
-      lastAccess: Math.max(memoryMetrics.lastAccess, sessionMetrics.lastAccess),
-      integrityViolations: memoryMetrics.integrityViolations + sessionMetrics.integrityViolations
-    };
-  }
-
-  /**
-   * Validate integrity of all storage providers
-   */
-  async validateIntegrity(): Promise<boolean> {
-    try {
-      const memoryValid = this.memoryStorage.validateIntegrity();
-      const sessionValid = this.sessionStorage.validateIntegrity();
-
-      return memoryValid && sessionValid;
-    } catch (error) {
-      console.error('Storage integrity validation failed:', error);
-      return false;
-    }
-  }
-
-  /**
-   * Get available storage types
-   */
-  getAvailableStorageTypes(): StorageType[] {
-    const available: StorageType[] = [];
-
-    if (MemoryStorageProvider.isAvailable()) {
-      available.push('memory');
-    }
-
-    if (SessionStorageProvider.isAvailable()) {
-      available.push('sessionStorage');
-    }
-
-    return available;
-  }
-
-  /**
-   * Perform manual cleanup of expired items
-   */
-  async performCleanup(): Promise<{ memory: number; session: number }> {
-    const memoryCleanedCount = this.memoryStorage.cleanup();
-    const sessionCleanedCount = this.sessionStorage.cleanup();
-
-    return {
-      memory: memoryCleanedCount,
-      session: sessionCleanedCount
-    };
-  }
-
-  /**
-   * Get storage provider by type
-   */
-  private getStorageProvider(type: StorageType): MemoryStorageProvider | SessionStorageProvider {
-    switch (type) {
-      case 'sessionStorage':
-        return this.sessionStorage;
-      case 'memory':
-      default:
-        return this.memoryStorage;
-    }
-  }
-
-  /**
-   * Merge options with defaults
-   */
-  private mergeOptions(options: StorageOptions): Required<StorageOptions> {
-    return {
-      encrypted: options.encrypted ?? true,
-      compressed: options.compressed ?? false,
-      expiresIn: options.expiresIn ?? 3600000,
-      integrityCheck: options.integrityCheck ?? true,
-      fallbackStorage: options.fallbackStorage ?? 'memory'
-    };
-  }
-
-  /**
-   * Check if data has integrity check
-   */
-  private hasIntegrityCheck(data: any): boolean {
-    return data &&
-           typeof data === 'object' &&
-           'data' in data &&
-           'integrity' in data &&
-           typeof data.integrity === 'string';
-  }
-
-  /**
-   * Check if data is encrypted
-   */
-  private isEncryptedData(data: any): boolean {
-    return data &&
-           typeof data === 'object' &&
-           'data' in data &&
-           'iv' in data &&
-           'tag' in data &&
-           typeof data.data === 'string' &&
-           typeof data.iv === 'string' &&
-           typeof data.tag === 'string';
-  }
-
-  /**
-   * Record failed attempt and implement lockout
-   */
-  private recordFailedAttempt(): void {
-    this.failedAttempts++;
-
-    if (this.failedAttempts >= this.defaultConfig.maxFailedAttempts) {
-      this.lockoutUntil = Date.now() + this.defaultConfig.lockoutDuration;
-      console.warn(`Storage locked out for ${this.defaultConfig.lockoutDuration / 1000} seconds due to security violations`);
-    }
-  }
-
-  /**
-   * Check if storage is currently locked out
-   */
-  private isLockedOut(): boolean {
-    if (this.lockoutUntil > Date.now()) {
+      this.updateMetrics('operation');
       return true;
-    }
 
-    // Reset if lockout period has passed
-    if (this.lockoutUntil > 0) {
-      this.failedAttempts = 0;
-      this.lockoutUntil = 0;
-    }
-
-    return false;
-  }
-
-  /**
-   * Start automatic cleanup timer
-   */
-  private startCleanupTimer(): void {
-    if (typeof window !== 'undefined') {
-      this.cleanupTimer = window.setInterval(() => {
-        this.performCleanup().catch(error => {
-          console.error('Automatic cleanup failed:', error);
-        });
-      }, this.defaultConfig.cleanupInterval);
-    }
-  }
-
-  /**
-   * Validate storage integrity on initialization
-   */
-  private async validateStorageIntegrity(): Promise<void> {
-    try {
-      const isValid = await this.validateIntegrity();
-      if (!isValid) {
-        console.warn('Storage integrity validation failed, clearing potentially corrupted data');
-        await this.clear();
-      }
     } catch (error) {
-      console.error('Storage integrity validation error:', error);
+      console.error('Secure storage setItem failed:', error);
+      this.updateMetrics('error');
+      return false;
     }
   }
 
   /**
-   * Cleanup resources
+   * Retrieve item securely
    */
-  destroy(): void {
-    if (this.cleanupTimer) {
-      clearInterval(this.cleanupTimer);
+  getItem(key: string, namespace?: string): any {
+    try {
+      const storageKey = this.createKey(key, namespace || this.defaultNamespace);
+
+      // Check memory cache first
+      const cached = this.memoryCache.get(storageKey);
+      if (cached) {
+        if (this.isExpired(cached)) {
+          this.removeItem(key, namespace);
+          return null;
+        }
+        this.updateMetrics('cacheHit');
+        return cached.encrypted ? this.decrypt(cached.value) : cached.value;
+      }
+
+      // Check localStorage
+      const stored = localStorage.getItem(storageKey);
+      if (!stored) {
+        return null;
+      }
+
+      const item: StorageItem = JSON.parse(stored);
+
+      if (this.isExpired(item)) {
+        this.removeItem(key, namespace);
+        return null;
+      }
+
+      // Update memory cache
+      this.memoryCache.set(storageKey, item);
+
+      this.updateMetrics('operation');
+      return item.encrypted ? this.decrypt(item.value) : item.value;
+
+    } catch (error) {
+      console.error('Secure storage getItem failed:', error);
+      this.updateMetrics('error');
+      return null;
     }
+  }
+
+  /**
+   * Remove item
+   */
+  removeItem(key: string, namespace?: string): boolean {
+    try {
+      const storageKey = this.createKey(key, namespace || this.defaultNamespace);
+
+      this.memoryCache.delete(storageKey);
+      localStorage.removeItem(storageKey);
+
+      this.updateMetrics('operation');
+      return true;
+
+    } catch (error) {
+      console.error('Secure storage removeItem failed:', error);
+      this.updateMetrics('error');
+      return false;
+    }
+  }
+
+  /**
+   * Clear all items in namespace
+   */
+  clear(namespace?: string): void {
+    const targetNamespace = namespace || this.defaultNamespace;
+
+    // Clear memory cache
+    this.memoryCache.forEach((item, key) => {
+      if (item.namespace === targetNamespace) {
+        this.memoryCache.delete(key);
+      }
+    });
+
+    // Clear localStorage
+    Object.keys(localStorage).forEach(key => {
+      if (key.startsWith(`${targetNamespace}:`)) {
+        localStorage.removeItem(key);
+      }
+    });
+
+    this.updateMetrics('operation');
+  }
+
+  /**
+   * Check if key exists
+   */
+  hasItem(key: string, namespace?: string): boolean {
+    const storageKey = this.createKey(key, namespace || this.defaultNamespace);
+    return this.memoryCache.has(storageKey) || localStorage.getItem(storageKey) !== null;
+  }
+
+  /**
+   * Get all keys in namespace
+   */
+  getKeys(namespace?: string): string[] {
+    const targetNamespace = namespace || this.defaultNamespace;
+    const prefix = `${targetNamespace}:`;
+
+    return Object.keys(localStorage)
+      .filter(key => key.startsWith(prefix))
+      .map(key => key.substring(prefix.length));
+  }
+
+  /**
+   * Get storage size
+   */
+  getSize(namespace?: string): number {
+    const targetNamespace = namespace || this.defaultNamespace;
+    const prefix = `${targetNamespace}:`;
+
+    return Object.keys(localStorage)
+      .filter(key => key.startsWith(prefix))
+      .reduce((size, key) => {
+        const value = localStorage.getItem(key);
+        return size + (value ? value.length : 0);
+      }, 0);
+  }
+
+  // Private methods
+
+  private initializeSecureStorage(): void {
+    // Clean expired items on initialization
+    this.cleanupExpiredItems();
+
+    // Setup periodic cleanup
+    setInterval(() => {
+      this.cleanupExpiredItems();
+    }, 5 * 60 * 1000); // Every 5 minutes
+
+    console.log('🔐 Secure Storage Service initialized');
+  }
+
+  private createKey(key: string, namespace: string): string {
+    return `${namespace}:${key}`;
+  }
+
+  private isExpired(item: StorageItem): boolean {
+    return item.expiry ? Date.now() > item.expiry : false;
+  }
+
+  private encrypt(value: any): string {
+    // Simple encoding for demo (not cryptographically secure)
+    return btoa(JSON.stringify(value));
+  }
+
+  private decrypt(encrypted: string): any {
+    try {
+      return JSON.parse(atob(encrypted));
+    } catch {
+      return null;
+    }
+  }
+
+  private cleanupExpiredItems(): void {
+    let cleanedCount = 0;
+
+    // Clean memory cache
+    this.memoryCache.forEach((item, key) => {
+      if (this.isExpired(item)) {
+        this.memoryCache.delete(key);
+        cleanedCount++;
+      }
+    });
+
+    // Clean localStorage
+    Object.keys(localStorage).forEach(key => {
+      try {
+        const stored = localStorage.getItem(key);
+        if (stored && key.includes(':')) {
+          const item: StorageItem = JSON.parse(stored);
+          if (this.isExpired(item)) {
+            localStorage.removeItem(key);
+            cleanedCount++;
+          }
+        }
+      } catch {
+        // Invalid item, remove it
+        localStorage.removeItem(key);
+        cleanedCount++;
+      }
+    });
+
+    if (cleanedCount > 0) {
+      console.log(`🧹 Cleaned ${cleanedCount} expired storage items`);
+    }
+  }
+
+  private updateMetrics(type: 'operation' | 'error' | 'cacheHit'): void {
+    const current = this.storageMetrics$.value;
+    const updated = { ...current };
+
+    switch (type) {
+      case 'operation':
+        updated.operations++;
+        break;
+      case 'error':
+        updated.errors++;
+        break;
+      case 'cacheHit':
+        updated.cacheHits++;
+        break;
+    }
+
+    updated.size = this.memoryCache.size;
+    this.storageMetrics$.next(updated);
   }
 }

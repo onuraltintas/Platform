@@ -221,7 +221,7 @@ import { GroupDto } from '../../../models/group.models';
 
     <!-- Confirmation Modal -->
     <app-confirmation-modal
-      [visible]="showConfirmModal"
+      [visible]="showConfirmModal()"
       [config]="confirmConfig"
       (result)="onConfirmResult($event)"/>
   `,
@@ -462,42 +462,49 @@ export class UserListComponent implements OnInit {
     this.loadFilterData();
   }
 
-  private async loadUsers() {
+  private loadUsers() {
     this.loading.set(true);
 
-    try {
-      const request: GetUsersRequest = {
-        ...this.filters(),
-        page: this.currentPage(),
-        pageSize: this.pageSize()
-      };
+    const request: GetUsersRequest = {
+      ...this.filters(),
+      page: this.currentPage(),
+      pageSize: this.pageSize()
+    };
 
-      const response = await this.userService.getUsers(request).toPromise();
-
-      if (response) {
-        this.users.set(response.users || response.data || []);
-        this.totalUsers.set(response.totalCount);
+    this.userService.getUsers(request).subscribe({
+      next: (response) => {
+        if (response) {
+          this.users.set(response.users || response.data || []);
+          this.totalUsers.set(response.totalCount);
+        }
+        this.loading.set(false);
+      },
+      error: (error) => {
+        console.error('Failed to load users:', error);
+        // Show error notification
+        this.loading.set(false);
       }
-    } catch (error) {
-      console.error('Failed to load users:', error);
-      // Show error notification
-    } finally {
-      this.loading.set(false);
-    }
+    });
   }
 
-  private async loadFilterData() {
-    try {
-      const [roles, groups] = await Promise.all([
-        this.roleService.getRoles().toPromise(),
-        this.groupService.getGroups().toPromise()
-      ]);
+  private loadFilterData() {
+    this.roleService.getRoles().subscribe({
+      next: (roles) => {
+        this.availableRoles.set(roles?.data || []);
+      },
+      error: (error) => {
+        console.error('Failed to load roles:', error);
+      }
+    });
 
-      this.availableRoles.set(roles?.data || []);
-      this.availableGroups.set(groups?.data || []);
-    } catch (error) {
-      console.error('Failed to load filter data:', error);
-    }
+    this.groupService.getGroups().subscribe({
+      next: (groups) => {
+        this.availableGroups.set(groups?.data || []);
+      },
+      error: (error) => {
+        console.error('Failed to load groups:', error);
+      }
+    });
   }
 
   onFiltersChange(filters: any) {

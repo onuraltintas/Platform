@@ -256,7 +256,7 @@ import { PermissionDto } from '../../../models/permission.models';
 
     <!-- Confirmation Modal -->
     <app-confirmation-modal
-      [visible]="showConfirmModal"
+      [visible]="showConfirmModal()"
       [config]="confirmConfig"
       (result)="onConfirmResult($event)"/>
   `,
@@ -338,7 +338,7 @@ export class RoleListComponent implements OnInit {
     const systemRoles = rolesData.filter(r => r.isSystemRole).length;
     const customRoles = totalCount - systemRoles;
     const defaultRoles = rolesData.filter(r => r.isDefault).length;
-    const totalPermissions = rolesData.reduce((sum, role) => sum + (role.permissions.length || 0), 0);
+    const totalPermissions = rolesData.reduce((sum, role) => sum + (role.permissions?.length || 0), 0);
 
     return [
       {
@@ -528,36 +528,39 @@ export class RoleListComponent implements OnInit {
     this.loadPermissions();
   }
 
-  private async loadRoles() {
+  private loadRoles() {
     this.loading.set(true);
 
-    try {
-      const request: GetRolesRequest = {
-        ...this.filters(),
-        page: this.currentPage(),
-        pageSize: this.pageSize()
-      };
+    const request: GetRolesRequest = {
+      ...this.filters(),
+      page: this.currentPage(),
+      pageSize: this.pageSize()
+    };
 
-      const response = await this.roleService.getRoles(request).toPromise();
-
-      if (response) {
-        this.roles.set(response.data ?? []);
-        this.totalRoles.set(response.totalCount ?? response.pagination?.total ?? 0);
+    this.roleService.getRoles(request).subscribe({
+      next: (response) => {
+        if (response) {
+          this.roles.set(response.data ?? []);
+          this.totalRoles.set(response.totalCount ?? response.pagination?.total ?? 0);
+        }
+        this.loading.set(false);
+      },
+      error: (error) => {
+        console.error('Failed to load roles:', error);
+        this.loading.set(false);
       }
-    } catch (error) {
-      console.error('Failed to load roles:', error);
-    } finally {
-      this.loading.set(false);
-    }
+    });
   }
 
-  private async loadPermissions() {
-    try {
-      const response = await this.permissionService.getPermissions().toPromise();
-      this.availablePermissions.set(response?.data || []);
-    } catch (error) {
-      console.error('Failed to load permissions:', error);
-    }
+  private loadPermissions() {
+    this.permissionService.getPermissions().subscribe({
+      next: (response) => {
+        this.availablePermissions.set(response?.data || []);
+      },
+      error: (error) => {
+        console.error('Failed to load permissions:', error);
+      }
+    });
   }
 
   onFiltersChange(filters: any) {
@@ -723,28 +726,37 @@ export class RoleListComponent implements OnInit {
     }
   }
 
-  async exportRoles() {
-    try {
-      await this.roleService.exportRoles(this.filters()).toPromise();
-    } catch (error) {
-      console.error('Export roles failed:', error);
-    }
+  exportRoles() {
+    this.roleService.exportRoles(this.filters()).subscribe({
+      next: () => {
+        console.log('Roles exported successfully');
+      },
+      error: (error) => {
+        console.error('Export roles failed:', error);
+      }
+    });
   }
 
-  async exportPermissions() {
-    try {
-      await this.permissionService.exportPermissions().toPromise();
-    } catch (error) {
-      console.error('Export permissions failed:', error);
-    }
+  exportPermissions() {
+    this.permissionService.exportPermissions().subscribe({
+      next: () => {
+        console.log('Permissions exported successfully');
+      },
+      error: (error) => {
+        console.error('Export permissions failed:', error);
+      }
+    });
   }
 
-  async bulkExportRoles(roleIds: string[]) {
-    try {
-      await this.roleService.exportRoles({ ids: roleIds }).toPromise();
-    } catch (error) {
-      console.error('Bulk export failed:', error);
-    }
+  bulkExportRoles(roleIds: string[]) {
+    this.roleService.exportRoles({ ids: roleIds }).subscribe({
+      next: () => {
+        console.log('Bulk export successful');
+      },
+      error: (error) => {
+        console.error('Bulk export failed:', error);
+      }
+    });
   }
 
   goToPage(page: number) {

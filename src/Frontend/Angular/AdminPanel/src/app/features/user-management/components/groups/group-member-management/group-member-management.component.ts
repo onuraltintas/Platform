@@ -1850,60 +1850,64 @@ export class GroupMemberManagementComponent implements OnInit {
   }
 
   // Data Loading Methods
-  async loadGroupAndMembers(): Promise<void> {
+  loadGroupAndMembers(): void {
     if (!this.groupId) return;
 
-    await Promise.all([
-      this.loadGroup(),
-      this.loadMembers(),
-      this.loadStatistics()
-    ]);
+    this.loadGroup();
+    this.loadMembers();
+    this.loadStatistics();
   }
 
-  async loadGroup(): Promise<void> {
+  loadGroup(): void {
     if (!this.groupId) return;
 
-    try {
-      const response = await this.groupService.getGroup(this.groupId).toPromise();
-      if (response) {
-        this.group.set(response);
+    this.groupService.getGroup(this.groupId).subscribe({
+      next: (response) => {
+        if (response) {
+          this.group.set(response);
+        }
+      },
+      error: (error) => {
+        this.errorHandler.handleError(error);
       }
-    } catch (error) {
-      this.errorHandler.handleError(error);
-    }
+    });
   }
 
-  async loadMembers(): Promise<void> {
+  loadMembers(): void {
     if (!this.groupId) return;
 
-    try {
-      this.loading.set(true);
-      const response = await this.groupService.getGroupMembers(this.groupId).toPromise();
-      if (response) {
-        this.members.set(response);
+    this.loading.set(true);
+    this.groupService.getGroupMembers(this.groupId).subscribe({
+      next: (response) => {
+        if (response) {
+          this.members.set(response);
+        }
+        this.loading.set(false);
+      },
+      error: (error) => {
+        this.errorHandler.handleError(error);
+        this.loading.set(false);
       }
-    } catch (error) {
-      this.errorHandler.handleError(error);
-    } finally {
-      this.loading.set(false);
-    }
+    });
   }
 
-  async loadStatistics(): Promise<void> {
+  loadStatistics(): void {
     if (!this.groupId) return;
 
-    try {
-      const response = await this.groupService.getGroupMemberStatistics(this.groupId).toPromise();
-      if (response) {
-        this.statistics.set(response);
+    this.groupService.getGroupMemberStatistics(this.groupId).subscribe({
+      next: (response) => {
+        if (response) {
+          this.statistics.set(response);
+        }
+      },
+      error: (error) => {
+        console.error('Member statistics loading failed:', error);
       }
-    } catch (error) {
-      console.error('Member statistics loading failed:', error);
-    }
+    });
   }
 
-  async refreshData(): Promise<void> {
-    await this.loadGroupAndMembers();
+  refreshData(): void {
+    this.loadGroupAndMembers();
   }
 
   // Filter Methods
@@ -1992,58 +1996,61 @@ export class GroupMemberManagementComponent implements OnInit {
   }
 
   // Member Management Methods
-  async openAddMemberModal(): Promise<void> {
-    await this.searchAvailableUsers();
+  openAddMemberModal(): void {
+    this.searchAvailableUsers();
     // Open modal programmatically
   }
 
-  async searchAvailableUsers(): Promise<void> {
-    try {
-      const currentMemberIds = this.members().map(m => m.userId);
-      const response = await this.userService.getAvailableUsers({
-        search: this.memberSearchTerm,
-        excludeUserIds: currentMemberIds
-      }).toPromise();
+  searchAvailableUsers(): void {
+    const currentMemberIds = this.members().map(m => m.userId);
 
-      if (response) {
-        const candidates: AddMemberCandidate[] = response.data.map(user => ({
-          user,
-          role: 'Member' as GroupMemberRole,
-          selected: false
-        }));
-        this.availableUsers.set(candidates);
+    this.userService.getAvailableUsers({
+      search: this.memberSearchTerm,
+      excludeUserIds: currentMemberIds
+    }).subscribe({
+      next: (response) => {
+        if (response) {
+          const candidates: AddMemberCandidate[] = response.data.map(user => ({
+            user,
+            role: 'Member' as GroupMemberRole,
+            selected: false
+          }));
+          this.availableUsers.set(candidates);
+        }
+      },
+      error: (error) => {
+        this.errorHandler.handleError(error);
       }
-    } catch (error) {
-      this.errorHandler.handleError(error);
-    }
+    });
   }
 
-  async addSelectedMembers(): Promise<void> {
+  addSelectedMembers(): void {
     if (!this.groupId) return;
 
     const selected = this.selectedCandidates();
     if (selected.length === 0) return;
 
-    try {
-      this.saving.set(true);
+    this.saving.set(true);
 
-      const requests: GroupMemberRequest[] = selected.map(candidate => ({
-        userId: candidate.user.id,
-        role: candidate.role
-      }));
+    const requests: GroupMemberRequest[] = selected.map(candidate => ({
+      userId: candidate.user.id,
+      role: candidate.role
+    }));
 
-      await this.groupService.addMembersToGroup(this.groupId, requests).toPromise();
-        await this.loadMembers();
-        await this.loadStatistics();
+    this.groupService.addMembersToGroup(this.groupId, requests).subscribe({
+      next: () => {
+        this.loadMembers();
+        this.loadStatistics();
         // Close modal
         this.availableUsers.set([]);
         this.memberSearchTerm = '';
+        this.saving.set(false);
+      },
+      error: (error) => {
+        this.errorHandler.handleError(error);
+        this.saving.set(false);
       }
-    } catch (error) {
-      this.errorHandler.handleError(error);
-    } finally {
-      this.saving.set(false);
-    }
+    });
   }
 
   changeMemberRole(member: GroupMemberDto): void {
@@ -2054,63 +2061,68 @@ export class GroupMemberManagementComponent implements OnInit {
     // Open modal programmatically
   }
 
-  async saveRoleChange(): Promise<void> {
+  saveRoleChange(): void {
     if (!this.groupId || this.changeRoleForm.invalid) return;
 
     const member = this.selectedMemberForRoleChange();
     if (!member) return;
 
-    try {
-      this.saving.set(true);
-      const newRole = this.changeRoleForm.get('newRole')?.value;
+    this.saving.set(true);
+    const newRole = this.changeRoleForm.get('newRole')?.value;
 
-      const response = await this.groupService.changeGroupMemberRole(
-        this.groupId,
-        member.userId,
-        newRole
-      ).toPromise();
-
-      await this.loadMembers();
-      await this.loadStatistics();
-      // Close modal
-    } catch (error) {
-      this.errorHandler.handleError(error);
-    } finally {
-      this.saving.set(false);
-    }
+    this.groupService.changeGroupMemberRole(
+      this.groupId,
+      member.userId,
+      newRole
+    ).subscribe({
+      next: () => {
+        this.loadMembers();
+        this.loadStatistics();
+        // Close modal
+        this.saving.set(false);
+      },
+      error: (error) => {
+        this.errorHandler.handleError(error);
+        this.saving.set(false);
+      }
+    });
   }
 
-  async removeMemberFromGroup(member: GroupMemberDto): Promise<void> {
+  removeMemberFromGroup(member: GroupMemberDto): void {
     if (!this.groupId || !this.canRemoveMember(member)) return;
 
-    const confirmed = await this.confirmationService.confirm({
+    this.confirmationService.confirm({
       title: 'Üyeyi Gruptan Çıkar',
       message: `${member.firstName} ${member.lastName} kullanıcısını gruptan çıkarmak istediğinizden emin misiniz?`,
       confirmText: 'Çıkar',
       confirmButtonClass: 'btn-danger'
-    });
-
-    if (confirmed) {
-      try {
-        await this.groupService.removeMemberFromGroup(this.groupId, member.userId).toPromise();
-        await this.loadMembers();
-        await this.loadStatistics();
-      } catch (error) {
-        this.errorHandler.handleError(error);
+    }).then(confirmed => {
+      if (confirmed) {
+        this.groupService.removeMemberFromGroup(this.groupId!, member.userId).subscribe({
+          next: () => {
+            this.loadMembers();
+            this.loadStatistics();
+          },
+          error: (error) => {
+            this.errorHandler.handleError(error);
+          }
+        });
       }
-    }
+    });
   }
 
-  async toggleMemberStatus(member: GroupMemberDto): Promise<void> {
+  toggleMemberStatus(member: GroupMemberDto): void {
     if (!this.groupId) return;
 
-    try {
-      await this.groupService.toggleGroupMemberStatus(this.groupId, member.userId).toPromise();
-      await this.loadMembers();
-      await this.loadStatistics();
-    } catch (error) {
-      this.errorHandler.handleError(error);
-    }
+    this.groupService.toggleGroupMemberStatus(this.groupId, member.userId).subscribe({
+      next: () => {
+        this.loadMembers();
+        this.loadStatistics();
+      },
+      error: (error) => {
+        this.errorHandler.handleError(error);
+      }
+    });
   }
 
   // Permission Methods
@@ -2142,66 +2154,71 @@ export class GroupMemberManagementComponent implements OnInit {
   }
 
   // Bulk Operations
-  async executeBulkOperation(operation: BulkMemberOperation): Promise<void> {
+  executeBulkOperation(operation: BulkMemberOperation): void {
     const selectedIds = this.selectedMembers().map(m => m.userId);
 
-    const confirmed = await this.confirmationService.confirm({
+    this.confirmationService.confirm({
       title: `Toplu ${operation.label}`,
       message: operation.confirmMessage,
       confirmText: operation.label,
-    });
+    }).then(confirmed => {
+      if (!confirmed) return;
 
-    if (!confirmed) return;
-
-    try {
       switch (operation.type) {
         case 'remove':
-          await this.bulkRemoveMembers(selectedIds);
+          this.bulkRemoveMembers(selectedIds);
           break;
         case 'changeRole':
           // Open bulk role change modal
           break;
         case 'activate':
-          await this.bulkToggleMemberStatus(selectedIds, true);
+          this.bulkToggleMemberStatus(selectedIds, true);
           break;
         case 'deactivate':
-          await this.bulkToggleMemberStatus(selectedIds, false);
+          this.bulkToggleMemberStatus(selectedIds, false);
           break;
         case 'export':
           // Export selected members
           break;
       }
-    } catch (error) {
-      this.errorHandler.handleError(error);
-    }
+    });
   }
 
-  private async bulkRemoveMembers(userIds: string[]): Promise<void> {
+  private bulkRemoveMembers(userIds: string[]): void {
     if (!this.groupId) return;
 
-    await this.groupService.removeMembersFromGroup(this.groupId, userIds);
-    await this.loadMembers();
-    await this.loadStatistics();
-    this.clearSelection();
+    this.groupService.removeMembersFromGroup(this.groupId, userIds).subscribe({
+      next: () => {
+        this.loadMembers();
+        this.loadStatistics();
+        this.clearSelection();
+      },
+      error: (error) => {
+        this.errorHandler.handleError(error);
+      }
+    });
   }
 
-  private async bulkToggleMemberStatus(userIds: string[], activate: boolean): Promise<void> {
+  private bulkToggleMemberStatus(userIds: string[], activate: boolean): void {
     if (!this.groupId) return;
 
-    await this.groupService.bulkToggleGroupMemberStatus(this.groupId, userIds, activate);
-    await this.loadMembers();
-    await this.loadStatistics();
-    this.clearSelection();
+    this.groupService.bulkToggleGroupMemberStatus(this.groupId, userIds, activate).subscribe({
+      next: () => {
+        this.loadMembers();
+        this.loadStatistics();
+        this.clearSelection();
+      },
+      error: (error) => {
+        this.errorHandler.handleError(error);
+      }
+    });
   }
 
   // Export Methods
-  async exportMembers(format: 'excel' | 'csv' | 'pdf'): Promise<void> {
-    try {
-      const members = this.selectedMembers().length > 0 ? this.selectedMembers() : this.filteredMembers();
-      // Implementation for export
-    } catch (error) {
-      this.errorHandler.handleError(error);
-    }
+  exportMembers(format: 'excel' | 'csv' | 'pdf'): void {
+    const members = this.selectedMembers().length > 0 ? this.selectedMembers() : this.filteredMembers();
+    // Implementation for export
+    console.log(`Exporting ${members.length} members in ${format} format`);
   }
 
   openBulkImportModal(): void {

@@ -391,33 +391,46 @@ export class UserManagementDashboardComponent implements OnInit {
     this.loadDashboardData();
   }
 
-  private async loadDashboardData() {
+  private loadDashboardData() {
     this.loading.set(true);
 
-    try {
-      // Load all dashboard data in parallel
-      const [stats, users, roles] = await Promise.all([
-        this.userService.getStatistics().toPromise(),
-        this.userService.getUsers({
-          pageSize: 5,
-          sortBy: 'lastLoginAt',
-          sortDirection: 'desc'
-        }).toPromise(),
-        this.roleService.getRoles({
-          pageSize: 3
-        }).toPromise()
-      ]);
+    // Load statistics
+    this.userService.getStatistics().subscribe({
+      next: (stats) => {
+        this.statistics.set(stats || null);
+      },
+      error: (error) => {
+        console.error('Failed to load statistics:', error);
+      }
+    });
 
-      this.statistics.set(stats || null);
-      this.recentUsers.set(users?.data || []);
-      this.topRoles.set(roles?.data as any || []);
+    // Load recent users
+    this.userService.getUsers({
+      pageSize: 5,
+      sortBy: 'lastLoginAt',
+      sortDirection: 'desc'
+    }).subscribe({
+      next: (users) => {
+        this.recentUsers.set(users?.data || []);
+      },
+      error: (error) => {
+        console.error('Failed to load recent users:', error);
+      }
+    });
 
-    } catch (error) {
-      console.error('Dashboard data loading failed:', error);
-      // Handle error - could show toast notification
-    } finally {
-      this.loading.set(false);
-    }
+    // Load top roles
+    this.roleService.getRoles({
+      pageSize: 3
+    }).subscribe({
+      next: (roles) => {
+        this.topRoles.set(roles?.data as any || []);
+        this.loading.set(false);
+      },
+      error: (error) => {
+        console.error('Failed to load roles:', error);
+        this.loading.set(false);
+      }
+    });
   }
 
   onQuickActionClick(event: any) {

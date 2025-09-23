@@ -52,6 +52,25 @@ export const environment = {
     enableMFA: false
   },
 
+  // Performance optimization settings
+  performance: {
+    enableOptimizedTokenCache: true,
+    enableBackgroundRefresh: true,
+    cacheWarmupOnInit: true,
+    performanceMonitoring: true,
+    maxCacheSize: 50,
+    tokenCacheCleanupInterval: 5 * 60 * 1000 // 5 minutes
+  },
+
+  // Security levels by environment
+  security: {
+    level: 'basic' as 'basic' | 'enhanced' | 'enterprise',
+    enableAdvancedEncryption: false, // Disabled for development
+    enableIntegrityChecks: false,    // Disabled for development
+    enableAuditLogging: false,       // Disabled for development
+    tokenEncryption: 'base64' as 'none' | 'base64' | 'aes-256'
+  },
+
   oauth: {
     google: {
       clientId: '', // Will be loaded from backend or secrets.env
