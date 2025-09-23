@@ -1,0 +1,131 @@
+<div class="terms-container">
+  <div class="terms-content">
+    <div class="header-section">
+      <h1>Kullanım Şartları</h1>
+      <p class="last-updated">Son güncelleme: {{ getCurrentDate() }}</p>
+    </div>
+
+    <div class="content-section">
+      <section>
+        <h2>1. Genel Hükümler</h2>
+        <p>
+          Bu kullanım şartları ("Şartlar"), PlatformV1 ("Platform", "Biz", "Bizim") tarafından sunulan
+          hizmetlerin kullanımını düzenler. Platformumuzu kullanarak bu şartları kabul etmiş sayılırsınız.
+        </p>
+      </section>
+
+      <section>
+        <h2>2. Hizmet Tanımı</h2>
+        <p>
+          PlatformV1, kullanıcılara yönelik kapsamlı bir yönetim sistemi ve hizmet platformudur.
+          Platform üzerinden kullanıcı yönetimi, grup organizasyonu, hız okuma eğitimleri ve
+          diğer eğitim hizmetlerine erişim sağlanmaktadır.
+        </p>
+      </section>
+
+      <section>
+        <h2>3. Kullanıcı Hesapları</h2>
+        <ul>
+          <li>Hesap oluşturmak için doğru ve güncel bilgiler vermelisiniz</li>
+          <li>Hesap güvenliğinizden siz sorumlusunuz</li>
+          <li>Şifrenizi güvenli tutmak ve başkalarıyla paylaşmamak zorundasınız</li>
+          <li>Hesabınızda gerçekleşen tüm aktivitelerden sorumlusunuz</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>4. Kabul Edilebilir Kullanım</h2>
+        <p>Platform kullanırken aşağıdaki davranışlarda bulunmamanız gerekmektedir:</p>
+        <ul>
+          <li>Yasadışı aktivitelerde bulunmak</li>
+          <li>Diğer kullanıcıları rahatsız etmek veya taciz etmek</li>
+          <li>Sisteme zarar verici yazılımlar yüklemek</li>
+          <li>Platform güvenliğini tehlikeye atmaya yönelik girişimlerde bulunmak</li>
+          <li>Telif hakkı ihlali yapacak içerik paylaşmak</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>5. Gizlilik ve Veri Koruma</h2>
+        <p>
+          Kişisel verilerinizin işlenmesi ve korunması hakkında detaylı bilgi için
+          Gizlilik Politikamızı inceleyiniz. Platformu kullanarak veri işleme
+          uygulamalarımızı kabul etmiş sayılırsınız.
+        </p>
+      </section>
+
+      <section>
+        <h2>6. Fikri Mülkiyet Hakları</h2>
+        <p>
+          Platform üzerindeki tüm içerik, yazılım, tasarım ve materyaller PlatformV1'in
+          fikri mülkiyetidir. Bu materyallerin izinsiz kopyalanması, dağıtılması veya
+          kullanılması yasaktır.
+        </p>
+      </section>
+
+      <section>
+        <h2>7. Hizmet Kesintileri</h2>
+        <p>
+          Platform bakım, güncelleme veya teknik sorunlar nedeniyle geçici olarak
+          erişilemez olabilir. Bu durumlardan önceden bilgilendirilmeye çalışılacak
+          ancak acil durumlarda hizmet kesintisi yaşanabilir.
+        </p>
+      </section>
+
+      <section>
+        <h2>8. Hesap Sonlandırma</h2>
+        <p>
+          Bu şartları ihlal etmeniz durumunda hesabınız uyarı verilmeksizin sonlandırılabilir.
+          Ayrıca istediğiniz zaman hesabınızı kapatma hakkına sahipsiniz.
+        </p>
+      </section>
+
+      <section>
+        <h2>9. Sorumluluk Sınırlaması</h2>
+        <p>
+          PlatformV1, hizmet kullanımından doğabilecek doğrudan veya dolaylı zararlardan
+          sorumlu değildir. Platform "olduğu gibi" sunulmaktadır ve hiçbir garanti verilmemektedir.
+        </p>
+      </section>
+
+      <section>
+        <h2>10. Şartlarda Değişiklik</h2>
+        <p>
+          Bu kullanım şartları zaman zaman güncellenebilir. Önemli değişiklikler platform
+          üzerinden duyurulacaktır. Güncellemelerden sonra platformu kullanmaya devam etmeniz
+          yeni şartları kabul ettiğiniz anlamına gelir.
+        </p>
+      </section>
+
+      <section>
+        <h2>11. Uygulanacak Hukuk</h2>
+        <p>
+          Bu şartlar Türkiye Cumhuriyeti hukuku kapsamında yorumlanır ve uygulanır.
+          Ortaya çıkabilecek anlaşmazlıklar Türkiye mahkemelerinin yetkisi altındadır.
+        </p>
+      </section>
+
+      <section>
+        <h2>12. İletişim</h2>
+        <p>
+          Bu kullanım şartları hakkında sorularınız için bizimle iletişime geçebilirsiniz:
+        </p>
+        <ul>
+          <li>E-posta: {{ companyInfo.email }}</li>
+          <li>Telefon: {{ companyInfo.phone }}</li>
+          <li>Adres: {{ companyInfo.address }}</li>
+        </ul>
+      </section>
+    </div>
+
+    <div class="footer-section">
+      <a routerLink="/auth/register" class="back-link">
+        <i class="bi bi-arrow-left me-2"></i>
+        Kayıt Sayfasına Dön
+      </a>
+      <a routerLink="/auth/login" class="login-link">
+        Giriş Yap
+      </a>
+    </div>
+  </div>
+</div>

@@ -5,12 +5,8 @@ import { CommonModule } from '@angular/common';
   selector: 'app-exercise-builder',
   standalone: true,
   imports: [CommonModule],
-  template: `
-    <div class="container">
-      <h2>Egzersiz Yönetimi</h2>
-      <p>Exercise builder component - placeholder</p>
-    </div>
-  `
+  templateUrl: './exercise-builder.component.html',
+  styleUrl: './exercise-builder.component.scss'
 })
 export class ExerciseBuilderComponent {
   constructor() {}

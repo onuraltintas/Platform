@@ -4,6 +4,7 @@ using Enterprise.Shared.Authorization.Attributes;
 using Identity.Core.Interfaces;
 using Identity.Application.Services;
 using System.Security.Claims;
+using System.Linq;
 
 namespace Identity.API.Controllers;
 
@@ -88,8 +89,8 @@ public class TestAuthorizationController : ControllerBase
                 userId = userId,
                 directPermissions = permissionsResult.Value,
                 effectivePermissions = effectivePermissions,
-                permissionCount = permissionsResult.Value.Count(),
-                effectivePermissionCount = effectivePermissions.Count()
+                permissionCount = permissionsResult.Value?.Count() ?? 0,
+                effectivePermissionCount = effectivePermissions?.Count() ?? 0
             });
         }
         catch (Exception ex)

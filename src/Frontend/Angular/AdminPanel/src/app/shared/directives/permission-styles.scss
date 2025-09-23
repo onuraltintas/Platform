@@ -1,0 +1,165 @@
+// Permission directive styles
+
+.permission-disabled {
+  opacity: 0.5 !important;
+  cursor: not-allowed !important;
+  pointer-events: none !important;
+
+  &:hover {
+    opacity: 0.5 !important;
+  }
+}
+
+.permission-hidden {
+  display: none !important;
+}
+
+.permission-blur {
+  filter: blur(2px) !important;
+  pointer-events: none !important;
+}
+
+// Button specific permission styles
+.btn.permission-disabled,
+button.permission-disabled {
+  background-color: #e9ecef !important;
+  border-color: #dee2e6 !important;
+  color: #6c757d !important;
+
+  &:hover,
+  &:focus,
+  &:active {
+    background-color: #e9ecef !important;
+    border-color: #dee2e6 !important;
+    color: #6c757d !important;
+    box-shadow: none !important;
+  }
+}
+
+// Link specific permission styles
+a.permission-disabled {
+  color: #6c757d !important;
+  text-decoration: none !important;
+
+  &:hover,
+  &:focus {
+    color: #6c757d !important;
+    text-decoration: none !important;
+  }
+}
+
+// Input specific permission styles
+input.permission-disabled,
+textarea.permission-disabled,
+select.permission-disabled {
+  background-color: #e9ecef !important;
+  opacity: 1 !important;
+  cursor: not-allowed !important;
+}
+
+// Card/panel permission styles
+.card.permission-disabled,
+.panel.permission-disabled {
+  background-color: #f8f9fa !important;
+  border-color: #e9ecef !important;
+
+  .card-header,
+  .panel-header {
+    background-color: #e9ecef !important;
+    color: #6c757d !important;
+  }
+}
+
+// Permission indicator overlay
+.permission-overlay {
+  position: relative;
+
+  &::after {
+    content: '🔒';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 12px;
+    z-index: 1000;
+    pointer-events: none;
+  }
+}
+
+// Loading state for permission checks
+.permission-loading {
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.8);
+    z-index: 999;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin: -10px 0 0 -10px;
+    border: 2px solid #f3f3f3;
+    border-top: 2px solid #007bff;
+    border-radius: 50%;
+    animation: permission-spin 1s linear infinite;
+    z-index: 1000;
+  }
+}
+
+@keyframes permission-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+// Utility classes for permission-based styling
+.permission-show {
+  display: block !important;
+}
+
+.permission-hide {
+  display: none !important;
+}
+
+.permission-readonly {
+  pointer-events: none !important;
+  user-select: none !important;
+}
+
+// Dark theme support
+[data-theme="dark"] {
+  .permission-disabled {
+    opacity: 0.4 !important;
+  }
+
+  .btn.permission-disabled,
+  button.permission-disabled {
+    background-color: #343a40 !important;
+    border-color: #495057 !important;
+    color: #6c757d !important;
+  }
+
+  .card.permission-disabled,
+  .panel.permission-disabled {
+    background-color: #212529 !important;
+    border-color: #343a40 !important;
+  }
+
+  .permission-loading::before {
+    background: rgba(33, 37, 41, 0.8);
+  }
+}

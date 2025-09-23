@@ -80,10 +80,11 @@ public class AdminController : ControllerBase
             // Apply filters
             if (!string.IsNullOrEmpty(request.Search))
             {
-                query = query.Where(u => u.Email.Contains(request.Search) ||
-                                        u.UserName.Contains(request.Search) ||
-                                        u.FirstName.Contains(request.Search) ||
-                                        u.LastName.Contains(request.Search));
+                var s = request.Search;
+                query = query.Where(u => (u.Email ?? string.Empty).Contains(s) ||
+                                        (u.UserName ?? string.Empty).Contains(s) ||
+                                        (u.FirstName ?? string.Empty).Contains(s) ||
+                                        (u.LastName ?? string.Empty).Contains(s));
             }
 
             if (request.IsActive.HasValue)
@@ -111,11 +112,11 @@ public class AdminController : ControllerBase
                 Users = users.Select(u => new UserSummaryDto
                 {
                     Id = u.Id,
-                    UserName = u.UserName ?? u.Email,
-                    Email = u.Email,
+                    UserName = u.UserName ?? u.Email ?? string.Empty,
+                    Email = u.Email ?? string.Empty,
                     FirstName = u.FirstName ?? string.Empty,
                     LastName = u.LastName ?? string.Empty,
-                    FullName = $"{u.FirstName} {u.LastName}".Trim(),
+                    FullName = $"{u.FirstName ?? string.Empty} {u.LastName ?? string.Empty}".Trim(),
                     PhoneNumber = u.PhoneNumber,
                     IsEmailConfirmed = u.EmailConfirmed,
                     IsActive = u.IsActive,
@@ -165,11 +166,11 @@ public class AdminController : ControllerBase
             var result = new UserSummaryDto
             {
                 Id = user.Id,
-                UserName = user.UserName ?? user.Email,
-                Email = user.Email,
+                UserName = user.UserName ?? user.Email ?? string.Empty,
+                Email = user.Email ?? string.Empty,
                 FirstName = user.FirstName ?? string.Empty,
                 LastName = user.LastName ?? string.Empty,
-                FullName = $"{user.FirstName} {user.LastName}".Trim(),
+                FullName = $"{user.FirstName ?? string.Empty} {user.LastName ?? string.Empty}".Trim(),
                 PhoneNumber = user.PhoneNumber,
                 IsEmailConfirmed = user.EmailConfirmed,
                 IsActive = user.IsActive,
@@ -489,8 +490,9 @@ public class AdminController : ControllerBase
 
             if (!string.IsNullOrEmpty(request.Search))
             {
-                query = query.Where(r => r.Name.Contains(request.Search) ||
-                                        r.Description.Contains(request.Search));
+                var s = request.Search;
+                query = query.Where(r => (r.Name ?? string.Empty).Contains(s) ||
+                                        (r.Description ?? string.Empty).Contains(s));
             }
 
             if (request.IsActive.HasValue)

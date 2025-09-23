@@ -21,7 +21,7 @@ public class GroupRepository : BaseRepository<Group>, IGroupRepository
         _logger = logger;
     }
 
-    public async Task<Group?> GetByIdAsync(Guid groupId, CancellationToken cancellationToken = default)
+    public override async Task<Group?> GetByIdAsync(Guid groupId, CancellationToken cancellationToken = default)
     {
         try
         {

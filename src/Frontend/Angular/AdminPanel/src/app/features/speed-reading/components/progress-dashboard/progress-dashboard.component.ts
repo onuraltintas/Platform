@@ -5,12 +5,8 @@ import { CommonModule } from '@angular/common';
   selector: 'app-progress-dashboard',
   standalone: true,
   imports: [CommonModule],
-  template: `
-    <div class="container">
-      <h2>İlerleme Takibi</h2>
-      <p>Progress dashboard component - placeholder</p>
-    </div>
-  `
+  templateUrl: './progress-dashboard.component.html',
+  styleUrl: './progress-dashboard.component.scss'
 })
 export class ProgressDashboardComponent {
   constructor() {}

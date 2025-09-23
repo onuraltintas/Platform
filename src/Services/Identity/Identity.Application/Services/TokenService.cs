@@ -18,6 +18,7 @@ public class TokenService : Identity.Core.Interfaces.ITokenService
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly IUserService _userService;
     private readonly IGroupService _groupService;
+    private readonly IPermissionService _permissionService;
     private readonly Enterprise.Shared.Security.Interfaces.ITokenService _enterpriseTokenService;
     private readonly ICacheService _cacheService;
     private readonly IMapper _mapper;
@@ -31,6 +32,7 @@ public class TokenService : Identity.Core.Interfaces.ITokenService
         UserManager<ApplicationUser> userManager,
         IUserService userService,
         IGroupService groupService,
+        IPermissionService permissionService,
         Enterprise.Shared.Security.Interfaces.ITokenService enterpriseTokenService,
         ICacheService cacheService,
         IMapper mapper,
@@ -40,6 +42,7 @@ public class TokenService : Identity.Core.Interfaces.ITokenService
         _userManager = userManager;
         _userService = userService;
         _groupService = groupService;
+        _permissionService = permissionService;
         _enterpriseTokenService = enterpriseTokenService;
         _cacheService = cacheService;
         _mapper = mapper;
@@ -91,8 +94,9 @@ public class TokenService : Identity.Core.Interfaces.ITokenService
             // Get user roles
             var userRoles = await _userManager.GetRolesAsync(user);
 
-            // Get user permissions
-            var permissions = await GetUserPermissionsForTokenAsync(userId, activeGroup?.Id, cancellationToken);
+            // Get user permissions from PermissionService
+            var permissionsResult = await _permissionService.GetUserPermissionNamesAsync(userId, activeGroup?.Id, cancellationToken);
+            var permissions = permissionsResult.IsSuccess ? permissionsResult.Value : new List<string>();
 
             // Prepare claims for JWT
             var claims = new Dictionary<string, object>
@@ -131,9 +135,17 @@ public class TokenService : Identity.Core.Interfaces.ITokenService
             if (userRoles.Any())
             {
                 claims["roles"] = userRoles;
+
+                // SuperAdmin gets wildcard permission
+                if (userRoles.Contains("SuperAdmin"))
+                {
+                    claims["is_super"] = true;
+                    claims["permissions"] = new List<string> { "*.*.*" };
+                }
             }
 
-            if (permissions.Any())
+            // Add regular permissions if not SuperAdmin
+            if (!userRoles.Contains("SuperAdmin") && permissions.Any())
             {
                 claims["permissions"] = permissions;
             }
@@ -330,91 +342,6 @@ public class TokenService : Identity.Core.Interfaces.ITokenService
 
     #region Private Methods
 
-    private async Task<IEnumerable<string>> GetUserPermissionsForTokenAsync(string userId, Guid? groupId, CancellationToken cancellationToken)
-    {
-        try
-        {
-            var user = await _userManager.FindByIdAsync(userId);
-            if (user == null) return new List<string>();
-
-            var permissions = new List<string>();
-            var userRoles = await _userManager.GetRolesAsync(user);
-
-            // Add basic permissions
-            permissions.Add("profile.read");
-            permissions.Add("profile.write");
-
-            // Add role-based permissions
-            foreach (var role in userRoles)
-            {
-                switch (role.ToLower())
-                {
-                    case "admin":
-                        permissions.AddRange(new[]
-                        {
-                            "users.read", "users.write", "users.delete",
-                            "groups.read", "groups.write", "groups.delete",
-                            "services.read", "services.write", "services.delete",
-                            "permissions.read", "permissions.write",
-                            // Added for admin to see/manage roles and categories
-                            "roles.read", "roles.write",
-                            "categories.read", "categories.write",
-                            // SpeedReading resources
-                            "reading-texts.read", "reading-texts.write",
-                            "exercises.read", "exercises.write",
-                            "user-reading-profiles.read"
-                        });
-                        break;
-                    case "manager":
-                        permissions.AddRange(new[]
-                        {
-                            "users.read", "users.write",
-                            "groups.read", "groups.write"
-                        });
-                        break;
-                    case "user":
-                        permissions.AddRange(new[]
-                        {
-                            "groups.read"
-                        });
-                        break;
-                }
-            }
-
-            // Group-specific permissions
-            if (groupId.HasValue)
-            {
-                var userGroupRole = await _groupService.GetUserRoleInGroupAsync(userId, groupId.Value, cancellationToken);
-                if (userGroupRole.IsSuccess && userGroupRole.Value.HasValue)
-                {
-                    switch (userGroupRole.Value.Value)
-                    {
-                        case UserGroupRole.Owner:
-                        case UserGroupRole.Admin:
-                            permissions.AddRange(new[]
-                            {
-                                $"group.{groupId}.admin",
-                                $"group.{groupId}.users.manage"
-                            });
-                            break;
-                        case UserGroupRole.Moderator:
-                            permissions.Add($"group.{groupId}.moderate");
-                            break;
-                        case UserGroupRole.Member:
-                            permissions.Add($"group.{groupId}.member");
-                            break;
-                    }
-                }
-            }
-
-            return permissions.Distinct();
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error getting user permissions for token");
-            return new List<string>();
-        }
-    }
 
     private async Task<bool> IsNewDeviceAsync(string userId, string deviceId)
     {

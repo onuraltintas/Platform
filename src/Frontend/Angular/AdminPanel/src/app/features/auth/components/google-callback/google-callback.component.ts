@@ -9,24 +9,8 @@ import { CommonModule } from '@angular/common';
   selector: 'app-google-callback',
   standalone: true,
   imports: [CommonModule],
-  template: `
-    <div class="d-flex justify-content-center align-items-center min-vh-100">
-      <div class="text-center">
-        <div class="spinner-border text-primary mb-3" role="status">
-          <span class="visually-hidden">Yükleniyor...</span>
-        </div>
-        <h4>Google ile giriş yapılıyor...</h4>
-        <p class="text-muted">Lütfen bekleyiniz.</p>
-      </div>
-    </div>
-  `,
-  styles: [`
-    :host {
-      display: block;
-      height: 100vh;
-      background-color: #f8f9fa;
-    }
-  `]
+  templateUrl: './google-callback.component.html',
+  styleUrl: './google-callback.component.scss'
 })
 export class GoogleCallbackComponent implements OnInit {
   private readonly route = inject(ActivatedRoute);
@@ -56,16 +40,16 @@ export class GoogleCallbackComponent implements OnInit {
           console.log('Received token data:', tokenData);
 
           // Handle successful authentication
-          this.authService.handleGoogleLoginSuccess(tokenData);
+          await this.authService.handleGoogleLoginSuccess(tokenData);
 
           this.toastr.success('Google ile giriş başarılı!', 'Başarılı');
 
           // Parse state to get redirect URL
-          let redirectUrl = '/dashboard';
+          let redirectUrl = '/admin';
           if (state) {
             try {
               const stateData = JSON.parse(atob(decodeURIComponent(state)));
-              redirectUrl = stateData.redirectUrl || '/dashboard';
+              redirectUrl = stateData.redirectUrl || '/admin';
             } catch {
               console.warn('Could not parse state, using default redirect');
             }

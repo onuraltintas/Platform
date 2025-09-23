@@ -1,0 +1,497 @@
+.validation-feedback {
+  padding: 8px 0;
+  font-size: 0.875rem;
+  transition: all 0.3s ease;
+
+  &.has-errors {
+    .validation-status .status-icon.error {
+      color: #f44336;
+    }
+  }
+
+  &.has-warnings {
+    .validation-status .status-icon.warning {
+      color: #ff9800;
+    }
+  }
+
+  &.valid {
+    .validation-status .status-icon.success {
+      color: #4caf50;
+    }
+  }
+
+  &.risk-critical {
+    border-left: 4px solid #d32f2f;
+    padding-left: 12px;
+    background-color: #ffebee;
+  }
+
+  &.risk-high {
+    border-left: 4px solid #f57c00;
+    padding-left: 12px;
+    background-color: #fff3e0;
+  }
+
+  &.risk-medium {
+    border-left: 4px solid #fbc02d;
+    padding-left: 12px;
+    background-color: #fffde7;
+  }
+
+  &.risk-low {
+    border-left: 4px solid #388e3c;
+    padding-left: 12px;
+    background-color: #e8f5e8;
+  }
+}
+
+// Validation Status
+.validation-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+
+  .status-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+
+    &.validating {
+      color: #2196f3;
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    &.neutral {
+      color: #757575;
+    }
+
+    &.error {
+      color: #f44336;
+    }
+
+    &.warning {
+      color: #ff9800;
+    }
+
+    &.success {
+      color: #4caf50;
+    }
+  }
+
+  .status-text {
+    font-weight: 500;
+    color: #424242;
+  }
+
+  .validation-progress {
+    margin-left: auto;
+    width: 60px;
+    height: 4px;
+  }
+}
+
+// Security Indicator
+.security-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+
+  .security-icon {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+
+    &.risk-critical {
+      color: #d32f2f;
+    }
+
+    &.risk-high {
+      color: #f57c00;
+    }
+
+    &.risk-medium {
+      color: #fbc02d;
+    }
+
+    &.risk-low {
+      color: #388e3c;
+    }
+  }
+
+  .security-text {
+    color: inherit;
+  }
+}
+
+// Validation Errors
+.validation-errors {
+  margin-bottom: 8px;
+
+  .error-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    margin-bottom: 4px;
+    color: #d32f2f;
+
+    .error-icon {
+      font-size: 16px;
+      width: 16px;
+      height: 16px;
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
+
+    .error-text {
+      font-size: 0.75rem;
+      line-height: 1.4;
+    }
+  }
+}
+
+// Validation Warnings
+.validation-warnings {
+  margin-bottom: 8px;
+
+  .warning-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    margin-bottom: 4px;
+    color: #f57c00;
+
+    .warning-icon {
+      font-size: 16px;
+      width: 16px;
+      height: 16px;
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
+
+    .warning-text {
+      font-size: 0.75rem;
+      line-height: 1.4;
+    }
+  }
+}
+
+// Security Recommendations
+.security-recommendations {
+  margin-bottom: 12px;
+  padding: 12px;
+  background-color: #e3f2fd;
+  border-radius: 8px;
+  border-left: 4px solid #2196f3;
+
+  .recommendations-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #1976d2;
+    font-size: 0.875rem;
+
+    mat-icon {
+      font-size: 18px;
+      width: 18px;
+      height: 18px;
+    }
+  }
+
+  .recommendations-chips {
+    gap: 4px;
+
+    mat-chip {
+      font-size: 0.75rem;
+      height: 28px;
+      background-color: #bbdefb;
+      color: #1565c0;
+      border: 1px solid #90caf9;
+
+      &:hover {
+        background-color: #90caf9;
+      }
+    }
+  }
+}
+
+// Password Strength
+.password-strength {
+  margin-bottom: 12px;
+  padding: 8px 0;
+
+  .strength-title {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #666;
+    margin-bottom: 6px;
+  }
+
+  .strength-bar {
+    width: 100%;
+    height: 6px;
+    background-color: #e0e0e0;
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 4px;
+
+    .strength-fill {
+      height: 100%;
+      transition: width 0.3s ease, background-color 0.3s ease;
+      border-radius: 3px;
+
+      &.strength-weak {
+        background-color: #f44336;
+      }
+
+      &.strength-fair {
+        background-color: #ff9800;
+      }
+
+      &.strength-good {
+        background-color: #2196f3;
+      }
+
+      &.strength-strong {
+        background-color: #4caf50;
+      }
+    }
+  }
+
+  .strength-text {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: #666;
+  }
+}
+
+// Sanitization Info
+.sanitization-info {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+  padding: 6px 10px;
+  background-color: #fff3e0;
+  border-radius: 6px;
+  border: 1px solid #ffcc02;
+
+  .sanitization-icon {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+    color: #f57c00;
+  }
+
+  .sanitization-text {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: #ef6c00;
+  }
+
+  .sanitization-details {
+    font-size: 0.7rem;
+    color: #bf360c;
+    margin-left: auto;
+  }
+}
+
+// Performance Metrics
+.performance-metrics {
+  margin-top: 8px;
+  text-align: right;
+
+  .metrics-text {
+    font-size: 0.7rem;
+    color: #9e9e9e;
+    font-style: italic;
+  }
+}
+
+// Animations
+@keyframes pulse {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.1);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+// Dark mode support
+@media (prefers-color-scheme: dark) {
+  .validation-feedback {
+    color: #ffffff;
+
+    &.risk-critical {
+      background-color: #3e2723;
+      border-left-color: #f44336;
+    }
+
+    &.risk-high {
+      background-color: #3e2723;
+      border-left-color: #ff9800;
+    }
+
+    &.risk-medium {
+      background-color: #3e3e00;
+      border-left-color: #ffeb3b;
+    }
+
+    &.risk-low {
+      background-color: #1b5e20;
+      border-left-color: #4caf50;
+    }
+
+    .validation-status .status-text {
+      color: #e0e0e0;
+    }
+
+    .security-recommendations {
+      background-color: #0d47a1;
+      border-left-color: #2196f3;
+
+      .recommendations-title {
+        color: #90caf9;
+      }
+
+      mat-chip {
+        background-color: #1976d2;
+        color: #e3f2fd;
+        border-color: #42a5f5;
+      }
+    }
+
+    .password-strength {
+      .strength-title,
+      .strength-text {
+        color: #bdbdbd;
+      }
+
+      .strength-bar {
+        background-color: #424242;
+      }
+    }
+
+    .sanitization-info {
+      background-color: #3e2723;
+      border-color: #ff9800;
+
+      .sanitization-text {
+        color: #ffb74d;
+      }
+
+      .sanitization-details {
+        color: #ff8a65;
+      }
+    }
+
+    .performance-metrics .metrics-text {
+      color: #757575;
+    }
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .validation-feedback {
+    padding: 6px 0;
+
+    .security-recommendations {
+      padding: 8px;
+
+      .recommendations-chips {
+        mat-chip {
+          font-size: 0.7rem;
+          height: 24px;
+        }
+      }
+    }
+
+    .validation-status {
+      .status-icon {
+        font-size: 16px;
+        width: 16px;
+        height: 16px;
+      }
+
+      .validation-progress {
+        width: 40px;
+      }
+    }
+  }
+}
+
+// Accessibility
+.validation-feedback {
+  // High contrast mode support
+  @media (prefers-contrast: high) {
+    .status-icon.error {
+      color: #d50000 !important;
+    }
+
+    .status-icon.warning {
+      color: #f57c00 !important;
+    }
+
+    .status-icon.success {
+      color: #2e7d32 !important;
+    }
+
+    .security-icon.risk-critical {
+      color: #d50000 !important;
+    }
+
+    .security-icon.risk-high {
+      color: #f57c00 !important;
+    }
+  }
+
+  // Reduced motion support
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+
+  // Focus indicators for keyboard navigation
+  .recommendations-chips mat-chip:focus {
+    outline: 2px solid #2196f3;
+    outline-offset: 2px;
+  }
+}
+
+// Print styles
+@media print {
+  .validation-feedback {
+    .validation-progress,
+    .performance-metrics {
+      display: none;
+    }
+
+    .security-recommendations {
+      background: none;
+      border: 1px solid #000;
+    }
+
+    * {
+      color: #000 !important;
+      background: #fff !important;
+    }
+  }
+}

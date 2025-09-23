@@ -1,0 +1,139 @@
+<div class="page page-center">
+  <div class="container container-tight py-4">
+    <div class="text-center mb-4">
+      <a href="." class="navbar-brand navbar-brand-autodark">
+        <img src="logo.png" width="110" height="32" alt="OnAl Yazılım" class="navbar-brand-image">
+      </a>
+    </div>
+
+    @if (isLoading()) {
+      <!-- Loading State -->
+      <div class="card card-md">
+        <div class="card-body text-center">
+          <div class="text-primary mb-3">
+            <lucide-angular [img]="Loader2" class="icon icon-lg rotating"></lucide-angular>
+          </div>
+          <h2 class="h2 text-primary mb-4">E-posta Doğrulanıyor...</h2>
+          <p class="text-muted">Lütfen bekleyiniz, e-posta adresiniz doğrulanıyor.</p>
+        </div>
+      </div>
+    } @else {
+      @if (verificationStatus() === 'success') {
+        <!-- Success State -->
+        <div class="card card-md">
+          <div class="card-body text-center">
+            <div class="text-success mb-3">
+              <lucide-angular [img]="CheckCircle" class="icon icon-lg"></lucide-angular>
+            </div>
+            <h2 class="h2 text-success mb-4">E-posta Doğrulandı!</h2>
+            <p class="text-muted mb-4">
+              E-posta adresiniz başarıyla doğrulandı. Artık tüm özellikleri kullanabilirsiniz.
+            </p>
+            <a routerLink="/auth/login" class="btn btn-primary w-100">
+              <lucide-angular [img]="ArrowLeft" class="icon me-1"></lucide-angular>
+              Giriş Yap
+            </a>
+          </div>
+        </div>
+      }
+
+      @if (verificationStatus() === 'error') {
+        <!-- Error State -->
+        <div class="card card-md">
+          <div class="card-body text-center">
+            <div class="text-warning mb-3">
+              <lucide-angular [img]="AlertTriangle" class="icon icon-lg"></lucide-angular>
+            </div>
+            <h2 class="h2 text-warning mb-4">Doğrulama Başarısız</h2>
+            <p class="text-muted mb-4">
+              E-posta doğrulama bağlantısı geçersiz veya süresi dolmuş.
+            </p>
+            <button
+              type="button"
+              class="btn btn-primary w-100 mb-3"
+              (click)="resendVerification()"
+              [disabled]="resendCooldown() > 0">
+              @if (resendCooldown() > 0) {
+                <div class="spinner-border spinner-border-sm me-2" role="status"></div>
+                Tekrar gönder ({{ resendCooldown() }}s)
+              } @else {
+                <lucide-angular [img]="Mail" class="icon me-1"></lucide-angular>
+                Yeni Doğrulama E-postası Gönder
+              }
+            </button>
+            <a routerLink="/auth/login" class="btn btn-outline-secondary w-100">
+              <lucide-angular [img]="ArrowLeft" class="icon me-1"></lucide-angular>
+              Giriş sayfasına dön
+            </a>
+          </div>
+        </div>
+      }
+
+      @if (verificationStatus() === 'already-verified') {
+        <!-- Already Verified State -->
+        <div class="card card-md">
+          <div class="card-body text-center">
+            <div class="text-info mb-3">
+              <lucide-angular [img]="Info" class="icon icon-lg"></lucide-angular>
+            </div>
+            <h2 class="h2 text-info mb-4">E-posta Zaten Doğrulanmış</h2>
+            <p class="text-muted mb-4">
+              Bu e-posta adresi daha önce doğrulanmış.
+            </p>
+            <a routerLink="/auth/login" class="btn btn-primary w-100">
+              <lucide-angular [img]="ArrowLeft" class="icon me-1"></lucide-angular>
+              Giriş Yap
+            </a>
+          </div>
+        </div>
+      }
+
+      @if (verificationStatus() === 'no-token') {
+        <!-- No Token State -->
+        <div class="card card-md">
+          <div class="card-body text-center">
+            <div class="text-primary mb-3">
+              <lucide-angular [img]="Mail" class="icon icon-lg"></lucide-angular>
+            </div>
+            <h2 class="h2 text-primary mb-4">E-posta Doğrulama</h2>
+            <p class="text-muted mb-4">
+              E-posta doğrulama bağlantısı bulunamadı. Lütfen e-posta kutunuzdaki doğrulama bağlantısını kullanın.
+            </p>
+            <button
+              type="button"
+              class="btn btn-primary w-100 mb-3"
+              (click)="resendVerification()"
+              [disabled]="resendCooldown() > 0">
+              @if (resendCooldown() > 0) {
+                <div class="spinner-border spinner-border-sm me-2" role="status"></div>
+                Tekrar gönder ({{ resendCooldown() }}s)
+              } @else {
+                <lucide-angular [img]="Mail" class="icon me-1"></lucide-angular>
+                Doğrulama E-postası Gönder
+              }
+            </button>
+            <a routerLink="/auth/login" class="btn btn-outline-secondary w-100">
+              <lucide-angular [img]="ArrowLeft" class="icon me-1"></lucide-angular>
+              Giriş sayfasına dön
+            </a>
+          </div>
+        </div>
+      }
+    }
+
+    <!-- Help Section -->
+    <div class="card mt-3">
+      <div class="card-body">
+        <h6 class="card-title">
+          <lucide-angular [img]="HelpCircle" class="icon me-1"></lucide-angular>
+          Yardım
+        </h6>
+        <ul class="card-text list-unstyled small text-muted">
+          <li class="mb-1">• E-posta gelmiyorsa spam klasörünüzü kontrol edin</li>
+          <li class="mb-1">• Doğrulama bağlantısı 24 saat geçerlidir</li>
+          <li>• Sorun yaşıyorsanız destek ekibimizle iletişime geçin</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

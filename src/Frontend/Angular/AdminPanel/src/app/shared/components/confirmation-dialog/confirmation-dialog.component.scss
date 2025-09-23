@@ -1,0 +1,149 @@
+.confirmation-dialog {
+  min-width: 320px;
+  max-width: 500px;
+}
+
+.dialog-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 24px 24px 16px;
+  border-bottom: 1px solid var(--mat-divider-color);
+
+  &.danger {
+    background-color: #fef2f2;
+    border-bottom-color: #fca5a5;
+  }
+
+  &.warning {
+    background-color: #fefce8;
+    border-bottom-color: #fde047;
+  }
+
+  &.success {
+    background-color: #f0fdf4;
+    border-bottom-color: #86efac;
+  }
+
+  &.info {
+    background-color: #eff6ff;
+    border-bottom-color: #93c5fd;
+  }
+
+  mat-icon {
+    font-size: 28px;
+    width: 28px;
+    height: 28px;
+  }
+
+  h2 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 500;
+  }
+}
+
+.dialog-content {
+  padding: 24px;
+  min-height: 60px;
+}
+
+.message {
+  margin-bottom: 16px;
+
+  &.danger .message-text {
+    color: #dc2626;
+  }
+
+  &.warning .message-text {
+    color: #d97706;
+  }
+}
+
+.message-text {
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--mat-text-secondary);
+}
+
+.custom-content {
+  margin: 16px 0;
+}
+
+.confirmation-input {
+  margin: 20px 0;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.details-panel {
+  margin-top: 16px;
+  box-shadow: none;
+  border: 1px solid var(--mat-divider-color);
+}
+
+.details-content {
+  padding: 16px 0;
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--mat-text-secondary);
+  white-space: pre-wrap;
+}
+
+.dialog-actions {
+  padding: 16px 24px 24px;
+  gap: 8px;
+
+  button {
+    min-width: 80px;
+  }
+}
+
+// Focus styles
+button:focus-visible {
+  outline: 2px solid var(--mat-primary);
+  outline-offset: 2px;
+}
+
+// Animation
+.confirmation-dialog {
+  animation: slideIn 0.2s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+// Responsive
+@media (max-width: 600px) {
+  .confirmation-dialog {
+    min-width: 280px;
+    max-width: 95vw;
+  }
+
+  .dialog-header {
+    padding: 16px 16px 12px;
+  }
+
+  .dialog-content {
+    padding: 16px;
+  }
+
+  .dialog-actions {
+    padding: 12px 16px 16px;
+    flex-direction: column-reverse;
+
+    button {
+      width: 100%;
+    }
+  }
+}

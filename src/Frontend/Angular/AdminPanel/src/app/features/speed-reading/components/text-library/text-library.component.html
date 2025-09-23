@@ -1,0 +1,336 @@
+    <div class="text-library-container">
+      <!-- Header -->
+      <div class="row mb-4">
+        <div class="col-md-6">
+          <h2 class="h3 mb-0">
+            <i class="fas fa-book me-2"></i>
+            Metin Kütüphanesi
+          </h2>
+          <p class="text-muted">Hızlı okuma egzersizleri için metin yönetimi</p>
+        </div>
+        <div class="col-md-6 text-end">
+          <button
+            class="btn btn-primary me-2"
+            (click)="openCreateModal()"
+            [disabled]="loading()">
+            <i class="fas fa-plus me-2"></i>
+            Yeni Metin
+          </button>
+          <button
+            class="btn btn-outline-secondary me-2"
+            (click)="openImportModal()">
+            <i class="fas fa-upload me-2"></i>
+            İçe Aktar
+          </button>
+          <button
+            class="btn btn-outline-secondary"
+            (click)="exportTexts()"
+            [disabled]="loading()">
+            <i class="fas fa-download me-2"></i>
+            Dışa Aktar
+          </button>
+        </div>
+      </div>
+
+      <!-- Filters -->
+      <div class="card mb-4">
+        <div class="card-body">
+          <form [formGroup]="filterForm" class="row g-3">
+            <div class="col-md-3">
+              <label class="form-label">Arama</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="search"
+                placeholder="Başlık veya içerik ara...">
+            </div>
+            <div class="col-md-2">
+              <label class="form-label">Zorluk</label>
+              <select class="form-select" formControlName="difficulty">
+                <option value="">Tümü</option>
+                <option value="beginner">Başlangıç</option>
+                <option value="intermediate">Orta</option>
+                <option value="advanced">İleri</option>
+                <option value="expert">Uzman</option>
+              </select>
+            </div>
+            <div class="col-md-2">
+              <label class="form-label">Kategori</label>
+              <select class="form-select" formControlName="category">
+                <option value="">Tümü</option>
+                <option *ngFor="let cat of categories()" [value]="cat">{{cat}}</option>
+              </select>
+            </div>
+            <div class="col-md-2">
+              <label class="form-label">Dil</label>
+              <select class="form-select" formControlName="language">
+                <option value="">Tümü</option>
+                <option value="tr">Türkçe</option>
+                <option value="en">English</option>
+              </select>
+            </div>
+            <div class="col-md-2">
+              <label class="form-label">Durum</label>
+              <select class="form-select" formControlName="isActive">
+                <option value="">Tümü</option>
+                <option value="true">Aktif</option>
+                <option value="false">Pasif</option>
+              </select>
+            </div>
+            <div class="col-md-1 d-flex align-items-end">
+              <button
+                type="button"
+                class="btn btn-outline-secondary w-100"
+                (click)="resetFilters()">
+                <i class="fas fa-redo"></i>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Statistics Cards -->
+      <div class="row mb-4">
+        <div class="col-md-3">
+          <div class="card">
+            <div class="card-body">
+              <h6 class="text-muted mb-2">Toplam Metin</h6>
+              <h3 class="mb-0">{{totalTexts()}}</h3>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card">
+            <div class="card-body">
+              <h6 class="text-muted mb-2">Aktif Metin</h6>
+              <h3 class="mb-0 text-success">{{activeTexts()}}</h3>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card">
+            <div class="card-body">
+              <h6 class="text-muted mb-2">Ortalama Kelime</h6>
+              <h3 class="mb-0">{{averageWordCount()}}</h3>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card">
+            <div class="card-body">
+              <h6 class="text-muted mb-2">Kategori Sayısı</h6>
+              <h3 class="mb-0">{{categories().length}}</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Data Table -->
+      <div class="card">
+        <div class="card-body">
+          <div *ngIf="loading()" class="text-center py-5">
+            <div class="spinner-border text-primary" role="status">
+              <span class="visually-hidden">Yükleniyor...</span>
+            </div>
+          </div>
+
+          <div *ngIf="!loading() && texts().length === 0" class="text-center py-5">
+            <i class="fas fa-book fa-3x text-muted mb-3"></i>
+            <p class="text-muted">Henüz metin bulunmuyor</p>
+            <button class="btn btn-primary" (click)="openCreateModal()">
+              <i class="fas fa-plus me-2"></i>
+              İlk Metni Ekle
+            </button>
+          </div>
+
+          <div *ngIf="!loading() && texts().length > 0" class="table-responsive">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>
+                    <input
+                      type="checkbox"
+                      class="form-check-input"
+                      [checked]="allSelected()"
+                      (change)="toggleSelectAll()">
+                  </th>
+                  <th>Başlık</th>
+                  <th>Zorluk</th>
+                  <th>Kategori</th>
+                  <th>Kelime Sayısı</th>
+                  <th>Dil</th>
+                  <th>Durum</th>
+                  <th>Oluşturulma</th>
+                  <th>İşlemler</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let text of texts()">
+                  <td>
+                    <input
+                      type="checkbox"
+                      class="form-check-input"
+                      [checked]="isSelected(text.id)"
+                      (change)="toggleSelection(text.id)">
+                  </td>
+                  <td>
+                    <a [routerLink]="['/admin/speed-reading/texts', text.id]" class="text-decoration-none">
+                      {{text.title}}
+                    </a>
+                  </td>
+                  <td>
+                    <span [class]="'badge bg-' + getDifficultyColor(text.difficulty)">
+                      {{getDifficultyLabel(text.difficulty)}}
+                    </span>
+                  </td>
+                  <td>{{text.category}}</td>
+                  <td>{{text.wordCount}}</td>
+                  <td>
+                    <span class="badge bg-secondary">
+                      {{text.language === 'tr' ? 'TR' : 'EN'}}
+                    </span>
+                  </td>
+                  <td>
+                    <span [class]="'badge bg-' + (text.isActive ? 'success' : 'danger')">
+                      {{text.isActive ? 'Aktif' : 'Pasif'}}
+                    </span>
+                  </td>
+                  <td>{{formatDate(text.createdAt)}}</td>
+                  <td>
+                    <div class="btn-group btn-group-sm">
+                      <button
+                        class="btn btn-outline-primary"
+                        [routerLink]="['/admin/speed-reading/texts', text.id, 'edit']"
+                        title="Düzenle">
+                        <i class="fas fa-edit"></i>
+                      </button>
+                      <button
+                        class="btn btn-outline-info"
+                        (click)="previewText(text)"
+                        title="Önizle">
+                        <i class="fas fa-eye"></i>
+                      </button>
+                      <button
+                        class="btn btn-outline-danger"
+                        (click)="confirmDelete(text)"
+                        title="Sil">
+                        <i class="fas fa-trash"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Bulk Actions -->
+          <div *ngIf="selectedIds().length > 0" class="mt-3">
+            <div class="alert alert-info d-flex justify-content-between align-items-center">
+              <span>{{selectedIds().length}} metin seçildi</span>
+              <div>
+                <button class="btn btn-sm btn-outline-danger me-2" (click)="bulkDelete()">
+                  <i class="fas fa-trash me-1"></i>
+                  Seçilileri Sil
+                </button>
+                <button class="btn btn-sm btn-outline-secondary" (click)="clearSelection()">
+                  Seçimi Temizle
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pagination -->
+          <nav *ngIf="totalPages() > 1" class="mt-4">
+            <ul class="pagination justify-content-center">
+              <li class="page-item" [class.disabled]="currentPage() === 1">
+                <button class="page-link" (click)="goToPage(currentPage() - 1)">
+                  <i class="fas fa-chevron-left"></i>
+                </button>
+              </li>
+              <li
+                *ngFor="let page of getPageNumbers()"
+                class="page-item"
+                [class.active]="page === currentPage()">
+                <button class="page-link" (click)="goToPage(page)">{{page}}</button>
+              </li>
+              <li class="page-item" [class.disabled]="currentPage() === totalPages()">
+                <button class="page-link" (click)="goToPage(currentPage() + 1)">
+                  <i class="fas fa-chevron-right"></i>
+                </button>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <!-- Create/Edit Modal -->
+    <div class="modal fade" id="textModal" tabindex="-1">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">
+              {{editingText() ? 'Metin Düzenle' : 'Yeni Metin Ekle'}}
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <form [formGroup]="textForm" (ngSubmit)="saveText()">
+            <div class="modal-body">
+              <div class="row g-3">
+                <div class="col-md-8">
+                  <label class="form-label">Başlık <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" formControlName="title">
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">Dil <span class="text-danger">*</span></label>
+                  <select class="form-select" formControlName="language">
+                    <option value="tr">Türkçe</option>
+                    <option value="en">English</option>
+                  </select>
+                </div>
+                <div class="col-12">
+                  <label class="form-label">İçerik <span class="text-danger">*</span></label>
+                  <textarea
+                    class="form-control"
+                    formControlName="content"
+                    rows="10"
+                    (input)="updateWordCount()"></textarea>
+                  <small class="text-muted">Kelime sayısı: {{wordCount()}}</small>
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">Zorluk <span class="text-danger">*</span></label>
+                  <select class="form-select" formControlName="difficulty">
+                    <option value="beginner">Başlangıç</option>
+                    <option value="intermediate">Orta</option>
+                    <option value="advanced">İleri</option>
+                    <option value="expert">Uzman</option>
+                  </select>
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">Kategori <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" formControlName="category" list="categoryList">
+                  <datalist id="categoryList">
+                    <option *ngFor="let cat of categories()" [value]="cat">
+                  </datalist>
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">Etiketler</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    formControlName="tags"
+                    placeholder="Virgülle ayırın">
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
+              <button type="submit" class="btn btn-primary" [disabled]="textForm.invalid || saving()">
+                <span *ngIf="saving()" class="spinner-border spinner-border-sm me-2"></span>
+                {{editingText() ? 'Güncelle' : 'Kaydet'}}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>

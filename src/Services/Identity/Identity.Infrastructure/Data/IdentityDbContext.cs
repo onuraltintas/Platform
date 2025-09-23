@@ -21,6 +21,8 @@ public class IdentityDbContext : IdentityDbContext<ApplicationUser, ApplicationR
     public DbSet<Service> Services { get; set; }
     public DbSet<Permission> Permissions { get; set; }
     public DbSet<RolePermission> RolePermissions { get; set; }
+    public DbSet<UserPermission> UserPermissions { get; set; }
+    public DbSet<PermissionAuditLog> PermissionAuditLogs { get; set; }
     public DbSet<GroupService> GroupServices { get; set; }
     
     // Security & Audit
@@ -28,6 +30,22 @@ public class IdentityDbContext : IdentityDbContext<ApplicationUser, ApplicationR
     public DbSet<LoginAttempt> LoginAttempts { get; set; }
     public DbSet<UserDevice> UserDevices { get; set; }
     public DbSet<UserConsent> UserConsents { get; set; }
+    public DbSet<UserSession> UserSessions { get; set; }
+
+    // Zero Trust Architecture
+    public DbSet<TrustScore> TrustScores { get; set; }
+    public DbSet<TrustScoreHistory> TrustScoreHistory { get; set; }
+    public DbSet<DeviceTrust> DeviceTrusts { get; set; }
+    public DbSet<DeviceActivity> DeviceActivities { get; set; }
+    public DbSet<SecurityPolicy> SecurityPolicies { get; set; }
+    public DbSet<PolicyViolation> PolicyViolations { get; set; }
+
+    // Advanced Audit System
+    public DbSet<AuditEvent> AuditEvents { get; set; }
+    public DbSet<AuditEventAttachment> AuditEventAttachments { get; set; }
+    public DbSet<SecurityAlert> SecurityAlerts { get; set; }
+    public DbSet<SecurityAlertAction> SecurityAlertActions { get; set; }
+    public DbSet<AlertRule> AlertRules { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

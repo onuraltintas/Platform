@@ -280,9 +280,16 @@ public class EmailService : IEmailService
             .Subject(message.Subject);
 
         if (message.IsHtml)
-            email.Body(message.Body);
+        {
+            email.Body(message.Body, true);
+            // Ensure HTML content-type is set
+            email.Header("Content-Type", "text/html; charset=utf-8");
+        }
         else
+        {
             email.Body(message.Body, false);
+            email.Header("Content-Type", "text/plain; charset=utf-8");
+        }
 
         if (!string.IsNullOrEmpty(message.From))
             email.SetFrom(message.From, message.FromName);

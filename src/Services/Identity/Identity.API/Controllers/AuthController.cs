@@ -14,12 +14,16 @@ namespace Identity.API.Controllers;
 public class AuthController : ControllerBase
 {
     private readonly IAuthService _authService;
+    private readonly IUserService _userService;
+    private readonly IEmailService _emailService;
     private readonly ILogger<AuthController> _logger;
     private readonly IConfiguration _configuration;
 
-    public AuthController(IAuthService authService, ILogger<AuthController> logger, IConfiguration configuration)
+    public AuthController(IAuthService authService, IUserService userService, IEmailService emailService, ILogger<AuthController> logger, IConfiguration configuration)
     {
         _authService = authService;
+        _userService = userService;
+        _emailService = emailService;
         _logger = logger;
         _configuration = configuration;
     }
@@ -58,6 +62,81 @@ public class AuthController : ControllerBase
         _logger.LogInformation("User {EmailOrUsername} logged in successfully", request.EmailOrUsername);
 
         return Ok(result.Value);
+    }
+
+    /// <summary>
+    /// Kullanıcı kaydı
+    /// </summary>
+    /// <param name="request">Kayıt bilgileri</param>
+    /// <returns>Kayıt sonucu</returns>
+    [HttpPost("register")]
+    [ProducesResponseType(typeof(RegisterResponse), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> Register([FromBody] RegisterRequest request)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
+        // Add request context
+        request.IpAddress = GetClientIpAddress();
+        request.UserAgent = Request.Headers.UserAgent.ToString();
+
+        try
+        {
+            // Create user
+            var createUserRequest = new CreateUserRequest
+            {
+                Email = request.Email,
+                UserName = request.UserName,
+                FirstName = request.FirstName,
+                LastName = request.LastName,
+                PhoneNumber = request.PhoneNumber,
+                Password = request.Password,
+                EmailConfirmed = false,
+                DefaultGroupId = request.GroupId
+            };
+
+            var userResult = await _userService.CreateAsync(createUserRequest);
+            if (!userResult.IsSuccess)
+            {
+                return BadRequest(userResult.Error);
+            }
+
+            var user = userResult.Value;
+
+            // Generate email confirmation token
+            var tokenResult = await _userService.GenerateEmailConfirmationTokenAsync(user.Id ?? string.Empty ?? string.Empty);
+            if (tokenResult.IsSuccess && !string.IsNullOrEmpty(user.Email ?? string.Empty) && !string.IsNullOrEmpty(tokenResult.Value ?? string.Empty))
+            {
+                // Send confirmation email
+                await _emailService.SendEmailConfirmationAsync(user.Email ?? string.Empty, user.FirstName ?? string.Empty ?? string.Empty, tokenResult.Value ?? string.Empty);
+            }
+
+            // Send welcome email
+            if (!string.IsNullOrEmpty(user.Email ?? string.Empty))
+            {
+                await _emailService.SendWelcomeEmailAsync(user.Email ?? string.Empty, user.FirstName ?? string.Empty ?? string.Empty);
+            }
+
+            var response = new RegisterResponse
+            {
+                UserId = user.Id ?? string.Empty ?? string.Empty,
+                Email = user.Email ?? string.Empty,
+                RequiresEmailConfirmation = true,
+                Message = "Kayıt başarılı! E-posta adresinizi doğrulamak için gelen kutunuzu kontrol edin."
+            };
+
+            _logger.LogInformation("User {Email} registered successfully", request.Email);
+
+            return CreatedAtAction(nameof(Login), new { }, response);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error during registration for {Email}", request.Email);
+            return BadRequest("Kayıt işlemi sırasında hata oluştu");
+        }
     }
 
     /// <summary>
@@ -465,6 +544,211 @@ public class AuthController : ControllerBase
         return Ok(result.Value);
     }
 
+    /// <summary>
+    /// E-posta adresini doğrula
+    /// </summary>
+    /// <param name="request">Doğrulama token'ı</param>
+    /// <returns>Doğrulama sonucu</returns>
+    [HttpPost("verify-email")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(string), StatusCodes.Status409Conflict)]
+    public async Task<IActionResult> VerifyEmail([FromBody] VerifyEmailRequest request)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
+        var result = await _authService.VerifyEmailAsync(request.Token);
+        if (!result.IsSuccess)
+        {
+            if (result.Error.Contains("already verified"))
+            {
+                return Conflict(result.Error);
+            }
+            return BadRequest(result.Error);
+        }
+
+        _logger.LogInformation("Email verified successfully for token");
+
+        return Ok(new { message = "E-posta adresiniz başarıyla doğrulandı." });
+    }
+
+    /// <summary>
+    /// Doğrulama e-postasını yeniden gönder
+    /// </summary>
+    /// <param name="request">E-posta adresi</param>
+    /// <returns>Gönderim sonucu</returns>
+    [HttpPost("resend-verification")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> ResendVerificationEmail([FromBody] ResendVerificationRequest request)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
+        var userResult = await _userService.GetByEmailAsync(request.Email);
+        if (!userResult.IsSuccess)
+        {
+            // Don't reveal whether the user exists
+            return Ok(new { message = "Eğer bu e-posta adresi sistemimizde kayıtlıysa, doğrulama e-postası gönderilecektir." });
+        }
+
+        var user = userResult.Value;
+
+        // Generate new token
+        var tokenResult = await _userService.GenerateEmailConfirmationTokenAsync(user.Id ?? string.Empty ?? string.Empty);
+        if (tokenResult.IsSuccess && !string.IsNullOrEmpty(user.Email ?? string.Empty) && !string.IsNullOrEmpty(tokenResult.Value ?? string.Empty))
+        {
+            await _emailService.SendEmailConfirmationAsync(user.Email ?? string.Empty, user.FirstName ?? string.Empty ?? string.Empty, tokenResult.Value ?? string.Empty);
+        }
+
+        _logger.LogInformation("Verification email resent for {Email}", request.Email);
+
+        return Ok(new { message = "Doğrulama e-postası gönderildi." });
+    }
+
+    /// <summary>
+    /// Şifre sıfırlama e-postası gönder
+    /// </summary>
+    /// <param name="request">E-posta adresi</param>
+    /// <returns>Gönderim sonucu</returns>
+    [HttpPost("forgot-password")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordRequest request)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
+        try
+        {
+            _logger.LogInformation("Password reset requested for email: {Email}", request.Email);
+
+            var userResult = await _userService.GetByEmailAsync(request.Email);
+            if (!userResult.IsSuccess)
+            {
+                // Don't reveal whether the user exists or not for security
+                _logger.LogWarning("Password reset requested for non-existent user: {Email}", request.Email);
+
+                // For testing purposes, still try to send an email with dummy data
+                try
+                {
+                    var testEmailResult = await _emailService.SendPasswordResetEmailAsync(
+                        request.Email,
+                        "Test User",
+                        "test-reset-token-123"
+                    );
+
+                    if (testEmailResult.IsSuccess)
+                    {
+                        _logger.LogInformation("Test password reset email sent to: {Email}", request.Email);
+                    }
+                    else
+                    {
+                        _logger.LogError("Failed to send test password reset email to {Email}: {Error}", request.Email, testEmailResult.Error);
+                    }
+                }
+                catch (Exception emailEx)
+                {
+                    _logger.LogError(emailEx, "Exception while sending test password reset email to {Email}", request.Email);
+                }
+
+                return Ok(new { message = "Eğer hesabınız mevcutsa, şifre sıfırlama e-postası gönderildi." });
+            }
+
+            var user = userResult.Value;
+
+            if (!user.EmailConfirmed)
+            {
+                _logger.LogWarning("Password reset requested for unconfirmed email: {Email}", request.Email);
+                return BadRequest("E-posta adresinizi önce doğrulamanız gerekiyor.");
+            }
+
+            // Generate password reset token
+            var tokenResult = await _userService.GeneratePasswordResetTokenAsync(request.Email);
+            if (!tokenResult.IsSuccess)
+            {
+                _logger.LogError("Failed to generate password reset token for {Email}: {Error}", request.Email, tokenResult.Error);
+                return StatusCode(500, "Şifre sıfırlama token'ı oluşturulamadı");
+            }
+
+            // Send password reset email
+            var emailResult = await _emailService.SendPasswordResetEmailAsync(user.Email ?? string.Empty ?? string.Empty, user.FirstName ?? string.Empty ?? string.Empty, tokenResult.Value ?? string.Empty ?? string.Empty);
+            if (!emailResult.IsSuccess)
+            {
+                _logger.LogError("Failed to send password reset email to {Email}: {Error}", request.Email, emailResult.Error);
+                return StatusCode(500, "E-posta gönderilirken bir hata oluştu");
+            }
+
+            _logger.LogInformation("Password reset email sent to: {Email}", request.Email);
+
+            return Ok(new { message = "Şifre sıfırlama e-postası gönderildi. Lütfen gelen kutunuzu kontrol edin." });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error sending password reset email to {Email}", request.Email);
+            return StatusCode(500, "E-posta gönderilirken bir hata oluştu");
+        }
+    }
+
+    /// <summary>
+    /// Şifre sıfırlama (token ile)
+    /// </summary>
+    /// <param name="request">Şifre sıfırlama bilgileri</param>
+    /// <returns>Sıfırlama sonucu</returns>
+    [HttpPost("reset-password")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordRequest request)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
+        try
+        {
+            _logger.LogInformation("Password reset attempt for email: {Email}", request.Email);
+
+            // Get user by email
+            var userResult = await _userService.GetByEmailAsync(request.Email);
+            if (!userResult.IsSuccess)
+            {
+                _logger.LogWarning("Password reset attempt for non-existent user: {Email}", request.Email);
+                return BadRequest("Geçersiz şifre sıfırlama isteği");
+            }
+
+            var user = userResult.Value;
+
+            // Reset password with token
+            if (string.IsNullOrEmpty(request.Token))
+            {
+                return BadRequest("Geçersiz şifre sıfırlama isteği");
+            }
+            var result = await _userService.ResetPasswordAsync(user.Id ?? string.Empty ?? string.Empty, request.Token, request.NewPassword);
+            if (!result.IsSuccess)
+            {
+                _logger.LogWarning("Failed password reset for {Email}: {Error}", request.Email, result.Error);
+                return BadRequest(result.Error);
+            }
+
+            _logger.LogInformation("Password reset successful for user {Email}", request.Email);
+
+            return Ok(new { success = true, message = "Şifreniz başarıyla değiştirildi" });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error resetting password for {Email}", request.Email);
+            return StatusCode(500, "Şifre sıfırlanırken bir hata oluştu");
+        }
+    }
+
     #region Private Methods
 
     private string? GetClientIpAddress()
@@ -521,3 +805,4 @@ public class TokenValidationResponse
     public string? Email { get; set; }
     public DateTime ValidatedAt { get; set; }
 }
+

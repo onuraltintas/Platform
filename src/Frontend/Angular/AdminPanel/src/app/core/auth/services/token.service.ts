@@ -1,39 +1,70 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { jwtDecode } from 'jwt-decode';
 import { environment } from '../../../../environments/environment';
 import { TokenPayload } from '../models/auth.models';
+import { SecureTokenStorageService } from '../../security/services/secure-token-storage.service';
 
+/**
+ * Secure Token Service
+ * Refactored to use enterprise-grade secure storage with encryption
+ */
 @Injectable({
   providedIn: 'root'
 })
 export class TokenService {
-  private readonly tokenKey = environment.auth.tokenKey;
-  private readonly refreshKey = environment.auth.refreshKey;
-  private readonly storagePrefix = environment.storage.prefix;
+  private readonly secureTokenStorage = inject(SecureTokenStorageService);
 
-  getAccessToken(): string | null {
-    return localStorage.getItem(this.storagePrefix + this.tokenKey);
+  /**
+   * Get access token securely
+   */
+  getAccessToken(): Promise<string | null> {
+    return this.secureTokenStorage.getAccessToken();
   }
 
-  getRefreshToken(): string | null {
-    return localStorage.getItem(this.storagePrefix + this.refreshKey);
+  /**
+   * Get refresh token securely
+   */
+  getRefreshToken(): Promise<string | null> {
+    return this.secureTokenStorage.getRefreshToken();
   }
 
-  setTokens(accessToken: string, refreshToken: string): void {
-    localStorage.setItem(this.storagePrefix + this.tokenKey, accessToken);
-    localStorage.setItem(this.storagePrefix + this.refreshKey, refreshToken);
-  }
-
-  clearTokens(): void {
-    localStorage.removeItem(this.storagePrefix + this.tokenKey);
-    localStorage.removeItem(this.storagePrefix + this.refreshKey);
-  }
-
-  isTokenValid(): boolean {
-    const token = this.getAccessToken();
-    if (!token) return false;
-
+  /**
+   * Store tokens securely with encryption
+   */
+  async setTokens(accessToken: string, refreshToken: string, expiresIn?: number): Promise<boolean> {
     try {
+      const [accessResult, refreshResult] = await Promise.all([
+        this.secureTokenStorage.setAccessToken(accessToken, expiresIn),
+        this.secureTokenStorage.setRefreshToken(refreshToken)
+      ]);
+
+      return accessResult && refreshResult;
+    } catch (error) {
+      console.error('Failed to store tokens securely:', error);
+      return false;
+    }
+  }
+
+  /**
+   * Clear all tokens securely
+   */
+  async clearTokens(): Promise<boolean> {
+    try {
+      return await this.secureTokenStorage.clearTokens();
+    } catch (error) {
+      console.error('Failed to clear tokens securely:', error);
+      return false;
+    }
+  }
+
+  /**
+   * Check if access token is valid and not expired
+   */
+  async isTokenValid(): Promise<boolean> {
+    try {
+      const token = await this.getAccessToken();
+      if (!token) return false;
+
       const payload = this.decodeToken(token);
       if (!payload || !payload.exp) return false;
 
@@ -47,18 +78,12 @@ export class TokenService {
     }
   }
 
-  isRefreshTokenValid(): boolean {
-    const token = this.getRefreshToken();
-    if (!token) return false;
-
+  /**
+   * Check if refresh token is valid and not expired
+   */
+  async isRefreshTokenValid(): Promise<boolean> {
     try {
-      const payload = this.decodeToken(token);
-      if (!payload || !payload.exp) return false;
-
-      const expirationTime = payload.exp * 1000;
-      const currentTime = Date.now();
-
-      return currentTime < expirationTime;
+      return await this.secureTokenStorage.isRefreshTokenValid();
     } catch {
       return false;
     }
@@ -72,46 +97,112 @@ export class TokenService {
     }
   }
 
-  getTokenPayload(): TokenPayload | null {
-    const token = this.getAccessToken();
-    return token ? this.decodeToken(token) : null;
+  /**
+   * Get token payload from access token
+   */
+  async getTokenPayload(): Promise<TokenPayload | null> {
+    try {
+      const token = await this.getAccessToken();
+      return token ? this.decodeToken(token) : null;
+    } catch {
+      return null;
+    }
   }
 
-  getUserId(): string | null {
-    const payload = this.getTokenPayload();
-    return payload?.sub || null;
+  /**
+   * Get user ID from token
+   */
+  async getUserId(): Promise<string | null> {
+    try {
+      const payload = await this.getTokenPayload();
+      return payload?.sub || null;
+    } catch {
+      return null;
+    }
   }
 
-  getUserEmail(): string | null {
-    const payload = this.getTokenPayload();
-    return payload?.email || null;
+  /**
+   * Get user email from token
+   */
+  async getUserEmail(): Promise<string | null> {
+    try {
+      const payload = await this.getTokenPayload();
+      return payload?.email || null;
+    } catch {
+      return null;
+    }
   }
 
-  getUserPermissions(): string[] {
-    const payload = this.getTokenPayload();
-    return payload?.permissions || [];
+  /**
+   * Get user permissions from token
+   */
+  async getUserPermissions(): Promise<string[]> {
+    try {
+      const payload = await this.getTokenPayload();
+      return payload?.permissions || [];
+    } catch {
+      return [];
+    }
   }
 
-  getUserRoles(): string[] {
-    const payload = this.getTokenPayload();
-    return payload?.roles || [];
+  /**
+   * Get user roles from token
+   */
+  async getUserRoles(): Promise<string[]> {
+    try {
+      const payload = await this.getTokenPayload();
+      return payload?.roles || [];
+    } catch {
+      return [];
+    }
   }
 
-  getTokenExpirationTime(): number | null {
-    const payload = this.getTokenPayload();
-    return payload?.exp ? payload.exp * 1000 : null;
+  /**
+   * Get token expiration time
+   */
+  async getTokenExpirationTime(): Promise<number | null> {
+    try {
+      const payload = await this.getTokenPayload();
+      return payload?.exp ? payload.exp * 1000 : null;
+    } catch {
+      return null;
+    }
   }
 
-  shouldRefreshToken(): boolean {
-    const token = this.getAccessToken();
-    if (!token) return false;
+  /**
+   * Check if token should be refreshed
+   */
+  async shouldRefreshToken(): Promise<boolean> {
+    try {
+      return await this.secureTokenStorage.shouldRefreshAccessToken();
+    } catch {
+      return false;
+    }
+  }
 
-    const expirationTime = this.getTokenExpirationTime();
-    if (!expirationTime) return false;
+  /**
+   * Get comprehensive token statistics
+   */
+  async getTokenStats(): Promise<Record<string, unknown>> {
+    try {
+      return await this.secureTokenStorage.getTokenStats();
+    } catch (error) {
+      console.error('Failed to get token stats:', error);
+      return {
+        hasAccessToken: false,
+        hasRefreshToken: false
+      };
+    }
+  }
 
-    const currentTime = Date.now();
-    const bufferTime = environment.auth.refreshBeforeExpiry;
-
-    return currentTime >= (expirationTime - bufferTime) && this.isRefreshTokenValid();
+  /**
+   * Validate token storage integrity
+   */
+  async validateTokenIntegrity(): Promise<boolean> {
+    try {
+      return await this.secureTokenStorage.validateIntegrity();
+    } catch {
+      return false;
+    }
   }
 }

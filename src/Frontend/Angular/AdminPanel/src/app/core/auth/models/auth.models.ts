@@ -65,8 +65,8 @@ export interface LoginResponse {
   user: User;
   permissions: string[];
   roles: string[];
-  activeGroup: any;
-  availableGroups: any[];
+  activeGroup: Group | null;
+  availableGroups: Group[];
   deviceId?: string;
   isNewDevice: boolean;
   requiresTwoFactor: boolean;
@@ -74,11 +74,15 @@ export interface LoginResponse {
 
 export interface RegisterRequest {
   email: string;
+  userName: string;
   password: string;
+  confirmPassword: string;
   firstName: string;
   lastName: string;
   phoneNumber?: string;
   acceptTerms: boolean;
+  acceptPrivacyPolicy: boolean;
+  acceptMarketing?: boolean;
 }
 
 export interface RefreshTokenRequest {

@@ -1,6 +1,6 @@
 import { inject } from '@angular/core';
-import { Router, CanActivateFn, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { map, catchError, of } from 'rxjs';
+import { Router, CanActivateFn, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { Observable, map, catchError, of } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import { TokenService } from '../services/token.service';
 
@@ -12,26 +12,50 @@ export const authGuard: CanActivateFn = (
   const tokenService = inject(TokenService);
   const router = inject(Router);
 
-  // Check if user is authenticated
-  if (authService.isAuthenticated && tokenService.isTokenValid()) {
-    return true;
-  }
+  // Return observable for async token validation
+  return new Observable<boolean | UrlTree>(observer => {
+    const checkAuthentication = async () => {
+      try {
+        // Check if user is authenticated with async token validation
+        const isAuthenticated = await authService.getAuthenticationStatus();
 
-  // Check if refresh token is valid and try to refresh
-  if (tokenService.isRefreshTokenValid()) {
-    return authService.refreshToken().pipe(
-      map(() => true),
-      catchError(() => {
-        // Store attempted URL for redirecting after login
+        if (isAuthenticated) {
+          observer.next(true);
+          observer.complete();
+          return;
+        }
+
+        // Check if refresh token is valid and try to refresh
+        const refreshTokenValid = await tokenService.isRefreshTokenValid();
+        if (refreshTokenValid) {
+          authService.refreshToken().pipe(
+            map(() => {
+              observer.next(true);
+              observer.complete();
+              return true;
+            }),
+            catchError(() => {
+              // Store attempted URL for redirecting after login
+              sessionStorage.setItem('redirectUrl', state.url);
+              observer.next(router.createUrlTree(['/auth/login']));
+              observer.complete();
+              return of(false);
+            })
+          ).subscribe();
+        } else {
+          // Store attempted URL for redirecting after login
+          sessionStorage.setItem('redirectUrl', state.url);
+          observer.next(router.createUrlTree(['/auth/login']));
+          observer.complete();
+        }
+      } catch (error) {
+        console.error('Auth guard error:', error);
         sessionStorage.setItem('redirectUrl', state.url);
-        return of(router.createUrlTree(['/auth/login']));
-      })
-    );
-  }
+        observer.next(router.createUrlTree(['/auth/login']));
+        observer.complete();
+      }
+    };
 
-  // Store attempted URL for redirecting after login
-  sessionStorage.setItem('redirectUrl', state.url);
-
-  // Redirect to login page
-  return router.createUrlTree(['/auth/login']);
+    checkAuthentication();
+  });
 };

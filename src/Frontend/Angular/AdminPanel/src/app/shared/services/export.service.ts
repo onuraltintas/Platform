@@ -8,7 +8,7 @@ export interface ExportColumn {
   field: string;
   header: string;
   width?: number;
-  format?: (value: any) => string;
+  format?: (value: unknown) => string;
 }
 
 export interface ExportOptions {
@@ -32,12 +32,12 @@ export class ExportService {
    * Export data to Excel format
    */
   exportToExcel(
-    data: any[],
+    data: unknown[],
     columns: ExportColumn[],
     options: ExportOptions = {}
   ): void {
     const fileName = this.generateFileName(options.fileName || 'export', 'xlsx', options.includeDate);
-    const sheetName = options.sheetName || 'Sheet1';
+    const _sheetName = options.sheetName || 'Sheet1';
 
     // Prepare data
     const exportData = this.prepareData(data, columns);
@@ -51,7 +51,7 @@ export class ExportService {
 
     // Create workbook
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, sheetName);
+    XLSX.utils.book_append_sheet(wb, ws, _sheetName);
 
     // Save file
     XLSX.writeFile(wb, fileName);
@@ -61,7 +61,7 @@ export class ExportService {
    * Export data to CSV format
    */
   exportToCSV(
-    data: any[],
+    data: unknown[],
     columns: ExportColumn[],
     options: ExportOptions = {}
   ): void {
@@ -82,7 +82,7 @@ export class ExportService {
    * Export data to PDF format
    */
   exportToPDF(
-    data: any[],
+    data: unknown[],
     columns: ExportColumn[],
     options: ExportOptions = {}
   ): void {
@@ -158,7 +158,7 @@ export class ExportService {
    * Export JSON data
    */
   exportToJSON(
-    data: any[],
+    data: unknown[],
     options: ExportOptions = {}
   ): void {
     const fileName = this.generateFileName(options.fileName || 'export', 'json', options.includeDate);
@@ -176,8 +176,6 @@ export class ExportService {
     options: ExportOptions = {}
   ): void {
     const fileName = this.generateFileName(options.fileName || 'table-export', 'xlsx', options.includeDate);
-    const sheetName = options.sheetName || 'Sheet1';
-
     const wb = XLSX.utils.table_to_book(tableElement);
     XLSX.writeFile(wb, fileName);
   }
@@ -186,7 +184,7 @@ export class ExportService {
    * Batch export - multiple sheets
    */
   exportMultipleSheets(
-    sheets: { data: any[]; columns: ExportColumn[]; name: string }[],
+    sheets: { data: unknown[]; columns: ExportColumn[]; name: string }[],
     options: ExportOptions = {}
   ): void {
     const fileName = this.generateFileName(options.fileName || 'multi-export', 'xlsx', options.includeDate);
@@ -210,8 +208,8 @@ export class ExportService {
    * Export with custom template
    */
   exportWithTemplate(
-    data: any[],
-    templatePath: string,
+    data: unknown[],
+    _templatePath: string,
     options: ExportOptions = {}
   ): void {
     // This would require server-side template processing
@@ -223,9 +221,9 @@ export class ExportService {
   /**
    * Private helper methods
    */
-  private prepareData(data: any[], columns: ExportColumn[]): any[] {
+  private prepareData(data: unknown[], columns: ExportColumn[]): Record<string, unknown>[] {
     return data.map(item => {
-      const row: any = {};
+      const row: Record<string, unknown> = {};
       columns.forEach(col => {
         const value = this.getNestedProperty(item, col.field);
         row[col.header] = col.format ? col.format(value) : this.formatValue(value);
@@ -234,11 +232,13 @@ export class ExportService {
     });
   }
 
-  private getNestedProperty(obj: any, path: string): any {
-    return path.split('.').reduce((current, prop) => current?.[prop], obj);
+  private getNestedProperty(obj: unknown, path: string): unknown {
+    return path.split('.').reduce((current: unknown, prop: string) => {
+      return (current as Record<string, unknown>)?.[prop];
+    }, obj);
   }
 
-  private formatValue(value: any): string {
+  private formatValue(value: unknown): string {
     if (value === null || value === undefined) {
       return '';
     }
@@ -254,7 +254,7 @@ export class ExportService {
     return String(value);
   }
 
-  private calculateColumnWidths(data: any[], columns: ExportColumn[]): number[] {
+  private calculateColumnWidths(data: Record<string, unknown>[], columns: ExportColumn[]): number[] {
     const widths: number[] = [];
 
     columns.forEach(col => {
@@ -273,7 +273,7 @@ export class ExportService {
     return widths;
   }
 
-  private convertToCSV(data: any[]): string {
+  private convertToCSV(data: Record<string, unknown>[]): string {
     if (data.length === 0) return '';
 
     const headers = Object.keys(data[0]);
@@ -325,7 +325,7 @@ export class ExportService {
   /**
    * Validate export data
    */
-  validateExportData(data: any[], columns: ExportColumn[]): { valid: boolean; errors: string[] } {
+  validateExportData(data: unknown[], columns: ExportColumn[]): { valid: boolean; errors: string[] } {
     const errors: string[] = [];
 
     if (!data || data.length === 0) {

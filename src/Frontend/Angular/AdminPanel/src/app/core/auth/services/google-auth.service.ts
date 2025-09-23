@@ -1,4 +1,4 @@
-import { Injectable, Inject } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { environment } from '../../../../environments/environment';
 
@@ -6,17 +6,14 @@ import { environment } from '../../../../environments/environment';
   providedIn: 'root'
 })
 export class GoogleAuthService {
-
-  constructor(
-    @Inject(DOCUMENT) private document: Document
-  ) {}
+  private readonly document = inject(DOCUMENT);
 
   googleLogin(): void {
     try {
       const csrfToken = Date.now().toString(); // Simple CSRF token
       const state = btoa(JSON.stringify({
         csrfToken,
-        redirectUrl: '/dashboard'
+        redirectUrl: '/admin'
       }));
 
       // secrets.env'den GOOGLE_CLIENT_ID gelecek, şimdilik environment'tan al

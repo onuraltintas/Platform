@@ -12,6 +12,7 @@ public interface IAuthService
     Task<Result<bool>> LogoutAllDevicesAsync(string userId, CancellationToken cancellationToken = default);
     Task<Result<bool>> RevokeTokenAsync(string refreshToken, CancellationToken cancellationToken = default);
     Task<Result<bool>> ValidateTokenAsync(string accessToken, CancellationToken cancellationToken = default);
+    Task<Result<bool>> VerifyEmailAsync(string token, CancellationToken cancellationToken = default);
     Task<Result<TokenResponse>> SwitchGroupAsync(string userId, Guid groupId, CancellationToken cancellationToken = default);
     Task<Result<IEnumerable<string>>> GetUserPermissionsAsync(string userId, Guid? groupId = null, CancellationToken cancellationToken = default);
 }

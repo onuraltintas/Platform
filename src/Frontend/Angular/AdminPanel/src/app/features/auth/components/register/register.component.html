@@ -1,0 +1,203 @@
+<div class="page page-center">
+  <div class="container container-tight py-4">
+    <div class="text-center mb-4">
+      <a href="." class="navbar-brand navbar-brand-autodark">
+        <img src="logo.png" width="110" height="32" alt="OnAl Yazılım" class="navbar-brand-image">
+      </a>
+    </div>
+
+    <div class="card card-md">
+      <div class="card-body">
+        <h2 class="h2 text-center mb-4">Hesap Oluştur</h2>
+        <p class="text-muted text-center mb-4">Yeni hesabınızı oluşturmak için bilgilerinizi girin</p>
+
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" novalidate>
+          <!-- First Name and Last Name Row -->
+          <div class="row">
+            <div class="col-6">
+              <div class="mb-3">
+                <label class="form-label">Ad</label>
+                <div class="input-group input-group-flat">
+                  <span class="input-group-text">
+                    <lucide-angular [img]="User" class="icon"></lucide-angular>
+                  </span>
+                  <input
+                    type="text"
+                    class="form-control"
+                    [class.is-invalid]="isFieldInvalid('firstName')"
+                    formControlName="firstName"
+                    placeholder="Adınız"
+                    autocomplete="given-name">
+                </div>
+                @if (isFieldInvalid('firstName')) {
+                  <div class="invalid-feedback">Ad gereklidir</div>
+                }
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="mb-3">
+                <label class="form-label">Soyad</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  [class.is-invalid]="isFieldInvalid('lastName')"
+                  formControlName="lastName"
+                  placeholder="Soyadınız"
+                  autocomplete="family-name">
+                @if (isFieldInvalid('lastName')) {
+                  <div class="invalid-feedback">Soyad gereklidir</div>
+                }
+              </div>
+            </div>
+          </div>
+
+          <!-- Email Field -->
+          <div class="mb-3">
+            <label class="form-label">E-posta Adresi</label>
+            <div class="input-group input-group-flat">
+              <span class="input-group-text">
+                <lucide-angular [img]="Mail" class="icon"></lucide-angular>
+              </span>
+              <input
+                type="email"
+                class="form-control"
+                [class.is-invalid]="isFieldInvalid('email')"
+                formControlName="email"
+                placeholder="E-posta adresiniz"
+                autocomplete="email">
+            </div>
+            @if (isFieldInvalid('email')) {
+              <div class="invalid-feedback">
+                @if (registerForm.get('email')?.errors?.['required']) {
+                  E-posta adresi gereklidir
+                }
+                @if (registerForm.get('email')?.errors?.['email']) {
+                  Geçerli bir e-posta adresi girin
+                }
+              </div>
+            }
+          </div>
+
+          <!-- Password Field -->
+          <div class="mb-3">
+            <label class="form-label">Şifre</label>
+            <div class="input-group input-group-flat">
+              <span class="input-group-text">
+                <lucide-angular [img]="Lock" class="icon"></lucide-angular>
+              </span>
+              <input
+                [type]="showPassword() ? 'text' : 'password'"
+                class="form-control"
+                [class.is-invalid]="isFieldInvalid('password')"
+                formControlName="password"
+                placeholder="Şifrenizi girin"
+                autocomplete="new-password"
+                (input)="onPasswordInput($event)">
+              <span class="input-group-text">
+                <a href="#" class="link-secondary" (click)="togglePasswordVisibility(); $event.preventDefault()">
+                  <lucide-angular [img]="showPassword() ? EyeOff : Eye" class="icon"></lucide-angular>
+                </a>
+              </span>
+            </div>
+            @if (isFieldInvalid('password')) {
+              <div class="invalid-feedback">
+                @if (registerForm.get('password')?.errors?.['required']) {
+                  Şifre gereklidir
+                }
+                @if (registerForm.get('password')?.errors?.['minlength']) {
+                  Şifre en az 8 karakter olmalıdır
+                }
+              </div>
+            }
+          </div>
+
+          <!-- Password Strength -->
+          @if (passwordStrength() && passwordStrength().strength > 0) {
+            <div class="mb-3">
+              <div class="form-label">Şifre Gücü</div>
+              <div class="progress progress-sm">
+                <div
+                  class="progress-bar"
+                  [class]="'bg-' + passwordStrength().color"
+                  [style.width.%]="passwordStrength().strength * 25">
+                </div>
+              </div>
+              <small class="form-hint" [class]="'text-' + passwordStrength().color">
+                {{ passwordStrength().label }}
+              </small>
+            </div>
+          }
+
+          <!-- Confirm Password Field -->
+          <div class="mb-3">
+            <label class="form-label">Şifre Onayı</label>
+            <div class="input-group input-group-flat">
+              <span class="input-group-text">
+                <lucide-angular [img]="Lock" class="icon"></lucide-angular>
+              </span>
+              <input
+                [type]="showConfirmPassword() ? 'text' : 'password'"
+                class="form-control"
+                [class.is-invalid]="isFieldInvalid('confirmPassword')"
+                formControlName="confirmPassword"
+                placeholder="Şifrenizi tekrar girin"
+                autocomplete="new-password">
+              <span class="input-group-text">
+                <a href="#" class="link-secondary" (click)="toggleConfirmPasswordVisibility(); $event.preventDefault()">
+                  <lucide-angular [img]="showConfirmPassword() ? EyeOff : Eye" class="icon"></lucide-angular>
+                </a>
+              </span>
+            </div>
+            @if (isFieldInvalid('confirmPassword')) {
+              <div class="invalid-feedback">
+                @if (registerForm.get('confirmPassword')?.errors?.['required']) {
+                  Şifre onayı gereklidir
+                }
+                @if (registerForm.get('confirmPassword')?.errors?.['mismatch']) {
+                  Şifreler eşleşmiyor
+                }
+              </div>
+            }
+          </div>
+
+          <!-- Terms Acceptance -->
+          <div class="mb-3">
+            <label class="form-check">
+              <input type="checkbox" class="form-check-input" formControlName="acceptTerms">
+              <span class="form-check-label">
+                <a routerLink="/terms" class="text-decoration-none">Kullanım Şartları</a> ve
+                <a routerLink="/privacy" class="text-decoration-none">Gizlilik Politikası</a>'nı kabul ediyorum
+              </span>
+            </label>
+            @if (isFieldInvalid('acceptTerms')) {
+              <div class="invalid-feedback d-block">
+                Devam etmek için şartları kabul etmelisiniz
+              </div>
+            }
+          </div>
+
+          <!-- Submit Button -->
+          <div class="form-footer">
+            <button
+              type="submit"
+              class="btn btn-primary w-100"
+              [disabled]="registerForm.invalid || isLoading()">
+              @if (isLoading()) {
+                <div class="spinner-border spinner-border-sm me-2" role="status"></div>
+                Hesap Oluşturuluyor...
+              } @else {
+                <lucide-angular [img]="UserPlus" class="icon me-1"></lucide-angular>
+                Hesap Oluştur
+              }
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Login Link -->
+    <div class="text-center mt-3">
+      Zaten hesabınız var mı? <a routerLink="/auth/login" class="text-decoration-none">Giriş Yap</a>
+    </div>
+  </div>
+</div>

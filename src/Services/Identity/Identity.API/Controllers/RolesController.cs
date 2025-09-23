@@ -1,11 +1,14 @@
 using Identity.Core.DTOs;
 using Identity.Core.Entities;
+using Identity.Core.Constants;
 using Identity.Infrastructure.Data;
+using Identity.Application.Authorization.Attributes;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
+using System.Security.Claims;
 
 namespace Identity.API.Controllers;
 
@@ -28,12 +31,19 @@ public class RolesController : ControllerBase
     }
 
     [HttpGet]
-    [Authorize(Policy = "permission:roles.read")]
+    [RequirePermission(PermissionConstants.Identity.Roles.Read)]
     public async Task<IActionResult> GetRoles([FromQuery] GetRolesRequest request)
     {
         try
         {
             var query = _roleManager.Roles.AsQueryable();
+
+            // Apply group scope: include roles for current group or system roles (GroupId is null)
+            var groupIdClaim = User.FindFirst("GroupId")?.Value;
+            if (!string.IsNullOrEmpty(groupIdClaim) && Guid.TryParse(groupIdClaim, out var groupId))
+            {
+                query = query.Where(r => r.GroupId == null || r.GroupId == groupId);
+            }
 
             if (!string.IsNullOrEmpty(request.Search))
             {
@@ -71,7 +81,7 @@ public class RolesController : ControllerBase
     }
 
     [HttpGet("{roleId}")]
-    [Authorize(Policy = "permission:roles.read")]
+    [RequirePermission(PermissionConstants.Identity.Roles.Read)]
     public async Task<IActionResult> GetRole(string roleId)
     {
         try
@@ -104,7 +114,7 @@ public class RolesController : ControllerBase
     }
 
     [HttpPost]
-    [Authorize(Policy = "permission:roles.write")]
+    [RequirePermission(PermissionConstants.Identity.Roles.Write)]
     public async Task<IActionResult> CreateRole([FromBody] AdminCreateRoleBody body)
     {
         try
@@ -123,6 +133,13 @@ public class RolesController : ControllerBase
                 CreatedAt = DateTime.UtcNow
             };
 
+            // Set group scope on role if available
+            var groupIdClaim = User.FindFirst("GroupId")?.Value;
+            if (!string.IsNullOrEmpty(groupIdClaim) && Guid.TryParse(groupIdClaim, out var groupId))
+            {
+                role.GroupId = groupId;
+            }
+
             var result = await _roleManager.CreateAsync(role);
             if (!result.Succeeded) return BadRequest(new { errors = result.Errors.Select(e => e.Description) });
 
@@ -132,7 +149,7 @@ public class RolesController : ControllerBase
                 var existingPermissions = await _db.Permissions.Where(p => permissionGuids.Contains(p.Id)).Select(p => p.Id).ToListAsync();
                 foreach (var pid in existingPermissions)
                 {
-                    _db.RolePermissions.Add(new RolePermission { RoleId = role.Id, PermissionId = pid, GrantedAt = DateTime.UtcNow, GrantedBy = User?.Identity?.Name });
+                    _db.RolePermissions.Add(new RolePermission { RoleId = role.Id, PermissionId = pid, GrantedAt = DateTime.UtcNow, GrantedBy = User?.Identity?.Name, GroupId = role.GroupId });
                 }
                 await _db.SaveChangesAsync();
             }
@@ -148,7 +165,7 @@ public class RolesController : ControllerBase
     }
 
     [HttpPut("{roleId}")]
-    [Authorize(Policy = "permission:roles.write")]
+    [RequirePermission(PermissionConstants.Identity.Roles.Write)]
     public async Task<IActionResult> UpdateRole(string roleId, [FromBody] AdminUpdateRoleBody body)
     {
         try
@@ -176,7 +193,7 @@ public class RolesController : ControllerBase
     }
 
     [HttpDelete("{roleId}")]
-    [Authorize(Policy = "permission:roles.delete")]
+    [RequirePermission(PermissionConstants.Identity.Roles.Delete)]
     public async Task<IActionResult> DeleteRole(string roleId)
     {
         try
@@ -205,7 +222,14 @@ public class RolesController : ControllerBase
             var role = await _roleManager.FindByIdAsync(roleId);
             if (role == null) return NotFound("Role not found");
 
-            var permissionIds = await _db.RolePermissions.Where(rp => rp.RoleId == roleId).Select(rp => rp.PermissionId.ToString()).ToListAsync();
+            // Only return permissions in current group scope or system scope
+            var groupIdClaim = User.FindFirst("GroupId")?.Value;
+            IQueryable<RolePermission> rpQuery = _db.RolePermissions.Where(rp => rp.RoleId == roleId);
+            if (!string.IsNullOrEmpty(groupIdClaim) && Guid.TryParse(groupIdClaim, out var groupId))
+            {
+                rpQuery = rpQuery.Where(rp => rp.GroupId == null || rp.GroupId == groupId);
+            }
+            var permissionIds = await rpQuery.Select(rp => rp.PermissionId.ToString()).ToListAsync();
             return Ok(new { data = permissionIds });
         }
         catch (Exception ex)
@@ -224,10 +248,14 @@ public class RolesController : ControllerBase
             if (role == null) return NotFound("Role not found");
             var exists = await _db.Permissions.AnyAsync(p => p.Id == permissionId);
             if (!exists) return NotFound("Permission not found");
-            var already = await _db.RolePermissions.AnyAsync(rp => rp.RoleId == roleId && rp.PermissionId == permissionId);
+            var groupIdClaim = User.FindFirst("GroupId")?.Value;
+            Guid? groupId = null;
+            if (!string.IsNullOrEmpty(groupIdClaim) && Guid.TryParse(groupIdClaim, out var g)) groupId = g;
+
+            var already = await _db.RolePermissions.AnyAsync(rp => rp.RoleId == roleId && rp.PermissionId == permissionId && rp.GroupId == groupId);
             if (already) return Ok();
 
-            _db.RolePermissions.Add(new RolePermission { RoleId = roleId, PermissionId = permissionId, GrantedAt = DateTime.UtcNow, GrantedBy = User?.Identity?.Name });
+            _db.RolePermissions.Add(new RolePermission { RoleId = roleId, PermissionId = permissionId, GrantedAt = DateTime.UtcNow, GrantedBy = User?.Identity?.Name, GroupId = groupId });
             await _db.SaveChangesAsync();
             return Ok();
         }
@@ -243,7 +271,11 @@ public class RolesController : ControllerBase
     {
         try
         {
-            var link = await _db.RolePermissions.FirstOrDefaultAsync(rp => rp.RoleId == roleId && rp.PermissionId == permissionId);
+            var groupIdClaim = User.FindFirst("GroupId")?.Value;
+            Guid? groupId = null;
+            if (!string.IsNullOrEmpty(groupIdClaim) && Guid.TryParse(groupIdClaim, out var g)) groupId = g;
+
+            var link = await _db.RolePermissions.FirstOrDefaultAsync(rp => rp.RoleId == roleId && rp.PermissionId == permissionId && rp.GroupId == groupId);
             if (link == null) return NotFound();
             _db.RolePermissions.Remove(link);
             await _db.SaveChangesAsync();
@@ -265,7 +297,11 @@ public class RolesController : ControllerBase
             if (role == null) return NotFound("Role not found");
 
             var newIds = (permissionIds ?? new()).Select(id => Guid.TryParse(id, out var g) ? g : Guid.Empty).Where(g => g != Guid.Empty).ToHashSet();
-            var currentLinks = await _db.RolePermissions.Where(rp => rp.RoleId == roleId).ToListAsync();
+            var groupIdClaim = User.FindFirst("GroupId")?.Value;
+            Guid? groupId = null;
+            if (!string.IsNullOrEmpty(groupIdClaim) && Guid.TryParse(groupIdClaim, out var g)) groupId = g;
+
+            var currentLinks = await _db.RolePermissions.Where(rp => rp.RoleId == roleId && rp.GroupId == groupId).ToListAsync();
             var currentIds = currentLinks.Select(l => l.PermissionId).ToHashSet();
 
             var toRemove = currentLinks.Where(l => !newIds.Contains(l.PermissionId)).ToList();
@@ -276,7 +312,7 @@ public class RolesController : ControllerBase
             {
                 foreach (var pid in toAdd)
                 {
-                    _db.RolePermissions.Add(new RolePermission { RoleId = roleId, PermissionId = pid, GrantedAt = DateTime.UtcNow, GrantedBy = User?.Identity?.Name });
+                    _db.RolePermissions.Add(new RolePermission { RoleId = roleId, PermissionId = pid, GrantedAt = DateTime.UtcNow, GrantedBy = User?.Identity?.Name, GroupId = groupId });
                 }
             }
 
@@ -294,7 +330,7 @@ public class RolesController : ControllerBase
     /// Gets role usage statistics
     /// </summary>
     [HttpGet("stats")]
-    [Authorize(Policy = "permission:roles.read")]
+    [RequirePermission(PermissionConstants.Identity.Roles.Read)]
     public async Task<IActionResult> GetRoleUsageStats()
     {
         try
@@ -340,7 +376,7 @@ public class RolesController : ControllerBase
     /// Clones a role with its permissions
     /// </summary>
     [HttpPost("{roleId}/clone")]
-    [Authorize(Policy = "permission:roles.write")]
+    [RequirePermission(PermissionConstants.Identity.Roles.Write)]
     public async Task<IActionResult> CloneRole(string roleId, [FromBody] CloneRoleRequest request)
     {
         try
@@ -358,14 +394,15 @@ public class RolesController : ControllerBase
                 IsSystemRole = false,
                 IsActive = true,
                 CreatedAt = DateTime.UtcNow,
-                CreatedBy = User?.Identity?.Name
+                CreatedBy = User?.Identity?.Name,
+                GroupId = sourceRole.GroupId
             };
 
             var result = await _roleManager.CreateAsync(newRole);
             if (!result.Succeeded)
                 return BadRequest(result.Errors);
 
-            // Copy permissions
+            // Copy permissions (respect group scope)
             var sourcePermissions = await _db.RolePermissions
                 .Where(rp => rp.RoleId == roleId)
                 .ToListAsync();
@@ -377,7 +414,8 @@ public class RolesController : ControllerBase
                     RoleId = newRole.Id,
                     PermissionId = sp.PermissionId,
                     GrantedAt = DateTime.UtcNow,
-                    GrantedBy = User?.Identity?.Name
+                    GrantedBy = User?.Identity?.Name,
+                    GroupId = sp.GroupId
                 });
 
                 _db.RolePermissions.AddRange(newPermissions);
@@ -397,7 +435,7 @@ public class RolesController : ControllerBase
     /// Compares two roles and their permissions
     /// </summary>
     [HttpGet("compare/{roleId1}/{roleId2}")]
-    [Authorize(Policy = "permission:roles.read")]
+    [RequirePermission(PermissionConstants.Identity.Roles.Read)]
     public async Task<IActionResult> CompareRoles(string roleId1, string roleId2)
     {
         try

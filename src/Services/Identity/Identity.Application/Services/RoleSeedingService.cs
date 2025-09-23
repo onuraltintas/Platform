@@ -2,6 +2,7 @@ using Identity.Core.Entities;
 using Identity.Core.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
+using System.Security.Claims;
 
 namespace Identity.Application.Services;
 
@@ -91,10 +92,49 @@ public class RoleSeedingService
                 {
                     try
                     {
-                        // This would need to be implemented in the permission service
-                        // await _permissionService.AssignPermissionsToRoleAsync(role.Id, permissionPattern);
-                        _logger.LogDebug("Would assign permission pattern {Pattern} to role {Role}",
-                            permissionPattern, mapping.RoleName);
+                        // For SuperAdmin, add wildcard permission as a claim
+                        if (mapping.RoleName == "SuperAdmin" && permissionPattern == "Identity.*.*")
+                        {
+                            // Add wildcard permission claim to SuperAdmin role
+                            var claim = new Claim("permission", "*.*.*");
+                            var existingClaim = await _roleManager.GetClaimsAsync(role);
+
+                            if (!existingClaim.Any(c => c.Type == "permission" && c.Value == "*.*.*"))
+                            {
+                                var result = await _roleManager.AddClaimAsync(role, claim);
+                                if (result.Succeeded)
+                                {
+                                    _logger.LogInformation("Assigned wildcard permission (*.*.*) to SuperAdmin role");
+                                }
+                                else
+                                {
+                                    _logger.LogError("Failed to assign wildcard permission to SuperAdmin: {Errors}",
+                                        string.Join(", ", result.Errors.Select(e => e.Description)));
+                                }
+                            }
+                        }
+                        else
+                        {
+                            // For other roles, add specific permission patterns as claims
+                            var claim = new Claim("permission", permissionPattern);
+                            var existingClaims = await _roleManager.GetClaimsAsync(role);
+
+                            if (!existingClaims.Any(c => c.Type == "permission" && c.Value == permissionPattern))
+                            {
+                                var result = await _roleManager.AddClaimAsync(role, claim);
+                                if (result.Succeeded)
+                                {
+                                    _logger.LogInformation("Assigned permission {Permission} to role {Role}",
+                                        permissionPattern, mapping.RoleName);
+                                }
+                                else
+                                {
+                                    _logger.LogError("Failed to assign permission {Permission} to role {Role}: {Errors}",
+                                        permissionPattern, mapping.RoleName,
+                                        string.Join(", ", result.Errors.Select(e => e.Description)));
+                                }
+                            }
+                        }
                     }
                     catch (Exception ex)
                     {
@@ -120,9 +160,9 @@ public class RoleSeedingService
             new("Admin", new[]
             {
                 "Identity.Users.*",
-                "Identity.Roles.Read", "Identity.Roles.Update", "Identity.Roles.Assign", "Identity.Roles.Revoke",
+                "Identity.Roles.*",
                 "Identity.Groups.*",
-                "Identity.Permissions.Read",
+                "Identity.Permissions.*",
                 "User.*.*",
                 "SpeedReading.Exercises.*",
                 "SpeedReading.ReadingTexts.*",
@@ -174,5 +214,68 @@ public class RoleSeedingService
         };
     }
 
+    /// <summary>
+    /// Seed role hierarchy relationships
+    /// </summary>
+    public async Task SeedRoleHierarchyAsync()
+    {
+        var hierarchyMappings = GetRoleHierarchyMappings();
+
+        foreach (var mapping in hierarchyMappings)
+        {
+            var role = await _roleManager.FindByNameAsync(mapping.RoleName);
+            if (role != null)
+            {
+                // Set parent role if specified
+                if (!string.IsNullOrEmpty(mapping.ParentRoleName))
+                {
+                    var parentRole = await _roleManager.FindByNameAsync(mapping.ParentRoleName);
+                    if (parentRole != null)
+                    {
+                        role.ParentRoleId = parentRole.Id;
+                    }
+                }
+
+                // Set hierarchy properties
+                role.HierarchyLevel = mapping.HierarchyLevel;
+                role.HierarchyPath = mapping.HierarchyPath;
+                role.InheritPermissions = mapping.InheritPermissions;
+                role.Priority = mapping.Priority;
+
+                var result = await _roleManager.UpdateAsync(role);
+                if (result.Succeeded)
+                {
+                    _logger.LogInformation("Updated role hierarchy for: {RoleName}", mapping.RoleName);
+                }
+                else
+                {
+                    _logger.LogError("Failed to update role hierarchy for {RoleName}: {Errors}",
+                        mapping.RoleName, string.Join(", ", result.Errors.Select(e => e.Description)));
+                }
+            }
+        }
+    }
+
+    private List<RoleHierarchyMapping> GetRoleHierarchyMappings()
+    {
+        return new List<RoleHierarchyMapping>
+        {
+            new("SuperAdmin", null, 0, "/SuperAdmin", true, 1000),
+            new("Admin", "SuperAdmin", 1, "/SuperAdmin/Admin", true, 900),
+            new("Manager", "Admin", 2, "/SuperAdmin/Admin/Manager", true, 800),
+            new("Moderator", "Manager", 3, "/SuperAdmin/Admin/Manager/Moderator", true, 700),
+            new("User", "Moderator", 4, "/SuperAdmin/Admin/Manager/Moderator/User", true, 600),
+            new("Student", "User", 5, "/SuperAdmin/Admin/Manager/Moderator/User/Student", true, 500),
+            new("Guest", "Student", 6, "/SuperAdmin/Admin/Manager/Moderator/User/Student/Guest", true, 100)
+        };
+    }
+
     private record RolePermissionMapping(string RoleName, string[] PermissionPatterns);
+    private record RoleHierarchyMapping(
+        string RoleName,
+        string? ParentRoleName,
+        int HierarchyLevel,
+        string HierarchyPath,
+        bool InheritPermissions,
+        int Priority);
 }

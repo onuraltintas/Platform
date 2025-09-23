@@ -4,13 +4,13 @@ export const environment = {
 
   endpoints: {
     auth: '/auth',
-    users: '/identity/users',
-    roles: '/identity/roles',
-    permissions: '/identity/permissions',
-    groups: '/identity/groups',
-    userProfile: '/user/profile',
-    speedReading: '/speed-reading',
-    audit: '/identity/audit'
+    users: '/users',
+    roles: '/roles',
+    permissions: '/permissions',
+    groups: '/groups',
+    userProfile: '/user-profiles',
+    speedReading: '/exercises',
+    audit: '/audit'
   },
 
   auth: {
@@ -34,6 +34,14 @@ export const environment = {
     defaultTheme: 'light',
     pageSize: 10,
     pageSizeOptions: [10, 25, 50, 100]
+  },
+
+  company: {
+    name: 'OnAl Otomasyon',
+    email: 'info@onalotomasyon.com',
+    phone: '+90 (212) 555-0123',
+    address: 'İstanbul, Türkiye',
+    website: 'https://www.onalotomasyon.com'
   },
 
   features: {

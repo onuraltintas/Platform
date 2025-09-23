@@ -1,17 +1,18 @@
 using Identity.Core.DTOs;
 using Identity.Core.Entities;
+using Identity.Core.Constants;
 using Identity.Infrastructure.Data;
+using Identity.Application.Authorization.Attributes;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Enterprise.Shared.Authorization.Attributes;
 using System.ComponentModel.DataAnnotations;
 
 namespace Identity.API.Controllers;
 
 [ApiController]
 [Route("api/v1/permissions")]
-[Authorize(Policy = "permission:permissions.read")]
+[RequirePermission(PermissionConstants.Identity.Permissions.Read)]
 public class PermissionsController : ControllerBase
 {
     private readonly IdentityDbContext _db;
@@ -232,7 +233,7 @@ public class PermissionsController : ControllerBase
     /// Gets permission matrix showing roles and their permissions
     /// </summary>
     [HttpGet("matrix")]
-    [Authorize(Policy = "permission:permissions.read")]
+    [RequirePermission(PermissionConstants.Identity.Permissions.Read)]
     public async Task<IActionResult> GetPermissionMatrix()
     {
         try
@@ -317,7 +318,7 @@ public class PermissionsController : ControllerBase
     /// Gets permissions grouped by service
     /// </summary>
     [HttpGet("by-service")]
-    [Authorize(Policy = "permission:permissions.read")]
+    [RequirePermission(PermissionConstants.Identity.Permissions.Read)]
     public async Task<IActionResult> GetPermissionsByService()
     {
         try
@@ -355,7 +356,7 @@ public class PermissionsController : ControllerBase
     /// Gets permissions grouped by resource
     /// </summary>
     [HttpGet("by-resource")]
-    [Authorize(Policy = "permission:permissions.read")]
+    [RequirePermission(PermissionConstants.Identity.Permissions.Read)]
     public async Task<IActionResult> GetPermissionsByResource()
     {
         try

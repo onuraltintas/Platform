@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
 import { AppComponent } from './app.component';
 
 @Component({
-  selector: 'router-outlet',
+  selector: 'app-router-outlet',
   template: ''
 })
 class MockRouterOutletComponent {}

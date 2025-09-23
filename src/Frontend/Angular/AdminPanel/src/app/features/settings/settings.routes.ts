@@ -4,6 +4,6 @@ export const settingsRoutes: Routes = [
   {
     path: '',
     loadComponent: () => import('./settings.component').then(m => m.SettingsComponent),
-    title: 'Ayarlar - PlatformV1'
+    title: 'Ayarlar - OnAl'
   }
 ];

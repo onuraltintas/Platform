@@ -1,0 +1,50 @@
+// Email verification component uses Tabler's built-in auth page styling
+
+:host {
+  display: block;
+  min-height: 100vh;
+}
+
+// Icon sizing
+.icon {
+  width: 1rem;
+  height: 1rem;
+
+  &.icon-lg {
+    width: 3rem;
+    height: 3rem;
+  }
+}
+
+// Button icon spacing
+.btn .icon {
+  vertical-align: -0.125rem;
+}
+
+// Rotating animation for loading spinner
+.rotating {
+  animation: rotate 1s linear infinite;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 576px) {
+  .container-tight {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .card-md {
+    border-radius: 0;
+    border-left: 0;
+    border-right: 0;
+  }
+}

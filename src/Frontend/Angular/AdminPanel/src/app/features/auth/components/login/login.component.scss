@@ -1,0 +1,64 @@
+// Login component uses Tabler's built-in auth page styling
+// Most styles are inherited from global Tabler CSS
+
+:host {
+  display: block;
+  min-height: 100vh;
+}
+
+// Tabler auth page styles are automatically applied via classes:
+// .page.page-center - Centers the content vertically and horizontally
+// .container.container-tight - Constrains width for auth forms
+// .card.card-md - Medium-sized card for the form
+// .form-footer - Proper spacing for form submit button
+
+// Custom minimal overrides only
+.navbar-brand-image {
+  max-height: 2rem;
+  width: auto;
+}
+
+// Loading state for button
+.btn[disabled] {
+  pointer-events: none;
+}
+
+// Alert customization
+.alert-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-right: 0.75rem;
+  margin-top: 0.125rem;
+  flex-shrink: 0;
+}
+
+// Icon sizing consistency
+.icon {
+  width: 1rem;
+  height: 1rem;
+}
+
+// Input group icon alignment
+.input-group-text .icon {
+  color: var(--bs-secondary);
+}
+
+// Google button styling
+.btn svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+// Responsive adjustments
+@media (max-width: 576px) {
+  .container-tight {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .card-md {
+    border-radius: 0;
+    border-left: 0;
+    border-right: 0;
+  }
+}

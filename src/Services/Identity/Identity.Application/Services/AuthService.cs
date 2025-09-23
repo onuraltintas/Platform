@@ -23,6 +23,7 @@ public class AuthService : IAuthService
     private readonly IUserService _userService;
     private readonly IGroupService _groupService;
     private readonly IGoogleAuthService _googleAuthService;
+    private readonly IPermissionService _permissionService;
     private readonly IHashingService _hashingService;
     private readonly ICacheService _cacheService;
     private readonly IEventBus _eventBus;
@@ -40,6 +41,7 @@ public class AuthService : IAuthService
         IUserService userService,
         IGroupService groupService,
         IGoogleAuthService googleAuthService,
+        IPermissionService permissionService,
         IHashingService hashingService,
         ICacheService cacheService,
         IEventBus eventBus,
@@ -53,6 +55,7 @@ public class AuthService : IAuthService
         _userService = userService;
         _groupService = groupService;
         _googleAuthService = googleAuthService;
+        _permissionService = permissionService;
         _hashingService = hashingService;
         _cacheService = cacheService;
         _eventBus = eventBus;
@@ -106,7 +109,9 @@ public class AuthService : IAuthService
             var requireEmailConfirmation = bool.Parse(_configuration["ENABLE_EMAIL_CONFIRMATION"] ?? "true");
             if (requireEmailConfirmation && !user.EmailConfirmed)
             {
-                return Result<TokenResponse>.Failure("E-posta adresinizi doğrulamanız gerekiyor");
+                // Return a special error that indicates email verification is needed
+                // Include the email address for resend functionality
+                return Result<TokenResponse>.Failure($"EMAIL_NOT_VERIFIED:{user.Email}");
             }
 
             // Handle 2FA if enabled
@@ -503,7 +508,7 @@ public class AuthService : IAuthService
         {
             var cacheKey = $"user_permissions_{userId}_{groupId}";
             var cachedPermissions = await _cacheService.GetAsync<IEnumerable<string>>(cacheKey, cancellationToken);
-            
+
             if (cachedPermissions != null)
             {
                 return Result<IEnumerable<string>>.Success(cachedPermissions);
@@ -516,22 +521,31 @@ public class AuthService : IAuthService
                 return Result<IEnumerable<string>>.Failure("Kullanıcı bulunamadı");
             }
 
-            var userRoles = await _userManager.GetRolesAsync(user);
-            var permissions = new List<string>();
-
-            // Add basic user permissions
-            permissions.Add("identity.read");
-            permissions.Add("profile.read");
-            permissions.Add("profile.write");
-
-            // Add role-based permissions
-            if (userRoles.Contains("Admin"))
+            // Use IPermissionService to get user permissions (includes role-based permissions)
+            var permissionsResult = await _permissionService.GetUserPermissionNamesAsync(userId, groupId, cancellationToken);
+            if (!permissionsResult.IsSuccess)
             {
-                permissions.AddRange(new[] { "users.read", "users.write", "groups.read", "groups.write" });
+                _logger.LogWarning("Failed to get user permissions from PermissionService for {UserId}: {Error}", userId, permissionsResult.Error);
+
+                // Fallback to basic permissions
+                var basicPermissions = new List<string> { "profile.read", "profile.write" };
+                await _cacheService.SetAsync(cacheKey, basicPermissions, TimeSpan.FromMinutes(1), cancellationToken);
+                return Result<IEnumerable<string>>.Success(basicPermissions);
             }
+
+            var permissions = permissionsResult.Value.ToList();
+
+            // Ensure basic permissions are always included
+            if (!permissions.Contains("profile.read"))
+                permissions.Add("profile.read");
+            if (!permissions.Contains("profile.write"))
+                permissions.Add("profile.write");
 
             // Cache permissions for 5 minutes
             await _cacheService.SetAsync(cacheKey, permissions, TimeSpan.FromMinutes(5), cancellationToken);
+
+            _logger.LogInformation("Retrieved {PermissionCount} permissions for user {UserId}: {Permissions}",
+                permissions.Count, userId, string.Join(", ", permissions));
 
             return Result<IEnumerable<string>>.Success(permissions);
         }
@@ -539,6 +553,29 @@ public class AuthService : IAuthService
         {
             _logger.LogError(ex, "Error getting user permissions for {UserId}", userId);
             return Result<IEnumerable<string>>.Failure("İzinler alınamadı");
+        }
+    }
+
+    public async Task<Result<bool>> VerifyEmailAsync(string token, CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            var result = await _userService.ConfirmEmailByTokenAsync(token, cancellationToken);
+            if (!result.IsSuccess)
+            {
+                if (result.Error.Contains("already verified"))
+                {
+                    return Result<bool>.Failure("already verified");
+                }
+                return Result<bool>.Failure(result.Error);
+            }
+
+            return Result<bool>.Success(true);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error verifying email with token");
+            return Result<bool>.Failure("E-posta doğrulanırken bir hata oluştu");
         }
     }
 

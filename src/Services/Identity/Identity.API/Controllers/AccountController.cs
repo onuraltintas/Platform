@@ -72,20 +72,23 @@ public class AccountController : ControllerBase
             var user = userResult.Value;
 
             // Generate email confirmation token
-            var tokenResult = await _userService.GenerateEmailConfirmationTokenAsync(user.Id);
-            if (tokenResult.IsSuccess)
+            var tokenResult = await _userService.GenerateEmailConfirmationTokenAsync(user.Id ?? string.Empty);
+            if (tokenResult.IsSuccess && !string.IsNullOrEmpty(user.Email) && !string.IsNullOrEmpty(tokenResult.Value))
             {
                 // Send confirmation email
-                await _emailService.SendEmailConfirmationAsync(user.Email, user.FirstName, tokenResult.Value);
+                await _emailService.SendEmailConfirmationAsync(user.Email, user.FirstName ?? string.Empty, tokenResult.Value);
             }
 
             // Send welcome email
-            await _emailService.SendWelcomeEmailAsync(user.Email, user.FirstName);
+            if (!string.IsNullOrEmpty(user.Email))
+            {
+                await _emailService.SendWelcomeEmailAsync(user.Email, user.FirstName ?? string.Empty);
+            }
 
             var response = new RegisterResponse
             {
-                UserId = user.Id,
-                Email = user.Email,
+                UserId = user.Id ?? string.Empty,
+                Email = user.Email ?? string.Empty,
                 RequiresEmailConfirmation = true,
                 Message = "Kayıt başarılı! E-posta adresinizi doğrulamak için gelen kutunuzu kontrol edin."
             };
@@ -153,20 +156,22 @@ public class AccountController : ControllerBase
         var user = userResult.Value;
 
         // Check if already confirmed
-        if (user.EmailConfirmed)
+        if (user?.EmailConfirmed == true)
         {
             return BadRequest("E-posta adresi zaten doğrulanmış");
         }
 
         // Generate new confirmation token
-        var tokenResult = await _userService.GenerateEmailConfirmationTokenAsync(user.Id);
+        var tokenResult = await _userService.GenerateEmailConfirmationTokenAsync(user?.Id ?? string.Empty);
         if (!tokenResult.IsSuccess)
         {
             return BadRequest("Doğrulama kodu oluşturulamadı");
         }
 
-        // Send confirmation email
-        await _emailService.SendEmailConfirmationAsync(user.Email, user.FirstName, tokenResult.Value);
+        if (!string.IsNullOrEmpty(user.Email) && !string.IsNullOrEmpty(tokenResult.Value))
+        {
+            await _emailService.SendEmailConfirmationAsync(user.Email, user.FirstName ?? string.Empty, tokenResult.Value);
+        }
 
         _logger.LogInformation("Email confirmation resent for user {Email}", request.Email);
 
@@ -199,9 +204,9 @@ public class AccountController : ControllerBase
             if (tokenResult.IsSuccess)
             {
                 var userResult = await _userService.GetByEmailAsync(request.Email);
-                if (userResult.IsSuccess)
+        if (userResult.IsSuccess && userResult.Value != null && !string.IsNullOrEmpty(userResult.Value.Email) && !string.IsNullOrEmpty(tokenResult.Value))
                 {
-                    await _emailService.SendPasswordResetEmailAsync(request.Email, userResult.Value.FirstName, tokenResult.Value);
+            await _emailService.SendPasswordResetEmailAsync(request.Email, userResult.Value.FirstName ?? string.Empty, tokenResult.Value);
                     _logger.LogInformation("Password reset token sent for user {Email}", request.Email);
                 }
             }
@@ -236,7 +241,7 @@ public class AccountController : ControllerBase
             return BadRequest("Geçersiz şifre sıfırlama isteği");
         }
 
-        var result = await _userService.ResetPasswordAsync(userResult.Value.Id, request.Token, request.NewPassword);
+        var result = await _userService.ResetPasswordAsync(userResult.Value?.Id ?? string.Empty, request.Token, request.NewPassword);
         if (!result.IsSuccess)
         {
             return BadRequest(result.Error);

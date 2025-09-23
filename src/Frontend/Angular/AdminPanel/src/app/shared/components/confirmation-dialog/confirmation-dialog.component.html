@@ -1,0 +1,76 @@
+<div class="confirmation-dialog">
+  <!-- Header -->
+  <div class="dialog-header" [ngClass]="headerClass()">
+    <mat-icon *ngIf="config.icon" [color]="config.iconColor">
+      {{ config.icon }}
+    </mat-icon>
+    <h2 mat-dialog-title>{{ config.title }}</h2>
+  </div>
+
+  <!-- Content -->
+  <mat-dialog-content class="dialog-content">
+    <!-- Main Message -->
+    <div class="message" [ngClass]="messageClass()">
+      <div *ngIf="!config.html; else htmlMessage" class="message-text">
+        {{ config.message }}
+      </div>
+      <ng-template #htmlMessage>
+        <div class="message-text" [innerHTML]="config.message"></div>
+      </ng-template>
+    </div>
+
+    <!-- Custom Content -->
+    <div *ngIf="config.customContent" class="custom-content">
+      <ng-container [ngTemplateOutlet]="config.customContent"></ng-container>
+    </div>
+
+    <!-- Text Confirmation Input -->
+    <div *ngIf="config.requireTextConfirmation" class="confirmation-input">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Onaylamak için "{{ config.confirmationText }}" yazın</mat-label>
+        <input
+          matInput
+          [formControl]="confirmationControl"
+          [placeholder]="config.confirmationText || ''"
+          autocomplete="off">
+        <mat-error *ngIf="confirmationControl.hasError('required')">
+          Bu alan zorunludur
+        </mat-error>
+        <mat-error *ngIf="confirmationControl.hasError('mismatch')">
+          Girilen metin eşleşmiyor
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <!-- Details (Expandable) -->
+    <mat-expansion-panel *ngIf="config.details" class="details-panel">
+      <mat-expansion-panel-header>
+        <mat-panel-title>Detaylar</mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="details-content">
+        {{ config.details }}
+      </div>
+    </mat-expansion-panel>
+  </mat-dialog-content>
+
+  <!-- Actions -->
+  <mat-dialog-actions class="dialog-actions" align="end">
+    <button
+      *ngIf="config.showCancelButton !== false"
+      mat-button
+      (click)="cancel()"
+      [attr.aria-label]="config.cancelText || 'İptal'">
+      {{ config.cancelText || 'İptal' }}
+    </button>
+
+    <button
+      mat-raised-button
+      [color]="config.confirmColor || 'primary'"
+      [disabled]="!canConfirm()"
+      (click)="confirm()"
+      [attr.aria-label]="config.confirmText || 'Tamam'"
+      cdkTrapFocus="true">
+      {{ config.confirmText || 'Tamam' }}
+    </button>
+  </mat-dialog-actions>
+</div>

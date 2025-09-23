@@ -1,18 +1,19 @@
 using Identity.Core.DTOs;
 using Identity.Core.Entities;
 using Identity.Core.Interfaces;
+using Identity.Core.Constants;
 using Identity.Infrastructure.Data;
+using Identity.Application.Authorization.Attributes;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Enterprise.Shared.Authorization.Attributes;
 
 namespace Identity.API.Controllers;
 
 [ApiController]
 [Route("api/v1/users")]
-[Authorize(Roles = "Admin")]
+[RequirePermission(PermissionConstants.Identity.Users.Read)]
 public class UsersController : ControllerBase
 {
     private readonly UserManager<ApplicationUser> _userManager;
@@ -44,10 +45,11 @@ public class UsersController : ControllerBase
 
             if (!string.IsNullOrEmpty(request.Search))
             {
-                query = query.Where(u => u.Email.Contains(request.Search) ||
-                                        u.UserName.Contains(request.Search) ||
-                                        u.FirstName.Contains(request.Search) ||
-                                        u.LastName.Contains(request.Search));
+                var s = request.Search;
+                query = query.Where(u => (u.Email ?? string.Empty).Contains(s) ||
+                                        (u.UserName ?? string.Empty).Contains(s) ||
+                                        (u.FirstName ?? string.Empty).Contains(s) ||
+                                        (u.LastName ?? string.Empty).Contains(s));
             }
 
             if (request.IsActive.HasValue)
@@ -84,11 +86,11 @@ public class UsersController : ControllerBase
                 Users = users.Select(u => new UserSummaryDto
                 {
                     Id = u.Id,
-                    UserName = u.UserName ?? u.Email,
-                    Email = u.Email,
+                    UserName = u.UserName ?? u.Email ?? string.Empty,
+                    Email = u.Email ?? string.Empty,
                     FirstName = u.FirstName ?? string.Empty,
                     LastName = u.LastName ?? string.Empty,
-                    FullName = $"{u.FirstName} {u.LastName}".Trim(),
+                    FullName = $"{u.FirstName ?? string.Empty} {u.LastName ?? string.Empty}".Trim(),
                     PhoneNumber = u.PhoneNumber,
                     IsEmailConfirmed = u.EmailConfirmed,
                     IsActive = u.IsActive,
@@ -112,12 +114,11 @@ public class UsersController : ControllerBase
                 .Where(r => roleIds.Contains(r.Id))
                 .Select(r => new { r.Id, r.Name })
                 .ToListAsync();
-            var roleNameById = roleNames.ToDictionary(r => r.Id, r => r.Name);
+            var roleNameById = roleNames.ToDictionary(r => r.Id, r => r.Name ?? string.Empty);
             var userIdToRoleNames = roleLinks
                 .GroupBy(ur => ur.UserId)
-                .ToDictionary(g => g.Key, g => g.Select(ur => roleNameById.TryGetValue(ur.RoleId, out var n) ? n : null)
-                                               .Where(n => n != null)!
-                                               .Cast<string>()
+                .ToDictionary(g => g.Key, g => g.Select(ur => roleNameById.TryGetValue(ur.RoleId, out var n) ? n : string.Empty)
+                                               .Where(n => !string.IsNullOrEmpty(n))
                                                .ToList());
 
             // Populate groups for each user (batch)
@@ -193,7 +194,7 @@ public class UsersController : ControllerBase
 
             if (userGroupsResult.IsSuccess)
             {
-                foreach (var group in userGroupsResult.Value)
+                foreach (var group in userGroupsResult.Value ?? new List<GroupDto>())
                 {
                     var roleResult = await _groupService.GetUserRoleInGroupAsync(userId, group.Id);
                     userGroups.Add(new UserGroupInfo
@@ -211,11 +212,11 @@ public class UsersController : ControllerBase
             var result = new UserSummaryDto
             {
                 Id = user.Id,
-                UserName = user.UserName ?? user.Email,
-                Email = user.Email,
+                UserName = user.UserName ?? user.Email ?? string.Empty,
+                Email = user.Email ?? string.Empty,
                 FirstName = user.FirstName ?? string.Empty,
                 LastName = user.LastName ?? string.Empty,
-                FullName = $"{user.FirstName} {user.LastName}".Trim(),
+                FullName = $"{user.FirstName ?? string.Empty} {user.LastName ?? string.Empty}".Trim(),
                 PhoneNumber = user.PhoneNumber,
                 IsEmailConfirmed = user.EmailConfirmed,
                 IsActive = user.IsActive,
@@ -236,7 +237,7 @@ public class UsersController : ControllerBase
     }
 
     [HttpPost]
-    [Authorize(Policy = "permission:users.create")]
+    [RequirePermission(PermissionConstants.Identity.Users.Create)]
     public async Task<IActionResult> CreateUser([FromBody] CreateUserRequest request)
     {
         try
@@ -309,7 +310,7 @@ public class UsersController : ControllerBase
     }
 
     [HttpPut("{userId}")]
-    [Authorize(Policy = "permission:users.update")]
+    [RequirePermission(PermissionConstants.Identity.Users.Update)]
     public async Task<IActionResult> UpdateUser(string userId, [FromBody] UpdateUserRequest request)
     {
         try
@@ -396,7 +397,7 @@ public class UsersController : ControllerBase
     }
 
     [HttpDelete("{userId}")]
-    [Authorize(Policy = "permission:users.delete")]
+    [RequirePermission(PermissionConstants.Identity.Users.Delete)]
     public async Task<IActionResult> DeleteUser(string userId)
     {
         try
@@ -433,7 +434,7 @@ public class UsersController : ControllerBase
     }
 
     [HttpPatch("{userId}/activate")]
-    [Authorize(Policy = "permission:users.activate")]
+    [RequirePermission(PermissionConstants.Identity.Users.Activate)]
     public async Task<IActionResult> ActivateUser(string userId)
     {
         try
@@ -461,7 +462,7 @@ public class UsersController : ControllerBase
     }
 
     [HttpPatch("{userId}/deactivate")]
-    [Authorize(Policy = "permission:users.deactivate")]
+    [RequirePermission(PermissionConstants.Identity.Users.Deactivate)]
     public async Task<IActionResult> DeactivateUser(string userId)
     {
         try

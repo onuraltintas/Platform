@@ -36,6 +36,14 @@ export const environment = {
     pageSizeOptions: [10, 25, 50, 100]
   },
 
+  company: {
+    name: 'OnAl Otomasyon',
+    email: 'info@onalotomasyon.com',
+    phone: '+90 (212) 555-0123',
+    address: 'İstanbul, Türkiye',
+    website: 'https://www.onalotomasyon.com'
+  },
+
   features: {
     enableDarkMode: true,
     enableNotifications: true,

@@ -1,0 +1,20 @@
+<div class="data-table-container">
+  <!-- Loading State -->
+  <div class="loading-overlay" *ngIf="isLoading()">
+    <mat-spinner diameter="40"></mat-spinner>
+    <p>Yükleniyor...</p>
+  </div>
+
+  <!-- Empty State -->
+  <div class="empty-state" *ngIf="isEmpty()">
+    <mat-icon>inbox</mat-icon>
+    <p>Gösterilecek veri yok</p>
+  </div>
+
+  <!-- Success State -->
+  <div class="success-state" *ngIf="!isEmpty() && !isLoading()">
+    <p>Data Table component başarıyla oluşturuldu!</p>
+    <p>{{ config().data?.length || 0 }} kayıt var</p>
+    <p>{{ config().columns?.length || 0 }} sütun tanımlı</p>
+  </div>
+</div>

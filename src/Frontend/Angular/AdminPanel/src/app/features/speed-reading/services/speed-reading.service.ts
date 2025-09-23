@@ -57,7 +57,7 @@ export class SpeedReadingService {
   }
 
   updateText(id: string, dto: Partial<CreateSpeedReadingTextDto>): Observable<SpeedReadingText> {
-    let updateData: any = { ...dto };
+    const updateData: any = { ...dto };
 
     if (dto.content) {
       updateData.wordCount = dto.content.split(/\s+/).length;

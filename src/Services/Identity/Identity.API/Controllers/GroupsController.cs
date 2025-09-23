@@ -49,7 +49,7 @@ public class GroupsController : ControllerBase
                 request.Search,
                 request.Type);
 
-            if (!result.IsSuccess)
+        if (!result.IsSuccess || result.Value == null)
             {
                 return BadRequest(new { error = result.Error });
             }
@@ -84,9 +84,9 @@ public class GroupsController : ControllerBase
         {
             var result = await _groupService.GetByIdAsync(groupId);
 
-            if (!result.IsSuccess)
+            if (!result.IsSuccess || result.Value == null)
             {
-                return NotFound(new { error = result.Error });
+                return NotFound(new { error = result.Error ?? "Group not found" });
             }
 
             // Check if user can access this group
@@ -137,7 +137,7 @@ public class GroupsController : ControllerBase
 
             var result = await _groupService.CreateAsync(request, currentUserId);
 
-            if (!result.IsSuccess)
+            if (!result.IsSuccess || result.Value == null)
             {
                 return BadRequest(new { error = result.Error });
             }
@@ -202,7 +202,7 @@ public class GroupsController : ControllerBase
 
             var result = await _groupService.UpdateAsync(groupId, request, currentUserId);
 
-            if (!result.IsSuccess)
+            if (!result.IsSuccess || result.Value == null)
             {
                 return BadRequest(new { error = result.Error });
             }
@@ -220,10 +220,9 @@ public class GroupsController : ControllerBase
     /// Delete a group
     /// </summary>
     /// <param name="groupId">Group ID</param>
-    /// <returns>Success result</returns>
+    /// <returns>Deletion result</returns>
     [HttpDelete("{groupId:guid}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(string), StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
@@ -237,11 +236,12 @@ public class GroupsController : ControllerBase
                 return Unauthorized();
             }
 
-            // Only owners can delete groups
+            // Check if user can manage this group
             var roleResult = await _groupService.GetUserRoleInGroupAsync(currentUserId, groupId);
-            if (!roleResult.IsSuccess || roleResult.Value != UserGroupRole.Owner)
+            if (!roleResult.IsSuccess || !roleResult.Value.HasValue ||
+                (roleResult.Value != UserGroupRole.Admin && roleResult.Value != UserGroupRole.Owner))
             {
-                return Forbid("Only group owners can delete groups");
+                return Forbid("You don't have permission to delete this group");
             }
 
             var result = await _groupService.DeleteAsync(groupId, currentUserId);
@@ -297,7 +297,7 @@ public class GroupsController : ControllerBase
                 request.Page,
                 request.PageSize);
 
-            if (!result.IsSuccess)
+            if (!result.IsSuccess || result.Value == null)
             {
                 return BadRequest(new { error = result.Error });
             }
@@ -359,7 +359,7 @@ public class GroupsController : ControllerBase
                 request.Role,
                 currentUserId);
 
-            if (!result.IsSuccess)
+            if (!result.IsSuccess || !result.Value)
             {
                 return BadRequest(new { error = result.Error });
             }
@@ -505,7 +505,7 @@ public class GroupsController : ControllerBase
 
             var result = await _groupService.GetUserGroupsAsync(currentUserId);
 
-            if (!result.IsSuccess)
+            if (!result.IsSuccess || result.Value == null)
             {
                 return BadRequest(new { error = result.Error });
             }

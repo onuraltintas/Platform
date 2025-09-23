@@ -1,0 +1,265 @@
+<div class="form-dialog-container">
+  <!-- Header -->
+  <div mat-dialog-title class="dialog-header">
+    <div class="header-content">
+      <div class="header-icon" [ngSwitch]="config.mode">
+        <mat-icon *ngSwitchCase="'create'" color="primary">add</mat-icon>
+        <mat-icon *ngSwitchCase="'edit'" color="accent">edit</mat-icon>
+        <mat-icon *ngSwitchCase="'view'" color="primary">visibility</mat-icon>
+        <mat-icon *ngSwitchCase="'clone'" color="accent">content_copy</mat-icon>
+      </div>
+
+      <div class="header-text">
+        <h2>{{ config.title }}</h2>
+        <p *ngIf="config.subtitle">{{ config.subtitle }}</p>
+      </div>
+    </div>
+
+    <!-- Progress Bar -->
+    <mat-progress-bar
+      *ngIf="config.showProgressBar && state().loading"
+      mode="indeterminate">
+    </mat-progress-bar>
+
+    <!-- Close Button -->
+    <button mat-icon-button
+            mat-dialog-close="cancel"
+            [disabled]="state().saving"
+            class="close-button">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <!-- Content -->
+  <mat-dialog-content class="dialog-content">
+    <!-- Loading State -->
+    <div class="loading-overlay" *ngIf="state().loading">
+      <mat-spinner diameter="40"></mat-spinner>
+      <p>Yükleniyor...</p>
+    </div>
+
+    <!-- Auto-save indicator -->
+    <div class="auto-save-indicator"
+         *ngIf="config.autoSave && state().lastSaved">
+      <mat-icon class="auto-save-icon">cloud_done</mat-icon>
+      <span>Son kayıt: {{ state().lastSaved | date:'HH:mm:ss' }}</span>
+    </div>
+
+    <!-- Validation Summary -->
+    <mat-card class="validation-summary"
+              *ngIf="config.showValidationSummary && state().validationSummary.hasErrors && state().showValidationErrors">
+      <mat-card-header>
+        <mat-icon color="warn">error</mat-icon>
+        <mat-card-title>Doğrulama Hataları</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <ul class="error-list">
+          <li *ngFor="let fieldError of state().validationSummary.errors">
+            <strong>{{ fieldError.label }}:</strong>
+            <span *ngFor="let error of fieldError.errors; let last = last">
+              {{ error }}<span *ngIf="!last">, </span>
+            </span>
+          </li>
+        </ul>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Form -->
+    <form [formGroup]="form"
+          (ngSubmit)="onSubmit()"
+          [class]="'form-layout-' + config.layout"
+          *ngIf="!state().loading">
+
+      <!-- Dynamic Form Fields -->
+      <div class="form-fields"
+           [class.grid-layout]="config.layout === 'grid'"
+           [style.grid-template-columns]="getGridColumns()">
+
+        <div *ngFor="let field of visibleFields(); trackBy: trackByField"
+             class="form-field-wrapper"
+             [class]="getFieldWrapperClass(field)"
+             [style.order]="field.order">
+
+          <!-- Text Input -->
+          <mat-form-field
+            *ngIf="isTextFieldType(field.type)"
+            appearance="outline"
+            class="full-width">
+            <mat-label>
+              {{ field.label }}
+              <span *ngIf="isFieldRequired(field.key)" class="required-indicator">*</span>
+            </mat-label>
+
+            <input matInput
+                   [type]="getInputType(field.type)"
+                   [formControlName]="field.key"
+                   [placeholder]="field.placeholder || ''"
+                   [readonly]="field.readonly"
+                   [maxlength]="field.maxLength">
+
+            <mat-hint *ngIf="field.hint">{{ field.hint }}</mat-hint>
+
+            <mat-error *ngIf="hasFieldError(field.key)">
+              {{ getFieldErrorMessage(field.key, field) }}
+            </mat-error>
+          </mat-form-field>
+
+          <!-- Textarea -->
+          <mat-form-field
+            *ngIf="field.type === 'textarea'"
+            appearance="outline"
+            class="full-width">
+            <mat-label>
+              {{ field.label }}
+              <span *ngIf="isFieldRequired(field.key)" class="required-indicator">*</span>
+            </mat-label>
+
+            <textarea matInput
+                      [formControlName]="field.key"
+                      [placeholder]="field.placeholder || ''"
+                      [readonly]="field.readonly"
+                      [rows]="4"
+                      [maxlength]="field.maxLength">
+            </textarea>
+
+            <mat-hint *ngIf="field.hint">{{ field.hint }}</mat-hint>
+
+            <mat-error *ngIf="hasFieldError(field.key)">
+              {{ getFieldErrorMessage(field.key, field) }}
+            </mat-error>
+          </mat-form-field>
+
+          <!-- Select -->
+          <mat-form-field
+            *ngIf="field.type === 'select'"
+            appearance="outline"
+            class="full-width">
+            <mat-label>
+              {{ field.label }}
+              <span *ngIf="isFieldRequired(field.key)" class="required-indicator">*</span>
+            </mat-label>
+
+            <mat-select [formControlName]="field.key"
+                       [multiple]="field.multiple">
+              <mat-option value="" *ngIf="field.clearable && !field.multiple">
+                <em>Seçiniz</em>
+              </mat-option>
+              <mat-option *ngFor="let option of getFieldOptions(field)"
+                         [value]="option.value"
+                         [disabled]="option.disabled">
+                <mat-icon *ngIf="option.icon">{{ option.icon }}</mat-icon>
+                {{ option.label }}
+              </mat-option>
+            </mat-select>
+
+            <mat-hint *ngIf="field.hint">{{ field.hint }}</mat-hint>
+
+            <mat-error *ngIf="hasFieldError(field.key)">
+              {{ getFieldErrorMessage(field.key, field) }}
+            </mat-error>
+          </mat-form-field>
+
+          <!-- Checkbox -->
+          <div *ngIf="field.type === 'checkbox'" class="checkbox-field">
+            <mat-checkbox [formControlName]="field.key"
+                         [disabled]="field.disabled">
+              {{ field.label }}
+              <span *ngIf="isFieldRequired(field.key)" class="required-indicator">*</span>
+            </mat-checkbox>
+            <div class="field-hint" *ngIf="field.hint">{{ field.hint }}</div>
+            <div class="field-error" *ngIf="hasFieldError(field.key)">
+              {{ getFieldErrorMessage(field.key, field) }}
+            </div>
+          </div>
+
+          <!-- Toggle -->
+          <div *ngIf="field.type === 'toggle'" class="toggle-field">
+            <mat-slide-toggle [formControlName]="field.key"
+                             [disabled]="field.disabled">
+              {{ field.label }}
+              <span *ngIf="isFieldRequired(field.key)" class="required-indicator">*</span>
+            </mat-slide-toggle>
+            <div class="field-hint" *ngIf="field.hint">{{ field.hint }}</div>
+            <div class="field-error" *ngIf="hasFieldError(field.key)">
+              {{ getFieldErrorMessage(field.key, field) }}
+            </div>
+          </div>
+
+          <!-- Date Picker -->
+          <mat-form-field
+            *ngIf="isDateFieldType(field.type)"
+            appearance="outline"
+            class="full-width">
+            <mat-label>
+              {{ field.label }}
+              <span *ngIf="isFieldRequired(field.key)" class="required-indicator">*</span>
+            </mat-label>
+
+            <input matInput
+                   [matDatepicker]="picker"
+                   [formControlName]="field.key"
+                   [min]="field.minDate"
+                   [max]="field.maxDate"
+                   [readonly]="field.readonly">
+
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+
+            <mat-hint *ngIf="field.hint">{{ field.hint }}</mat-hint>
+
+            <mat-error *ngIf="hasFieldError(field.key)">
+              {{ getFieldErrorMessage(field.key, field) }}
+            </mat-error>
+          </mat-form-field>
+
+        </div>
+      </div>
+    </form>
+  </mat-dialog-content>
+
+  <!-- Actions -->
+  <mat-dialog-actions class="dialog-actions" align="end">
+    <!-- Custom Actions -->
+    <button *ngFor="let action of getVisibleActions()"
+            mat-button
+            [color]="action.color"
+            [disabled]="isActionDisabled(action) || state().saving"
+            (click)="executeCustomAction(action)">
+      <mat-icon *ngIf="action.icon">{{ action.icon }}</mat-icon>
+      {{ action.label }}
+    </button>
+
+    <!-- Reset Button -->
+    <button *ngIf="config.showResetButton && config.mode !== 'view'"
+            mat-button
+            type="button"
+            [disabled]="state().saving || !state().formDirty"
+            (click)="onReset()">
+      <mat-icon>refresh</mat-icon>
+      {{ config.resetText || 'Sıfırla' }}
+    </button>
+
+    <!-- Cancel Button -->
+    <button *ngIf="config.showCancelButton !== false"
+            mat-button
+            mat-dialog-close="cancel"
+            [disabled]="state().saving">
+      {{ config.cancelText || 'İptal' }}
+    </button>
+
+    <!-- Submit Button -->
+    <button *ngIf="config.mode !== 'view'"
+            mat-raised-button
+            color="primary"
+            type="submit"
+            [disabled]="!canSubmit()"
+            (click)="onSubmit()">
+      <mat-spinner *ngIf="state().saving"
+                   diameter="20"
+                   class="button-spinner">
+      </mat-spinner>
+      <mat-icon *ngIf="!state().saving">{{ getSubmitIcon() }}</mat-icon>
+      {{ getSubmitText() }}
+    </button>
+  </mat-dialog-actions>
+</div>

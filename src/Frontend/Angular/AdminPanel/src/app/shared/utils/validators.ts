@@ -50,13 +50,28 @@ export class CustomValidators {
   }
 
   static phoneNumber(control: AbstractControl): ValidationErrors | null {
-    const phoneRegex = /^(\+90|90)?[1-9][0-9]{9}$/;
+    const phoneRegex = /^0[0-9]{10}$/;
 
     if (!control.value) {
       return null;
     }
 
     const cleaned = control.value.replace(/[\s()-]/g, '');
+
+    // Check if it's exactly 11 digits starting with 0
+    if (cleaned.length !== 11) {
+      return { phoneNumber: { message: 'Telefon numarası 11 haneli olmalıdır' } };
+    }
+
+    if (!cleaned.startsWith('0')) {
+      return { phoneNumber: { message: 'Telefon numarası 0 ile başlamalıdır' } };
+    }
+
+    // Check if all characters are digits
+    if (!/^\d+$/.test(cleaned)) {
+      return { phoneNumber: { message: 'Telefon numarası sadece rakam içermelidir' } };
+    }
+
     return phoneRegex.test(cleaned) ? null : { phoneNumber: true };
   }
 

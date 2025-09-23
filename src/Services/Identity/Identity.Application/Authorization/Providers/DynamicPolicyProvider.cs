@@ -101,6 +101,9 @@ public class DynamicPolicyProvider : IAuthorizationPolicyProvider
                 case "group":
                     return CreateGroupPolicy(policyBuilder, policyValue);
 
+                case "group-permission":
+                    return CreateGroupPermissionPolicy(policyBuilder, policyValue, parts.Skip(2).ToArray());
+
                 case "owner":
                     return CreateOwnerPolicy(policyBuilder, policyValue, parts.Skip(2).ToArray());
 
@@ -257,6 +260,35 @@ public class DynamicPolicyProvider : IAuthorizationPolicyProvider
     {
         var roleList = roles.Split(',', StringSplitOptions.RemoveEmptyEntries);
         return builder.RequireRole(roleList).Build();
+    }
+
+    private AuthorizationPolicy CreateGroupPermissionPolicy(
+        AuthorizationPolicyBuilder builder,
+        string permission,
+        string[] additionalParams)
+    {
+        // Group-permission policy is similar to regular permission policy
+        // but it considers group context from the user's claims
+        Guid? groupId = null;
+        string? resource = null;
+
+        // Parse additional parameters (group ID might be provided)
+        foreach (var param in additionalParams)
+        {
+            if (Guid.TryParse(param, out var gId))
+            {
+                groupId = gId;
+            }
+            else if (param.StartsWith("resource="))
+            {
+                resource = param.Substring(9);
+            }
+        }
+
+        // Create a permission requirement with group context
+        // The group context will be taken from user's GroupId claim if not explicitly provided
+        var requirement = new PermissionRequirement(permission, resource, groupId);
+        return builder.AddRequirements(requirement).Build();
     }
 }
 

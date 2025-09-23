@@ -32,36 +32,41 @@ export class AuthService {
   private currentUserSubject = new BehaviorSubject<User | null>(this.loadUserFromStorage());
   public currentUser$ = this.currentUserSubject.asObservable();
 
-  private isAuthenticatedSubject = new BehaviorSubject<boolean>(this.tokenService.isTokenValid());
+  private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
   public isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
 
   constructor() {
-    // Initialize authentication state
+    // Initialize authentication state asynchronously
     this.initializeAuthState();
   }
 
-  private initializeAuthState(): void {
-    const user = this.loadUserFromStorage();
-    const isValid = this.tokenService.isTokenValid();
+  private async initializeAuthState(): Promise<void> {
+    try {
+      const user = this.loadUserFromStorage();
+      const isValid = await this.tokenService.isTokenValid();
 
-    if (user && isValid) {
-      this.currentUserSubject.next(user);
-      this.isAuthenticatedSubject.next(true);
-    } else if (!isValid) {
-      this.clearAuthData();
+      if (user && isValid) {
+        this.currentUserSubject.next(user);
+        this.isAuthenticatedSubject.next(true);
+      } else if (!isValid) {
+        await this.clearAuthData();
+      }
+    } catch (error) {
+      console.error('Failed to initialize auth state:', error);
+      await this.clearAuthData();
     }
   }
 
   login(credentials: LoginRequest): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(`${this.apiUrl}/login`, credentials).pipe(
-      tap(response => this.handleLoginResponse(response)),
+      tap(async response => await this.handleLoginResponse(response)),
       catchError(error => this.handleAuthError(error))
     );
   }
 
   googleLogin(request: GoogleLoginRequest): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(`${this.apiUrl}/google-login`, request).pipe(
-      tap(response => this.handleLoginResponse(response)),
+      tap(async response => await this.handleLoginResponse(response)),
       catchError(error => this.handleAuthError(error))
     );
   }
@@ -73,39 +78,65 @@ export class AuthService {
   }
 
   refreshToken(): Observable<RefreshTokenResponse> {
-    const refreshToken = this.tokenService.getRefreshToken();
+    return new Observable(observer => {
+      this.tokenService.getRefreshToken().then(refreshToken => {
+        if (!refreshToken) {
+          observer.error(new Error('No refresh token available'));
+          return;
+        }
 
-    if (!refreshToken) {
-      return throwError(() => new Error('No refresh token available'));
-    }
-
-    return this.http.post<RefreshTokenResponse>(
-      `${this.apiUrl}/refresh`,
-      { refreshToken }
-    ).pipe(
-      tap(response => {
-        this.tokenService.setTokens(response.accessToken, response.refreshToken);
-        this.isAuthenticatedSubject.next(true);
-      }),
-      catchError(error => {
-        this.logout();
-        return throwError(() => error);
-      })
-    );
+        this.http.post<RefreshTokenResponse>(
+          `${this.apiUrl}/refresh`,
+          { refreshToken }
+        ).pipe(
+          tap(async response => {
+            const success = await this.tokenService.setTokens(response.accessToken, response.refreshToken);
+            if (success) {
+              this.isAuthenticatedSubject.next(true);
+              observer.next(response);
+              observer.complete();
+            } else {
+              observer.error(new Error('Failed to store tokens securely'));
+            }
+          }),
+          catchError(error => {
+            this.logout();
+            observer.error(error);
+            return throwError(() => error);
+          })
+        ).subscribe();
+      }).catch(error => {
+        observer.error(error);
+      });
+    });
   }
 
   logout(): void {
-    const refreshToken = this.tokenService.getRefreshToken();
+    // Use async logout for secure token handling
+    this.performLogout().catch(error => {
+      console.error('Logout error:', error);
+      // Even if logout fails, clear local data and redirect
+      this.router.navigate(['/auth/login']);
+    });
+  }
 
-    if (refreshToken) {
-      // Call logout endpoint (fire and forget)
-      this.http.post(`${this.apiUrl}/logout`, { refreshToken }).subscribe({
-        error: () => {} // Ignore errors
-      });
+  private async performLogout(): Promise<void> {
+    try {
+      const refreshToken = await this.tokenService.getRefreshToken();
+
+      if (refreshToken) {
+        // Call logout endpoint (fire and forget)
+        this.http.post(`${this.apiUrl}/logout`, { refreshToken }).subscribe({
+          error: () => {} // Ignore errors
+        });
+      }
+
+      await this.clearAuthData();
+      this.router.navigate(['/auth/login']);
+    } catch (error) {
+      console.error('Logout process failed:', error);
+      throw error;
     }
-
-    this.clearAuthData();
-    this.router.navigate(['/auth/login']);
   }
 
   getCurrentUser(): Observable<User> {
@@ -122,9 +153,6 @@ export class AuthService {
     return this.http.post<void>(`${this.apiUrl}/change-password`, request);
   }
 
-  requestPasswordReset(email: string): Observable<void> {
-    return this.http.post<void>(`${this.apiUrl}/forgot-password`, { email });
-  }
 
   resetPassword(request: ResetPasswordRequest): Observable<void> {
     return this.http.post<void>(`${this.apiUrl}/reset-password`, request);
@@ -134,8 +162,9 @@ export class AuthService {
     return this.http.post<void>(`${this.apiUrl}/verify-email`, { token });
   }
 
-  resendVerificationEmail(): Observable<void> {
-    return this.http.post<void>(`${this.apiUrl}/resend-verification`, {});
+  resendVerificationEmail(email?: string): Observable<void> {
+    const body = email ? { email } : {};
+    return this.http.post<void>(`${this.apiUrl}/resend-verification`, body);
   }
 
   hasPermission(permission: string): Observable<boolean> {
@@ -170,30 +199,63 @@ export class AuthService {
     return of(permissions.every(p => userPermissions.includes(p)));
   }
 
-  private handleLoginResponse(response: LoginResponse): void {
-    this.tokenService.setTokens(response.accessToken, response.refreshToken);
+  private async handleLoginResponse(response: LoginResponse): Promise<void> {
+    try {
+      // Use consistent camelCase property names
+      const accessToken = response.accessToken;
+      const refreshToken = response.refreshToken;
+      const expiresIn = response.expiresIn;
+      const user = response.user;
+      const permissions = response.permissions || [];
 
-    // API response'dan gelen user data'sını düzenle
-    const user = response.user;
-    user.permissions = response.permissions || [];
+      if (!accessToken || !refreshToken || !user) {
+        throw new Error('Invalid login response format');
+      }
 
-    this.saveUserToStorage(user);
-    this.savePermissionsToStorage(response.permissions || []);
-    this.currentUserSubject.next(user);
-    this.isAuthenticatedSubject.next(true);
+      // Store tokens securely
+      const success = await this.tokenService.setTokens(
+        accessToken,
+        refreshToken,
+        expiresIn
+      );
+
+      if (!success) {
+        throw new Error('Failed to store tokens securely');
+      }
+
+      // API response'dan gelen user data'sını düzenle
+      user.permissions = permissions;
+
+      this.saveUserToStorage(user);
+      this.savePermissionsToStorage(permissions);
+      this.currentUserSubject.next(user);
+      this.isAuthenticatedSubject.next(true);
+    } catch (error) {
+      console.error('Failed to handle login response:', error);
+      throw error;
+    }
   }
 
-  private handleAuthError(error: any): Observable<never> {
+  private handleAuthError(error: unknown): Observable<never> {
     this.clearAuthData();
     return throwError(() => error);
   }
 
-  private clearAuthData(): void {
-    this.tokenService.clearTokens();
-    localStorage.removeItem(this.userKey);
-    localStorage.removeItem(this.permissionsKey);
-    this.currentUserSubject.next(null);
-    this.isAuthenticatedSubject.next(false);
+  private async clearAuthData(): Promise<void> {
+    try {
+      await this.tokenService.clearTokens();
+      localStorage.removeItem(this.userKey);
+      localStorage.removeItem(this.permissionsKey);
+      this.currentUserSubject.next(null);
+      this.isAuthenticatedSubject.next(false);
+    } catch (error) {
+      console.error('Failed to clear auth data:', error);
+      // Force clear even if secure storage fails
+      localStorage.removeItem(this.userKey);
+      localStorage.removeItem(this.permissionsKey);
+      this.currentUserSubject.next(null);
+      this.isAuthenticatedSubject.next(false);
+    }
   }
 
   private saveUserToStorage(user: User): void {
@@ -222,7 +284,60 @@ export class AuthService {
     return this.isAuthenticatedSubject.value;
   }
 
-  handleGoogleLoginSuccess(loginResponse: LoginResponse): void {
-    this.handleLoginResponse(loginResponse);
+  /**
+   * Get authentication status asynchronously (more reliable)
+   */
+  async getAuthenticationStatus(): Promise<boolean> {
+    try {
+      return await this.tokenService.isTokenValid();
+    } catch {
+      return false;
+    }
+  }
+
+  /**
+   * Request password reset email
+   */
+  requestPasswordReset(email: string): Observable<ApiResponse<void>> {
+    return this.http.post<ApiResponse<void>>(`${this.apiUrl}/forgot-password`, { email }).pipe(
+      map(response => response),
+      catchError(error => {
+        console.error('Password reset request failed:', error);
+        return throwError(() => error);
+      })
+    );
+  }
+
+  /**
+   * Get comprehensive authentication information
+   */
+  async getAuthInfo(): Promise<{
+    isAuthenticated: boolean;
+    tokenStats: unknown;
+    user: User | null;
+  }> {
+    try {
+      const [isAuthenticated, tokenStats] = await Promise.all([
+        this.getAuthenticationStatus(),
+        this.tokenService.getTokenStats()
+      ]);
+
+      return {
+        isAuthenticated,
+        tokenStats,
+        user: this.currentUserValue
+      };
+    } catch (error) {
+      console.error('Failed to get auth info:', error);
+      return {
+        isAuthenticated: false,
+        tokenStats: { hasAccessToken: false, hasRefreshToken: false },
+        user: null
+      };
+    }
+  }
+
+  async handleGoogleLoginSuccess(loginResponse: LoginResponse): Promise<void> {
+    await this.handleLoginResponse(loginResponse);
   }
 }

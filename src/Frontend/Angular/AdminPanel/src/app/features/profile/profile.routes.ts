@@ -4,6 +4,6 @@ export const profileRoutes: Routes = [
   {
     path: '',
     loadComponent: () => import('./profile.component').then(m => m.ProfileComponent),
-    title: 'Profil - PlatformV1'
+    title: 'Profil - OnAl'
   }
 ];

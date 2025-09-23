@@ -4,6 +4,7 @@ using Identity.Core.Entities;
 using Enterprise.Shared.Common.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 
 namespace Identity.Application.Services;
@@ -108,7 +109,7 @@ public class UserService : IUserService
         {
             var user = new ApplicationUser
             {
-                UserName = request.Email,
+                UserName = request.UserName,
                 Email = request.Email,
                 FirstName = request.FirstName,
                 LastName = request.LastName,
@@ -332,6 +333,40 @@ public class UserService : IUserService
         }
     }
 
+    public async Task<Result<bool>> ConfirmEmailByTokenAsync(string token, CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            // Find user by token - for now we'll iterate through users
+            // In production, you might want to store token-userId mapping in cache or database
+            var users = await _userManager.Users.Where(u => !u.EmailConfirmed).ToListAsync(cancellationToken);
+
+            foreach (var user in users)
+            {
+                try
+                {
+                    var result = await _userManager.ConfirmEmailAsync(user, token);
+                    if (result.Succeeded)
+                    {
+                        return Result<bool>.Success(true);
+                    }
+                }
+                catch
+                {
+                    // Continue to next user
+                    continue;
+                }
+            }
+
+            return Result<bool>.Failure("Geçersiz veya süresi dolmuş doğrulama token'ı");
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error confirming email by token");
+            return Result<bool>.Failure("E-posta doğrulanamadı");
+        }
+    }
+
     public async Task<Result<string>> GenerateEmailConfirmationTokenAsync(string userId, CancellationToken cancellationToken = default)
     {
         try
@@ -396,6 +431,200 @@ public class UserService : IUserService
         {
             _logger.LogError(ex, "Error checking if user {UserId} is in group {GroupId}", userId, groupId);
             return Result<bool>.Failure("Grup üyeliği kontrol edilemedi");
+        }
+    }
+
+    // Permission management methods
+    public async Task<IEnumerable<string>> GetUserPermissionsAsync(string userId, CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null) return new List<string>();
+
+            var claims = await _userManager.GetClaimsAsync(user);
+            return claims.Where(c => c.Type == "permission").Select(c => c.Value);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error getting user permissions for {UserId}", userId);
+            return new List<string>();
+        }
+    }
+
+    public async Task<IEnumerable<string>> GetRolePermissionsAsync(string roleId, CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            // Placeholder - would need RoleManager injection
+            return new List<string>();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error getting role permissions for {RoleId}", roleId);
+            return new List<string>();
+        }
+    }
+
+    public async Task<PagedResult<PermissionDto>> GetAllPermissionsAsync(int page = 1, int pageSize = 50, string? search = null, string? category = null, string? service = null)
+    {
+        try
+        {
+            // Placeholder implementation
+            return new PagedResult<PermissionDto>
+            {
+                Data = new List<PermissionDto>(),
+                Page = page,
+                PageSize = pageSize,
+                TotalCount = 0
+            };
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error getting all permissions");
+            return new PagedResult<PermissionDto>
+            {
+                Data = new List<PermissionDto>(),
+                Page = page,
+                PageSize = pageSize,
+                TotalCount = 0
+            };
+        }
+    }
+
+    public async Task<PermissionDto?> GetPermissionByCodeAsync(string permissionCode)
+    {
+        try
+        {
+            // Placeholder implementation
+            return null;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error getting permission by code {PermissionCode}", permissionCode);
+            return null;
+        }
+    }
+
+    public async Task<PermissionDto> CreatePermissionAsync(CreatePermissionRequest request)
+    {
+        try
+        {
+            // Placeholder implementation
+            throw new NotImplementedException("Permission creation needs proper repository implementation");
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error creating permission");
+            throw;
+        }
+    }
+
+    public async Task<PermissionDto?> UpdatePermissionAsync(string permissionCode, UpdatePermissionRequest request)
+    {
+        try
+        {
+            // Placeholder implementation
+            return null;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error updating permission {PermissionCode}", permissionCode);
+            return null;
+        }
+    }
+
+    public async Task<bool> DeletePermissionAsync(string permissionCode)
+    {
+        try
+        {
+            // Placeholder implementation
+            return false;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error deleting permission {PermissionCode}", permissionCode);
+            return false;
+        }
+    }
+
+    public async Task AssignPermissionToRoleAsync(string roleId, string permissionCode, bool isWildcard = false, string? permissionPattern = null)
+    {
+        try
+        {
+            // Placeholder implementation
+            _logger.LogInformation("Assigning permission {PermissionCode} to role {RoleId}", permissionCode, roleId);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error assigning permission {PermissionCode} to role {RoleId}", permissionCode, roleId);
+        }
+    }
+
+    public async Task<bool> RemovePermissionFromRoleAsync(string roleId, string permissionCode)
+    {
+        try
+        {
+            // Placeholder implementation
+            return true;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error removing permission {PermissionCode} from role {RoleId}", permissionCode, roleId);
+            return false;
+        }
+    }
+
+    public async Task AssignDirectPermissionToUserAsync(string userId, string permissionCode, string type = "Grant", bool isWildcard = false, string? permissionPattern = null)
+    {
+        try
+        {
+            // Placeholder implementation
+            _logger.LogInformation("Assigning direct permission {PermissionCode} to user {UserId}", permissionCode, userId);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error assigning direct permission {PermissionCode} to user {UserId}", permissionCode, userId);
+        }
+    }
+
+    public async Task<bool> RemoveDirectPermissionFromUserAsync(string userId, string permissionCode)
+    {
+        try
+        {
+            // Placeholder implementation
+            return true;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error removing direct permission {PermissionCode} from user {UserId}", permissionCode, userId);
+            return false;
+        }
+    }
+
+    public async Task<List<string>> GetPermissionCategoriesAsync()
+    {
+        try
+        {
+            return new List<string> { "Identity", "User", "SpeedReading", "Admin" };
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error getting permission categories");
+            return new List<string>();
+        }
+    }
+
+    public async Task<List<string>> GetPermissionServicesAsync()
+    {
+        try
+        {
+            return new List<string> { "Identity", "User", "SpeedReading", "Gateway" };
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error getting permission services");
+            return new List<string>();
         }
     }
 }

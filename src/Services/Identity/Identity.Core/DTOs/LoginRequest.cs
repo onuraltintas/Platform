@@ -77,3 +77,37 @@ public class RefreshTokenRequest
 
     public string? DeviceId { get; set; }
 }
+
+public class VerifyEmailRequest
+{
+    [Required(ErrorMessage = "Doğrulama token'ı gereklidir")]
+    public string Token { get; set; } = string.Empty;
+}
+
+public class ResendVerificationRequest
+{
+    [Required(ErrorMessage = "E-posta adresi gereklidir")]
+    [EmailAddress(ErrorMessage = "Geçerli bir e-posta adresi giriniz")]
+    public string Email { get; set; } = string.Empty;
+}
+
+public class ForgotPasswordRequest
+{
+    [Required(ErrorMessage = "E-posta adresi gereklidir")]
+    [EmailAddress(ErrorMessage = "Geçerli bir e-posta adresi giriniz")]
+    public string Email { get; set; } = string.Empty;
+}
+
+public class ResetPasswordRequest
+{
+    [Required(ErrorMessage = "E-posta adresi gereklidir")]
+    [EmailAddress(ErrorMessage = "Geçerli bir e-posta adresi giriniz")]
+    public string Email { get; set; } = string.Empty;
+
+    [Required(ErrorMessage = "Sıfırlama token'ı gereklidir")]
+    public string Token { get; set; } = string.Empty;
+
+    [Required(ErrorMessage = "Yeni şifre gereklidir")]
+    [MinLength(8, ErrorMessage = "Şifre en az 8 karakter olmalıdır")]
+    public string NewPassword { get; set; } = string.Empty;
+}

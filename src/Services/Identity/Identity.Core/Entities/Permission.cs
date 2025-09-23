@@ -3,11 +3,14 @@ namespace Identity.Core.Entities;
 public class Permission
 {
     public Guid Id { get; set; }
+    public string Code { get; set; } = string.Empty; // Unique identifier like "Users.Read"
     public string Name { get; set; } = string.Empty;
     public string? DisplayName { get; set; }
     public string? Description { get; set; }
     public string Resource { get; set; } = string.Empty;
     public string Action { get; set; } = string.Empty;
+    public string? Category { get; set; } // Permission category
+    public string? CreatedBy { get; set; }
     
     // Service Association
     public Guid ServiceId { get; set; }
@@ -36,6 +39,7 @@ public class Permission
     public bool IsActive { get; set; } = true;
     public DateTime CreatedAt { get; set; }
     public DateTime? LastModifiedAt { get; set; }
+    public string? LastModifiedBy { get; set; }
 
     // Navigation Properties
     public virtual ICollection<RolePermission> RolePermissions { get; set; } = new List<RolePermission>();

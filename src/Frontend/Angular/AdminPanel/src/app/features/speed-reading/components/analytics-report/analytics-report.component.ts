@@ -5,12 +5,8 @@ import { CommonModule } from '@angular/common';
   selector: 'app-analytics-report',
   standalone: true,
   imports: [CommonModule],
-  template: `
-    <div class="container">
-      <h2>Analitik Raporlar</h2>
-      <p>Analytics report component - placeholder</p>
-    </div>
-  `
+  templateUrl: './analytics-report.component.html',
+  styleUrl: './analytics-report.component.scss'
 })
 export class AnalyticsReportComponent {
   constructor() {}

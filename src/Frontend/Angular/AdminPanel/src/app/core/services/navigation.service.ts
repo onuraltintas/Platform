@@ -2,14 +2,16 @@ import { Injectable, inject, signal } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter, map } from 'rxjs/operators';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { PermissionsService } from '../../shared/permissions/permissions.service';
 
-import { AuthService } from '../auth/services/auth.service';
+// import { AuthService } from '../auth/services/auth.service'; // Disabled for development
 
 export interface NavigationItem {
   id: string;
   title: string;
   type: 'item' | 'group' | 'divider';
-  icon?: string;
+  icon?: string; // legacy icon class
+  iconName?: string; // Material icon name
   url?: string;
   classes?: string;
   exactMatch?: boolean;
@@ -36,15 +38,15 @@ export interface BreadcrumbItem {
 })
 export class NavigationService {
   private readonly router = inject(Router);
-  private readonly authService = inject(AuthService);
+  private readonly perms = inject(PermissionsService);
 
   private navigationItems: NavigationItem[] = [
     {
-      id: 'dashboard',
-      title: 'Dashboard',
+      id: 'home',
+      title: 'Ana',
       type: 'item',
-      icon: 'fas fa-tachometer-alt',
-      url: '/dashboard',
+      iconName: 'home',
+      url: '/admin',
       exactMatch: true,
       breadcrumbs: true
     },
@@ -55,45 +57,45 @@ export class NavigationService {
     },
     {
       id: 'user-management',
-      title: 'Kullanıcı Yönetimi',
+      title: 'Kullanıcılar',
       type: 'group',
-      icon: 'fas fa-users',
-      permissions: ['Users.Read'],
+      iconName: 'group',
+      permissions: ['Identity.Users.Read'],
       children: [
         {
           id: 'users',
-          title: 'Kullanıcılar',
+          title: 'Kullanıcı Listesi',
           type: 'item',
-          icon: 'fas fa-user',
-          url: '/users',
-          permissions: ['Users.Read'],
+          iconName: 'person',
+          url: '/admin/user-management/users',
+          permissions: ['Identity.Users.Read'],
           breadcrumbs: true
         },
         {
           id: 'roles',
           title: 'Roller',
           type: 'item',
-          icon: 'fas fa-user-tag',
-          url: '/roles',
-          permissions: ['Roles.Read'],
+          iconName: 'admin_panel_settings',
+          url: '/admin/user-management/roles',
+          permissions: ['Identity.Roles.Read'],
           breadcrumbs: true
         },
         {
           id: 'permissions',
           title: 'İzinler',
           type: 'item',
-          icon: 'fas fa-key',
-          url: '/permissions',
-          permissions: ['Permissions.Read'],
+          iconName: 'vpn_key',
+          url: '/admin/user-management/permissions',
+          permissions: ['Identity.Permissions.Read'],
           breadcrumbs: true
         },
         {
           id: 'groups',
           title: 'Gruplar',
           type: 'item',
-          icon: 'fas fa-users-cog',
-          url: '/groups',
-          permissions: ['Groups.Read'],
+          iconName: 'groups',
+          url: '/admin/user-management/groups',
+          permissions: ['Identity.Groups.Read'],
           breadcrumbs: true
         }
       ]
@@ -102,15 +104,15 @@ export class NavigationService {
       id: 'speed-reading',
       title: 'Hızlı Okuma',
       type: 'group',
-      icon: 'fas fa-book-reader',
+      iconName: 'menu_book',
       permissions: ['SpeedReading.Read'],
       children: [
         {
           id: 'speed-reading-sessions',
           title: 'Oturumlar',
           type: 'item',
-          icon: 'fas fa-play-circle',
-          url: '/speed-reading/sessions',
+          iconName: 'play_circle',
+          url: '/admin/speed-reading/sessions',
           permissions: ['SpeedReading.Read'],
           breadcrumbs: true
         },
@@ -118,8 +120,8 @@ export class NavigationService {
           id: 'speed-reading-texts',
           title: 'Metinler',
           type: 'item',
-          icon: 'fas fa-file-text',
-          url: '/speed-reading/texts',
+          iconName: 'article',
+          url: '/admin/speed-reading/texts',
           permissions: ['SpeedReading.Read'],
           breadcrumbs: true
         },
@@ -127,8 +129,8 @@ export class NavigationService {
           id: 'speed-reading-analytics',
           title: 'Analitik',
           type: 'item',
-          icon: 'fas fa-chart-line',
-          url: '/speed-reading/analytics',
+          iconName: 'trending_up',
+          url: '/admin/speed-reading/analytics',
           permissions: ['SpeedReading.Read'],
           breadcrumbs: true
         }
@@ -184,16 +186,16 @@ export class NavigationService {
       id: 'profile',
       title: 'Profil',
       type: 'item',
-      icon: 'fas fa-user-circle',
-      url: '/profile',
+      iconName: 'account_circle',
+      url: '/admin/profile',
       breadcrumbs: true
     },
     {
       id: 'settings',
       title: 'Ayarlar',
       type: 'item',
-      icon: 'fas fa-cog',
-      url: '/settings',
+      iconName: 'settings',
+      url: '/admin/settings',
       breadcrumbs: true
     }
   ];
@@ -251,31 +253,9 @@ export class NavigationService {
   }
 
   private async hasAccess(item: NavigationItem): Promise<boolean> {
-    // Always allow dividers and items without permissions
-    if (item.type === 'divider' || (!item.permissions && !item.roles)) {
-      return true;
-    }
-
-    // Check permissions
-    if (item.permissions) {
-      for (const permission of item.permissions) {
-        const hasPermission = await this.authService.hasPermission(permission).toPromise();
-        if (hasPermission) {
-          return true;
-        }
-      }
-    }
-
-    // Check roles (if needed in the future)
-    if (item.roles) {
-      const currentUser = this.authService.currentUserValue;
-      if (currentUser?.roles) {
-        const userRoles = currentUser.roles.map(r => r.name);
-        return item.roles.some(role => userRoles.includes(role));
-      }
-    }
-
-    return false;
+    const required = (item as any).permissions as string[] | undefined;
+    if (!required || required.length === 0) return true;
+    return this.perms.hasAll(required);
   }
 
   private updateActiveItem(url: string): void {
@@ -308,9 +288,16 @@ export class NavigationService {
   }
 
   private generateBreadcrumbs(url: string): BreadcrumbItem[] {
-    const breadcrumbs: BreadcrumbItem[] = [
-      { label: 'Ana Sayfa', url: '/dashboard' }
-    ];
+    const breadcrumbs: BreadcrumbItem[] = [];
+
+    // For home page, only show "Ana"
+    if (url === '/admin' || url === '/admin/') {
+      breadcrumbs.push({ label: 'Ana' });
+      return breadcrumbs;
+    }
+
+    // For other pages, start with "Ana" as home
+    breadcrumbs.push({ label: 'Ana', url: '/admin' });
 
     const item = this.findNavigationItemByUrl(url, this.navigationItems);
     if (item && item.breadcrumbs) {
@@ -328,11 +315,9 @@ export class NavigationService {
       });
 
       // Add current item (without URL since it's the current page)
-      if (item.url !== '/dashboard') {
-        breadcrumbs.push({
-          label: item.title
-        });
-      }
+      breadcrumbs.push({
+        label: item.title
+      });
     }
 
     return breadcrumbs;

@@ -242,6 +242,9 @@ if (bool.Parse(Environment.GetEnvironmentVariable("ENABLE_GOOGLE_AUTH") ?? "fals
 builder.Services.AddAuthorization();
 builder.Services.AddHttpContextAccessor();
 
+// Register SuperAdmin Bypass Handler (MUST BE FIRST for priority)
+builder.Services.AddScoped<Microsoft.AspNetCore.Authorization.IAuthorizationHandler, Identity.Application.Authorization.Handlers.SuperAdminBypassHandler>();
+
 // Register Authorization Handlers (Basic)
 builder.Services.AddScoped<Microsoft.AspNetCore.Authorization.IAuthorizationHandler, Identity.Application.Authorization.Handlers.PermissionAuthorizationHandler>();
 builder.Services.AddScoped<Microsoft.AspNetCore.Authorization.IAuthorizationHandler, Identity.Application.Authorization.Handlers.MultiplePermissionsAuthorizationHandler>();
@@ -379,17 +382,32 @@ builder.Services.AddScoped<IPermissionService, PermissionService>();
 builder.Services.AddScoped<Identity.Application.Services.IPermissionHierarchyService, Identity.Application.Services.PermissionHierarchyService>();
 builder.Services.AddScoped<Identity.Application.Services.IPermissionQueryOptimizer, Identity.Application.Services.PermissionQueryOptimizer>();
 builder.Services.AddScoped<Identity.Application.Services.IConditionalPermissionService, Identity.Application.Services.ConditionalPermissionService>();
+builder.Services.AddScoped<Identity.Application.Authorization.Services.IWildcardPermissionResolver, Identity.Application.Authorization.Services.WildcardPermissionResolver>();
+builder.Services.AddScoped<IPermissionAuditService, PermissionAuditService>();
 builder.Services.AddScoped<IGoogleAuthService, GoogleAuthService>();
 
 // Permission Discovery and Seeding Services
 builder.Services.AddScoped<IPermissionDiscoveryService, PermissionDiscoveryService>();
 builder.Services.AddScoped<RoleSeedingService>();
+builder.Services.AddScoped<ModernPermissionSeedingService>(); // New modern service
 builder.Services.AddScoped<DemoUserSeedingService>();
+builder.Services.AddScoped<GroupSeedingService>();
+builder.Services.AddScoped<ZeroTrustSeedingService>();
+builder.Services.AddScoped<AuditSeedingService>();
 
 // Service Permission Providers
 builder.Services.AddScoped<IServicePermissionProvider, IdentityServicePermissionProvider>();
 builder.Services.AddScoped<IServicePermissionProvider, UserServicePermissionProvider>();
 builder.Services.AddScoped<IServicePermissionProvider, SpeedReadingServicePermissionProvider>();
+
+// Zero Trust Security Architecture
+builder.Services.AddScoped<Identity.Core.ZeroTrust.IZeroTrustService, Identity.Application.Services.ZeroTrustService>();
+
+// Advanced Audit & Monitoring
+builder.Services.AddScoped<Identity.Core.Audit.IAuditService, Identity.Application.Services.AuditService>();
+
+// Advanced Permission Caching
+builder.Services.AddScoped<Identity.Core.Caching.IPermissionCacheService, Identity.Application.Services.PermissionCacheService>();
 
 // Enterprise Shared Observability
 builder.Services.AddSharedObservability(builder.Configuration);
@@ -497,6 +515,9 @@ app.UseSession();
 app.UseAuthentication();
 app.UseAuthorization();
 
+// Group Context (must run after authentication so we can attach claims)
+app.UseMiddleware<Identity.API.Middleware.GroupContextMiddleware>();
+
 // Controllers
 app.MapControllers();
 
@@ -558,6 +579,12 @@ app.MapMethods("/health", new[] { "HEAD" }, () => Results.Ok());
             var roleSeedingService = scope.ServiceProvider.GetRequiredService<RoleSeedingService>();
             await roleSeedingService.SeedStandardRolesAsync();
             Log.Information("Standard roles seeding completed");
+
+            // Seed default groups and group-scoped roles/permissions
+            var groupSeedingService = scope.ServiceProvider.GetRequiredService<GroupSeedingService>();
+            await groupSeedingService.SeedDefaultGroupsAsync();
+            await groupSeedingService.SeedGroupRolesAndPermissionsAsync();
+            Log.Information("Group seeding completed");
 
             // Seed environment admin
             var adminEmail = Environment.GetEnvironmentVariable("ADMIN_EMAIL");
@@ -629,8 +656,10 @@ app.MapMethods("/health", new[] { "HEAD" }, () => Results.Ok());
                 var permissionDiscoveryService = scope.ServiceProvider.GetRequiredService<IPermissionDiscoveryService>();
                 await SeedDiscoveredPermissionsAsync(permissionDiscoveryService, context);
 
-                // Assign permissions to roles according to the new role hierarchy
-                await AssignPermissionsToRolesAsync(context, roleManager);
+                // Use Modern Permission Seeding Service
+                var modernPermissionSeedingService = scope.ServiceProvider.GetRequiredService<ModernPermissionSeedingService>();
+                await modernPermissionSeedingService.SeedAllPermissionsAsync();
+                Log.Information("Modern permission seeding completed");
 
                 // Seed demo users in Development environment
                 var demoUserSeedingService = scope.ServiceProvider.GetRequiredService<DemoUserSeedingService>();
@@ -748,98 +777,6 @@ static async Task SeedDiscoveredPermissionsAsync(IPermissionDiscoveryService per
     }
 }
 
-static async Task AssignPermissionsToRolesAsync(IdentityDbContext context, RoleManager<ApplicationRole> roleManager)
-{
-    var rolePermissionMappings = new Dictionary<string, string[]>
-    {
-        ["SuperAdmin"] = new[] { "*" }, // All permissions
-        ["Admin"] = new[]
-        {
-            "Identity.Users.*", "Identity.Roles.Read", "Identity.Roles.Update", "Identity.Roles.Assign", "Identity.Roles.Revoke",
-            "Identity.Groups.*", "Identity.Permissions.Read", "User.*.*", "SpeedReading.Exercises.*", "SpeedReading.ReadingTexts.*"
-        },
-        ["Manager"] = new[]
-        {
-            "Identity.Users.Read", "Identity.Users.Update", "Identity.Groups.Read", "Identity.Groups.Update",
-            "User.Profiles.*", "User.Preferences.*", "SpeedReading.Exercises.Read", "SpeedReading.Statistics.Read"
-        },
-        ["User"] = new[]
-        {
-            "Identity.Auth.*", "User.Profiles.Read", "User.Profiles.Update", "User.Preferences.*",
-            "SpeedReading.Sessions.*", "SpeedReading.Progress.*", "SpeedReading.Statistics.Read"
-        },
-        ["Student"] = new[]
-        {
-            "Identity.Auth.*", "User.Profiles.Read", "User.Profiles.Update", "User.Preferences.Read", "User.Preferences.Update",
-            "SpeedReading.Exercises.Read", "SpeedReading.Sessions.*", "SpeedReading.Progress.*"
-        },
-        ["Guest"] = new[]
-        {
-            "Identity.Auth.Login", "SpeedReading.Exercises.Read", "SpeedReading.ReadingTexts.Read"
-        }
-    };
-
-    foreach (var mapping in rolePermissionMappings)
-    {
-        var role = await roleManager.FindByNameAsync(mapping.Key);
-        if (role == null) continue;
-
-        var roleId = role.Id;
-        var existingPermissionIds = (await context.RolePermissions
-            .Where(rp => rp.RoleId == roleId)
-            .Select(rp => rp.PermissionId)
-            .ToListAsync())
-            .ToHashSet();
-
-        IEnumerable<Permission> permissionsToAssign;
-
-        if (mapping.Value.Contains("*"))
-        {
-            // SuperAdmin gets all permissions
-            permissionsToAssign = await context.Permissions.ToListAsync();
-        }
-        else
-        {
-            // Other roles get permissions based on patterns
-            var allPermissions = await context.Permissions.ToListAsync();
-            permissionsToAssign = allPermissions
-                .Where(p => mapping.Value.Any(pattern => MatchesPattern(p.Name, pattern)))
-                .ToList();
-        }
-
-        var newPermissions = permissionsToAssign
-            .Where(p => !existingPermissionIds.Contains(p.Id))
-            .ToList();
-
-        if (newPermissions.Any())
-        {
-            var now = DateTime.UtcNow;
-            var rolePermissions = newPermissions.Select(p => new RolePermission
-            {
-                RoleId = roleId,
-                PermissionId = p.Id,
-                GrantedAt = now,
-                GrantedBy = "auto-seed"
-            });
-
-            await context.RolePermissions.AddRangeAsync(rolePermissions);
-            Log.Information("Assigned {Count} permissions to role {RoleName}", newPermissions.Count, mapping.Key);
-        }
-    }
-
-    await context.SaveChangesAsync();
-}
-
-static bool MatchesPattern(string permissionName, string pattern)
-{
-    if (pattern == "*") return true;
-    if (pattern.EndsWith("*"))
-    {
-        var prefix = pattern[..^1];
-        return permissionName.StartsWith(prefix, StringComparison.OrdinalIgnoreCase);
-    }
-    return permissionName.Equals(pattern, StringComparison.OrdinalIgnoreCase);
-}
 
 // Make Program class accessible for integration tests
 public partial class Program { }

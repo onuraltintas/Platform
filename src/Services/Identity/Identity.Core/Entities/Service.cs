@@ -3,6 +3,7 @@ namespace Identity.Core.Entities;
 public class Service
 {
     public Guid Id { get; set; }
+    public string Code { get; set; } = string.Empty; // Unique service code
     public string Name { get; set; } = string.Empty;
     public string? DisplayName { get; set; }
     public string? Description { get; set; }
@@ -23,6 +24,7 @@ public class Service
     // Metadata
     public Dictionary<string, string> Metadata { get; set; } = new();
     public DateTime RegisteredAt { get; set; }
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow; // Alias for RegisteredAt
     public DateTime? LastModifiedAt { get; set; }
     public string? RegisteredBy { get; set; }
     

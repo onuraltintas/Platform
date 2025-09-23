@@ -106,15 +106,19 @@ public static class ServiceCollectionExtensions
         // Register core gateway services
         services.AddSingleton<IServiceDiscoveryService, ServiceDiscoveryService>();
         services.AddHttpClient<ServiceDiscoveryService>();
-        
+
         // Register authentication services
         services.AddScoped<IGatewayAuthenticationService, GatewayAuthenticationService>();
         services.AddSingleton<IApiKeyAuthenticationService, ApiKeyAuthenticationService>();
-        
+
+        // Register authorization services
+        services.AddScoped<Gateway.Core.Authorization.IGatewayPermissionService, Gateway.Core.Authorization.GatewayPermissionService>();
+        services.AddHttpClient<Gateway.Core.Authorization.GatewayPermissionService>();
+
         // TODO: Register remaining Gateway services when implemented
         // services.AddScoped<IGatewayService, GatewayService>();
         // services.AddScoped<IServiceHealthService, ServiceHealthService>();
-        
+
         return services;
     }
 

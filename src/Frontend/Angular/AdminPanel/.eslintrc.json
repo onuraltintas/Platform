@@ -1,10 +1,7 @@
 {
   "root": true,
   "ignorePatterns": [
-    "projects/**/*",
-    "dist/**/*",
-    "node_modules/**/*",
-    "coverage/**/*"
+    "projects/**/*"
   ],
   "overrides": [
     {
@@ -13,11 +10,30 @@
       ],
       "extends": [
         "eslint:recommended",
-        "@typescript-eslint/recommended",
-        "@angular-eslint/recommended",
-        "@angular-eslint/template/process-inline-templates"
+        "plugin:@typescript-eslint/recommended",
+        "plugin:@angular-eslint/recommended",
+        "plugin:@angular-eslint/template/process-inline-templates"
+      ],
+      "plugins": [
+        "unused-imports"
       ],
       "rules": {
+        "unused-imports/no-unused-imports": "error",
+        "unused-imports/no-unused-vars": [
+          "error",
+          { "vars": "all", "varsIgnorePattern": "^_", "args": "after-used", "argsIgnorePattern": "^_" }
+        ],
+        "@typescript-eslint/no-explicit-any": "warn",
+        "@typescript-eslint/no-unused-vars": "error",
+        "prefer-const": "error",
+        "no-useless-escape": "error",
+        "@typescript-eslint/no-var-requires": "error",
+        "no-case-declarations": "error",
+        "no-prototype-builtins": "error",
+        "no-control-regex": "warn",
+        "@angular-eslint/prefer-inject": "error",
+        "@angular-eslint/use-lifecycle-interface": "error",
+        "@angular-eslint/no-empty-lifecycle-method": "error",
         "@angular-eslint/directive-selector": [
           "error",
           {
@@ -33,59 +49,7 @@
             "prefix": "app",
             "style": "kebab-case"
           }
-        ],
-        "@typescript-eslint/no-unused-vars": [
-          "error",
-          {
-            "argsIgnorePattern": "^_",
-            "varsIgnorePattern": "^_"
-          }
-        ],
-        "@typescript-eslint/explicit-function-return-type": "off",
-        "@typescript-eslint/explicit-member-accessibility": [
-          "error",
-          {
-            "accessibility": "explicit",
-            "overrides": {
-              "constructors": "off"
-            }
-          }
-        ],
-        "@typescript-eslint/no-explicit-any": "warn",
-        "@typescript-eslint/prefer-readonly": "error",
-        "@typescript-eslint/no-magic-numbers": [
-          "warn",
-          {
-            "ignore": [-1, 0, 1, 2, 10, 100, 1000],
-            "ignoreArrayIndexes": true,
-            "ignoreDefaultValues": true
-          }
-        ],
-        "no-console": [
-          "warn",
-          {
-            "allow": ["warn", "error"]
-          }
-        ],
-        "prefer-const": "error",
-        "no-var": "error",
-        "eqeqeq": ["error", "always"],
-        "curly": "error",
-        "max-len": [
-          "error",
-          {
-            "code": 120,
-            "ignoreUrls": true,
-            "ignoreStrings": true,
-            "ignoreTemplateLiterals": true
-          }
-        ],
-        "indent": ["error", 2],
-        "quotes": ["error", "single"],
-        "semi": ["error", "always"],
-        "comma-dangle": ["error", "never"],
-        "object-curly-spacing": ["error", "always"],
-        "array-bracket-spacing": ["error", "never"]
+        ]
       }
     },
     {
@@ -93,23 +57,10 @@
         "*.html"
       ],
       "extends": [
-        "@angular-eslint/template/recommended",
-        "@angular-eslint/template/accessibility"
+        "plugin:@angular-eslint/template/recommended",
+        "plugin:@angular-eslint/template/accessibility"
       ],
-      "rules": {
-        "@angular-eslint/template/click-events-have-key-events": "off",
-        "@angular-eslint/template/interactive-supports-focus": "off"
-      }
-    },
-    {
-      "files": [
-        "*.spec.ts"
-      ],
-      "rules": {
-        "@typescript-eslint/no-magic-numbers": "off",
-        "@typescript-eslint/no-explicit-any": "off",
-        "no-console": "off"
-      }
+      "rules": {}
     }
   ]
 }

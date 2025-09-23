@@ -2,397 +2,31 @@ import { Component, inject, OnInit, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
+import { LucideAngularModule, User, Mail, Eye, EyeOff, Lock, UserPlus } from 'lucide-angular';
 import { AuthService } from '../../../../core/auth/services/auth.service';
 import { LoadingService } from '../../../../shared/services/loading.service';
 import { CustomValidators, getPasswordStrength } from '../../../../shared/utils/validators';
 import { RegisterRequest } from '../../../../core/auth/models/auth.models';
-import { ToastrService } from 'ngx-toastr';
+import { ToastService } from '../../../../core/bildirimler/toast.service';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink],
-  template: `
-    <div class="card">
-      <div class="card-body p-5">
-        <div class="text-center mb-4">
-          <h2 class="text-primary mb-2">
-            <i class="fas fa-user-plus me-2"></i>
-            Kayıt Ol
-          </h2>
-          <p class="text-muted">PlatformV1 hesabınızı oluşturun</p>
-        </div>
-
-        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" novalidate>
-          <!-- Name Fields Row -->
-          <div class="row">
-            <div class="col-md-6 mb-3">
-              <label for="firstName" class="form-label">
-                <i class="fas fa-user me-2"></i>
-                Ad
-              </label>
-              <input
-                type="text"
-                id="firstName"
-                class="form-control"
-                [class.is-invalid]="isFieldInvalid('firstName')"
-                formControlName="firstName"
-                placeholder="Adınız"
-                autocomplete="given-name"
-              />
-              <div class="invalid-feedback" *ngIf="isFieldInvalid('firstName')">
-                <small *ngIf="registerForm.get('firstName')?.errors?.['required']">
-                  Ad gereklidir
-                </small>
-                <small *ngIf="registerForm.get('firstName')?.errors?.['minlength']">
-                  Ad en az 2 karakter olmalıdır
-                </small>
-              </div>
-            </div>
-
-            <div class="col-md-6 mb-3">
-              <label for="lastName" class="form-label">
-                <i class="fas fa-user me-2"></i>
-                Soyad
-              </label>
-              <input
-                type="text"
-                id="lastName"
-                class="form-control"
-                [class.is-invalid]="isFieldInvalid('lastName')"
-                formControlName="lastName"
-                placeholder="Soyadınız"
-                autocomplete="family-name"
-              />
-              <div class="invalid-feedback" *ngIf="isFieldInvalid('lastName')">
-                <small *ngIf="registerForm.get('lastName')?.errors?.['required']">
-                  Soyad gereklidir
-                </small>
-                <small *ngIf="registerForm.get('lastName')?.errors?.['minlength']">
-                  Soyad en az 2 karakter olmalıdır
-                </small>
-              </div>
-            </div>
-          </div>
-
-          <!-- Email Field -->
-          <div class="mb-3">
-            <label for="email" class="form-label">
-              <i class="fas fa-envelope me-2"></i>
-              E-posta Adresi
-            </label>
-            <input
-              type="email"
-              id="email"
-              class="form-control"
-              [class.is-invalid]="isFieldInvalid('email')"
-              formControlName="email"
-              placeholder="ornek@platformv1.com"
-              autocomplete="username"
-            />
-            <div class="invalid-feedback" *ngIf="isFieldInvalid('email')">
-              <small *ngIf="registerForm.get('email')?.errors?.['required']">
-                E-posta adresi gereklidir
-              </small>
-              <small *ngIf="registerForm.get('email')?.errors?.['email']">
-                Geçerli bir e-posta adresi giriniz
-              </small>
-            </div>
-          </div>
-
-          <!-- Phone Number Field -->
-          <div class="mb-3">
-            <label for="phoneNumber" class="form-label">
-              <i class="fas fa-phone me-2"></i>
-              Telefon Numarası <span class="text-muted">(Opsiyonel)</span>
-            </label>
-            <input
-              type="tel"
-              id="phoneNumber"
-              class="form-control"
-              [class.is-invalid]="isFieldInvalid('phoneNumber')"
-              formControlName="phoneNumber"
-              placeholder="+90 5XX XXX XX XX"
-              autocomplete="tel"
-            />
-            <div class="invalid-feedback" *ngIf="isFieldInvalid('phoneNumber')">
-              <small *ngIf="registerForm.get('phoneNumber')?.errors?.['phoneNumber']">
-                Geçerli bir telefon numarası giriniz
-              </small>
-            </div>
-          </div>
-
-          <!-- Password Field -->
-          <div class="mb-3">
-            <label for="password" class="form-label">
-              <i class="fas fa-lock me-2"></i>
-              Şifre
-            </label>
-            <div class="input-group">
-              <input
-                [type]="showPassword() ? 'text' : 'password'"
-                id="password"
-                class="form-control"
-                [class.is-invalid]="isFieldInvalid('password')"
-                formControlName="password"
-                placeholder="Güçlü bir şifre oluşturun"
-                autocomplete="new-password"
-                (input)="onPasswordChange()"
-              />
-              <button
-                type="button"
-                class="btn btn-outline-secondary"
-                (click)="togglePasswordVisibility()"
-                tabindex="-1"
-              >
-                <i [class]="showPassword() ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
-              </button>
-            </div>
-
-            <!-- Password Strength Indicator -->
-            <div class="mt-2" *ngIf="registerForm.get('password')?.value">
-              <div class="d-flex align-items-center">
-                <div class="flex-grow-1 me-2">
-                  <div class="progress" style="height: 6px;">
-                    <div
-                      class="progress-bar"
-                      [class]="'bg-' + passwordStrength().color"
-                      [style.width.%]="(passwordStrength().strength / 6) * 100"
-                    ></div>
-                  </div>
-                </div>
-                <small [class]="'text-' + passwordStrength().color + ' fw-bold'">
-                  {{ passwordStrength().label }}
-                </small>
-              </div>
-            </div>
-
-            <div class="invalid-feedback" *ngIf="isFieldInvalid('password')">
-              <small *ngIf="registerForm.get('password')?.errors?.['required']">
-                Şifre gereklidir
-              </small>
-              <div *ngIf="registerForm.get('password')?.errors?.['password']">
-                <small class="d-block" *ngIf="registerForm.get('password')?.errors?.['password']?.['minLength']">
-                  Şifre en az 8 karakter olmalıdır
-                </small>
-                <small class="d-block" *ngIf="registerForm.get('password')?.errors?.['password']?.['requiresNumber']">
-                  Şifre en az bir rakam içermelidir
-                </small>
-                <small class="d-block" *ngIf="registerForm.get('password')?.errors?.['password']?.['requiresUppercase']">
-                  Şifre en az bir büyük harf içermelidir
-                </small>
-                <small class="d-block" *ngIf="registerForm.get('password')?.errors?.['password']?.['requiresLowercase']">
-                  Şifre en az bir küçük harf içermelidir
-                </small>
-                <small class="d-block" *ngIf="registerForm.get('password')?.errors?.['password']?.['requiresSpecial']">
-                  Şifre en az bir özel karakter içermelidir
-                </small>
-              </div>
-            </div>
-          </div>
-
-          <!-- Confirm Password Field -->
-          <div class="mb-3">
-            <label for="confirmPassword" class="form-label">
-              <i class="fas fa-lock me-2"></i>
-              Şifre Tekrarı
-            </label>
-            <div class="input-group">
-              <input
-                [type]="showConfirmPassword() ? 'text' : 'password'"
-                id="confirmPassword"
-                class="form-control"
-                [class.is-invalid]="isFieldInvalid('confirmPassword')"
-                formControlName="confirmPassword"
-                placeholder="Şifrenizi tekrar giriniz"
-                autocomplete="new-password"
-              />
-              <button
-                type="button"
-                class="btn btn-outline-secondary"
-                (click)="toggleConfirmPasswordVisibility()"
-                tabindex="-1"
-              >
-                <i [class]="showConfirmPassword() ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
-              </button>
-            </div>
-            <div class="invalid-feedback" *ngIf="isFieldInvalid('confirmPassword')">
-              <small *ngIf="registerForm.get('confirmPassword')?.errors?.['required']">
-                Şifre tekrarı gereklidir
-              </small>
-              <small *ngIf="registerForm.get('confirmPassword')?.errors?.['passwordMismatch']">
-                Şifreler eşleşmiyor
-              </small>
-            </div>
-          </div>
-
-          <!-- Terms and Conditions -->
-          <div class="mb-3 form-check">
-            <input
-              type="checkbox"
-              class="form-check-input"
-              [class.is-invalid]="isFieldInvalid('acceptTerms')"
-              id="acceptTerms"
-              formControlName="acceptTerms"
-            />
-            <label class="form-check-label" for="acceptTerms">
-              <a href="#" class="text-primary text-decoration-none">Kullanım Şartları</a> ve
-              <a href="#" class="text-primary text-decoration-none">Gizlilik Politikası</a>'nı kabul ediyorum
-            </label>
-            <div class="invalid-feedback" *ngIf="isFieldInvalid('acceptTerms')">
-              <small>Kullanım şartlarını kabul etmelisiniz</small>
-            </div>
-          </div>
-
-          <!-- Submit Button -->
-          <div class="d-grid mb-3">
-            <button
-              type="submit"
-              class="btn btn-primary btn-lg"
-              [disabled]="registerForm.invalid || isLoading()"
-            >
-              <span *ngIf="isLoading()" class="spinner-border spinner-border-sm me-2"></span>
-              <i *ngIf="!isLoading()" class="fas fa-user-plus me-2"></i>
-              {{ isLoading() ? 'Hesap oluşturuluyor...' : 'Hesap Oluştur' }}
-            </button>
-          </div>
-
-          <!-- Divider -->
-          <hr class="my-4">
-
-          <!-- Google Register -->
-          <div class="d-grid mb-3" *ngIf="environment.features.enableGoogleAuth">
-            <button
-              type="button"
-              class="btn btn-outline-danger btn-lg"
-              (click)="registerWithGoogle()"
-              [disabled]="isLoading()"
-            >
-              <i class="fab fa-google me-2"></i>
-              Google ile Kayıt Ol
-            </button>
-          </div>
-        </form>
-
-        <!-- Login Link -->
-        <div class="text-center">
-          <p class="mb-0">
-            Zaten hesabınız var mı?
-            <a routerLink="/auth/login" class="text-primary text-decoration-none fw-bold">
-              Giriş Yap
-            </a>
-          </p>
-        </div>
-      </div>
-
-      <!-- Loading Overlay -->
-      <div *ngIf="isLoading()" class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center bg-white bg-opacity-75">
-        <div class="text-center">
-          <div class="spinner-border text-primary" role="status"></div>
-          <div class="mt-2 text-muted">Hesap oluşturuluyor...</div>
-        </div>
-      </div>
-    </div>
-  `,
-  styles: [`
-    .card {
-      border: none;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-      border-radius: 15px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .card-body {
-      background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
-    }
-
-    .form-control {
-      border-radius: 10px;
-      border: 2px solid #e9ecef;
-      transition: all 0.3s ease;
-    }
-
-    .form-control:focus {
-      border-color: #0d6efd;
-      box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.15);
-    }
-
-    .btn {
-      border-radius: 10px;
-      font-weight: 600;
-      transition: all 0.3s ease;
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, #0d6efd 0%, #0b5ed7 100%);
-      border: none;
-    }
-
-    .btn-primary:hover:not(:disabled) {
-      transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(13, 110, 253, 0.3);
-    }
-
-    .btn-outline-danger {
-      border: 2px solid #dc3545;
-      color: #dc3545;
-      font-weight: 600;
-    }
-
-    .btn-outline-danger:hover:not(:disabled) {
-      background: #dc3545;
-      transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(220, 53, 69, 0.3);
-    }
-
-    .form-check-input:checked {
-      background-color: #0d6efd;
-      border-color: #0d6efd;
-    }
-
-    .text-primary {
-      background: linear-gradient(135deg, #0d6efd, #6610f2);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .progress {
-      border-radius: 10px;
-      background-color: #e9ecef;
-    }
-
-    .progress-bar {
-      border-radius: 10px;
-      transition: all 0.3s ease;
-    }
-
-    .invalid-feedback {
-      display: block;
-    }
-
-    a {
-      transition: all 0.3s ease;
-    }
-
-    a:hover {
-      transform: translateX(3px);
-    }
-
-    @media (max-width: 576px) {
-      .card-body {
-        padding: 2rem !important;
-      }
-    }
-  `]
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    RouterLink,
+    LucideAngularModule
+  ],
+  templateUrl: './register.component.html',
+  styleUrl: './register.component.scss'
 })
 export class RegisterComponent implements OnInit {
   private readonly fb = inject(FormBuilder);
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
   private readonly loadingService = inject(LoadingService);
-  private readonly toastr = inject(ToastrService);
+  private readonly toast = inject(ToastService);
 
   registerForm!: FormGroup;
   showPassword = signal(false);
@@ -404,6 +38,14 @@ export class RegisterComponent implements OnInit {
     return getPasswordStrength(this.passwordStrengthValue());
   });
 
+  // Lucide icons
+  readonly User = User;
+  readonly Mail = Mail;
+  readonly Eye = Eye;
+  readonly EyeOff = EyeOff;
+  readonly Lock = Lock;
+  readonly UserPlus = UserPlus;
+
   // Access environment in template
   get environment() {
     return (window as any).__env || { features: { enableGoogleAuth: true } };
@@ -413,6 +55,12 @@ export class RegisterComponent implements OnInit {
     this.createForm();
     this.loadingService.isLoading$.subscribe(loading => {
       this.isLoading.set(loading);
+      // Enable/disable form based on loading state
+      if (loading) {
+        this.registerForm.disable();
+      } else {
+        this.registerForm.enable();
+      }
     });
   }
 
@@ -420,11 +68,14 @@ export class RegisterComponent implements OnInit {
     this.registerForm = this.fb.group({
       firstName: ['', [Validators.required, Validators.minLength(2)]],
       lastName: ['', [Validators.required, Validators.minLength(2)]],
+      userName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
       email: ['', [Validators.required, CustomValidators.email]],
       phoneNumber: ['', [CustomValidators.phoneNumber]],
       password: ['', [Validators.required, CustomValidators.password]],
       confirmPassword: ['', [Validators.required]],
-      acceptTerms: [false, [Validators.requiredTrue]]
+      acceptTerms: [false, [Validators.requiredTrue]],
+      acceptPrivacyPolicy: [false, [Validators.requiredTrue]],
+      acceptMarketing: [false]
     }, {
       validators: [CustomValidators.passwordMatch('password', 'confirmPassword')]
     });
@@ -434,21 +85,22 @@ export class RegisterComponent implements OnInit {
     if (this.registerForm.valid && !this.isLoading()) {
       const registerRequest: RegisterRequest = {
         email: this.registerForm.value.email,
+        userName: this.registerForm.value.userName,
         password: this.registerForm.value.password,
+        confirmPassword: this.registerForm.value.confirmPassword,
         firstName: this.registerForm.value.firstName,
         lastName: this.registerForm.value.lastName,
         phoneNumber: this.registerForm.value.phoneNumber || undefined,
-        acceptTerms: this.registerForm.value.acceptTerms
+        acceptTerms: this.registerForm.value.acceptTerms,
+        acceptPrivacyPolicy: this.registerForm.value.acceptPrivacyPolicy,
+        acceptMarketing: this.registerForm.value.acceptMarketing || false
       };
 
       this.isLoading.set(true);
 
       this.authService.register(registerRequest).subscribe({
         next: () => {
-          this.toastr.success(
-            'Hesabınız başarıyla oluşturuldu. E-posta adresinizi doğrulamak için gelen kutunuzu kontrol edin.',
-            'Kayıt Başarılı'
-          );
+          this.toast.basari('Hesabınız başarıyla oluşturuldu. E-posta adresinizi doğrulamak için gelen kutunuzu kontrol edin.');
           this.router.navigate(['/auth/login']);
         },
         error: (error) => {
@@ -463,22 +115,32 @@ export class RegisterComponent implements OnInit {
               if (messages.length > 0) {
                 const control = this.registerForm.get(field.toLowerCase());
                 if (control) {
-                  this.toastr.error(messages[0], 'Doğrulama Hatası');
+                  this.toast.hata(messages[0]);
                 }
               }
             });
-          } else if (error.error?.message) {
-            // Business logic errors
-            const message = error.error.message;
-            if (message.toLowerCase().includes('email')) {
-              this.toastr.error('Bu e-posta adresi zaten kullanılıyor.', 'Hata');
-            } else if (message.toLowerCase().includes('username')) {
-              this.toastr.error('Bu kullanıcı adı zaten alınmış.', 'Hata');
+          } else if (error.error && typeof error.error === 'string') {
+            // Handle string error messages from backend
+            const message = error.error;
+            if (message.toLowerCase().includes('email') && message.toLowerCase().includes('taken')) {
+              this.toast.hata('Bu e-posta adresi zaten kullanılıyor. Lütfen farklı bir e-posta adresi deneyin.');
+            } else if (message.toLowerCase().includes('username') && message.toLowerCase().includes('taken')) {
+              this.toast.hata('Bu kullanıcı adı zaten alınmış. Lütfen farklı bir kullanıcı adı deneyin.');
             } else {
-              this.toastr.error(message, 'Hata');
+              this.toast.hata(message);
+            }
+          } else if (error.error?.message) {
+            // Business logic errors with message property
+            const message = error.error.message;
+            if (message.toLowerCase().includes('email') && message.toLowerCase().includes('taken')) {
+              this.toast.hata('Bu e-posta adresi zaten kullanılıyor. Lütfen farklı bir e-posta adresi deneyin.');
+            } else if (message.toLowerCase().includes('username') && message.toLowerCase().includes('taken')) {
+              this.toast.hata('Bu kullanıcı adı zaten alınmış. Lütfen farklı bir kullanıcı adı deneyin.');
+            } else {
+              this.toast.hata(message);
             }
           } else {
-            this.toastr.error(error.userMessage || 'Hesap oluşturulurken bir hata oluştu', 'Kayıt Hatası');
+            this.toast.hata(error.userMessage || 'Hesap oluşturulurken bir hata oluştu');
           }
         },
         complete: () => {
@@ -487,13 +149,13 @@ export class RegisterComponent implements OnInit {
       });
     } else {
       this.markFormGroupTouched();
-      this.toastr.warning('Lütfen tüm gerekli alanları doldurun', 'Uyarı');
+      this.toast.uyari('Lütfen tüm gerekli alanları doldurun');
     }
   }
 
   registerWithGoogle(): void {
     // TODO: Google OAuth2 implementation
-    this.toastr.info('Google ile kayıt özelliği yakında aktif olacak');
+    this.toast.bilgi('Google ile kayıt özelliği yakında aktif olacak');
   }
 
   togglePasswordVisibility(): void {
@@ -504,8 +166,9 @@ export class RegisterComponent implements OnInit {
     this.showConfirmPassword.update(current => !current);
   }
 
-  onPasswordChange(): void {
-    const password = this.registerForm.get('password')?.value || '';
+  onPasswordInput(event: Event): void {
+    const target = event.target as HTMLInputElement;
+    const password = target.value || '';
     this.passwordStrengthValue.set(password);
   }
 

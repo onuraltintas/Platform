@@ -13,6 +13,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\Shared\Enterprise.Shared.Common\Enterprise.Shared.Common.csproj" />
     <ProjectReference Include="..\..\..\Shared\Enterprise.Shared.Events\Enterprise.Shared.Events.csproj" />
+    <ProjectReference Include="..\..\..\Shared\Enterprise.Shared.Caching\Enterprise.Shared.Caching.csproj" />
   </ItemGroup>
 
 </Project>

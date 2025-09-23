@@ -1,4 +1,4 @@
-export interface ApiResponse<T = any> {
+export interface ApiResponse<T = unknown> {
   data?: T;
   success: boolean;
   message?: string;
@@ -12,7 +12,7 @@ export interface ApiError {
   code: string;
   message: string;
   field?: string;
-  details?: any;
+  details?: Record<string, unknown>;
 }
 
 export interface PagedResult<T> {
@@ -25,19 +25,29 @@ export interface PagedResult<T> {
   hasPrevious: boolean;
 }
 
+export interface PagedResponse<T> {
+  data: T[];
+  totalCount: number;
+  page: number;
+  pageSize: number;
+  totalPages: number;
+  hasNext: boolean;
+  hasPrevious: boolean;
+}
+
 export interface PageRequest {
   pageNumber?: number;
   pageSize?: number;
   sortBy?: string;
   sortDirection?: 'asc' | 'desc';
   search?: string;
-  filters?: Record<string, any>;
+  filters?: Record<string, unknown>;
 }
 
 export interface BulkOperationRequest {
   ids: string[];
   operation: 'delete' | 'activate' | 'deactivate' | 'export';
-  params?: Record<string, any>;
+  params?: Record<string, unknown>;
 }
 
 export interface BulkOperationResult {
@@ -62,7 +72,7 @@ export interface FileUploadResponse {
 export interface ExportRequest {
   format: 'excel' | 'csv' | 'pdf';
   columns?: string[];
-  filters?: Record<string, any>;
+  filters?: Record<string, unknown>;
 }
 
 export interface AuditLog {
@@ -72,8 +82,8 @@ export interface AuditLog {
   action: string;
   entityType: string;
   entityId?: string;
-  oldValues?: Record<string, any>;
-  newValues?: Record<string, any>;
+  oldValues?: Record<string, unknown>;
+  newValues?: Record<string, unknown>;
   ipAddress: string;
   userAgent: string;
   timestamp: Date;

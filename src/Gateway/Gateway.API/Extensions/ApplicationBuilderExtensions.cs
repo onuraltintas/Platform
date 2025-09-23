@@ -32,6 +32,14 @@ public static class ApplicationBuilderExtensions
     }
 
     /// <summary>
+    /// Use Gateway authorization middleware
+    /// </summary>
+    public static IApplicationBuilder UseGatewayAuthorization(this IApplicationBuilder app)
+    {
+        return app.UseMiddleware<GatewayAuthorizationMiddleware>();
+    }
+
+    /// <summary>
     /// Use Gateway error handling middleware
     /// </summary>
     public static IApplicationBuilder UseGatewayErrorHandling(this IApplicationBuilder app)

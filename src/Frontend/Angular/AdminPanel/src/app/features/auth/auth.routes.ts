@@ -14,32 +14,32 @@ export const authRoutes: Routes = [
       {
         path: 'login',
         loadComponent: () => import('./components/login/login.component').then(m => m.LoginComponent),
-        title: 'Giriş Yap - PlatformV1'
+        title: 'Giriş Yap - OnAl'
       },
       {
         path: 'register',
         loadComponent: () => import('./components/register/register.component').then(m => m.RegisterComponent),
-        title: 'Kayıt Ol - PlatformV1'
+        title: 'Kayıt Ol - OnAl'
       },
       {
         path: 'forgot-password',
         loadComponent: () => import('./components/forgot-password/forgot-password.component').then(m => m.ForgotPasswordComponent),
-        title: 'Şifre Sıfırlama - PlatformV1'
+        title: 'Şifre Sıfırlama - OnAl'
       },
       {
         path: 'reset-password',
         loadComponent: () => import('./components/reset-password/reset-password.component').then(m => m.ResetPasswordComponent),
-        title: 'Şifre Yenileme - PlatformV1'
+        title: 'Şifre Yenileme - OnAl'
       },
       {
         path: 'verify-email',
         loadComponent: () => import('./components/verify-email/verify-email.component').then(m => m.VerifyEmailComponent),
-        title: 'E-posta Doğrulama - PlatformV1'
+        title: 'E-posta Doğrulama - OnAl'
       },
       {
         path: 'google/callback',
         loadComponent: () => import('./components/google-callback/google-callback.component').then(m => m.GoogleCallbackComponent),
-        title: 'Google Girişi - PlatformV1'
+        title: 'Google Girişi - OnAl'
       }
     ]
   }

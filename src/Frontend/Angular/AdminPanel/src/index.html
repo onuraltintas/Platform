@@ -1,12 +1,66 @@
 <!doctype html>
-<html lang="en">
+<html lang="tr">
 <head>
   <meta charset="utf-8">
-  <title>Platformv1Admin</title>
+  <title>OnAl Admin Panel</title>
   <base href="/">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+  <!-- Viewport and responsive design -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Security Headers (Meta Tags) -->
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
+  <!-- Content Security Policy (Development - Report Only) -->
+  <!-- Production CSP should be set via server headers -->
+  <meta http-equiv="Content-Security-Policy-Report-Only"
+        content="default-src 'self';
+                 script-src 'self' 'unsafe-inline' 'unsafe-eval' localhost:* 127.0.0.1:* accounts.google.com apis.google.com;
+                 style-src 'self' 'unsafe-inline' fonts.googleapis.com;
+                 font-src 'self' data: fonts.gstatic.com;
+                 img-src 'self' data: blob: localhost:* 127.0.0.1:* www.gravatar.com;
+                 connect-src 'self' localhost:* 127.0.0.1:* ws://localhost:* wss://localhost:*;
+                 frame-src 'self' accounts.google.com;
+                 object-src 'none';
+                 base-uri 'self';
+                 form-action 'self';
+                 frame-ancestors 'none';
+                 report-uri /api/v1/security/csp-violations">
+
+  <!-- App metadata -->
+  <meta name="description" content="OnAl Admin Panel - Secure enterprise administration interface">
+  <meta name="keywords" content="admin, platform, management, enterprise, security">
+  <meta name="author" content="OnAl">
+  <meta name="application-name" content="OnAl Admin">
+
+  <!-- PWA and mobile -->
+  <meta name="theme-color" content="#667eea">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="OnAl Admin">
+
+  <!-- Icons and manifest -->
+  <link rel="icon" type="image/png" href="simge.png">
   <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="simge.png">
+
+  <!-- Preconnect for performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="dns-prefetch" href="https://api.platformv1.com">
+
+  <!-- Material Icons with integrity -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+        rel="stylesheet"
+        crossorigin="anonymous">
+
+  <!-- Permissions Policy -->
+  <meta http-equiv="Permissions-Policy"
+        content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), fullscreen=(self), notifications=(self)">
 </head>
 <body>
   <!-- Google Sign-In API -->

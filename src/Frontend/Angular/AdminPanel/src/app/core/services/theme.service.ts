@@ -25,11 +25,7 @@ export class ThemeService {
       return savedTheme;
     }
 
-    // Check system preference
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      return 'dark';
-    }
-
+    // Always default to light theme
     return 'light';
   }
 
@@ -94,5 +90,10 @@ export class ThemeService {
 
   isLightMode(): boolean {
     return this.currentTheme() === 'light';
+  }
+
+  // Force light theme on startup
+  forceLightTheme(): void {
+    this.setTheme('light');
   }
 }

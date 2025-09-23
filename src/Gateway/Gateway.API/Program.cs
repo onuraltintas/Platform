@@ -210,6 +210,9 @@ app.UseCors("GatewayPolicy");
 app.UseAuthentication();
 app.UseAuthorization();
 
+// Gateway-level authorization (after standard auth)
+app.UseGatewayAuthorization();
+
 // Rate Limiting (after authentication to allow per-user limits)
 app.UseGatewayRateLimiting();
 

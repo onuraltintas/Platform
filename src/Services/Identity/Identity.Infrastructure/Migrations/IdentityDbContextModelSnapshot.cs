@@ -23,6 +23,109 @@ namespace Identity.Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("Identity.Core.Entities.AlertRule", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Actions")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("jsonb")
+                        .HasDefaultValue("{}");
+
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<string>("Conditions")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("jsonb")
+                        .HasDefaultValue("{}");
+
+                    b.Property<TimeSpan?>("CooldownPeriod")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("interval")
+                        .HasDefaultValue(new TimeSpan(0, 0, 5, 0, 0));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                    b.Property<string>("CreatedBy")
+                        .HasMaxLength(450)
+                        .HasColumnType("character varying(450)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<Guid?>("GroupId")
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(true);
+
+                    b.Property<int?>("MaxAlertsPerHour")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(10);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("NotificationChannels")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("jsonb")
+                        .HasDefaultValue("[]");
+
+                    b.Property<int>("Priority")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(100);
+
+                    b.Property<string>("Severity")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)")
+                        .HasDefaultValue("Medium");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasMaxLength(450)
+                        .HasColumnType("character varying(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Category")
+                        .HasDatabaseName("IX_AlertRules_Category");
+
+                    b.HasIndex("GroupId")
+                        .HasDatabaseName("IX_AlertRules_GroupId");
+
+                    b.HasIndex("IsActive")
+                        .HasDatabaseName("IX_AlertRules_IsActive");
+
+                    b.HasIndex("Name")
+                        .IsUnique()
+                        .HasDatabaseName("IX_AlertRules_Name");
+
+                    b.ToTable("AlertRules", "public");
+                });
+
             modelBuilder.Entity("Identity.Core.Entities.ApplicationRole", b =>
                 {
                     b.Property<string>("Id")
@@ -33,29 +136,56 @@ namespace Identity.Infrastructure.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("text");
+                        .HasMaxLength(450)
+                        .HasColumnType("character varying(450)");
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
 
                     b.Property<Guid?>("GroupId")
                         .HasColumnType("uuid");
 
+                    b.Property<Guid?>("GroupId1")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("HierarchyLevel")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(0);
+
+                    b.Property<string>("HierarchyPath")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("character varying(4000)");
+
+                    b.Property<bool>("InheritPermissions")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(true);
+
                     b.Property<bool>("IsActive")
-                        .HasColumnType("boolean");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(true);
 
                     b.Property<bool>("IsSystemRole")
-                        .HasColumnType("boolean");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false);
 
                     b.Property<DateTime?>("LastModifiedAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("LastModifiedBy")
-                        .HasColumnType("text");
+                        .HasMaxLength(450)
+                        .HasColumnType("character varying(450)");
 
                     b.Property<string>("Name")
                         .HasMaxLength(256)
@@ -65,15 +195,50 @@ namespace Identity.Infrastructure.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)");
 
+                    b.Property<string>("ParentRoleId")
+                        .HasMaxLength(450)
+                        .HasColumnType("character varying(450)");
+
+                    b.Property<int>("Priority")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(0);
+
                     b.HasKey("Id");
 
-                    b.HasIndex("GroupId");
+                    b.HasIndex("CreatedAt")
+                        .HasDatabaseName("IX_Roles_CreatedAt");
+
+                    b.HasIndex("GroupId")
+                        .HasDatabaseName("IX_Roles_GroupId");
+
+                    b.HasIndex("GroupId1");
+
+                    b.HasIndex("HierarchyLevel")
+                        .HasDatabaseName("IX_Roles_HierarchyLevel");
+
+                    b.HasIndex("IsActive")
+                        .HasDatabaseName("IX_Roles_IsActive");
 
                     b.HasIndex("NormalizedName")
                         .IsUnique()
                         .HasDatabaseName("RoleNameIndex");
 
-                    b.ToTable("Roles", "public");
+                    b.HasIndex("ParentRoleId")
+                        .HasDatabaseName("IX_Roles_ParentRoleId");
+
+                    b.HasIndex("Priority")
+                        .HasDatabaseName("IX_Roles_Priority");
+
+                    b.HasIndex("GroupId", "Name")
+                        .HasDatabaseName("IX_Roles_Group_Name");
+
+                    b.ToTable("Roles", "public", t =>
+                        {
+                            t.HasCheckConstraint("CK_Roles_NoSelfReference", "\"Id\" != \"ParentRoleId\"");
+
+                            t.HasCheckConstraint("CK_Roles_ValidHierarchyLevel", "\"HierarchyLevel\" >= 0 AND \"HierarchyLevel\" <= 10");
+                        });
                 });
 
             modelBuilder.Entity("Identity.Core.Entities.ApplicationUser", b =>
@@ -248,6 +413,409 @@ namespace Identity.Infrastructure.Migrations
                         .IsUnique();
 
                     b.ToTable("Users", "public");
+                });
+
+            modelBuilder.Entity("Identity.Core.Entities.AuditEvent", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Action")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<int>("Category")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(0);
+
+                    b.Property<string>("CorrelationId")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<long?>("Duration")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("EntityId")
+                        .IsRequired()
+                        .HasMaxLength(450)
+                        .HasColumnType("character varying(450)");
+
+                    b.Property<string>("EntityType")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("ErrorMessage")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<string>("EventType")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<Guid?>("GroupId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("IpAddress")
+                        .IsRequired()
+                        .HasMaxLength(45)
+                        .HasColumnType("character varying(45)");
+
+                    b.Property<bool>("IsSecurityEvent")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false);
+
+                    b.Property<bool>("IsSuccessful")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(true);
+
+                    b.Property<string>("Metadata")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("jsonb")
+                        .HasDefaultValue("{}");
+
+                    b.Property<string>("NewValues")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("jsonb")
+                        .HasDefaultValue("{}");
+
+                    b.Property<string>("OldValues")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("jsonb")
+                        .HasDefaultValue("{}");
+
+                    b.Property<string>("RiskLevel")
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<Guid?>("SecurityAlertId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("SessionId")
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)");
+
+                    b.Property<int>("Severity")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(0);
+
+                    b.Property<string>("Source")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("Tags")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("jsonb")
+                        .HasDefaultValue("{}");
+
+                    b.Property<DateTime>("Timestamp")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                    b.Property<string>("UserAgent")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasMaxLength(450)
+                        .HasColumnType("character varying(450)");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CorrelationId")
+                        .HasDatabaseName("IX_AuditEvents_CorrelationId");
+
+                    b.HasIndex("EntityId")
+                        .HasDatabaseName("IX_AuditEvents_EntityId");
+
+                    b.HasIndex("EntityType")
+                        .HasDatabaseName("IX_AuditEvents_EntityType");
+
+                    b.HasIndex("EventType")
+                        .HasDatabaseName("IX_AuditEvents_EventType");
+
+                    b.HasIndex("GroupId")
+                        .HasDatabaseName("IX_AuditEvents_GroupId");
+
+                    b.HasIndex("IsSecurityEvent")
+                        .HasDatabaseName("IX_AuditEvents_IsSecurityEvent");
+
+                    b.HasIndex("SecurityAlertId");
+
+                    b.HasIndex("Severity")
+                        .HasDatabaseName("IX_AuditEvents_Severity");
+
+                    b.HasIndex("Timestamp")
+                        .HasDatabaseName("IX_AuditEvents_Timestamp");
+
+                    b.HasIndex("UserId")
+                        .HasDatabaseName("IX_AuditEvents_UserId");
+
+                    b.HasIndex("EntityType", "EntityId")
+                        .HasDatabaseName("IX_AuditEvents_Entity_Composite");
+
+                    b.HasIndex("UserId", "Timestamp")
+                        .HasDatabaseName("IX_AuditEvents_User_Time");
+
+                    b.ToTable("AuditEvents", "public");
+                });
+
+            modelBuilder.Entity("Identity.Core.Entities.AuditEventAttachment", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("AuditEventId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("ContentType")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                    b.Property<string>("FileName")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
+
+                    b.Property<string>("FilePath")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<string>("Metadata")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("jsonb")
+                        .HasDefaultValue("{}");
+
+                    b.Property<long>("Size")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AuditEventId")
+                        .HasDatabaseName("IX_AuditEventAttachments_AuditEventId");
+
+                    b.HasIndex("CreatedAt")
+                        .HasDatabaseName("IX_AuditEventAttachments_CreatedAt");
+
+                    b.ToTable("AuditEventAttachments", "public");
+                });
+
+            modelBuilder.Entity("Identity.Core.Entities.DeviceActivity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("ActivityData")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("jsonb")
+                        .HasDefaultValue("{}");
+
+                    b.Property<string>("ActivityType")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<Guid>("DeviceTrustId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("ErrorMessage")
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
+
+                    b.Property<string>("IpAddress")
+                        .IsRequired()
+                        .HasMaxLength(45)
+                        .HasColumnType("character varying(45)");
+
+                    b.Property<bool>("IsSuccessful")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(true);
+
+                    b.Property<string>("Location")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<DateTime>("OccurredAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ActivityType")
+                        .HasDatabaseName("IX_DeviceActivities_ActivityType");
+
+                    b.HasIndex("DeviceTrustId")
+                        .HasDatabaseName("IX_DeviceActivities_DeviceTrustId");
+
+                    b.HasIndex("IpAddress")
+                        .HasDatabaseName("IX_DeviceActivities_IpAddress");
+
+                    b.HasIndex("OccurredAt")
+                        .HasDatabaseName("IX_DeviceActivities_OccurredAt");
+
+                    b.ToTable("DeviceActivities", "public");
+                });
+
+            modelBuilder.Entity("Identity.Core.Entities.DeviceTrust", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("AdditionalInfo")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("jsonb")
+                        .HasDefaultValue("{}");
+
+                    b.Property<string>("Browser")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("CertificateFingerprint")
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)");
+
+                    b.Property<string>("CompliancePolicies")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("jsonb")
+                        .HasDefaultValue("{}");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                    b.Property<string>("DeviceFingerprint")
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
+                    b.Property<string>("DeviceId")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
+
+                    b.Property<string>("DeviceName")
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
+
+                    b.Property<string>("DeviceType")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<DateTime>("FirstSeen")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(true);
+
+                    b.Property<bool>("IsCompliant")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsJailbroken")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsManaged")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsTrusted")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime?>("LastComplianceCheck")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("LastSeen")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("OperatingSystem")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("SecurityFeatures")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("jsonb")
+                        .HasDefaultValue("{}");
+
+                    b.Property<decimal>("TrustScore")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("decimal(5,2)")
+                        .HasDefaultValue(50.0m);
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("UserAgent")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasMaxLength(450)
+                        .HasColumnType("character varying(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DeviceId")
+                        .HasDatabaseName("IX_DeviceTrusts_DeviceId");
+
+                    b.HasIndex("IsTrusted")
+                        .HasDatabaseName("IX_DeviceTrusts_IsTrusted");
+
+                    b.HasIndex("LastSeen")
+                        .HasDatabaseName("IX_DeviceTrusts_LastSeen");
+
+                    b.HasIndex("UserId")
+                        .HasDatabaseName("IX_DeviceTrusts_UserId");
+
+                    b.HasIndex("UserId", "DeviceId")
+                        .IsUnique()
+                        .HasDatabaseName("IX_DeviceTrusts_User_Device");
+
+                    b.ToTable("DeviceTrusts", "public");
                 });
 
             modelBuilder.Entity("Identity.Core.Entities.Group", b =>
@@ -608,6 +1176,196 @@ namespace Identity.Infrastructure.Migrations
                     b.ToTable("Permissions", "public");
                 });
 
+            modelBuilder.Entity("Identity.Core.Entities.PermissionAuditLog", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Action")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("DeleteAfter")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<string>("ErrorMessage")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<Guid?>("GroupId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("IpAddress")
+                        .HasMaxLength(45)
+                        .HasColumnType("character varying(45)");
+
+                    b.Property<string>("Metadata")
+                        .HasColumnType("text");
+
+                    b.Property<string>("PermissionCode")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<Guid?>("PermissionId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("RequestId")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<Guid?>("RoleId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("RoleId1")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("Success")
+                        .HasColumnType("boolean");
+
+                    b.Property<Guid?>("TargetRoleId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("TargetRoleId1")
+                        .HasColumnType("text");
+
+                    b.Property<string>("TargetUserId")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("Timestamp")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("UserAgent")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GroupId");
+
+                    b.HasIndex("PermissionId");
+
+                    b.HasIndex("RoleId1");
+
+                    b.HasIndex("TargetRoleId1");
+
+                    b.HasIndex("TargetUserId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("PermissionAuditLogs", "public");
+                });
+
+            modelBuilder.Entity("Identity.Core.Entities.PolicyViolation", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("AcknowledgedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("AcknowledgedBy")
+                        .HasMaxLength(450)
+                        .HasColumnType("character varying(450)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<DateTime>("DetectedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                    b.Property<string>("DeviceId")
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
+
+                    b.Property<string>("IpAddress")
+                        .IsRequired()
+                        .HasMaxLength(45)
+                        .HasColumnType("character varying(45)");
+
+                    b.Property<string>("Resolution")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<DateTime?>("ResolvedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("ResolvedBy")
+                        .HasMaxLength(450)
+                        .HasColumnType("character varying(450)");
+
+                    b.Property<Guid>("SecurityPolicyId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Severity")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
+                        .HasDefaultValue("Open");
+
+                    b.Property<string>("UserAgent")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasMaxLength(450)
+                        .HasColumnType("character varying(450)");
+
+                    b.Property<string>("ViolationData")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("jsonb")
+                        .HasDefaultValue("{}");
+
+                    b.Property<string>("ViolationType")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DetectedAt")
+                        .HasDatabaseName("IX_PolicyViolations_DetectedAt");
+
+                    b.HasIndex("SecurityPolicyId")
+                        .HasDatabaseName("IX_PolicyViolations_SecurityPolicyId");
+
+                    b.HasIndex("Severity")
+                        .HasDatabaseName("IX_PolicyViolations_Severity");
+
+                    b.HasIndex("Status")
+                        .HasDatabaseName("IX_PolicyViolations_Status");
+
+                    b.HasIndex("UserId")
+                        .HasDatabaseName("IX_PolicyViolations_UserId");
+
+                    b.HasIndex("ViolationType")
+                        .HasDatabaseName("IX_PolicyViolations_ViolationType");
+
+                    b.HasIndex("UserId", "DetectedAt")
+                        .HasDatabaseName("IX_PolicyViolations_User_Time");
+
+                    b.ToTable("PolicyViolations", "public");
+                });
+
             modelBuilder.Entity("Identity.Core.Entities.RefreshToken", b =>
                 {
                     b.Property<Guid>("Id")
@@ -713,6 +1471,317 @@ namespace Identity.Infrastructure.Migrations
                     b.ToTable("RolePermissions", "public");
                 });
 
+            modelBuilder.Entity("Identity.Core.Entities.SecurityAlert", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("AcknowledgedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("AcknowledgedBy")
+                        .HasMaxLength(450)
+                        .HasColumnType("character varying(450)");
+
+                    b.Property<string>("AlertData")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("jsonb")
+                        .HasDefaultValue("{}");
+
+                    b.Property<Guid?>("AlertRuleId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("AlertType")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<decimal>("ConfidenceScore")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("decimal(5,2)")
+                        .HasDefaultValue(100.0m);
+
+                    b.Property<string>("CorrelationId")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<string>("DeviceId")
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
+
+                    b.Property<Guid?>("GroupId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("IpAddress")
+                        .HasMaxLength(45)
+                        .HasColumnType("character varying(45)");
+
+                    b.Property<bool>("IsAutoGenerated")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(true);
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<int>("Priority")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(100);
+
+                    b.Property<string>("Resolution")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<DateTime?>("ResolvedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("ResolvedBy")
+                        .HasMaxLength(450)
+                        .HasColumnType("character varying(450)");
+
+                    b.Property<string>("RuleId")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("RuleName")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("SessionId")
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)");
+
+                    b.Property<string>("Severity")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)")
+                        .HasDefaultValue("Medium");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)")
+                        .HasDefaultValue("New");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("TriggerConditions")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("jsonb")
+                        .HasDefaultValue("{}");
+
+                    b.Property<string>("UserId")
+                        .HasMaxLength(450)
+                        .HasColumnType("character varying(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AlertRuleId");
+
+                    b.HasIndex("AlertType")
+                        .HasDatabaseName("IX_SecurityAlerts_AlertType");
+
+                    b.HasIndex("CorrelationId")
+                        .HasDatabaseName("IX_SecurityAlerts_CorrelationId");
+
+                    b.HasIndex("CreatedAt")
+                        .HasDatabaseName("IX_SecurityAlerts_CreatedAt");
+
+                    b.HasIndex("GroupId")
+                        .HasDatabaseName("IX_SecurityAlerts_GroupId");
+
+                    b.HasIndex("Severity")
+                        .HasDatabaseName("IX_SecurityAlerts_Severity");
+
+                    b.HasIndex("Status")
+                        .HasDatabaseName("IX_SecurityAlerts_Status");
+
+                    b.HasIndex("UserId")
+                        .HasDatabaseName("IX_SecurityAlerts_UserId");
+
+                    b.ToTable("SecurityAlerts", "public");
+                });
+
+            modelBuilder.Entity("Identity.Core.Entities.SecurityAlertAction", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("ActionData")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("jsonb")
+                        .HasDefaultValue("{}");
+
+                    b.Property<string>("ActionDetails")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<string>("ActionType")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<DateTime>("PerformedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                    b.Property<string>("PerformedBy")
+                        .IsRequired()
+                        .HasMaxLength(450)
+                        .HasColumnType("character varying(450)");
+
+                    b.Property<Guid>("SecurityAlertId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ActionType")
+                        .HasDatabaseName("IX_SecurityAlertActions_ActionType");
+
+                    b.HasIndex("PerformedAt")
+                        .HasDatabaseName("IX_SecurityAlertActions_PerformedAt");
+
+                    b.HasIndex("PerformedBy")
+                        .HasDatabaseName("IX_SecurityAlertActions_PerformedBy");
+
+                    b.HasIndex("SecurityAlertId")
+                        .HasDatabaseName("IX_SecurityAlertActions_SecurityAlertId");
+
+                    b.ToTable("SecurityAlertActions", "public");
+                });
+
+            modelBuilder.Entity("Identity.Core.Entities.SecurityPolicy", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<string>("Conditions")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("jsonb")
+                        .HasDefaultValue("{}");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                    b.Property<string>("CreatedBy")
+                        .HasMaxLength(450)
+                        .HasColumnType("character varying(450)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<Guid?>("GroupId")
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(true);
+
+                    b.Property<bool>("IsEnforced")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(true);
+
+                    b.Property<decimal>("MinimumTrustScore")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("decimal(5,2)")
+                        .HasDefaultValue(50.0m);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("PolicyType")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<int>("Priority")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(100);
+
+                    b.Property<string>("Rules")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("jsonb")
+                        .HasDefaultValue("{}");
+
+                    b.Property<string>("Severity")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasMaxLength(450)
+                        .HasColumnType("character varying(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Category")
+                        .HasDatabaseName("IX_SecurityPolicies_Category");
+
+                    b.HasIndex("CreatedAt")
+                        .HasDatabaseName("IX_SecurityPolicies_CreatedAt");
+
+                    b.HasIndex("GroupId")
+                        .HasDatabaseName("IX_SecurityPolicies_GroupId");
+
+                    b.HasIndex("IsActive")
+                        .HasDatabaseName("IX_SecurityPolicies_IsActive");
+
+                    b.HasIndex("Name")
+                        .IsUnique()
+                        .HasDatabaseName("IX_SecurityPolicies_Name");
+
+                    b.HasIndex("PolicyType")
+                        .HasDatabaseName("IX_SecurityPolicies_PolicyType");
+
+                    b.HasIndex("Priority")
+                        .HasDatabaseName("IX_SecurityPolicies_Priority");
+
+                    b.ToTable("SecurityPolicies", "public");
+                });
+
             modelBuilder.Entity("Identity.Core.Entities.Service", b =>
                 {
                     b.Property<Guid>("Id")
@@ -795,6 +1864,141 @@ namespace Identity.Infrastructure.Migrations
                     b.HasIndex("Type");
 
                     b.ToTable("Services", "public");
+                });
+
+            modelBuilder.Entity("Identity.Core.Entities.TrustScore", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<decimal>("AuthenticationScore")
+                        .HasColumnType("decimal(5,2)");
+
+                    b.Property<decimal>("BehaviorScore")
+                        .HasColumnType("decimal(5,2)");
+
+                    b.Property<DateTime>("CalculatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                    b.Property<string>("DeviceId")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
+
+                    b.Property<decimal>("DeviceScore")
+                        .HasColumnType("decimal(5,2)");
+
+                    b.Property<string>("Factors")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("jsonb")
+                        .HasDefaultValue("[]");
+
+                    b.Property<string>("IpAddress")
+                        .IsRequired()
+                        .HasMaxLength(45)
+                        .HasColumnType("character varying(45)");
+
+                    b.Property<bool>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(true);
+
+                    b.Property<decimal>("LocationScore")
+                        .HasColumnType("decimal(5,2)");
+
+                    b.Property<decimal>("NetworkScore")
+                        .HasColumnType("decimal(5,2)");
+
+                    b.Property<string>("Recommendations")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("jsonb")
+                        .HasDefaultValue("[]");
+
+                    b.Property<string>("Risks")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("jsonb")
+                        .HasDefaultValue("[]");
+
+                    b.Property<decimal>("Score")
+                        .HasColumnType("decimal(5,2)");
+
+                    b.Property<int>("TrustLevel")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasMaxLength(450)
+                        .HasColumnType("character varying(450)");
+
+                    b.Property<DateTime>("ValidUntil")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CalculatedAt")
+                        .HasDatabaseName("IX_TrustScores_CalculatedAt");
+
+                    b.HasIndex("DeviceId")
+                        .HasDatabaseName("IX_TrustScores_DeviceId");
+
+                    b.HasIndex("IpAddress")
+                        .HasDatabaseName("IX_TrustScores_IpAddress");
+
+                    b.HasIndex("UserId")
+                        .HasDatabaseName("IX_TrustScores_UserId");
+
+                    b.HasIndex("UserId", "DeviceId", "IpAddress")
+                        .HasDatabaseName("IX_TrustScores_Composite");
+
+                    b.ToTable("TrustScores", "public");
+                });
+
+            modelBuilder.Entity("Identity.Core.Entities.TrustScoreHistory", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("ChangeReason")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<DateTime>("ChangedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                    b.Property<string>("EventData")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("jsonb")
+                        .HasDefaultValue("{}");
+
+                    b.Property<decimal>("NewScore")
+                        .HasColumnType("decimal(5,2)");
+
+                    b.Property<decimal>("PreviousScore")
+                        .HasColumnType("decimal(5,2)");
+
+                    b.Property<Guid>("TrustScoreId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ChangedAt")
+                        .HasDatabaseName("IX_TrustScoreHistory_ChangedAt");
+
+                    b.HasIndex("TrustScoreId")
+                        .HasDatabaseName("IX_TrustScoreHistory_TrustScoreId");
+
+                    b.ToTable("TrustScoreHistory", "public");
                 });
 
             modelBuilder.Entity("Identity.Core.Entities.UserConsent", b =>
@@ -954,6 +2158,64 @@ namespace Identity.Infrastructure.Migrations
                     b.ToTable("UserGroups", "public");
                 });
 
+            modelBuilder.Entity("Identity.Core.Entities.UserPermission", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Conditions")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<DateTime?>("ExpiresAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("GrantedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("GrantedBy")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid?>("GroupId")
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsWildcard")
+                        .HasColumnType("boolean");
+
+                    b.Property<Guid?>("PermissionId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("PermissionPattern")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("Reason")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GroupId");
+
+                    b.HasIndex("PermissionId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserPermissions", "public");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.Property<int>("Id")
@@ -1060,13 +2322,90 @@ namespace Identity.Infrastructure.Migrations
                     b.ToTable("UserTokens", "public");
                 });
 
+            modelBuilder.Entity("Identity.Core.Entities.AlertRule", b =>
+                {
+                    b.HasOne("Identity.Core.Entities.Group", "Group")
+                        .WithMany()
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("Group");
+                });
+
             modelBuilder.Entity("Identity.Core.Entities.ApplicationRole", b =>
                 {
                     b.HasOne("Identity.Core.Entities.Group", "Group")
+                        .WithMany()
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("Identity.Core.Entities.Group", null)
                         .WithMany("Roles")
-                        .HasForeignKey("GroupId");
+                        .HasForeignKey("GroupId1");
+
+                    b.HasOne("Identity.Core.Entities.ApplicationRole", "ParentRole")
+                        .WithMany("ChildRoles")
+                        .HasForeignKey("ParentRoleId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Group");
+
+                    b.Navigation("ParentRole");
+                });
+
+            modelBuilder.Entity("Identity.Core.Entities.AuditEvent", b =>
+                {
+                    b.HasOne("Identity.Core.Entities.Group", "Group")
+                        .WithMany()
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("Identity.Core.Entities.SecurityAlert", null)
+                        .WithMany("RelatedAuditEvents")
+                        .HasForeignKey("SecurityAlertId");
+
+                    b.HasOne("Identity.Core.Entities.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Group");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Identity.Core.Entities.AuditEventAttachment", b =>
+                {
+                    b.HasOne("Identity.Core.Entities.AuditEvent", "AuditEvent")
+                        .WithMany("Attachments")
+                        .HasForeignKey("AuditEventId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AuditEvent");
+                });
+
+            modelBuilder.Entity("Identity.Core.Entities.DeviceActivity", b =>
+                {
+                    b.HasOne("Identity.Core.Entities.DeviceTrust", "DeviceTrust")
+                        .WithMany("Activities")
+                        .HasForeignKey("DeviceTrustId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("DeviceTrust");
+                });
+
+            modelBuilder.Entity("Identity.Core.Entities.DeviceTrust", b =>
+                {
+                    b.HasOne("Identity.Core.Entities.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Identity.Core.Entities.GroupInvitation", b =>
@@ -1142,6 +2481,64 @@ namespace Identity.Infrastructure.Migrations
                     b.Navigation("Service");
                 });
 
+            modelBuilder.Entity("Identity.Core.Entities.PermissionAuditLog", b =>
+                {
+                    b.HasOne("Identity.Core.Entities.Group", "Group")
+                        .WithMany()
+                        .HasForeignKey("GroupId");
+
+                    b.HasOne("Identity.Core.Entities.Permission", "Permission")
+                        .WithMany()
+                        .HasForeignKey("PermissionId");
+
+                    b.HasOne("Identity.Core.Entities.ApplicationRole", "Role")
+                        .WithMany()
+                        .HasForeignKey("RoleId1");
+
+                    b.HasOne("Identity.Core.Entities.ApplicationRole", "TargetRole")
+                        .WithMany()
+                        .HasForeignKey("TargetRoleId1");
+
+                    b.HasOne("Identity.Core.Entities.ApplicationUser", "TargetUser")
+                        .WithMany()
+                        .HasForeignKey("TargetUserId");
+
+                    b.HasOne("Identity.Core.Entities.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Group");
+
+                    b.Navigation("Permission");
+
+                    b.Navigation("Role");
+
+                    b.Navigation("TargetRole");
+
+                    b.Navigation("TargetUser");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Identity.Core.Entities.PolicyViolation", b =>
+                {
+                    b.HasOne("Identity.Core.Entities.SecurityPolicy", "SecurityPolicy")
+                        .WithMany("Violations")
+                        .HasForeignKey("SecurityPolicyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Identity.Core.Entities.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("SecurityPolicy");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Identity.Core.Entities.RefreshToken", b =>
                 {
                     b.HasOne("Identity.Core.Entities.Group", "Group")
@@ -1185,6 +2582,78 @@ namespace Identity.Infrastructure.Migrations
                     b.Navigation("Role");
                 });
 
+            modelBuilder.Entity("Identity.Core.Entities.SecurityAlert", b =>
+                {
+                    b.HasOne("Identity.Core.Entities.AlertRule", null)
+                        .WithMany("TriggeredAlerts")
+                        .HasForeignKey("AlertRuleId");
+
+                    b.HasOne("Identity.Core.Entities.Group", "Group")
+                        .WithMany()
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("Identity.Core.Entities.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("Group");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Identity.Core.Entities.SecurityAlertAction", b =>
+                {
+                    b.HasOne("Identity.Core.Entities.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("PerformedBy")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Identity.Core.Entities.SecurityAlert", "SecurityAlert")
+                        .WithMany("Actions")
+                        .HasForeignKey("SecurityAlertId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("SecurityAlert");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Identity.Core.Entities.SecurityPolicy", b =>
+                {
+                    b.HasOne("Identity.Core.Entities.Group", "Group")
+                        .WithMany()
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("Group");
+                });
+
+            modelBuilder.Entity("Identity.Core.Entities.TrustScore", b =>
+                {
+                    b.HasOne("Identity.Core.Entities.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Identity.Core.Entities.TrustScoreHistory", b =>
+                {
+                    b.HasOne("Identity.Core.Entities.TrustScore", "TrustScore")
+                        .WithMany("History")
+                        .HasForeignKey("TrustScoreId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("TrustScore");
+                });
+
             modelBuilder.Entity("Identity.Core.Entities.UserConsent", b =>
                 {
                     b.HasOne("Identity.Core.Entities.ApplicationUser", "User")
@@ -1222,6 +2691,29 @@ namespace Identity.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Group");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Identity.Core.Entities.UserPermission", b =>
+                {
+                    b.HasOne("Identity.Core.Entities.Group", "Group")
+                        .WithMany()
+                        .HasForeignKey("GroupId");
+
+                    b.HasOne("Identity.Core.Entities.Permission", "Permission")
+                        .WithMany()
+                        .HasForeignKey("PermissionId");
+
+                    b.HasOne("Identity.Core.Entities.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Group");
+
+                    b.Navigation("Permission");
 
                     b.Navigation("User");
                 });
@@ -1277,8 +2769,15 @@ namespace Identity.Infrastructure.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Identity.Core.Entities.AlertRule", b =>
+                {
+                    b.Navigation("TriggeredAlerts");
+                });
+
             modelBuilder.Entity("Identity.Core.Entities.ApplicationRole", b =>
                 {
+                    b.Navigation("ChildRoles");
+
                     b.Navigation("RolePermissions");
                 });
 
@@ -1293,6 +2792,16 @@ namespace Identity.Infrastructure.Migrations
                     b.Navigation("UserDevices");
 
                     b.Navigation("UserGroups");
+                });
+
+            modelBuilder.Entity("Identity.Core.Entities.AuditEvent", b =>
+                {
+                    b.Navigation("Attachments");
+                });
+
+            modelBuilder.Entity("Identity.Core.Entities.DeviceTrust", b =>
+                {
+                    b.Navigation("Activities");
                 });
 
             modelBuilder.Entity("Identity.Core.Entities.Group", b =>
@@ -1316,11 +2825,28 @@ namespace Identity.Infrastructure.Migrations
                     b.Navigation("RolePermissions");
                 });
 
+            modelBuilder.Entity("Identity.Core.Entities.SecurityAlert", b =>
+                {
+                    b.Navigation("Actions");
+
+                    b.Navigation("RelatedAuditEvents");
+                });
+
+            modelBuilder.Entity("Identity.Core.Entities.SecurityPolicy", b =>
+                {
+                    b.Navigation("Violations");
+                });
+
             modelBuilder.Entity("Identity.Core.Entities.Service", b =>
                 {
                     b.Navigation("GroupServices");
 
                     b.Navigation("Permissions");
+                });
+
+            modelBuilder.Entity("Identity.Core.Entities.TrustScore", b =>
+                {
+                    b.Navigation("History");
                 });
 #pragma warning restore 612, 618
         }

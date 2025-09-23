@@ -1,0 +1,116 @@
+<div
+  class="loading-overlay"
+  [class.fullscreen]="config().fullscreen"
+  [class.with-backdrop]="config().backdrop"
+  [class.clickable]="config().clickToClose"
+  [ngStyle]="overlayStyles()"
+  [@fadeInOut]="isVisible() ? 'visible' : 'hidden'"
+  (click)="onOverlayClick($event)"
+  (keydown.enter)="onOverlayClick($event)"
+  (keydown.space)="onOverlayClick($event)"
+  [attr.aria-label]="config().ariaLabel || 'Yükleniyor'"
+  [attr.aria-describedby]="config().ariaDescribedBy"
+  role="status"
+  aria-live="polite">
+
+  <!-- Backdrop -->
+  <div
+    *ngIf="config().backdrop"
+    class="backdrop"
+    [ngClass]="config().backdropClass">
+  </div>
+
+  <!-- Loading Content -->
+  <div class="loading-content" [class]="contentPositionClass()">
+
+    <!-- Custom Template -->
+    <ng-container *ngIf="config().customTemplate; else defaultContent">
+      <ng-container [ngTemplateOutlet]="config().customTemplate"></ng-container>
+    </ng-container>
+
+    <!-- Default Content -->
+    <ng-template #defaultContent>
+      <div class="loading-container" [class]="spinnerSizeClass()">
+
+        <!-- Custom Icon -->
+        <mat-icon *ngIf="config().icon && !config().showSpinner"
+                 [style.font-size]="config().iconSize || '48px'"
+                 [style.width]="config().iconSize || '48px'"
+                 [style.height]="config().iconSize || '48px'">
+          {{ config().icon }}
+        </mat-icon>
+
+        <!-- Spinner Types -->
+        <div *ngIf="config().showSpinner" class="spinner-container">
+
+          <!-- Circular Spinner -->
+          <mat-spinner
+            *ngIf="config().spinnerType === 'circular'"
+            [diameter]="spinnerDiameter()"
+            [color]="config().spinnerColor"
+            [class.pulse]="config().pulseAnimation">
+          </mat-spinner>
+
+          <!-- Dots Spinner -->
+          <div *ngIf="config().spinnerType === 'dots'" class="dots-spinner" [@pulse]>
+            <div class="dot" *ngFor="let dot of [1,2,3]"></div>
+          </div>
+
+          <!-- Pulse Spinner -->
+          <div *ngIf="config().spinnerType === 'pulse'" class="pulse-spinner" [@pulse]>
+            <div class="pulse-circle"></div>
+          </div>
+
+          <!-- Wave Spinner -->
+          <div *ngIf="config().spinnerType === 'wave'" class="wave-spinner">
+            <div class="wave-bar" *ngFor="let bar of [1,2,3,4,5]" [@wave]></div>
+          </div>
+
+          <!-- Bounce Spinner -->
+          <div *ngIf="config().spinnerType === 'bounce'" class="bounce-spinner">
+            <div class="bounce-ball" *ngFor="let ball of [1,2,3]" [@bounce]></div>
+          </div>
+
+          <!-- Skeleton Loader -->
+          <div *ngIf="config().spinnerType === 'skeleton'" class="skeleton-loader">
+            <div class="skeleton-line" *ngFor="let line of [1,2,3]"></div>
+          </div>
+
+        </div>
+
+        <!-- Progress Bar -->
+        <div *ngIf="config().showProgress" class="progress-container">
+          <mat-progress-bar
+            [mode]="config().progress !== undefined ? 'determinate' : 'indeterminate'"
+            [value]="config().progress || 0"
+            [color]="config().spinnerColor">
+          </mat-progress-bar>
+          <div *ngIf="config().progress !== undefined" class="progress-text">
+            {{ config().progress }}%
+          </div>
+        </div>
+
+        <!-- Messages -->
+        <div *ngIf="config().message || config().submessage" class="message-container">
+          <div *ngIf="config().message" class="main-message">
+            {{ config().message }}
+          </div>
+          <div *ngIf="config().submessage" class="sub-message">
+            {{ config().submessage }}
+          </div>
+        </div>
+
+      </div>
+    </ng-template>
+
+  </div>
+
+  <!-- Linear Progress (Top) -->
+  <mat-progress-bar
+    *ngIf="config().spinnerType === 'linear'"
+    mode="indeterminate"
+    [color]="config().spinnerColor"
+    class="linear-progress">
+  </mat-progress-bar>
+
+</div>

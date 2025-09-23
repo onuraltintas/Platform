@@ -1,0 +1,356 @@
+<div class="settings-container">
+  <!-- Header -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <h1 class="h3 mb-1">Sistem Ayarları</h1>
+      <p class="text-muted mb-0">Sistem geneli ayarlar ve konfigürasyonlar</p>
+    </div>
+  </div>
+
+  <div class="row">
+    <!-- General Settings -->
+    <div class="col-lg-6 mb-4">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="card-title mb-0">
+            <i class="fas fa-cog me-2"></i>
+            Genel Ayarlar
+          </h5>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="generalSettingsForm" (ngSubmit)="onSaveGeneral()">
+            <div class="mb-3">
+              <label for="systemName" class="form-label">Sistem Adı</label>
+              <input
+                type="text"
+                id="systemName"
+                class="form-control"
+                formControlName="systemName"
+                [class.is-invalid]="isFieldInvalid('systemName', 'general')"
+              >
+              <div *ngIf="isFieldInvalid('systemName', 'general')" class="invalid-feedback">
+                Sistem adı zorunludur.
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="systemDescription" class="form-label">Sistem Açıklaması</label>
+              <textarea
+                id="systemDescription"
+                class="form-control"
+                formControlName="systemDescription"
+                rows="3"
+              ></textarea>
+            </div>
+
+            <div class="mb-3">
+              <label for="language" class="form-label">Varsayılan Dil</label>
+              <select id="language" class="form-select" formControlName="language">
+                <option value="tr">Türkçe</option>
+                <option value="en">English</option>
+                <option value="de">Deutsch</option>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label for="timezone" class="form-label">Zaman Dilimi</label>
+              <select id="timezone" class="form-select" formControlName="timezone">
+                <option value="Europe/Istanbul">İstanbul (UTC+3)</option>
+                <option value="UTC">UTC (UTC+0)</option>
+                <option value="Europe/London">Londra (UTC+0)</option>
+                <option value="America/New_York">New York (UTC-5)</option>
+              </select>
+            </div>
+
+            <div class="form-check mb-3">
+              <input
+                type="checkbox"
+                id="maintenanceMode"
+                class="form-check-input"
+                formControlName="maintenanceMode"
+              >
+              <label for="maintenanceMode" class="form-check-label">
+                Bakım Modu
+              </label>
+              <small class="form-text text-muted d-block">
+                Aktif olduğunda sadece yöneticiler sisteme erişebilir
+              </small>
+            </div>
+
+            <button
+              type="submit"
+              class="btn btn-primary"
+              [disabled]="generalSettingsForm.invalid || savingGeneral"
+            >
+              <span *ngIf="savingGeneral" class="spinner-border spinner-border-sm me-2"></span>
+              <i *ngIf="!savingGeneral" class="fas fa-save me-2"></i>
+              Kaydet
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Security Settings -->
+    <div class="col-lg-6 mb-4">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="card-title mb-0">
+            <i class="fas fa-shield-alt me-2"></i>
+            Güvenlik Ayarları
+          </h5>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="securitySettingsForm" (ngSubmit)="onSaveSecurity()">
+            <div class="mb-3">
+              <label for="sessionTimeout" class="form-label">Oturum Zaman Aşımı (dakika)</label>
+              <input
+                type="number"
+                id="sessionTimeout"
+                class="form-control"
+                formControlName="sessionTimeout"
+                min="5"
+                max="480"
+              >
+            </div>
+
+            <div class="mb-3">
+              <label for="passwordPolicy" class="form-label">Şifre Politikası</label>
+              <select id="passwordPolicy" class="form-select" formControlName="passwordPolicy">
+                <option value="basic">Temel (8 karakter minimum)</option>
+                <option value="medium">Orta (8 karakter, büyük/küçük harf)</option>
+                <option value="strong">Güçlü (8 karakter, büyük/küçük harf, sayı, özel karakter)</option>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label for="maxLoginAttempts" class="form-label">Maksimum Giriş Denemesi</label>
+              <input
+                type="number"
+                id="maxLoginAttempts"
+                class="form-control"
+                formControlName="maxLoginAttempts"
+                min="3"
+                max="10"
+              >
+            </div>
+
+            <div class="form-check mb-3">
+              <input
+                type="checkbox"
+                id="requireTwoFactor"
+                class="form-check-input"
+                formControlName="requireTwoFactor"
+              >
+              <label for="requireTwoFactor" class="form-check-label">
+                İki Faktörlü Kimlik Doğrulama Zorunlu
+              </label>
+            </div>
+
+            <div class="form-check mb-3">
+              <input
+                type="checkbox"
+                id="enableAuditLog"
+                class="form-check-input"
+                formControlName="enableAuditLog"
+              >
+              <label for="enableAuditLog" class="form-check-label">
+                Denetim Günlüğü
+              </label>
+            </div>
+
+            <button
+              type="submit"
+              class="btn btn-primary"
+              [disabled]="securitySettingsForm.invalid || savingSecurity"
+            >
+              <span *ngIf="savingSecurity" class="spinner-border spinner-border-sm me-2"></span>
+              <i *ngIf="!savingSecurity" class="fas fa-save me-2"></i>
+              Kaydet
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Email Settings -->
+    <div class="col-lg-6 mb-4">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="card-title mb-0">
+            <i class="fas fa-envelope me-2"></i>
+            E-posta Ayarları
+          </h5>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="emailSettingsForm" (ngSubmit)="onSaveEmail()">
+            <div class="mb-3">
+              <label for="smtpHost" class="form-label">SMTP Sunucu</label>
+              <input
+                type="text"
+                id="smtpHost"
+                class="form-control"
+                formControlName="smtpHost"
+                placeholder="smtp.gmail.com"
+              >
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label for="smtpPort" class="form-label">Port</label>
+                <input
+                  type="number"
+                  id="smtpPort"
+                  class="form-control"
+                  formControlName="smtpPort"
+                  placeholder="587"
+                >
+              </div>
+              <div class="col-md-6">
+                <label for="smtpSecurity" class="form-label">Güvenlik</label>
+                <select id="smtpSecurity" class="form-select" formControlName="smtpSecurity">
+                  <option value="none">Yok</option>
+                  <option value="tls">TLS</option>
+                  <option value="ssl">SSL</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="smtpUsername" class="form-label">Kullanıcı Adı</label>
+              <input
+                type="text"
+                id="smtpUsername"
+                class="form-control"
+                formControlName="smtpUsername"
+              >
+            </div>
+
+            <div class="mb-3">
+              <label for="smtpPassword" class="form-label">Şifre</label>
+              <input
+                type="password"
+                id="smtpPassword"
+                class="form-control"
+                formControlName="smtpPassword"
+              >
+            </div>
+
+            <div class="mb-3">
+              <label for="fromEmail" class="form-label">Gönderen E-posta</label>
+              <input
+                type="email"
+                id="fromEmail"
+                class="form-control"
+                formControlName="fromEmail"
+                placeholder="noreply@company.com"
+              >
+            </div>
+
+            <div class="d-flex gap-2">
+              <button
+                type="button"
+                class="btn btn-outline-secondary"
+                (click)="testEmailConnection()"
+                [disabled]="testingEmail"
+              >
+                <span *ngIf="testingEmail" class="spinner-border spinner-border-sm me-2"></span>
+                <i *ngIf="!testingEmail" class="fas fa-vial me-2"></i>
+                Test Et
+              </button>
+              <button
+                type="submit"
+                class="btn btn-primary"
+                [disabled]="emailSettingsForm.invalid || savingEmail"
+              >
+                <span *ngIf="savingEmail" class="spinner-border spinner-border-sm me-2"></span>
+                <i *ngIf="!savingEmail" class="fas fa-save me-2"></i>
+                Kaydet
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Backup Settings -->
+    <div class="col-lg-6 mb-4">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="card-title mb-0">
+            <i class="fas fa-database me-2"></i>
+            Yedekleme Ayarları
+          </h5>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="backupSettingsForm" (ngSubmit)="onSaveBackup()">
+            <div class="form-check mb-3">
+              <input
+                type="checkbox"
+                id="enableAutoBackup"
+                class="form-check-input"
+                formControlName="enableAutoBackup"
+              >
+              <label for="enableAutoBackup" class="form-check-label">
+                Otomatik Yedekleme
+              </label>
+            </div>
+
+            <div class="mb-3" *ngIf="backupSettingsForm.get('enableAutoBackup')?.value">
+              <label for="backupFrequency" class="form-label">Yedekleme Sıklığı</label>
+              <select id="backupFrequency" class="form-select" formControlName="backupFrequency">
+                <option value="daily">Günlük</option>
+                <option value="weekly">Haftalık</option>
+                <option value="monthly">Aylık</option>
+              </select>
+            </div>
+
+            <div class="mb-3" *ngIf="backupSettingsForm.get('enableAutoBackup')?.value">
+              <label for="backupTime" class="form-label">Yedekleme Saati</label>
+              <input
+                type="time"
+                id="backupTime"
+                class="form-control"
+                formControlName="backupTime"
+              >
+            </div>
+
+            <div class="mb-3">
+              <label for="backupRetention" class="form-label">Yedek Saklama Süresi (gün)</label>
+              <input
+                type="number"
+                id="backupRetention"
+                class="form-control"
+                formControlName="backupRetention"
+                min="1"
+                max="365"
+              >
+            </div>
+
+            <div class="d-flex gap-2">
+              <button
+                type="button"
+                class="btn btn-outline-info"
+                (click)="createManualBackup()"
+                [disabled]="creatingBackup"
+              >
+                <span *ngIf="creatingBackup" class="spinner-border spinner-border-sm me-2"></span>
+                <i *ngIf="!creatingBackup" class="fas fa-download me-2"></i>
+                Manuel Yedek Al
+              </button>
+              <button
+                type="submit"
+                class="btn btn-primary"
+                [disabled]="backupSettingsForm.invalid || savingBackup"
+              >
+                <span *ngIf="savingBackup" class="spinner-border spinner-border-sm me-2"></span>
+                <i *ngIf="!savingBackup" class="fas fa-save me-2"></i>
+                Kaydet
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

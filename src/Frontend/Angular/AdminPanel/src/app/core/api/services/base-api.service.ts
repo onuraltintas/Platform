@@ -23,7 +23,7 @@ export class BaseApiService {
 
   protected post<T>(
     endpoint: string,
-    body: any,
+    body: unknown,
     options?: { headers?: HttpHeaders }
   ): Observable<T> {
     return this.http.post<ApiResponse<T>>(`${this.apiUrl}${endpoint}`, body, options).pipe(
@@ -33,7 +33,7 @@ export class BaseApiService {
 
   protected put<T>(
     endpoint: string,
-    body: any,
+    body: unknown,
     options?: { headers?: HttpHeaders }
   ): Observable<T> {
     return this.http.put<ApiResponse<T>>(`${this.apiUrl}${endpoint}`, body, options).pipe(
@@ -43,7 +43,7 @@ export class BaseApiService {
 
   protected patch<T>(
     endpoint: string,
-    body: any,
+    body: unknown,
     options?: { headers?: HttpHeaders }
   ): Observable<T> {
     return this.http.patch<ApiResponse<T>>(`${this.apiUrl}${endpoint}`, body, options).pipe(
@@ -164,7 +164,7 @@ export class BaseApiService {
     return null;
   }
 
-  protected handleError(error: any): Observable<never> {
+  protected handleError(error: unknown): Observable<never> {
     console.error('API Error:', error);
     throw error;
   }

@@ -1,18 +1,15 @@
-import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
+import { ApplicationConfig, provideZoneChangeDetection, importProvidersFrom } from '@angular/core';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { provideStore } from '@ngrx/store';
-import { provideEffects } from '@ngrx/effects';
-import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { provideToastr } from 'ngx-toastr';
 
 import { routes } from './app.routes';
 import { jwtInterceptor } from './core/auth/interceptors/jwt.interceptor';
 import { errorInterceptor } from './core/api/interceptors/error.interceptor';
 import { loadingInterceptor } from './core/api/interceptors/loading.interceptor';
-import { reducers, AuthEffects } from './store';
-import { environment } from '../environments/environment';
+import { groupInterceptor } from './core/api/interceptors/group.interceptor';
+import { LucideAngularModule, List, Grid3x3, ChevronUp, ChevronDown, ChevronLeft, ChevronRight, Download, FileSpreadsheet, FileText, Upload, Filter, Search, Inbox, MoreHorizontal, Eye, Edit, Trash, Users, UserCheck, Shield, Settings as SettingsIcon, BookOpen, User, Activity, Layers, Package as PackageIcon, BarChart3, Key, Server, RefreshCw, Star, Save, RotateCcw, Minimize2, Copy, CheckCircle } from 'lucide-angular';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -21,10 +18,49 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(
       withInterceptors([
         jwtInterceptor,
+        groupInterceptor,
         errorInterceptor,
         loadingInterceptor
       ])
     ),
+    importProvidersFrom(LucideAngularModule.pick({
+      List,
+      Grid3x3,
+      CheckCircle,
+      ChevronUp,
+      ChevronDown,
+      ChevronLeft,
+      ChevronRight,
+      Download,
+      FileSpreadsheet,
+      FileText,
+      Upload,
+      Filter,
+      Search,
+      Inbox,
+      MoreHorizontal,
+      Eye,
+      Edit,
+      Trash,
+      Users,
+      UserCheck,
+      Shield,
+      Settings: SettingsIcon,
+      BookOpen,
+      User,
+      Activity,
+      Layers,
+      Package: PackageIcon,
+      BarChart3,
+      Key,
+      Server,
+      RefreshCw,
+      Star,
+      Save,
+      RotateCcw,
+      Minimize2,
+      Copy
+    })),
     provideAnimations(),
     // Enhanced toastr configuration
     provideToastr({
@@ -39,13 +75,6 @@ export const appConfig: ApplicationConfig = {
       maxOpened: 5,
       autoDismiss: true,
       newestOnTop: true
-    }),
-    provideStore(reducers),
-    provideEffects([AuthEffects]),
-    provideStoreDevtools({
-      maxAge: 25,
-      logOnly: environment.production,
-      autoPause: true
     })
   ]
 };

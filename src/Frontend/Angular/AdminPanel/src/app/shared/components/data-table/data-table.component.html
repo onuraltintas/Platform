@@ -1,0 +1,129 @@
+<div class="data-table-container">
+  <!-- Loading State -->
+  <div class="loading-overlay" *ngIf="isLoading()">
+    <mat-spinner diameter="40"></mat-spinner>
+    <p>{{ config.loadingMessage || 'Yükleniyor...' }}</p>
+  </div>
+
+  <!-- Empty State -->
+  <div class="empty-state" *ngIf="isEmpty()">
+    <mat-icon>inbox</mat-icon>
+    <p>{{ config.emptyMessage || 'Gösterilecek veri yok' }}</p>
+  </div>
+
+  <!-- Data Table -->
+  <div *ngIf="!isEmpty() && !isLoading()" class="table-container">
+    <table mat-table [dataSource]="dataSource" matSort class="data-table">
+
+      <!-- Selection Column -->
+      <ng-container matColumnDef="select" *ngIf="config.selectable">
+        <th mat-header-cell *matHeaderCellDef>
+          <mat-checkbox
+            *ngIf="config.multiSelect"
+            (change)="$event ? toggleAllRows() : null"
+            [checked]="selection.hasValue() && isAllSelected()"
+            [indeterminate]="selection.hasValue() && !isAllSelected()"
+            [disabled]="config.data.length === 0">
+          </mat-checkbox>
+        </th>
+        <td mat-cell *matCellDef="let row">
+          <mat-checkbox
+            (click)="$event.stopPropagation()"
+            (change)="$event ? selection.toggle(row) : null"
+            [checked]="selection.isSelected(row)">
+          </mat-checkbox>
+        </td>
+      </ng-container>
+
+      <!-- Dynamic Columns -->
+      <ng-container *ngFor="let column of visibleColumns()" [matColumnDef]="column.key">
+        <th mat-header-cell *matHeaderCellDef [mat-sort-header]="column.sortable ? column.key : ''">
+          {{ column.label }}
+        </th>
+        <td mat-cell *matCellDef="let row" [ngClass]="getCellClass(column, row)">
+
+          <!-- Avatar Type -->
+          <div *ngIf="column.type === 'avatar'" class="avatar-cell">
+            <div class="data-avatar">
+              {{ getFormattedValue(column, row) }}
+            </div>
+          </div>
+
+          <!-- Text Types -->
+          <span *ngIf="isTextType(column.type)">
+            {{ getFormattedValue(column, row) }}
+          </span>
+
+          <!-- Email Type -->
+          <a *ngIf="column.type === 'email'" [href]="'mailto:' + getFormattedValue(column, row)">
+            {{ getFormattedValue(column, row) }}
+          </a>
+
+          <!-- Boolean Badge Type -->
+          <mat-chip *ngIf="column.type === 'boolean-badge'" [ngClass]="getBooleanBadgeClass(column, row)">
+            {{ getFormattedValue(column, row) }}
+          </mat-chip>
+
+          <!-- Chip List Type -->
+          <mat-chip-listbox *ngIf="column.type === 'chip-list'">
+            <mat-chip *ngFor="let chip of getChipList(column, row)" [ngClass]="getChipClass(column, row, chip)">
+              {{ chip }}
+            </mat-chip>
+          </mat-chip-listbox>
+
+          <!-- Date/DateTime Types -->
+          <span *ngIf="isDateType(column.type)">
+            {{ getFormattedValue(column, row) }}
+          </span>
+
+          <!-- Boolean Type -->
+          <mat-icon *ngIf="column.type === 'boolean'" [ngClass]="getBooleanIconClass(column, row)">
+            {{ getBooleanIcon(column, row) }}
+          </mat-icon>
+
+        </td>
+      </ng-container>
+
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions" *ngIf="hasActions()">
+        <th mat-header-cell *matHeaderCellDef>İşlemler</th>
+        <td mat-cell *matCellDef="let row" class="actions-cell">
+          <button mat-icon-button [matMenuTriggerFor]="actionsMenu" [matMenuTriggerData]="{row: row}">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+
+          <mat-menu #actionsMenu="matMenu">
+            <ng-template matMenuContent let-row="row">
+              <button
+                *ngFor="let action of getVisibleActions(row)"
+                mat-menu-item
+                (click)="executeAction(action, row)"
+                [disabled]="isActionDisabled(action, row)">
+                <mat-icon [color]="action.color">{{ action.icon }}</mat-icon>
+                <span>{{ action.label }}</span>
+              </button>
+            </ng-template>
+          </mat-menu>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr
+        mat-row
+        *matRowDef="let row; columns: displayedColumns;"
+        (click)="onRowClick(row)"
+        [ngClass]="getRowClass(row)">
+      </tr>
+    </table>
+
+    <!-- Pagination -->
+    <mat-paginator
+      *ngIf="config.pageable"
+      [pageSizeOptions]="config.pageSizeOptions || [5, 10, 25, 50, 100]"
+      [showFirstLastButtons]="config.showFirstLastButtons || true"
+      [pageSize]="config.pageSize || 10"
+      [length]="config.data.length || 0"
+      (page)="onPageChange($event)">
+    </mat-paginator>
+  </div>
+</div>
