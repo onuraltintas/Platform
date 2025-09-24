@@ -87,8 +87,8 @@ export class PermissionDemoComponent implements OnInit {
 
   getSpeedReadingPermissions(): string[] {
     return [
-      this.permissions.SPEED_READING.TEXTS.READ,
-      this.permissions.SPEED_READING.TEXTS.CREATE,
+      this.permissions.SPEED_READING.READING_TEXTS.READ,
+      this.permissions.SPEED_READING.READING_TEXTS.CREATE,
       this.permissions.SPEED_READING.EXERCISES.READ,
       this.permissions.SPEED_READING.ANALYTICS.READ
     ];

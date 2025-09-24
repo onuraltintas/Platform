@@ -1,16 +1,16 @@
 export const environment = {
   production: false,
-  apiGateway: 'http://localhost:5001/api/v1',
+  apiGateway: 'http://localhost:5000',
 
   endpoints: {
-    auth: '/auth',
-    users: '/users',
-    roles: '/roles',
-    permissions: '/permissions',
-    groups: '/groups',
-    userProfile: '/user-profiles',
-    speedReading: '/exercises',
-    audit: '/audit'
+    auth: '/api/v1/auth',
+    users: '/api/v1/users',
+    roles: '/api/v1/roles',
+    permissions: '/api/v1/permissions',
+    groups: '/api/v1/groups',
+    userProfile: '/api/v1/user-profiles',
+    speedReading: '/api/v1/reading-texts',
+    audit: '/api/v1/audit'
   },
 
   auth: {

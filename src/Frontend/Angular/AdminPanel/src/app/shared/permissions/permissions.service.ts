@@ -1,30 +1,31 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
+import { PermissionService } from '../../core/services/permission.service';
 
 @Injectable({ providedIn: 'root' })
 export class PermissionsService {
-  private readonly permissionsSignal = signal<Set<string>>(new Set());
+  private readonly core = inject(PermissionService);
 
+  // Wrapper API to maintain backward compatibility
   load(permissions: string[] | Set<string>): void {
-    const set = Array.isArray(permissions) ? new Set(permissions) : new Set(permissions);
-    this.permissionsSignal.set(set);
+    // No-op: core servis login sonrası kendi cache’ini yönetiyor
   }
 
   has(permission: string): boolean {
-    return this.permissionsSignal().has(permission);
+    return this.core.canAccessWithWildcard(permission);
   }
 
   hasAny(perms: string[]): boolean {
-    const set = this.permissionsSignal();
-    return perms.some(p => set.has(p));
+    return this.core.canAccessAny(perms);
   }
 
   hasAll(perms: string[]): boolean {
-    const set = this.permissionsSignal();
-    return perms.every(p => set.has(p));
+    return perms.every(p => this.core.canAccessWithWildcard(p));
   }
 
   get all(): string[] {
-    return Array.from(this.permissionsSignal());
+    const perms = this.core.getCurrentPermissions();
+    if (!perms) { return []; }
+    return perms.allPermissions?.length ? perms.allPermissions : [];
   }
 }
 

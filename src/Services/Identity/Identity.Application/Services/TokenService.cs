@@ -21,6 +21,7 @@ public class TokenService : Identity.Core.Interfaces.ITokenService
     private readonly IPermissionService _permissionService;
     private readonly Enterprise.Shared.Security.Interfaces.ITokenService _enterpriseTokenService;
     private readonly ICacheService _cacheService;
+    private readonly IRefreshTokenRepository _refreshTokenRepository;
     private readonly IMapper _mapper;
     private readonly ILogger<TokenService> _logger;
     private readonly IConfiguration _configuration;
@@ -35,6 +36,7 @@ public class TokenService : Identity.Core.Interfaces.ITokenService
         IPermissionService permissionService,
         Enterprise.Shared.Security.Interfaces.ITokenService enterpriseTokenService,
         ICacheService cacheService,
+        IRefreshTokenRepository refreshTokenRepository,
         IMapper mapper,
         ILogger<TokenService> logger,
         IConfiguration configuration)
@@ -45,6 +47,7 @@ public class TokenService : Identity.Core.Interfaces.ITokenService
         _permissionService = permissionService;
         _enterpriseTokenService = enterpriseTokenService;
         _cacheService = cacheService;
+        _refreshTokenRepository = refreshTokenRepository;
         _mapper = mapper;
         _logger = logger;
         _configuration = configuration;
@@ -160,25 +163,59 @@ public class TokenService : Identity.Core.Interfaces.ITokenService
             var jti = Guid.NewGuid().ToString();
             claims["jti"] = jti;
 
-            // Convert claims dictionary to Claims list
+            // Convert to standard ASP.NET Core Claims list for proper authorization
             var claimsList = new List<System.Security.Claims.Claim>();
-            foreach (var claim in claims)
+
+            // Add standard identity claims
+            claimsList.Add(new System.Security.Claims.Claim(System.Security.Claims.ClaimTypes.NameIdentifier, userId));
+            claimsList.Add(new System.Security.Claims.Claim(System.Security.Claims.ClaimTypes.Email, user.Email!));
+            claimsList.Add(new System.Security.Claims.Claim(System.Security.Claims.ClaimTypes.Name, $"{user.FirstName} {user.LastName}".Trim()));
+            claimsList.Add(new System.Security.Claims.Claim(System.Security.Claims.ClaimTypes.GivenName, user.FirstName));
+            claimsList.Add(new System.Security.Claims.Claim(System.Security.Claims.ClaimTypes.Surname, user.LastName));
+            claimsList.Add(new System.Security.Claims.Claim("email_verified", user.EmailConfirmed.ToString().ToLower()));
+            claimsList.Add(new System.Security.Claims.Claim("jti", jti));
+
+            // Add roles using standard ClaimTypes.Role
+            if (userRoles.Any())
             {
-                if (claim.Value is string stringValue)
+                foreach (var role in userRoles)
                 {
-                    claimsList.Add(new System.Security.Claims.Claim(claim.Key, stringValue));
+                    claimsList.Add(new System.Security.Claims.Claim(System.Security.Claims.ClaimTypes.Role, role));
                 }
-                else if (claim.Value is IEnumerable<object> enumerable)
+
+                // Add SuperAdmin flag for easy checking
+                if (userRoles.Contains("SuperAdmin"))
                 {
-                    foreach (var item in enumerable)
-                    {
-                        claimsList.Add(new System.Security.Claims.Claim(claim.Key, item.ToString() ?? string.Empty));
-                    }
+                    claimsList.Add(new System.Security.Claims.Claim("is_super", "true"));
+                    claimsList.Add(new System.Security.Claims.Claim("permission", "*.*.*"));
                 }
-                else
+            }
+
+            // Add permissions as individual claims
+            if (!userRoles.Contains("SuperAdmin") && permissions.Any())
+            {
+                foreach (var permission in permissions)
                 {
-                    claimsList.Add(new System.Security.Claims.Claim(claim.Key, claim.Value.ToString() ?? string.Empty));
+                    claimsList.Add(new System.Security.Claims.Claim("permission", permission));
                 }
+            }
+
+            // Add group information as custom claims (standardized)
+            if (activeGroup != null)
+            {
+                // Backward-compatible: keep old claims
+                claimsList.Add(new System.Security.Claims.Claim("active_group_id", activeGroup.Id.ToString()));
+                claimsList.Add(new System.Security.Claims.Claim("active_group_name", activeGroup.Name));
+                claimsList.Add(new System.Security.Claims.Claim("active_group_type", activeGroup.Type.ToString()));
+
+                // Standard claim used across handlers and gateway
+                claimsList.Add(new System.Security.Claims.Claim("GroupId", activeGroup.Id.ToString()));
+            }
+
+            // Add device info if provided
+            if (!string.IsNullOrEmpty(deviceId))
+            {
+                claimsList.Add(new System.Security.Claims.Claim("device_id", deviceId));
             }
 
             var accessToken = _enterpriseTokenService.GenerateAccessToken(claimsList, _accessTokenExpiryMinutes);
@@ -207,8 +244,8 @@ public class TokenService : Identity.Core.Interfaces.ITokenService
                 UserAgent = GetCurrentUserAgent()
             };
 
-            // Store refresh token (you would implement this in repository)
-            // await _refreshTokenRepository.CreateAsync(refreshTokenEntity);
+            // Store refresh token securely (hashed)
+            await _refreshTokenRepository.CreateAsync(refreshTokenEntity, cancellationToken);
 
             var expiresAt = DateTime.UtcNow.AddMinutes(_accessTokenExpiryMinutes);
 
@@ -264,17 +301,33 @@ public class TokenService : Identity.Core.Interfaces.ITokenService
     {
         try
         {
-            // Check refresh token in database
-            // var tokenEntity = await _refreshTokenRepository.GetByTokenAsync(refreshToken);
-            
-            // For now, return true as placeholder
-            return Task.FromResult(Result<bool>.Success(true));
+            var hashed = Hash(refreshToken);
+            return ValidateHashedRefreshTokenAsync(hashed, cancellationToken);
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Error validating refresh token");
             return Task.FromResult(Result<bool>.Failure("Refresh token doğrulanamadı"));
         }
+    }
+
+    private async Task<Result<bool>> ValidateHashedRefreshTokenAsync(string hashedToken, CancellationToken cancellationToken)
+    {
+        var entity = await _refreshTokenRepository.GetByHashedTokenAsync(hashedToken, cancellationToken);
+        if (entity == null) return Result<bool>.Success(false);
+
+        if (entity.IsRevoked) return Result<bool>.Success(false);
+        if (entity.IsUsed) return Result<bool>.Success(false);
+        if (entity.ExpiresAt < DateTime.UtcNow) return Result<bool>.Success(false);
+
+        return Result<bool>.Success(true);
+    }
+
+    private static string Hash(string input)
+    {
+        using var sha256 = System.Security.Cryptography.SHA256.Create();
+        var bytes = sha256.ComputeHash(System.Text.Encoding.UTF8.GetBytes(input));
+        return Convert.ToBase64String(bytes);
     }
 
     public async Task<Result<string>> GetUserIdFromTokenAsync(string token)

@@ -1,5 +1,6 @@
 using Identity.Core.Caching;
 using Identity.Core.Entities;
+using Identity.Core.Interfaces;
 using Identity.Infrastructure.Data;
 using Enterprise.Shared.Caching.Interfaces;
 using Enterprise.Shared.Caching.Models;
@@ -19,6 +20,7 @@ public class PermissionCacheService : IPermissionCacheService
     private readonly ICacheMetricsService _metricsService;
     private readonly IdentityDbContext _context;
     private readonly ILogger<PermissionCacheService> _logger;
+    private readonly IGatewayCacheInvalidationClient _gatewayInvalidation;
 
     // Cache key prefixes
     private const string USER_PERMISSIONS_PREFIX = "perm:user:";
@@ -37,13 +39,15 @@ public class PermissionCacheService : IPermissionCacheService
         IBulkCacheService bulkCacheService,
         ICacheMetricsService metricsService,
         IdentityDbContext context,
-        ILogger<PermissionCacheService> logger)
+        ILogger<PermissionCacheService> logger,
+        IGatewayCacheInvalidationClient gatewayInvalidation)
     {
         _cacheService = cacheService;
         _bulkCacheService = bulkCacheService;
         _metricsService = metricsService;
         _context = context;
         _logger = logger;
+        _gatewayInvalidation = gatewayInvalidation;
     }
 
     public async Task<HashSet<string>> GetUserPermissionsAsync(string userId, CancellationToken cancellationToken = default)
@@ -225,6 +229,16 @@ public class PermissionCacheService : IPermissionCacheService
 
             await BulkInvalidateUsersAsync(usersWithRole, cancellationToken);
 
+            // Notify Gateway to invalidate affected users immediately
+            try
+            {
+                await _gatewayInvalidation.BulkInvalidateAsync(usersWithRole, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogWarning(ex, "Failed to notify gateway for bulk invalidation");
+            }
+
             _logger.LogInformation("Invalidated role permissions cache for {RoleId} and {UserCount} affected users",
                 roleId, usersWithRole.Count);
         }
@@ -241,6 +255,17 @@ public class PermissionCacheService : IPermissionCacheService
             // This is a complex operation - we need to invalidate all users/roles that have this permission
             // For simplicity, we'll clear all caches when a permission is modified
             await ClearAllCachesAsync(cancellationToken);
+
+            // As a conservative approach, notify gateway to clear all user caches
+            try
+            {
+                // Fetch affected users (optional optimization). For now, signal empty -> gateway can ignore
+                await _gatewayInvalidation.BulkInvalidateAsync(Array.Empty<string>(), cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogWarning(ex, "Failed to notify gateway for permission change");
+            }
 
             _logger.LogWarning("Cleared all permission caches due to permission modification: {PermissionCode}", permissionCode);
         }

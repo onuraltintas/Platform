@@ -76,3 +76,14 @@ public class GroupMemberDto
     public bool IsActive { get; set; }
     public DateTime? LastLoginAt { get; set; }
 }
+
+public class GroupStatisticsDto
+{
+    public int TotalGroups { get; set; }
+    public int SystemGroups { get; set; }
+    public int CustomGroups { get; set; }
+    public int TotalMembers { get; set; }
+    public double AverageMembersPerGroup { get; set; }
+    public GroupDto? LargestGroup { get; set; }
+    public int EmptyGroups { get; set; }
+}

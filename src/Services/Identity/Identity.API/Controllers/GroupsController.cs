@@ -70,6 +70,47 @@ public class GroupsController : ControllerBase
     }
 
     /// <summary>
+    /// Get group statistics
+    /// </summary>
+    /// <returns>Group statistics</returns>
+    [HttpGet("statistics")]
+    [AllowAnonymous]
+    [ProducesResponseType(typeof(GroupStatisticsDto), StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetGroupStatistics()
+    {
+        try
+        {
+            var statistics = await _groupService.GetStatisticsAsync();
+
+            if (!statistics.IsSuccess || statistics.Value == null)
+            {
+                // Return default statistics if not available
+                return Ok(new GroupStatisticsDto
+                {
+                    TotalGroups = 0,
+                    SystemGroups = 0,
+                    CustomGroups = 0,
+                    TotalMembers = 0
+                });
+            }
+
+            return Ok(statistics.Value);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error retrieving group statistics");
+            // Return default statistics on error
+            return Ok(new GroupStatisticsDto
+            {
+                TotalGroups = 0,
+                SystemGroups = 0,
+                CustomGroups = 0,
+                TotalMembers = 0
+            });
+        }
+    }
+
+    /// <summary>
     /// Get group by ID
     /// </summary>
     /// <param name="groupId">Group ID</param>

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { BaseUserManagementService } from './base-user-management.service';
+import { environment } from '../../../../environments/environment';
 import {
   GroupDto,
   GroupMemberDto,
@@ -21,7 +22,7 @@ import {
   providedIn: 'root'
 })
 export class GroupService extends BaseUserManagementService {
-  private readonly apiPath = '/groups';
+  private readonly apiPath = `${environment.endpoints.groups}`;
 
   /**
    * Get paginated groups list

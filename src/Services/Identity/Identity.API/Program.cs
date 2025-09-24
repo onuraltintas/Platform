@@ -15,6 +15,7 @@ using FluentValidation.AspNetCore;
 using FluentValidation;
 using System.Reflection;
 using System.Threading.RateLimiting;
+using Microsoft.AspNetCore.RateLimiting;
 using Enterprise.Shared.Security.Extensions;
 using Enterprise.Shared.Events.Extensions;
 using Enterprise.Shared.Email.Extensions;
@@ -205,6 +206,9 @@ builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
 .AddEntityFrameworkStores<IdentityDbContext>()
 .AddDefaultTokenProviders();
 
+// Repositories
+builder.Services.AddScoped<IRefreshTokenRepository, Identity.Infrastructure.Repositories.RefreshTokenRepository>();
+
 // JWT Authentication - use the early defined variables
 
 builder.Services.AddAuthentication(options =>
@@ -239,7 +243,11 @@ if (bool.Parse(Environment.GetEnvironmentVariable("ENABLE_GOOGLE_AUTH") ?? "fals
 }
 
 // Authorization with Dynamic Policy Provider
-builder.Services.AddAuthorization();
+builder.Services.AddAuthorization(options =>
+{
+    // Continue invoking handlers even if one fails
+    options.InvokeHandlersAfterFailure = false;
+});
 builder.Services.AddHttpContextAccessor();
 
 // Register SuperAdmin Bypass Handler (MUST BE FIRST for priority)
@@ -334,12 +342,16 @@ if (!string.IsNullOrEmpty(redisConnectionString))
     // Register ICacheMetricsService required by DistributedCacheService
     builder.Services.AddSingleton<Enterprise.Shared.Caching.Interfaces.ICacheMetricsService, Enterprise.Shared.Caching.Services.CacheMetricsService>();
     builder.Services.AddScoped<Enterprise.Shared.Caching.Interfaces.ICacheService, Enterprise.Shared.Caching.Services.DistributedCacheService>();
+    builder.Services.AddScoped<Enterprise.Shared.Caching.Interfaces.IBulkCacheService>(provider =>
+        (Enterprise.Shared.Caching.Interfaces.IBulkCacheService)provider.GetRequiredService<Enterprise.Shared.Caching.Interfaces.ICacheService>());
 }
 else
 {
     builder.Services.AddMemoryCache();
     builder.Services.AddSingleton<Enterprise.Shared.Caching.Interfaces.ICacheMetricsService, Enterprise.Shared.Caching.Services.CacheMetricsService>();
     builder.Services.AddScoped<Enterprise.Shared.Caching.Interfaces.ICacheService, Enterprise.Shared.Caching.Services.MemoryCacheService>();
+    builder.Services.AddScoped<Enterprise.Shared.Caching.Interfaces.IBulkCacheService>(provider =>
+        (Enterprise.Shared.Caching.Interfaces.IBulkCacheService)provider.GetRequiredService<Enterprise.Shared.Caching.Interfaces.ICacheService>());
 }
 
 // CORS
@@ -355,9 +367,38 @@ builder.Services.AddCors(options =>
     });
 });
 
-// Rate Limiting - Temporarily disabled due to .NET 8 compatibility issues
-// TODO: Implement proper rate limiting with correct .NET 8 APIs
-// builder.Services.AddRateLimiter(options => { ... });
+// Rate Limiting
+builder.Services.AddRateLimiter(options =>
+{
+    // Global policy: 100 istek / 1 dakika
+    options.AddFixedWindowLimiter("GlobalPolicy", limiterOptions =>
+    {
+        limiterOptions.PermitLimit = 100;
+        limiterOptions.Window = TimeSpan.FromMinutes(1);
+        limiterOptions.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
+        limiterOptions.QueueLimit = 50;
+    });
+
+    // Auth policy: login/refresh için daha sıkı limitler
+    options.AddFixedWindowLimiter("AuthPolicy", limiterOptions =>
+    {
+        limiterOptions.PermitLimit = 10;
+        limiterOptions.Window = TimeSpan.FromMinutes(1);
+        limiterOptions.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
+        limiterOptions.QueueLimit = 5;
+    });
+
+    // Email policy: e-posta işlemleri için düşük trafik
+    options.AddFixedWindowLimiter("EmailPolicy", limiterOptions =>
+    {
+        limiterOptions.PermitLimit = 5;
+        limiterOptions.Window = TimeSpan.FromMinutes(1);
+        limiterOptions.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
+        limiterOptions.QueueLimit = 2;
+    });
+
+    options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+});
 
 // AutoMapper
 builder.Services.AddAutoMapper(typeof(Program), typeof(Identity.Application.Mappings.IdentityMappingProfile));
@@ -371,6 +412,9 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IUserService, UserService>();
 // Register GroupService - now uses shared Enterprise caching internally
+// Gateway cache invalidation client
+builder.Services.AddHttpClient();
+builder.Services.AddScoped<IGatewayCacheInvalidationClient, Identity.Infrastructure.Services.GatewayCacheInvalidationClient>();
 builder.Services.AddScoped<IGroupService, Identity.Application.Services.GroupService>();
 builder.Services.AddScoped<IGroupRepository, Identity.Infrastructure.Repositories.GroupRepository>();
 // Temporarily comment out ServiceRegistryService to avoid complex dependencies
@@ -390,6 +434,7 @@ builder.Services.AddScoped<IGoogleAuthService, GoogleAuthService>();
 builder.Services.AddScoped<IPermissionDiscoveryService, PermissionDiscoveryService>();
 builder.Services.AddScoped<RoleSeedingService>();
 builder.Services.AddScoped<ModernPermissionSeedingService>(); // New modern service
+builder.Services.AddScoped<PermissionDataMigrationService>(); // Data migration for legacy permission codes
 builder.Services.AddScoped<DemoUserSeedingService>();
 builder.Services.AddScoped<GroupSeedingService>();
 builder.Services.AddScoped<ZeroTrustSeedingService>();
@@ -487,6 +532,60 @@ app.Use(async (context, next) =>
     context.Response.Headers.Append("X-Frame-Options", "DENY");
     context.Response.Headers.Append("X-XSS-Protection", "1; mode=block");
     context.Response.Headers.Append("Referrer-Policy", "strict-origin-when-cross-origin");
+
+    // Content Security Policy (basic, environment-aware)
+    if (!context.Response.Headers.ContainsKey("Content-Security-Policy"))
+    {
+        var isDev = context.RequestServices.GetService<IWebHostEnvironment>()?.IsDevelopment() == true;
+        var csp = isDev
+            ? string.Join("; ", new[]
+            {
+                "default-src 'self'",
+                "script-src 'self' 'unsafe-inline' 'unsafe-eval' localhost:*",
+                "style-src 'self' 'unsafe-inline'",
+                "img-src 'self' data: https:",
+                "font-src 'self' https:",
+                "connect-src 'self' https: ws: wss: localhost:*",
+                "object-src 'none'",
+                "frame-ancestors 'none'",
+                "upgrade-insecure-requests"
+            })
+            : string.Join("; ", new[]
+            {
+                "default-src 'self'",
+                "script-src 'self'",
+                "style-src 'self' 'unsafe-inline'",
+                "img-src 'self' data: https:",
+                "font-src 'self' https:",
+                "connect-src 'self' https:",
+                "object-src 'none'",
+                "frame-ancestors 'none'",
+                "upgrade-insecure-requests"
+            });
+        context.Response.Headers.Append("Content-Security-Policy", csp);
+    }
+
+    // Permissions-Policy
+    if (!context.Response.Headers.ContainsKey("Permissions-Policy"))
+    {
+        context.Response.Headers.Append("Permissions-Policy",
+            "geolocation=(), microphone=(), camera=(), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=()");
+    }
+
+    // Cross-Origin isolation headers
+    if (!context.Response.Headers.ContainsKey("Cross-Origin-Embedder-Policy"))
+        context.Response.Headers.Append("Cross-Origin-Embedder-Policy", "require-corp");
+    if (!context.Response.Headers.ContainsKey("Cross-Origin-Opener-Policy"))
+        context.Response.Headers.Append("Cross-Origin-Opener-Policy", "same-origin");
+    if (!context.Response.Headers.ContainsKey("Cross-Origin-Resource-Policy"))
+        context.Response.Headers.Append("Cross-Origin-Resource-Policy", "same-origin");
+
+    // HSTS (HTTPS ise)
+    if (context.Request.IsHttps && !context.Response.Headers.ContainsKey("Strict-Transport-Security"))
+    {
+        context.Response.Headers.Append("Strict-Transport-Security", "max-age=31536000; includeSubDomains; preload");
+    }
+
     await next();
 });
 
@@ -505,8 +604,8 @@ app.UseSerilogRequestLogging();
 // CORS
 app.UseCors("DefaultPolicy");
 
-// Rate Limiting - Temporarily disabled
-// app.UseRateLimiter();
+// Rate Limiting
+app.UseRateLimiter();
 
 // Session (for Google OAuth callback)
 app.UseSession();
@@ -651,6 +750,10 @@ app.MapMethods("/health", new[] { "HEAD" }, () => Results.Ok());
 
                 // Seed default services if missing
                 await SeedDefaultServicesAsync(context);
+
+                // Data migration: normalize legacy permission codes/patterns
+                var permissionDataMigration = scope.ServiceProvider.GetRequiredService<PermissionDataMigrationService>();
+                await permissionDataMigration.MigrateAsync();
 
                 // Discover and seed permissions using the new automatic system
                 var permissionDiscoveryService = scope.ServiceProvider.GetRequiredService<IPermissionDiscoveryService>();

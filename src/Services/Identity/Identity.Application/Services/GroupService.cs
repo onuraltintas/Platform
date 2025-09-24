@@ -594,6 +594,91 @@ public class GroupService : IGroupService
         }
     }
 
+    public async Task<Result<GroupStatisticsDto>> GetStatisticsAsync(CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            var cacheKey = "group:statistics";
+
+            var statistics = await _cache.GetOrSetAsync(cacheKey, async () =>
+            {
+                // Get all groups for statistics
+                var allGroupsResult = await _groupRepository.GetGroupsAsync(1, int.MaxValue, null, null, cancellationToken);
+
+                if (allGroupsResult == null || allGroupsResult.Data == null)
+                {
+                    return new GroupStatisticsDto
+                    {
+                        TotalGroups = 0,
+                        SystemGroups = 0,
+                        CustomGroups = 0,
+                        TotalMembers = 0,
+                        AverageMembersPerGroup = 0,
+                        EmptyGroups = 0
+                    };
+                }
+
+                var groups = allGroupsResult.Data.ToList();
+                var totalGroups = groups.Count;
+                var systemGroups = groups.Count(g => g.Name.StartsWith("System_") || g.Name.StartsWith("Role_"));
+                var customGroups = totalGroups - systemGroups;
+
+                // Count members and find largest group
+                var totalMembers = 0;
+                var largestGroupSize = 0;
+                Group? largestGroup = null;
+                var emptyGroups = 0;
+
+                foreach (var group in groups)
+                {
+                    var memberCount = await _groupRepository.GetMemberCountAsync(group.Id, cancellationToken);
+                    totalMembers += memberCount;
+
+                    if (memberCount == 0)
+                    {
+                        emptyGroups++;
+                    }
+
+                    if (memberCount > largestGroupSize)
+                    {
+                        largestGroupSize = memberCount;
+                        largestGroup = group;
+                    }
+                }
+
+                var averageMembersPerGroup = totalGroups > 0 ? (double)totalMembers / totalGroups : 0;
+
+                return new GroupStatisticsDto
+                {
+                    TotalGroups = totalGroups,
+                    SystemGroups = systemGroups,
+                    CustomGroups = customGroups,
+                    TotalMembers = totalMembers,
+                    AverageMembersPerGroup = Math.Round(averageMembersPerGroup, 2),
+                    LargestGroup = largestGroup != null ? _mapper.Map<GroupDto>(largestGroup) : null,
+                    EmptyGroups = emptyGroups
+                };
+            }, TimeSpan.FromMinutes(5), cancellationToken);
+
+            return Result<GroupStatisticsDto>.Success(statistics);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error getting group statistics");
+
+            // Return default statistics on error
+            return Result<GroupStatisticsDto>.Success(new GroupStatisticsDto
+            {
+                TotalGroups = 0,
+                SystemGroups = 0,
+                CustomGroups = 0,
+                TotalMembers = 0,
+                AverageMembersPerGroup = 0,
+                EmptyGroups = 0
+            });
+        }
+    }
+
     private string GenerateSecureCode(int length = 16)
     {
         const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";

@@ -58,11 +58,11 @@ export class PermissionConstants {
 
   // Speed Reading Service Permissions
   static readonly SPEED_READING = {
-    TEXTS: {
-      READ: 'SpeedReading.Texts.Read',
-      CREATE: 'SpeedReading.Texts.Create',
-      UPDATE: 'SpeedReading.Texts.Update',
-      DELETE: 'SpeedReading.Texts.Delete'
+    READING_TEXTS: {
+      READ: 'SpeedReading.ReadingTexts.Read',
+      CREATE: 'SpeedReading.ReadingTexts.Create',
+      UPDATE: 'SpeedReading.ReadingTexts.Update',
+      DELETE: 'SpeedReading.ReadingTexts.Delete'
     },
     EXERCISES: {
       READ: 'SpeedReading.Exercises.Read',

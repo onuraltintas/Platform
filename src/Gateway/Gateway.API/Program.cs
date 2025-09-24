@@ -61,10 +61,10 @@ builder.Services.Configure<GatewayOptions>(options =>
     // Security configuration (allow defaults for development)
     options.Security.JwtSecret = Environment.GetEnvironmentVariable("JWT_SECRET") 
         ?? "development-secret-key-minimum-256-bits-for-hs256-algorithm";
-    options.Security.JwtIssuer = Environment.GetEnvironmentVariable("JWT_ISSUER") 
-        ?? "https://localhost:5000";
-    options.Security.JwtAudience = Environment.GetEnvironmentVariable("JWT_AUDIENCE") 
-        ?? "gateway-api";
+    options.Security.JwtIssuer = Environment.GetEnvironmentVariable("JWT_ISSUER")
+        ?? "PlatformV1";
+    options.Security.JwtAudience = Environment.GetEnvironmentVariable("JWT_AUDIENCE")
+        ?? "PlatformV1";
     
     // Rate limiting configuration
     options.RateLimiting.RequestsPerMinute = int.Parse(Environment.GetEnvironmentVariable("RATE_LIMIT_REQUESTS_PER_MINUTE") ?? "100");
@@ -91,17 +91,6 @@ builder.Services.Configure<GatewayOptions>(options =>
         CircuitBreakerTimeoutSeconds = 60
     };
     
-    // Notification service
-    options.DownstreamServices.Notification = new IdentityServiceOptions
-    {
-        BaseUrl = Environment.GetEnvironmentVariable("NOTIFICATION_SERVICE_URL") ?? "https://localhost:5003",
-        HealthEndpoint = "/health",
-        TimeoutSeconds = 25,
-        RetryCount = 2,
-        EnableCircuitBreaker = true,
-        FailureThreshold = 0.3,
-        CircuitBreakerTimeoutSeconds = 45
-    };
 });
 
 // Add controllers with validation filter

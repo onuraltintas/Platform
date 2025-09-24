@@ -79,7 +79,7 @@ services:
       dockerfile: src/Gateway/Gateway.API/Dockerfile
     container_name: platform-gateway
     ports:
-      - "5001:80"
+      - "5000:80"
       - "5443:443"
     environment:
       - ASPNETCORE_URLS=http://+:80
@@ -109,6 +109,8 @@ services:
       context: .
       dockerfile: src/Services/Identity/Identity.API/Dockerfile
     container_name: platform-identity
+    ports:
+      - "5001:80"
     environment:
       - ASPNETCORE_URLS=http://+:80
     env_file:

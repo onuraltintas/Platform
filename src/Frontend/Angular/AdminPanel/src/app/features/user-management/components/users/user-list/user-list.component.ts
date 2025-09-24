@@ -2,7 +2,7 @@ import { Component, OnInit, signal, computed, inject, ChangeDetectionStrategy } 
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { LucideAngularModule, UserPlus, Download, Upload, Search, Filter, MoreHorizontal } from 'lucide-angular';
+import { LucideAngularModule, UserPlus, Download, Upload, Search, Filter, MoreHorizontal, X } from 'lucide-angular';
 
 import { AdvancedDataTableComponent, TableColumn, TableConfig } from '../../../../../shared/components/data-table/advanced-data-table.component';
 import { FilterPanelComponent, FilterField } from '../../../../../shared/components/filter-panel/filter-panel.component';
@@ -440,7 +440,7 @@ export class UserListComponent implements OnInit {
     {
       key: 'bulk-deactivate',
       label: 'Pasifleştir',
-      icon: 'user-x',
+      icon: 'x',
       variant: 'outline-warning',
       requiresSelection: true,
       requiresPermission: 'Identity.Users.Update'

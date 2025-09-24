@@ -11,6 +11,7 @@
     <ProjectReference Include="..\..\Shared\Enterprise.Shared.Common\Enterprise.Shared.Common.csproj" />
     <ProjectReference Include="..\..\Shared\Enterprise.Shared.Security\Enterprise.Shared.Security.csproj" />
     <ProjectReference Include="..\..\Shared\Enterprise.Shared.Configuration\Enterprise.Shared.Configuration.csproj" />
+    <ProjectReference Include="..\..\Shared\Enterprise.Shared.Caching\Enterprise.Shared.Caching.csproj" />
   </ItemGroup>
 
 </Project>

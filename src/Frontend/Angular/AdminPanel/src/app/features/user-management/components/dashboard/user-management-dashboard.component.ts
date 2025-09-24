@@ -1,7 +1,7 @@
 import { Component, OnInit, signal, computed, inject, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { LucideAngularModule, Users, Shield, UserCheck, Settings } from 'lucide-angular';
+import { LucideAngularModule, Users, Shield, UserCheck, Settings, X } from 'lucide-angular';
 
 import { StatisticsCardComponent, StatisticConfig } from '../../../../shared/components/statistics-card/statistics-card.component';
 import { ActionButtonGroupComponent, ActionButton } from '../../../../shared/components/action-button-group/action-button-group.component';
@@ -371,7 +371,7 @@ export class UserManagementDashboardComponent implements OnInit {
         {
           key: 'bulk-deactivate',
           label: 'Toplu Pasifleştir',
-          icon: 'user-x',
+          icon: 'x',
           requiresPermission: 'Identity.Users.Update',
           destructive: true
         }

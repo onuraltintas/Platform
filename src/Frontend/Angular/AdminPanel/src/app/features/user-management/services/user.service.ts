@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { BaseUserManagementService } from './base-user-management.service';
+import { environment } from '../../../../environments/environment';
 import {
   UserDto,
   CreateUserRequest,
@@ -18,7 +19,7 @@ import {
   providedIn: 'root'
 })
 export class UserService extends BaseUserManagementService {
-  private readonly apiPath = '/users';
+  private readonly apiPath = `${environment.endpoints.users}`;
 
   /**
    * Get paginated users list

@@ -39,6 +39,9 @@ public class ModernPermissionSeedingService
 
         try
         {
+            // NOTE: Legacy migration is handled by a separate data migration service.
+            // Seeding only ensures target state with standardized permission codes.
+
             // First, seed permission definitions
             await SeedPermissionDefinitionsAsync();
 
@@ -302,11 +305,11 @@ public class ModernPermissionSeedingService
             new("System.Admin.SystemConfig", "System Configuration", "Configure system settings", "System Administration"),
             new("System.Admin.SecurityAudit", "Security Audit", "Access to security audit features", "System Administration"),
 
-            // Speed Reading Service Permissions
-            new("SpeedReading.Texts.Read", "Read Reading Texts", "View reading texts and materials", "Speed Reading"),
-            new("SpeedReading.Texts.Create", "Create Reading Texts", "Add new reading texts", "Speed Reading"),
-            new("SpeedReading.Texts.Update", "Update Reading Texts", "Modify reading texts", "Speed Reading"),
-            new("SpeedReading.Texts.Delete", "Delete Reading Texts", "Remove reading texts", "Speed Reading"),
+            // Speed Reading Service Permissions (standardized)
+            new("SpeedReading.ReadingTexts.Read", "Read Reading Texts", "View reading texts and materials", "Speed Reading"),
+            new("SpeedReading.ReadingTexts.Create", "Create Reading Texts", "Add new reading texts", "Speed Reading"),
+            new("SpeedReading.ReadingTexts.Update", "Update Reading Texts", "Modify reading texts", "Speed Reading"),
+            new("SpeedReading.ReadingTexts.Delete", "Delete Reading Texts", "Remove reading texts", "Speed Reading"),
 
             new("SpeedReading.Exercises.Read", "Read Exercises", "View speed reading exercises", "Speed Reading"),
             new("SpeedReading.Exercises.Create", "Create Exercises", "Create new exercises", "Speed Reading"),
@@ -359,7 +362,7 @@ public class ModernPermissionSeedingService
                 {
                     "Identity.Users.Read", "Identity.Users.Update",
                     "Identity.Groups.Read", "Identity.Groups.Update", "Identity.Groups.ManageMembers",
-                    "SpeedReading.Texts.Read", "SpeedReading.Exercises.Read",
+                    "SpeedReading.ReadingTexts.Read", "SpeedReading.Exercises.Read",
                     "SpeedReading.Analytics.Read"
                 }
             ),
@@ -369,7 +372,7 @@ public class ModernPermissionSeedingService
                 new[]
                 {
                     "Identity.Users.Read", // Can read own profile
-                    "SpeedReading.Texts.Read", "SpeedReading.Exercises.Read",
+                    "SpeedReading.ReadingTexts.Read", "SpeedReading.Exercises.Read",
                     "SpeedReading.Analytics.Read"
                 }
             ),
@@ -378,7 +381,7 @@ public class ModernPermissionSeedingService
                 new string[] { }, // No wildcards
                 new[]
                 {
-                    "SpeedReading.Texts.Read", "SpeedReading.Exercises.Read",
+                    "SpeedReading.ReadingTexts.Read", "SpeedReading.Exercises.Read",
                     "SpeedReading.Analytics.Read"
                 }
             ),
@@ -387,11 +390,13 @@ public class ModernPermissionSeedingService
                 new string[] { }, // No wildcards
                 new[]
                 {
-                    "SpeedReading.Texts.Read"
+                    "SpeedReading.ReadingTexts.Read"
                 }
             )
         };
     }
+
+    // NOTE: Legacy migration removed from seeding.
 
     /// <summary>
     /// Gets current permissions for a role from database

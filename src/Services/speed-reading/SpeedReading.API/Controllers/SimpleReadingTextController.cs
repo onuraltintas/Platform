@@ -9,6 +9,7 @@ namespace SpeedReading.API.Controllers;
 /// </summary>
 [ApiController]
 [Route("api/v1/reading-texts")]
+[Route("texts")]
 [Produces("application/json")]
 public class SimpleReadingTextController : ControllerBase
 {
@@ -23,7 +24,7 @@ public class SimpleReadingTextController : ControllerBase
     /// Gets all reading texts
     /// </summary>
     [HttpGet]
-    [Authorize(Policy = "reading-texts.read")]
+    [AllowAnonymous]
     [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status200OK)]
     public ActionResult<ApiResponse<object>> GetReadingTexts()
     {
@@ -66,7 +67,7 @@ public class SimpleReadingTextController : ControllerBase
     /// Gets reading text by ID
     /// </summary>
     [HttpGet("{id:guid}")]
-    [Authorize(Policy = "reading-texts.read")]
+    [AllowAnonymous]
     [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status200OK)]
     public ActionResult<ApiResponse<object>> GetReadingText([FromRoute] Guid id)
     {

@@ -11,16 +11,13 @@ namespace Gateway.API.Middleware;
 public class GatewayAuthorizationMiddleware
 {
     private readonly RequestDelegate _next;
-    private readonly IGatewayPermissionService _permissionService;
     private readonly ILogger<GatewayAuthorizationMiddleware> _logger;
 
     public GatewayAuthorizationMiddleware(
         RequestDelegate next,
-        IGatewayPermissionService permissionService,
         ILogger<GatewayAuthorizationMiddleware> logger)
     {
         _next = next;
-        _permissionService = permissionService;
         _logger = logger;
     }
 
@@ -41,8 +38,11 @@ public class GatewayAuthorizationMiddleware
 
             _logger.LogDebug("Checking authorization for {Method} {Route}", method, route);
 
+            // Get permission service from HttpContext (service locator pattern for scoped service)
+            var permissionService = context.RequestServices.GetRequiredService<IGatewayPermissionService>();
+
             // Check if user has permission for this route
-            var hasPermission = await _permissionService.HasPermissionAsync(
+            var hasPermission = await permissionService.HasPermissionAsync(
                 context.User,
                 route,
                 method,
@@ -69,15 +69,22 @@ public class GatewayAuthorizationMiddleware
 
     private static bool ShouldSkipAuthorization(PathString path)
     {
-        var skipPaths = new[]
+        // Minimal public surface by default
+        var alwaysPublic = new[]
         {
-            "/health",
-            "/swagger",
-            "/metrics",
-            "/.well-known"
+            "/health"
         };
 
-        return skipPaths.Any(skipPath => path.StartsWithSegments(skipPath, StringComparison.OrdinalIgnoreCase));
+        // Environment-based optional public endpoints
+        // Swagger & metrics should be public only in Development
+        // .well-known can be kept public for manifests if required
+        var isDevelopment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development";
+        var devPublic = isDevelopment
+            ? new[] { "/swagger", "/metrics", "/.well-known" }
+            : Array.Empty<string>();
+
+        return alwaysPublic.Concat(devPublic)
+            .Any(skipPath => path.StartsWithSegments(skipPath, StringComparison.OrdinalIgnoreCase));
     }
 
     private async Task HandleUnauthorizedAsync(HttpContext context, string route, string method)

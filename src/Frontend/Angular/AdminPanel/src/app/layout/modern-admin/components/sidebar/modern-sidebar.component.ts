@@ -80,9 +80,11 @@ interface MenuItem {
                   [class.active]="isMenuActive(item)"
                   [class.show]="item.expanded">
                 @if (item.children) {
-                  <a class="nav-link dropdown-toggle" href="#"
+                  <a class="nav-link dropdown-toggle"
+                     [routerLink]="item.route"
                      (click)="toggleMenuItem($event, item)"
-                     [class.show]="item.expanded">
+                     [class.show]="item.expanded"
+                     routerLinkActive="active">
                     <span class="nav-link-icon">
                       <lucide-icon [name]="item.icon" [size]="20"></lucide-icon>
                     </span>
@@ -368,75 +370,78 @@ export class ModernSidebarComponent implements OnInit {
   private menuItems: MenuItem[] = [
     {
       label: 'Kullanıcı Yönetimi',
-      icon: this.usersIcon,
+      icon: 'users',
+      route: '/admin/user-management',
       permissions: ['Identity.Users.Read', 'Identity.Roles.Read', 'Identity.Groups.Read', 'Identity.Permissions.Read'],
       children: [
         {
           label: 'Kullanıcılar',
           route: '/admin/user-management/users',
           permission: 'Identity.Users.Read',
-          icon: this.userCheckIcon
+          icon: 'user-check'
         },
         {
           label: 'Roller',
           route: '/admin/user-management/roles',
           permission: 'Identity.Roles.Read',
-          icon: this.shieldIcon
+          icon: 'shield'
         },
         {
           label: 'Yetkiler',
           route: '/admin/user-management/permissions',
           permission: 'Identity.Permissions.Read',
-          icon: this.keyIcon
+          icon: 'key'
         },
         {
           label: 'Gruplar',
           route: '/admin/user-management/groups',
           permission: 'Identity.Groups.Read',
-          icon: this.usersIcon
+          icon: 'users'
         }
       ]
     },
     {
       label: 'Hızlı Okuma',
-      icon: this.bookOpenIcon,
+      icon: 'book-open',
+      route: '/admin/speed-reading',
       permissions: ['SpeedReading.Exercises.Read', 'SpeedReading.ReadingTexts.Read', 'SpeedReading.Progress.Read', 'SpeedReading.Statistics.Read'],
       children: [
         {
           label: 'Egzersizler',
           route: '/admin/speed-reading/exercises',
           permission: 'SpeedReading.Exercises.Read',
-          icon: this.fileTextIcon
+          icon: 'file-text'
         },
         {
           label: 'Metin Kütüphanesi',
           route: '/admin/speed-reading/texts',
           permission: 'SpeedReading.ReadingTexts.Read',
-          icon: this.packageIcon
+          icon: 'package'
         },
         {
           label: 'Oturumlar',
           route: '/admin/speed-reading/sessions',
           permission: 'SpeedReading.Sessions.Read',
-          icon: this.activityIcon
+          icon: 'activity'
         },
         {
           label: 'İlerleme Takibi',
           route: '/admin/speed-reading/progress',
           permission: 'SpeedReading.Progress.Read',
-          icon: this.barChartIcon
+          icon: 'bar-chart-3'
         },
         {
           label: 'İstatistikler',
           route: '/admin/speed-reading/statistics',
           permission: 'SpeedReading.Statistics.Read',
-          icon: this.layersIcon
+          icon: 'layers'
         }
       ]
     },
     {
       label: 'Platform Yönetimi',
       icon: this.layersIcon,
+      route: '/admin/platform',
       roles: ['SuperAdmin', 'Admin'],
       children: [
         {
@@ -526,12 +531,26 @@ export class ModernSidebarComponent implements OnInit {
   }
 
   toggleMenuItem(event: Event, item: MenuItem): void {
-    event.preventDefault();
+    console.log('🔍 Menu item clicked:', item.label, 'Route:', item.route);
 
     if (item.children) {
+      // Dropdown varsa sadece aç/kapat
+      event.preventDefault();
       item.expanded = !item.expanded;
-    } else {
+      console.log('📂 Dropdown toggled:', item.expanded);
+
+      // Eğer route varsa ve dropdown açılıyorsa navigate et
+      if (item.route && item.expanded) {
+        console.log('🚀 Navigating to:', item.route);
+        this.router.navigate([item.route]);
+      }
+    } else if (item.route) {
+      // Route varsa navigate et
+      console.log('🚀 Direct navigation to:', item.route);
+      event.preventDefault();
+      this.router.navigate([item.route]);
     }
+    // Hiçbiri yoksa default behavior'a izin ver
   }
 
   isMenuActive(item: MenuItem): boolean {

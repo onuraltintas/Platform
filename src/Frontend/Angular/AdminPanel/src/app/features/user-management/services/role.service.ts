@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { BaseUserManagementService } from './base-user-management.service';
+import { environment } from '../../../../environments/environment';
 import {
   RoleDto,
   CreateRoleRequest,
@@ -18,7 +19,7 @@ import {
   providedIn: 'root'
 })
 export class RoleService extends BaseUserManagementService {
-  private readonly apiPath = '/roles';
+  private readonly apiPath = `${environment.endpoints.roles}`;
 
   /**
    * Get paginated roles list

@@ -21,6 +21,16 @@ COPY ["src/Shared/Enterprise.Shared.Authorization/Enterprise.Shared.Authorizatio
 COPY ["src/Shared/Enterprise.Shared.Permissions/Enterprise.Shared.Permissions.csproj", "src/Shared/Enterprise.Shared.Permissions/"]
 COPY ["src/Shared/Enterprise.Shared.ErrorHandling/Enterprise.Shared.ErrorHandling.csproj", "src/Shared/Enterprise.Shared.ErrorHandling/"]
 COPY ["src/Shared/Enterprise.Shared.Logging/Enterprise.Shared.Logging.csproj", "src/Shared/Enterprise.Shared.Logging/"]
+COPY ["src/Shared/Enterprise.Shared.Configuration/Enterprise.Shared.Configuration.csproj", "src/Shared/Enterprise.Shared.Configuration/"]
+COPY ["src/Shared/Enterprise.Shared.Validation/Enterprise.Shared.Validation.csproj", "src/Shared/Enterprise.Shared.Validation/"]
+COPY ["src/Shared/Enterprise.Shared.Caching/Enterprise.Shared.Caching.csproj", "src/Shared/Enterprise.Shared.Caching/"]
+COPY ["src/Shared/Enterprise.Shared.Events/Enterprise.Shared.Events.csproj", "src/Shared/Enterprise.Shared.Events/"]
+COPY ["src/Shared/Enterprise.Shared.Resilience/Enterprise.Shared.Resilience.csproj", "src/Shared/Enterprise.Shared.Resilience/"]
+COPY ["src/Shared/Enterprise.Shared.Observability/Enterprise.Shared.Observability.csproj", "src/Shared/Enterprise.Shared.Observability/"]
+COPY ["src/Shared/Enterprise.Shared.Email/Enterprise.Shared.Email.csproj", "src/Shared/Enterprise.Shared.Email/"]
+COPY ["src/Shared/Enterprise.Shared.Privacy/Enterprise.Shared.Privacy.csproj", "src/Shared/Enterprise.Shared.Privacy/"]
+COPY ["src/Shared/Enterprise.Shared.Notifications/Enterprise.Shared.Notifications.csproj", "src/Shared/Enterprise.Shared.Notifications/"]
+COPY ["src/Shared/Enterprise.Shared.Storage/Enterprise.Shared.Storage.csproj", "src/Shared/Enterprise.Shared.Storage/"]
 
 # Restore dependencies
 RUN dotnet restore "src/Services/Identity/Identity.API/Identity.API.csproj" --no-cache

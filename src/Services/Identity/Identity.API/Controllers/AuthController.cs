@@ -10,7 +10,7 @@ namespace Identity.API.Controllers;
 
 [ApiController]
 [Route("api/v1/[controller]")]
-// [EnableRateLimiting("AuthPolicy")] - Temporarily disabled
+[EnableRateLimiting("AuthPolicy")]
 public class AuthController : ControllerBase
 {
     private readonly IAuthService _authService;
@@ -377,15 +377,17 @@ public class AuthController : ControllerBase
     /// <param name="request">Çıkış bilgileri</param>
     /// <returns>Başarı durumu</returns>
     [HttpPost("logout")]
-    [Authorize]
+    [AllowAnonymous]
     [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     public async Task<IActionResult> Logout([FromBody] LogoutRequest? request = null)
     {
         var userId = GetCurrentUserId();
+
+        // If user is not authenticated, just return success (already logged out)
         if (string.IsNullOrEmpty(userId))
         {
-            return Unauthorized();
+            _logger.LogInformation("Logout attempt without valid user context - treating as already logged out");
+            return Ok(true);
         }
 
         var result = await _authService.LogoutAsync(userId, request?.DeviceId);

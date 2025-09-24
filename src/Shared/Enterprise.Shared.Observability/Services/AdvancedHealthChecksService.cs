@@ -155,7 +155,7 @@ public class AdvancedHealthChecksService : IAdvancedHealthChecks
                     FreeSpacePercentage = Math.Round(freeSpacePercentage, 2)
                 });
 
-                if (freeSpacePercentage > 10) // 10% minimum free space
+                if (freeSpacePercentage > 2) // 2% minimum free space
                 {
                     healthyDrives++;
                 }

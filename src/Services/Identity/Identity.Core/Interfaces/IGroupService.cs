@@ -30,6 +30,9 @@ public interface IGroupService
     Task<Result<string>> GenerateInvitationCodeAsync(Guid groupId, UserGroupRole role, DateTime? expiresAt = null, CancellationToken cancellationToken = default);
     Task<Result<GroupDto>> JoinByInvitationCodeAsync(string userId, string invitationCode, CancellationToken cancellationToken = default);
     Task<Result<bool>> CanUserAccessGroupAsync(string userId, Guid groupId, CancellationToken cancellationToken = default);
+
+    // Statistics
+    Task<Result<GroupStatisticsDto>> GetStatisticsAsync(CancellationToken cancellationToken = default);
 }
 
 public interface IGroupRepository

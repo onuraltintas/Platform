@@ -23,6 +23,12 @@ COPY ["src/Shared/Enterprise.Shared.Caching/Enterprise.Shared.Caching.csproj", "
 COPY ["src/Shared/Enterprise.Shared.Security/Enterprise.Shared.Security.csproj", "src/Shared/Enterprise.Shared.Security/"]
 COPY ["src/Shared/Enterprise.Shared.Validation/Enterprise.Shared.Validation.csproj", "src/Shared/Enterprise.Shared.Validation/"]
 COPY ["src/Shared/Enterprise.Shared.Email/Enterprise.Shared.Email.csproj", "src/Shared/Enterprise.Shared.Email/"]
+COPY ["src/Shared/Enterprise.Shared.Authorization/Enterprise.Shared.Authorization.csproj", "src/Shared/Enterprise.Shared.Authorization/"]
+COPY ["src/Shared/Enterprise.Shared.Permissions/Enterprise.Shared.Permissions.csproj", "src/Shared/Enterprise.Shared.Permissions/"]
+COPY ["src/Shared/Enterprise.Shared.Auditing/Enterprise.Shared.Auditing.csproj", "src/Shared/Enterprise.Shared.Auditing/"]
+COPY ["src/Shared/Enterprise.Shared.Privacy/Enterprise.Shared.Privacy.csproj", "src/Shared/Enterprise.Shared.Privacy/"]
+COPY ["src/Shared/Enterprise.Shared.Notifications/Enterprise.Shared.Notifications.csproj", "src/Shared/Enterprise.Shared.Notifications/"]
+COPY ["src/Shared/Enterprise.Shared.Storage/Enterprise.Shared.Storage.csproj", "src/Shared/Enterprise.Shared.Storage/"]
 
 # Restore dependencies
 RUN dotnet restore "src/Gateway/Gateway.API/Gateway.API.csproj" --no-cache

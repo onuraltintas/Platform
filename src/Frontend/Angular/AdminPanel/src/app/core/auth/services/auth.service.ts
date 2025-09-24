@@ -12,7 +12,8 @@ import {
   RefreshTokenResponse,
   ChangePasswordRequest,
   ResetPasswordRequest,
-  GoogleLoginRequest
+  GoogleLoginRequest,
+  Role
 } from '../models/auth.models';
 import { TokenService } from './token.service';
 import { ApiResponse } from '../../api/models/api.models';
@@ -207,6 +208,7 @@ export class AuthService {
       const expiresIn = response.expiresIn;
       const user = response.user;
       const permissions = response.permissions || [];
+      const rolesFromResponse = response.roles || [];
 
       if (!accessToken || !refreshToken || !user) {
         throw new Error('Invalid login response format');
@@ -225,6 +227,17 @@ export class AuthService {
 
       // API response'dan gelen user data'sını düzenle
       user.permissions = permissions;
+      // Map roles (string[]) to Role[] expected by UI
+      const mappedRoles: Role[] = rolesFromResponse.map((roleName: string) => ({
+        id: roleName,
+        name: roleName,
+        description: '',
+        isSystemRole: false,
+        permissions: [],
+        createdAt: new Date(),
+        updatedAt: new Date()
+      }));
+      (user as User).roles = mappedRoles;
 
       this.saveUserToStorage(user);
       this.savePermissionsToStorage(permissions);

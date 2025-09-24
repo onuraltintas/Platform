@@ -9,7 +9,7 @@ namespace Identity.API.Controllers;
 
 [ApiController]
 [Route("api/v1/[controller]")]
-// [EnableRateLimiting("AccountPolicy")] - Temporarily disabled
+[EnableRateLimiting("GlobalPolicy")]
 public class AccountController : ControllerBase
 {
     private readonly IUserService _userService;

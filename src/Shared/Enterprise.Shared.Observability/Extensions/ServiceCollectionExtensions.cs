@@ -187,8 +187,7 @@ public class SystemHealthCheck : IHealthCheck
         var tasks = new[]
         {
             _healthChecks.CheckMemoryUsageAsync(cancellationToken),
-            _healthChecks.CheckCpuUsageAsync(cancellationToken),
-            _healthChecks.CheckDiskSpaceAsync(cancellationToken)
+            _healthChecks.CheckCpuUsageAsync(cancellationToken)
         };
         
         var results = await Task.WhenAll(tasks);

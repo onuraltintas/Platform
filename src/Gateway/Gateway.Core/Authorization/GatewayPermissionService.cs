@@ -411,10 +411,10 @@ public class GatewayPermissionService : IGatewayPermissionService
                 Service = "SpeedReading",
                 MethodPermissions = new Dictionary<string, string[]>
                 {
-                    ["GET"] = new[] { "SpeedReading.Texts.Read" },
-                    ["POST"] = new[] { "SpeedReading.Texts.Create" },
-                    ["PUT"] = new[] { "SpeedReading.Texts.Update" },
-                    ["DELETE"] = new[] { "SpeedReading.Texts.Delete" }
+                    ["GET"] = new[] { "SpeedReading.ReadingTexts.Read" },
+                    ["POST"] = new[] { "SpeedReading.ReadingTexts.Create" },
+                    ["PUT"] = new[] { "SpeedReading.ReadingTexts.Update" },
+                    ["DELETE"] = new[] { "SpeedReading.ReadingTexts.Delete" }
                 }
             },
 

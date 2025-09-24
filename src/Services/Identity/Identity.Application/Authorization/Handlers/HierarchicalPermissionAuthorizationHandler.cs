@@ -31,11 +31,20 @@ public class HierarchicalPermissionAuthorizationHandler : AuthorizationHandler<P
     {
         try
         {
+            // Check if user has SuperAdmin role - SuperAdmin bypasses all permission checks
+            if (context.User.IsInRole("SuperAdmin"))
+            {
+                _logger.LogDebug("SuperAdmin bypass activated for hierarchical permission: {Permission}",
+                    requirement.Permission);
+                context.Succeed(requirement);
+                return;
+            }
+
             var userId = context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             if (string.IsNullOrEmpty(userId))
             {
                 _logger.LogWarning("Hierarchical permission check failed: User ID not found in claims");
-                context.Fail();
+                // Don't call Fail() - let other handlers try
                 return;
             }
 
@@ -66,7 +75,7 @@ public class HierarchicalPermissionAuthorizationHandler : AuthorizationHandler<P
                 _logger.LogInformation(
                     "Hierarchical permission denied for user {UserId}, permission {Permission}",
                     userId, requirement.Permission);
-                context.Fail();
+                // Don't call Fail() - let other handlers try
             }
         }
         catch (Exception ex)
@@ -75,7 +84,17 @@ public class HierarchicalPermissionAuthorizationHandler : AuthorizationHandler<P
                 "Unexpected error in hierarchical permission authorization for user {UserId}, permission {Permission}",
                 context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value,
                 requirement.Permission);
-            context.Fail();
+
+            // Check if SuperAdmin even in exception case
+            if (context.User.IsInRole("SuperAdmin"))
+            {
+                _logger.LogWarning("Allowing SuperAdmin despite exception in hierarchical permission check");
+                context.Succeed(requirement);
+                return;
+            }
+
+            // Don't call Fail() on exception - let other handlers try
+            // This prevents blocking other authorization handlers
         }
     }
 }
@@ -105,11 +124,19 @@ public class OptimizedMultiplePermissionsAuthorizationHandler : AuthorizationHan
     {
         try
         {
+            // Check SuperAdmin first
+            if (context.User.IsInRole("SuperAdmin"))
+            {
+                _logger.LogDebug("SuperAdmin bypass activated for multiple permissions check");
+                context.Succeed(requirement);
+                return;
+            }
+
             var userId = context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             if (string.IsNullOrEmpty(userId))
             {
                 _logger.LogWarning("Optimized multiple permissions check failed: User ID not found in claims");
-                context.Fail();
+                // Don't call Fail() - let other handlers try
                 return;
             }
 
@@ -167,17 +194,22 @@ public class OptimizedMultiplePermissionsAuthorizationHandler : AuthorizationHan
             {
                 context.Succeed(requirement);
             }
-            else
-            {
-                context.Fail();
-            }
+            // Don't call Fail() - let other handlers try
         }
         catch (Exception ex)
         {
             _logger.LogError(ex,
                 "Unexpected error in optimized multiple permissions authorization for user {UserId}",
                 context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
-            context.Fail();
+
+            // Check if SuperAdmin even in exception case
+            if (context.User.IsInRole("SuperAdmin"))
+            {
+                _logger.LogWarning("Allowing SuperAdmin despite exception in multiple permissions check");
+                context.Succeed(requirement);
+                return;
+            }
+            // Don't call Fail() on exception - let other handlers try
         }
     }
 }

@@ -25,6 +25,7 @@ public class AuthService : IAuthService
     private readonly IGoogleAuthService _googleAuthService;
     private readonly IPermissionService _permissionService;
     private readonly IHashingService _hashingService;
+    private readonly IRefreshTokenRepository _refreshTokenRepository;
     private readonly ICacheService _cacheService;
     private readonly IEventBus _eventBus;
     private readonly IMapper _mapper;
@@ -43,6 +44,7 @@ public class AuthService : IAuthService
         IGoogleAuthService googleAuthService,
         IPermissionService permissionService,
         IHashingService hashingService,
+        IRefreshTokenRepository refreshTokenRepository,
         ICacheService cacheService,
         IEventBus eventBus,
         IMapper mapper,
@@ -57,6 +59,7 @@ public class AuthService : IAuthService
         _googleAuthService = googleAuthService;
         _permissionService = permissionService;
         _hashingService = hashingService;
+        _refreshTokenRepository = refreshTokenRepository;
         _cacheService = cacheService;
         _eventBus = eventBus;
         _mapper = mapper;
@@ -653,32 +656,48 @@ public class AuthService : IAuthService
 
     private async Task<string?> GetUserIdFromRefreshTokenAsync(string refreshToken)
     {
-        // Implementation to extract user ID from refresh token
-        return await Task.FromResult<string?>(null); // Placeholder
+        var hashed = Hash(refreshToken);
+        var entity = await _refreshTokenRepository.GetByHashedTokenAsync(hashed);
+        if (entity == null || entity.IsRevoked || entity.IsUsed || entity.ExpiresAt < DateTime.UtcNow)
+        {
+            return null;
+        }
+        return entity.UserId;
     }
 
     private async Task<Guid?> GetGroupIdFromRefreshTokenAsync(string refreshToken)
     {
-        // Implementation to extract group ID from refresh token
-        return await Task.FromResult<Guid?>(null); // Placeholder
+        var hashed = Hash(refreshToken);
+        var entity = await _refreshTokenRepository.GetByHashedTokenAsync(hashed);
+        if (entity == null || entity.IsRevoked || entity.IsUsed || entity.ExpiresAt < DateTime.UtcNow)
+        {
+            return null;
+        }
+        return entity.GroupId;
     }
 
     private async Task RevokeRefreshTokenAsync(string refreshToken, string reason)
     {
-        // Implementation to revoke refresh token
-        await Task.CompletedTask; // Placeholder
+        var hashed = Hash(refreshToken);
+        await _refreshTokenRepository.RevokeAsync(hashed, reason);
     }
 
     private async Task RevokeUserRefreshTokensAsync(string userId, string? deviceId = null)
     {
-        // Implementation to revoke user's refresh tokens
-        await Task.CompletedTask; // Placeholder
+        await _refreshTokenRepository.RevokeAllByUserAsync(userId, deviceId);
     }
 
     private string? GetJtiFromToken(string token)
     {
         // Implementation to extract JTI from JWT token
         return null; // Placeholder
+    }
+
+    private static string Hash(string input)
+    {
+        using var sha256 = System.Security.Cryptography.SHA256.Create();
+        var bytes = sha256.ComputeHash(System.Text.Encoding.UTF8.GetBytes(input));
+        return Convert.ToBase64String(bytes);
     }
 
     #endregion

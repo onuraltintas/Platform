@@ -102,14 +102,24 @@ export class PermissionService {
     }
 
     // SuperAdmin has all permissions
-    if (user.roles?.some((role: any) => role.name === 'SuperAdmin')) {
+    const isSuper = user.roles?.some((role: any) => role.name === 'SuperAdmin');
+
+    if (isSuper) {
       return true;
     }
 
-    // Check user permissions
-    const hasPermission = user.permissions?.includes(permission) || false;
+    // Check user permissions (exact or wildcard)
+    const hasExact = user.permissions?.includes(permission) || false;
 
-    return hasPermission;
+    if (hasExact) {
+      return true;
+    }
+
+    // Try wildcard permissions on the user side (e.g., *.*.*)
+    const userPermissions = user.permissions || [];
+    const hasWildcard = userPermissions.some((perm: string) => this.matchesWildcard(permission, perm));
+
+    return hasWildcard;
   }
 
   canAccessAny(permissions: string[]): boolean {
@@ -125,12 +135,19 @@ export class PermissionService {
       return true;
     }
 
-    // Check if user has any of the permissions
-    const hasAnyPermission = permissions.some(permission =>
-      user.permissions?.includes(permission) || false
+    const userPermissions = user.permissions || [];
+
+    // Any exact match
+    if (permissions.some(p => userPermissions.includes(p))) {
+      return true;
+    }
+
+    // Any wildcard match
+    const hasAnyWildcard = permissions.some(required =>
+      userPermissions.some(userPerm => this.matchesWildcard(required, userPerm))
     );
 
-    return hasAnyPermission;
+    return hasAnyWildcard;
   }
 
   isInRole(roleName: string): boolean {

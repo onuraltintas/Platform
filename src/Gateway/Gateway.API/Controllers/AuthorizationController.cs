@@ -15,13 +15,16 @@ public class AuthorizationController : ControllerBase
 {
     private readonly IGatewayPermissionService _permissionService;
     private readonly ILogger<AuthorizationController> _logger;
+    private readonly IConfiguration _configuration;
 
     public AuthorizationController(
         IGatewayPermissionService permissionService,
-        ILogger<AuthorizationController> logger)
+        ILogger<AuthorizationController> logger,
+        IConfiguration configuration)
     {
         _permissionService = permissionService;
         _logger = logger;
+        _configuration = configuration;
     }
 
     /// <summary>
@@ -148,6 +151,79 @@ public class AuthorizationController : ControllerBase
             _logger.LogError(ex, "Error invalidating permissions cache for user {UserId}", userId);
             return StatusCode(500, new { error = "Failed to invalidate user permissions cache" });
         }
+    }
+
+    /// <summary>
+    /// Internal endpoint to invalidate user permissions cache via API key (service-to-service)
+    /// </summary>
+    [HttpDelete("users/{userId}/cache/internal")]
+    [AllowAnonymous]
+    public async Task<IActionResult> InvalidateUserPermissionsInternal(string userId)
+    {
+        try
+        {
+            var providedKey = Request.Headers["X-Internal-API-Key"].FirstOrDefault();
+            var expectedKey = _configuration["GATEWAY_INTERNAL_API_KEY"] ?? Environment.GetEnvironmentVariable("GATEWAY_INTERNAL_API_KEY");
+
+            if (string.IsNullOrEmpty(expectedKey) || providedKey != expectedKey)
+            {
+                return Unauthorized(new { error = "Invalid internal API key" });
+            }
+
+            await _permissionService.InvalidateUserPermissionsAsync(userId);
+
+            _logger.LogInformation("[Internal] Invalidated permissions cache for user {UserId}", userId);
+
+            return Ok(new { message = "User permissions cache invalidated", userId, timestamp = DateTime.UtcNow });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error invalidating permissions cache for user {UserId} (internal)", userId);
+            return StatusCode(500, new { error = "Failed to invalidate user permissions cache" });
+        }
+    }
+
+    /// <summary>
+    /// Internal bulk invalidation via API key
+    /// </summary>
+    [HttpPost("users/bulk-invalidate/internal")]
+    [AllowAnonymous]
+    public async Task<IActionResult> BulkInvalidateInternal([FromBody] BulkInvalidateRequest request)
+    {
+        try
+        {
+            var providedKey = Request.Headers["X-Internal-API-Key"].FirstOrDefault();
+            var expectedKey = _configuration["GATEWAY_INTERNAL_API_KEY"] ?? Environment.GetEnvironmentVariable("GATEWAY_INTERNAL_API_KEY");
+
+            if (string.IsNullOrEmpty(expectedKey) || providedKey != expectedKey)
+            {
+                return Unauthorized(new { error = "Invalid internal API key" });
+            }
+
+            if (request.UserIds == null || !request.UserIds.Any())
+            {
+                return BadRequest(new { error = "UserIds cannot be empty" });
+            }
+
+            foreach (var userId in request.UserIds)
+            {
+                await _permissionService.InvalidateUserPermissionsAsync(userId);
+            }
+
+            _logger.LogInformation("[Internal] Bulk invalidated permissions cache for {Count} users", request.UserIds.Count());
+
+            return Ok(new { message = "Bulk invalidation completed", count = request.UserIds.Count(), timestamp = DateTime.UtcNow });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error during internal bulk invalidation");
+            return StatusCode(500, new { error = "Failed to bulk invalidate user permissions cache" });
+        }
+    }
+
+    public class BulkInvalidateRequest
+    {
+        public IEnumerable<string> UserIds { get; set; } = Array.Empty<string>();
     }
 
     /// <summary>

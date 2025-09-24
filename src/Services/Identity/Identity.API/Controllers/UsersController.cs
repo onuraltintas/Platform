@@ -488,5 +488,41 @@ public class UsersController : ControllerBase
             return StatusCode(500, "Internal server error");
         }
     }
+
+    [HttpGet("statistics")]
+    [RequirePermission(PermissionConstants.Identity.Users.Read)]
+    public async Task<IActionResult> GetUserStatistics()
+    {
+        try
+        {
+            var totalUsers = await _userManager.Users.CountAsync();
+            var activeUsers = await _userManager.Users.CountAsync(u => u.IsActive);
+            var inactiveUsers = totalUsers - activeUsers;
+            var emailConfirmedUsers = await _userManager.Users.CountAsync(u => u.EmailConfirmed);
+            var unconfirmedEmailUsers = totalUsers - emailConfirmedUsers;
+
+            var totalRoles = await _roleManager.Roles.CountAsync();
+            var totalGroups = await _db.Groups.CountAsync(g => !g.IsDeleted && g.IsActive);
+
+            var statistics = new
+            {
+                TotalUsers = totalUsers,
+                ActiveUsers = activeUsers,
+                InactiveUsers = inactiveUsers,
+                EmailConfirmedUsers = emailConfirmedUsers,
+                UnconfirmedEmailUsers = unconfirmedEmailUsers,
+                TotalRoles = totalRoles,
+                TotalGroups = totalGroups,
+                LastUpdated = DateTime.UtcNow
+            };
+
+            return Ok(statistics);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error retrieving user statistics");
+            return StatusCode(500, "Internal server error");
+        }
+    }
 }
 
